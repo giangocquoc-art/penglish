@@ -1,0 +1,44 @@
+﻿Task R09 — Replace/polish home dashboard, progress, whale UI, and visual hierarchy.
+
+Working directory:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Goal:
+After real repo/data/module replacement, polish the learner UI so the app feels coherent, not cluttered.
+
+Requirements:
+1. Audit current home/dashboard and duplicated feature cards.
+2. Make a clear dashboard:
+   - Continue learning
+   - English Speed
+   - Vocabulary
+   - Grammar
+   - Reading
+   - Shadowing
+   - Progress/confidence
+3. Use Vietnamese-first copy.
+4. Make visual hierarchy cleaner:
+   - fewer repeated buttons
+   - larger primary action
+   - glass/ocean sections
+   - whale as brand character, not random clutter
+5. Whale behavior:
+   - subtle background whale motion
+   - no whale blocking content
+   - streak whale growth capped
+   - high streak creates baby whales instead of oversized whale
+   - respect prefers-reduced-motion
+6. Progress/confidence:
+   - create a learner-friendly CEFR progress scale
+   - show completed skills
+   - show next recommendation
+   - encourage learner without fake precision
+7. Mobile-first layout inspired by clean quiz/learning apps.
+8. Ensure all entry points route to real replaced modules, not old content.
+
+Run:
+npx tsc -p apps/web/tsconfig.json --noEmit
+npm run build
+
+Create:
+reports/r09-dashboard-progress-whale-ui.md

@@ -1,0 +1,133 @@
+{
+  "baseUrl": "http://127.0.0.1:5182",
+  "checkedAt": "2026-06-05T17:17:09.542Z",
+  "routeResults": [
+    {
+      "name": "home-mobile",
+      "route": "/home",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase3-home-mobile.png",
+      "testId": null,
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "learning-path-mobile",
+      "route": "/learning-path",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase3-learning-path-mobile.png",
+      "testId": null,
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "foundation48-roadmap-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase3-foundation48-roadmap-mobile.png",
+      "testId": "foundation48-roadmap-page",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "practice-review-center-mobile",
+      "route": "/practice",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase3-practice-real-review-center-mobile.png",
+      "testId": "practice-real-review-center",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "words-notebook-mobile",
+      "route": "/words",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase3-words-learned-notebook-mobile.png",
+      "testId": "vocab-learned-words-panel",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "shadowing-mobile",
+      "route": "/shadowing",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase3-shadowing-mobile.png",
+      "testId": "shadowing-mobile-root",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "english-speed-mobile",
+      "route": "/english-speed",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase3-english-speed-mobile.png",
+      "testId": "speed-mobile-root",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    }
+  ],
+  "shadowingLocalCompare": {
+    "score": 17,
+    "missingWords": [
+      "c",
+      "u",
+      "hi",
+      "n",
+      "t"
+    ],
+    "extraWords": [
+      "introduce",
+      "clear"
+    ]
+  },
+  "englishSpeedLoop": {
+    "hasSpeedMistake": true,
+    "bestScore": 81,
+    "lastScore": 61
+  },
+  "consoleErrors": [],
+  "failedRequests": [],
+  "errors": []
+}

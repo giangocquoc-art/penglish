@@ -1,0 +1,298 @@
+{
+  "reportName": "P_ENGLISH_UNIT_1_COMPLETE_QA_REPORT",
+  "qaDate": "2026-05-21",
+  "scope": "Final source-level QA for Unit 1 after lesson page, all practice modes, progress dashboard, local SRS, and content validation.",
+  "overallStatus": "READY_WITH_KNOWN_ISSUES",
+  "templateReadinessForUnit2": {
+    "status": "YES_WITH_CONDITIONS",
+    "readyAreas": [
+      "lesson content shape",
+      "lesson route rendering",
+      "practice route dispatcher",
+      "all seven Unit 1 practice modes",
+      "local progress schema",
+      "local SRS foundation",
+      "content validation helper"
+    ],
+    "conditions": [
+      "Fix or isolate known TypeScript blockers before relying on tsc as a regression gate.",
+      "Resolve or formally document the Vite html-inline-proxy path-space issue.",
+      "Decide whether SRS should remain flashcard-first or expand to all practice modes.",
+      "Consolidate duplicate localStorage wrappers into the shared progress helper before scaling.",
+      "Run content validation for every new Unit 2 content set."
+    ]
+  },
+  "inspectedFiles": [
+    {
+      "path": "apps/web/src/pages/LessonPage.tsx",
+      "status": "pass_with_notes",
+      "notes": "Renders Unit 1 lesson, progress dashboard, smart review card, and practice CTAs."
+    },
+    {
+      "path": "apps/web/src/pages/PracticePage.tsx",
+      "status": "pass_with_risk",
+      "notes": "Dispatches all requested Unit 1 practice modes, but still performs legacy API calls for general practice state."
+    },
+    {
+      "path": "apps/web/src/components/practice/LessonFlashcardPractice.tsx",
+      "status": "pass",
+      "notes": "Supports normal flashcard mode and due-only review via review=due."
+    },
+    {
+      "path": "apps/web/src/components/practice/LessonQuizPractice.tsx",
+      "status": "pass_with_limitation",
+      "notes": "Quiz mode works and marks SRS, but due-only quiz route is not present in the inspected source snapshot."
+    },
+    {
+      "path": "apps/web/src/components/practice/LessonListeningPractice.tsx",
+      "status": "pass",
+      "notes": "Listening mode component exists and is routed."
+    },
+    {
+      "path": "apps/web/src/components/practice/LessonReflexPractice.tsx",
+      "status": "pass",
+      "notes": "Reflex mode component exists and is routed."
+    },
+    {
+      "path": "apps/web/src/components/practice/LessonTypingPractice.tsx",
+      "status": "pass",
+      "notes": "Typing mode component exists and is routed."
+    },
+    {
+      "path": "apps/web/src/components/practice/LessonMatchPractice.tsx",
+      "status": "pass",
+      "notes": "Match mode component exists and is routed."
+    },
+    {
+      "path": "apps/web/src/components/practice/LessonSpeedPractice.tsx",
+      "status": "pass",
+      "notes": "Speed mode component exists and is routed."
+    },
+    {
+      "path": "apps/web/src/lib/p-english/lesson-content-data.ts",
+      "status": "pass",
+      "notes": "Provides Unit 1 local lesson content and generated flashcards."
+    },
+    {
+      "path": "apps/web/src/lib/p-english/lesson-progress.ts",
+      "status": "pass_with_notes",
+      "notes": "Provides progress and SRS helpers. Some SRS mappings are not complete for all mode item sources."
+    },
+    {
+      "path": "apps/web/src/lib/p-english/lesson-content-validation.ts",
+      "status": "pass",
+      "notes": "Provides reusable content validation and summary helpers."
+    }
+  ],
+  "routes": [
+    {
+      "url": "/lessons/unit-1-greetings-introduction",
+      "status": "pass",
+      "handler": "LessonPage.tsx"
+    },
+    {
+      "url": "/practice?lessonId=unit-1-greetings-introduction&mode=flashcard",
+      "status": "pass",
+      "handler": "PracticePage.tsx -> LessonFlashcardPractice.tsx"
+    },
+    {
+      "url": "/practice?lessonId=unit-1-greetings-introduction&mode=quiz",
+      "status": "pass",
+      "handler": "PracticePage.tsx -> LessonQuizPractice.tsx"
+    },
+    {
+      "url": "/practice?lessonId=unit-1-greetings-introduction&mode=listen",
+      "status": "pass",
+      "handler": "PracticePage.tsx -> LessonListeningPractice.tsx"
+    },
+    {
+      "url": "/practice?lessonId=unit-1-greetings-introduction&mode=reflex",
+      "status": "pass",
+      "handler": "PracticePage.tsx -> LessonReflexPractice.tsx"
+    },
+    {
+      "url": "/practice?lessonId=unit-1-greetings-introduction&mode=type",
+      "status": "pass",
+      "handler": "PracticePage.tsx -> LessonTypingPractice.tsx"
+    },
+    {
+      "url": "/practice?lessonId=unit-1-greetings-introduction&mode=match",
+      "status": "pass",
+      "handler": "PracticePage.tsx -> LessonMatchPractice.tsx"
+    },
+    {
+      "url": "/practice?lessonId=unit-1-greetings-introduction&mode=speed",
+      "status": "pass",
+      "handler": "PracticePage.tsx -> LessonSpeedPractice.tsx"
+    },
+    {
+      "url": "/practice?lessonId=unit-1-greetings-introduction&mode=flashcard&review=due",
+      "status": "pass",
+      "handler": "LessonFlashcardPractice.tsx + getDueReviewItems"
+    }
+  ],
+  "modeStatus": {
+    "flashcard": {
+      "status": "pass",
+      "progressField": "flashcard",
+      "srs": "enabled",
+      "notes": "Normal deck and due deck supported."
+    },
+    "quiz": {
+      "status": "pass_with_limitation",
+      "progressField": "quiz",
+      "srs": "marking_enabled_due_route_missing",
+      "notes": "Tracks quiz progress and SRS; due-only quiz session not present in current source snapshot."
+    },
+    "listen": {
+      "status": "pass",
+      "progressField": "listening",
+      "srs": "not_full_coverage",
+      "notes": "Listening practice route exists and writes progress."
+    },
+    "reflex": {
+      "status": "pass",
+      "progressField": "reflex",
+      "srs": "not_full_coverage",
+      "notes": "Reflex practice route exists and writes progress."
+    },
+    "type": {
+      "status": "pass",
+      "progressField": "typing",
+      "srs": "not_mapped_to_review_items",
+      "notes": "Typing route exists and writes progress."
+    },
+    "match": {
+      "status": "pass",
+      "progressField": "match",
+      "srs": "partial",
+      "notes": "Match route exists and writes progress."
+    },
+    "speed": {
+      "status": "pass",
+      "progressField": "speed",
+      "srs": "not_mapped_to_review_items",
+      "notes": "Speed route exists and writes progress."
+    }
+  },
+  "localStorageSchema": {
+    "keyPattern": "p-english:lesson-progress:${lessonId}",
+    "unit1Key": "p-english:lesson-progress:unit-1-greetings-introduction",
+    "topLevelFields": [
+      "lessonId",
+      "flashcard",
+      "quiz",
+      "listening",
+      "reflex",
+      "typing",
+      "match",
+      "speed",
+      "srs"
+    ],
+    "srsItemFields": [
+      "itemId",
+      "type",
+      "level",
+      "lastReviewedAt",
+      "nextReviewAt",
+      "wrongCount",
+      "correctCount"
+    ],
+    "notes": [
+      "Progress is local to the browser/device.",
+      "mergeLessonProgress preserves existing mode fields while applying patches.",
+      "Some components still duplicate safe localStorage wrappers."
+    ]
+  },
+  "srsStatus": {
+    "status": "pass_with_coverage_gaps",
+    "implementedHelpers": [
+      "markItemReviewed",
+      "getDueReviewItems",
+      "getWeakReviewItems",
+      "calculateLessonProgressSummary"
+    ],
+    "intervalPolicy": {
+      "wrong": "10 minutes",
+      "correctLevel0": "10 minutes",
+      "correctLevel1": "1 day",
+      "correctLevel2": "3 days",
+      "correctLevel3": "7 days",
+      "correctLevel4": "14 days",
+      "correctLevel5": "30 days"
+    },
+    "gaps": [
+      "Due-only quiz route is not present in the current inspected source snapshot.",
+      "Typing and speed SRS review-item mapping are not complete.",
+      "Not every mode visibly feeds smart review in an equivalent way."
+    ]
+  },
+  "contentValidationStatus": {
+    "status": "pass_at_source_level",
+    "helper": "apps/web/src/lib/p-english/lesson-content-validation.ts",
+    "coveredAreas": [
+      "metadata",
+      "vocabulary",
+      "flashcards",
+      "quiz",
+      "sentenceOrdering",
+      "fillBlank",
+      "listening",
+      "reflex",
+      "completionCriteria"
+    ],
+    "risk": "Helper is not yet wired into an automated test or CI command."
+  },
+  "uiMobileRisks": [
+    {
+      "severity": "medium",
+      "risk": "PracticePage performs legacy API calls even for local Unit 1 routes."
+    },
+    {
+      "severity": "medium",
+      "risk": "LessonPage CTA discoverability is uneven for type, match, and speed modes."
+    },
+    {
+      "severity": "low",
+      "risk": "Long bilingual content can create tall cards on small screens."
+    },
+    {
+      "severity": "low",
+      "risk": "Text-to-speech depends on browser speechSynthesis support."
+    },
+    {
+      "severity": "medium",
+      "risk": "Progress is localStorage-only and does not sync across devices."
+    }
+  ],
+  "checks": {
+    "typescript": {
+      "command": "npx tsc -p apps/web/tsconfig.json --noEmit",
+      "status": "failed_known_unrelated_errors",
+      "errors": [
+        "apps/web/src/pages/CategoriesPage.tsx(92,11): error TS2322: Type '{ delay: number; }' is not assignable to type 'ResponsiveValue<Transition<string & {}>> | undefined'.",
+        "apps/web/src/pages/FoldersPage.tsx(82,11): error TS2322: Type '{ delay: number; }' is not assignable to type 'ResponsiveValue<Transition<string & {}>> | undefined'.",
+        "apps/web/src/pages/StudyPage.tsx(110,15): error TS2783: 'transition' is specified more than once, so this usage will be overwritten."
+      ]
+    },
+    "build": {
+      "command": "npm run build",
+      "status": "failed_known_vite_html_inline_proxy",
+      "error": "[vite:html-inline-proxy] Could not load C:/Users/PC/OneDrive/P-English/Luyen Tu/apps/web/index.html?html-proxy&inline-css&index=0.css (imported by index.html): No matching HTML proxy module found from C:/Users/PC/OneDrive/P-English/Luyen Tu/apps/web/index.html?html-proxy&inline-css&index=0.css",
+      "classification": "Known pre-existing path-space/build-pipeline issue; not fixed by scope."
+    }
+  },
+  "top10IssuesBeforeUnit2": [
+    "Fix unrelated TypeScript errors in CategoriesPage.tsx, FoldersPage.tsx, and StudyPage.tsx.",
+    "Resolve or formally work around the Vite html-inline-proxy path-space build failure.",
+    "Gate legacy API calls in PracticePage.tsx for local Unit lesson routes.",
+    "Consolidate duplicated localStorage wrappers into lesson-progress.ts.",
+    "Wire validateLessonContent into automated tests or CI.",
+    "Add due-only quiz review if SRS should cover quiz items fully.",
+    "Complete SRS mapping for typing, match, speed, listening, and reflex.",
+    "Improve LessonPage CTA coverage for all Unit 1 modes.",
+    "Run a dedicated mobile QA pass for long text and match interactions.",
+    "Define production policy for local-only progress versus synced user progress."
+  ],
+  "finalVerdict": "Unit 1 passes source-level QA for route/mode/content/progress/SRS readiness, but project-level green build and green TypeScript cannot be claimed until known unrelated TypeScript and Vite path-space issues are resolved."
+}

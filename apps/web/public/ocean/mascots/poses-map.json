@@ -1,0 +1,458 @@
+{
+  "apps/web/public/ocean/mascots/poo/poo-sheet-full.png": [
+    {
+      "file": "apps/web/public/ocean/mascots/poo/poses/poo-pose-01.png",
+      "publicPath": "/ocean/mascots/poo/poses/poo-pose-01.png",
+      "box": {
+        "x1": 2,
+        "y1": 41,
+        "x2": 1071,
+        "y2": 1014,
+        "area": 332172
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/poo/poses/poo-pose-02.png",
+      "publicPath": "/ocean/mascots/poo/poses/poo-pose-02.png",
+      "box": {
+        "x1": 1118,
+        "y1": 96,
+        "x2": 1432,
+        "y2": 373,
+        "area": 38375
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/poo/poses/poo-pose-03.png",
+      "publicPath": "/ocean/mascots/poo/poses/poo-pose-03.png",
+      "box": {
+        "x1": 1100,
+        "y1": 418,
+        "x2": 1434,
+        "y2": 685,
+        "area": 33862
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/poo/poses/poo-pose-04.png",
+      "publicPath": "/ocean/mascots/poo/poses/poo-pose-04.png",
+      "box": {
+        "x1": 1138,
+        "y1": 765,
+        "x2": 1380,
+        "y2": 995,
+        "area": 19283
+      }
+    }
+  ],
+  "apps/web/public/ocean/mascots/poo/poo-sheet-simple.png": [
+    {
+      "file": "apps/web/public/ocean/mascots/poo/poses/poo-pose-01.png",
+      "publicPath": "/ocean/mascots/poo/poses/poo-pose-01.png",
+      "box": {
+        "x1": 526,
+        "y1": 182,
+        "x2": 823,
+        "y2": 488,
+        "area": 31198
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/poo/poses/poo-pose-02.png",
+      "publicPath": "/ocean/mascots/poo/poses/poo-pose-02.png",
+      "box": {
+        "x1": 967,
+        "y1": 194,
+        "x2": 1296,
+        "y2": 476,
+        "area": 28761
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/poo/poses/poo-pose-03.png",
+      "publicPath": "/ocean/mascots/poo/poses/poo-pose-03.png",
+      "box": {
+        "x1": 165,
+        "y1": 226,
+        "x2": 467,
+        "y2": 480,
+        "area": 28141
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/poo/poses/poo-pose-04.png",
+      "publicPath": "/ocean/mascots/poo/poses/poo-pose-04.png",
+      "box": {
+        "x1": 536,
+        "y1": 557,
+        "x2": 860,
+        "y2": 854,
+        "area": 29838
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/poo/poses/poo-pose-05.png",
+      "publicPath": "/ocean/mascots/poo/poses/poo-pose-05.png",
+      "box": {
+        "x1": 145,
+        "y1": 580,
+        "x2": 467,
+        "y2": 847,
+        "area": 28705
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/poo/poses/poo-pose-06.png",
+      "publicPath": "/ocean/mascots/poo/poses/poo-pose-06.png",
+      "box": {
+        "x1": 952,
+        "y1": 609,
+        "x2": 1241,
+        "y2": 844,
+        "area": 23402
+      }
+    }
+  ],
+  "apps/web/public/ocean/mascots/muc-mo/poo-sheet-simple.png": [
+    {
+      "file": "apps/web/public/ocean/mascots/muc-mo/poses/muc-mo-pose-01.png",
+      "publicPath": "/ocean/mascots/muc-mo/poses/muc-mo-pose-01.png",
+      "box": {
+        "x1": 557,
+        "y1": 133,
+        "x2": 1350,
+        "y2": 536,
+        "area": 129225
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/muc-mo/poses/muc-mo-pose-02.png",
+      "publicPath": "/ocean/mascots/muc-mo/poses/muc-mo-pose-02.png",
+      "box": {
+        "x1": 73,
+        "y1": 146,
+        "x2": 510,
+        "y2": 515,
+        "area": 68709
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/muc-mo/poses/muc-mo-pose-03.png",
+      "publicPath": "/ocean/mascots/muc-mo/poses/muc-mo-pose-03.png",
+      "box": {
+        "x1": 82,
+        "y1": 579,
+        "x2": 521,
+        "y2": 921,
+        "area": 65284
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/muc-mo/poses/muc-mo-pose-04.png",
+      "publicPath": "/ocean/mascots/muc-mo/poses/muc-mo-pose-04.png",
+      "box": {
+        "x1": 566,
+        "y1": 591,
+        "x2": 930,
+        "y2": 924,
+        "area": 58443
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/muc-mo/poses/muc-mo-pose-05.png",
+      "publicPath": "/ocean/mascots/muc-mo/poses/muc-mo-pose-05.png",
+      "box": {
+        "x1": 1002,
+        "y1": 603,
+        "x2": 1362,
+        "y2": 930,
+        "area": 53607
+      }
+    }
+  ],
+  "apps/web/public/ocean/mascots/rua-ri/rua-ri-sheet.png": [
+    {
+      "file": "apps/web/public/ocean/mascots/rua-ri/poses/rua-ri-pose-01.png",
+      "publicPath": "/ocean/mascots/rua-ri/poses/rua-ri-pose-01.png",
+      "box": {
+        "x1": 515,
+        "y1": 140,
+        "x2": 1384,
+        "y2": 552,
+        "area": 133577
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/rua-ri/poses/rua-ri-pose-02.png",
+      "publicPath": "/ocean/mascots/rua-ri/poses/rua-ri-pose-02.png",
+      "box": {
+        "x1": 82,
+        "y1": 144,
+        "x2": 456,
+        "y2": 554,
+        "area": 75967
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/rua-ri/poses/rua-ri-pose-03.png",
+      "publicPath": "/ocean/mascots/rua-ri/poses/rua-ri-pose-03.png",
+      "box": {
+        "x1": 813,
+        "y1": 577,
+        "x2": 1122,
+        "y2": 974,
+        "area": 60390
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/rua-ri/poses/rua-ri-pose-04.png",
+      "publicPath": "/ocean/mascots/rua-ri/poses/rua-ri-pose-04.png",
+      "box": {
+        "x1": 298,
+        "y1": 581,
+        "x2": 709,
+        "y2": 973,
+        "area": 68023
+      }
+    }
+  ],
+  "apps/web/public/ocean/mascots/cua-quiz/cua-quiz-sheet.png": [
+    {
+      "file": "apps/web/public/ocean/mascots/cua-quiz/poses/cua-quiz-pose-01.png",
+      "publicPath": "/ocean/mascots/cua-quiz/poses/cua-quiz-pose-01.png",
+      "box": {
+        "x1": 541,
+        "y1": 101,
+        "x2": 1432,
+        "y2": 533,
+        "area": 128771
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/cua-quiz/poses/cua-quiz-pose-02.png",
+      "publicPath": "/ocean/mascots/cua-quiz/poses/cua-quiz-pose-02.png",
+      "box": {
+        "x1": 22,
+        "y1": 156,
+        "x2": 513,
+        "y2": 522,
+        "area": 70105
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/cua-quiz/poses/cua-quiz-pose-03.png",
+      "publicPath": "/ocean/mascots/cua-quiz/poses/cua-quiz-pose-03.png",
+      "box": {
+        "x1": 507,
+        "y1": 606,
+        "x2": 946,
+        "y2": 1003,
+        "area": 64793
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/cua-quiz/poses/cua-quiz-pose-04.png",
+      "publicPath": "/ocean/mascots/cua-quiz/poses/cua-quiz-pose-04.png",
+      "box": {
+        "x1": 56,
+        "y1": 612,
+        "x2": 448,
+        "y2": 915,
+        "area": 59246
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/cua-quiz/poses/cua-quiz-pose-05.png",
+      "publicPath": "/ocean/mascots/cua-quiz/poses/cua-quiz-pose-05.png",
+      "box": {
+        "x1": 995,
+        "y1": 613,
+        "x2": 1387,
+        "y2": 910,
+        "area": 58015
+      }
+    }
+  ],
+  "apps/web/public/ocean/mascots/sua-nghe/sua-nghe-sheet.png": [
+    {
+      "file": "apps/web/public/ocean/mascots/sua-nghe/poses/sua-nghe-pose-01.png",
+      "publicPath": "/ocean/mascots/sua-nghe/poses/sua-nghe-pose-01.png",
+      "box": {
+        "x1": 111,
+        "y1": 132,
+        "x2": 440,
+        "y2": 504,
+        "area": 60434
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/sua-nghe/poses/sua-nghe-pose-02.png",
+      "publicPath": "/ocean/mascots/sua-nghe/poses/sua-nghe-pose-02.png",
+      "box": {
+        "x1": 527,
+        "y1": 136,
+        "x2": 1406,
+        "y2": 504,
+        "area": 122988
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/sua-nghe/poses/sua-nghe-pose-03.png",
+      "publicPath": "/ocean/mascots/sua-nghe/poses/sua-nghe-pose-03.png",
+      "box": {
+        "x1": 55,
+        "y1": 563,
+        "x2": 481,
+        "y2": 959,
+        "area": 74172
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/sua-nghe/poses/sua-nghe-pose-04.png",
+      "publicPath": "/ocean/mascots/sua-nghe/poses/sua-nghe-pose-04.png",
+      "box": {
+        "x1": 561,
+        "y1": 568,
+        "x2": 922,
+        "y2": 934,
+        "area": 55933
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/sua-nghe/poses/sua-nghe-pose-05.png",
+      "publicPath": "/ocean/mascots/sua-nghe/poses/sua-nghe-pose-05.png",
+      "box": {
+        "x1": 952,
+        "y1": 568,
+        "x2": 1406,
+        "y2": 937,
+        "area": 60843
+      }
+    }
+  ],
+  "apps/web/public/ocean/mascots/ca-ngua-toc/ca-ngua-toc-sheet.png": [
+    {
+      "file": "apps/web/public/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-01.png",
+      "publicPath": "/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-01.png",
+      "box": {
+        "x1": 531,
+        "y1": 99,
+        "x2": 984,
+        "y2": 519,
+        "area": 72139
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-02.png",
+      "publicPath": "/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-02.png",
+      "box": {
+        "x1": 77,
+        "y1": 115,
+        "x2": 495,
+        "y2": 519,
+        "area": 62009
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-03.png",
+      "publicPath": "/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-03.png",
+      "box": {
+        "x1": 1043,
+        "y1": 126,
+        "x2": 1384,
+        "y2": 542,
+        "area": 55547
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-04.png",
+      "publicPath": "/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-04.png",
+      "box": {
+        "x1": 81,
+        "y1": 559,
+        "x2": 428,
+        "y2": 964,
+        "area": 52596
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-05.png",
+      "publicPath": "/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-05.png",
+      "box": {
+        "x1": 1022,
+        "y1": 567,
+        "x2": 1352,
+        "y2": 973,
+        "area": 49471
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-06.png",
+      "publicPath": "/ocean/mascots/ca-ngua-toc/poses/ca-ngua-toc-pose-06.png",
+      "box": {
+        "x1": 503,
+        "y1": 578,
+        "x2": 882,
+        "y2": 977,
+        "area": 54067
+      }
+    }
+  ],
+  "apps/web/public/ocean/mascots/sao-nhi/sao-nhi-sheet.png": [
+    {
+      "file": "apps/web/public/ocean/mascots/sao-nhi/poses/sao-nhi-pose-01.png",
+      "publicPath": "/ocean/mascots/sao-nhi/poses/sao-nhi-pose-01.png",
+      "box": {
+        "x1": 487,
+        "y1": 104,
+        "x2": 921,
+        "y2": 537,
+        "area": 79636
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/sao-nhi/poses/sao-nhi-pose-02.png",
+      "publicPath": "/ocean/mascots/sao-nhi/poses/sao-nhi-pose-02.png",
+      "box": {
+        "x1": 56,
+        "y1": 145,
+        "x2": 453,
+        "y2": 535,
+        "area": 70458
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/sao-nhi/poses/sao-nhi-pose-03.png",
+      "publicPath": "/ocean/mascots/sao-nhi/poses/sao-nhi-pose-03.png",
+      "box": {
+        "x1": 990,
+        "y1": 151,
+        "x2": 1374,
+        "y2": 542,
+        "area": 84660
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/sao-nhi/poses/sao-nhi-pose-04.png",
+      "publicPath": "/ocean/mascots/sao-nhi/poses/sao-nhi-pose-04.png",
+      "box": {
+        "x1": 231,
+        "y1": 575,
+        "x2": 701,
+        "y2": 965,
+        "area": 74607
+      }
+    },
+    {
+      "file": "apps/web/public/ocean/mascots/sao-nhi/poses/sao-nhi-pose-05.png",
+      "publicPath": "/ocean/mascots/sao-nhi/poses/sao-nhi-pose-05.png",
+      "box": {
+        "x1": 781,
+        "y1": 589,
+        "x2": 1171,
+        "y2": 964,
+        "area": 65340
+      }
+    }
+  ]
+}

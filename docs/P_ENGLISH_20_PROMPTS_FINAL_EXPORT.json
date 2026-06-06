@@ -1,0 +1,276 @@
+{
+  "exportedAt": "2026-05-21T10:27:40.897Z",
+  "completedReports": [
+    "docs/P_ENGLISH_UNIT_1_COMPLETE_QA_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_COMPLETE_QA_REPORT.json",
+    "docs/P_ENGLISH_UNIT_2_CONTENT_PLAN.md",
+    "docs/P_ENGLISH_LEARNING_PATH_PAGE_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_FINAL_QA_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_FINAL_QA_REPORT.json",
+    "docs/P_ENGLISH_UNIT_1_CONTENT_QA_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_LOCAL_SRS_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_PROGRESS_DASHBOARD_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_SPEED_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_MATCH_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_TYPING_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_REFLEX_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_LISTENING_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_QUIZ_WIRING_FIX_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_FLASHCARD_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_RENDER_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_LESSON_CONTENT_REPORT.md",
+    "docs/P_ENGLISH_CURRENT_STRUCTURE_AFTER_REDESIGN.md",
+    "docs/P_ENGLISH_CONTENT_ENTRY_POINTS.json",
+    "docs/P_ENGLISH_LESSON_DEVELOPMENT_CONTEXT.md",
+    "docs/P_ENGLISH_LESSON_DEVELOPMENT_CONTEXT.json",
+    "docs/P_ENGLISH_SOURCE_SNAPSHOT_FOR_CHATGPT.md"
+  ],
+  "missingReports": [
+    "docs/P_ENGLISH_TYPESCRIPT_CLEANUP_REPORT.md",
+    "docs/P_ENGLISH_PROGRESS_HELPER_MIGRATION_REPORT.md",
+    "docs/P_ENGLISH_QUIZ_DUE_REVIEW_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_MOBILE_POLISH_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_ACCESSIBILITY_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_PROGRESS_TOOLS_REPORT.md",
+    "docs/P_ENGLISH_LESSON_VALIDATION_DEBUG_REPORT.md",
+    "docs/P_ENGLISH_WINDOWS_PATH_SPACE_BUILD_PLAN.md",
+    "docs/P_ENGLISH_UNIT_2_DATA_REPORT.md",
+    "docs/P_ENGLISH_UNIT_2_LINKING_REPORT.md",
+    "docs/P_ENGLISH_GENERALIZED_PRACTICE_MODES_REPORT.md",
+    "docs/P_ENGLISH_UNIT_2_CONTENT_QA_REPORT.md",
+    "docs/P_ENGLISH_HOME_RECOMMENDATION_REPORT.md",
+    "docs/P_ENGLISH_PRACTICE_LAUNCHER_REPORT.md",
+    "docs/P_ENGLISH_LESSONPAGE_TOC_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_ACHIEVEMENTS_REPORT.md",
+    "docs/P_ENGLISH_UNIT_AUTHORING_TEMPLATE.md",
+    "docs/P_ENGLISH_UNIT_DEVELOPMENT_WORKFLOW.md"
+  ],
+  "createdFiles": [
+    "apps/web/src/pages/LearningPathPage.tsx",
+    "docs/P_ENGLISH_LEARNING_PATH_PAGE_REPORT.md",
+    "docs/P_ENGLISH_UNIT_2_CONTENT_PLAN.md",
+    "docs/P_ENGLISH_UNIT_1_COMPLETE_QA_REPORT.md",
+    "docs/P_ENGLISH_UNIT_1_COMPLETE_QA_REPORT.json",
+    "docs/P_ENGLISH_20_PROMPTS_FINAL_EXPORT.md",
+    "docs/P_ENGLISH_20_PROMPTS_FINAL_EXPORT.json"
+  ],
+  "changedFiles": [
+    "apps/web/src/App.tsx",
+    "apps/web/src/components/Sidebar.tsx",
+    "apps/web/src/pages/LessonPage.tsx",
+    "apps/web/src/pages/PracticePage.tsx",
+    "apps/web/src/lib/p-english/lesson-content-data.ts",
+    "apps/web/src/lib/p-english/lesson-progress.ts",
+    "apps/web/src/lib/p-english/lesson-content-validation.ts",
+    "apps/web/src/components/practice/LessonFlashcardPractice.tsx",
+    "apps/web/src/components/practice/LessonQuizPractice.tsx",
+    "apps/web/src/components/practice/LessonListeningPractice.tsx",
+    "apps/web/src/components/practice/LessonReflexPractice.tsx",
+    "apps/web/src/components/practice/LessonTypingPractice.tsx",
+    "apps/web/src/components/practice/LessonMatchPractice.tsx",
+    "apps/web/src/components/practice/LessonSpeedPractice.tsx"
+  ],
+  "routes": [
+    {
+      "path": "/learning-path",
+      "status": "added",
+      "source": "apps/web/src/App.tsx",
+      "page": "apps/web/src/pages/LearningPathPage.tsx"
+    },
+    {
+      "path": "/lessons/unit-1-greetings-introduction",
+      "status": "confirmed",
+      "source": "apps/web/src/pages/LessonPage.tsx"
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=flashcard",
+      "status": "confirmed"
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=quiz",
+      "status": "confirmed"
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=listen",
+      "status": "confirmed"
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=reflex",
+      "status": "confirmed"
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=type",
+      "status": "confirmed"
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=match",
+      "status": "confirmed"
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=speed",
+      "status": "confirmed"
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=flashcard&review=due",
+      "status": "confirmed"
+    }
+  ],
+  "unit1Status": {
+    "overall": "READY_WITH_KNOWN_ISSUES",
+    "lessonId": "unit-1-greetings-introduction",
+    "lessonPage": "confirmed",
+    "practiceModes": "all seven modes confirmed",
+    "progressDashboard": "confirmed",
+    "localSrs": "confirmed with coverage gaps",
+    "contentValidation": "confirmed at helper/source level",
+    "source": "docs/P_ENGLISH_UNIT_1_COMPLETE_QA_REPORT.md"
+  },
+  "unit2Status": {
+    "overall": "PLANNED_ONLY_IN_CONFIRMED_DOCS",
+    "plan": "docs/P_ENGLISH_UNIT_2_CONTENT_PLAN.md",
+    "dataReport": "missing/not found",
+    "linkingReport": "missing/not found",
+    "contentQaReport": "missing/not found",
+    "notes": "Unit 2 appears in learning-path-data, but no available report confirms completed data implementation or QA."
+  },
+  "practiceModes": {
+    "flashcard": {
+      "status": "covered",
+      "route": "/practice?lessonId=unit-1-greetings-introduction&mode=flashcard",
+      "dueReview": "supported for flashcard"
+    },
+    "quiz": {
+      "status": "covered_with_limitation",
+      "route": "/practice?lessonId=unit-1-greetings-introduction&mode=quiz",
+      "dueReview": "missing/not found for quiz due-only report"
+    },
+    "listen": {
+      "status": "covered",
+      "route": "/practice?lessonId=unit-1-greetings-introduction&mode=listen"
+    },
+    "reflex": {
+      "status": "covered",
+      "route": "/practice?lessonId=unit-1-greetings-introduction&mode=reflex"
+    },
+    "type": {
+      "status": "covered",
+      "route": "/practice?lessonId=unit-1-greetings-introduction&mode=type"
+    },
+    "match": {
+      "status": "covered",
+      "route": "/practice?lessonId=unit-1-greetings-introduction&mode=match"
+    },
+    "speed": {
+      "status": "covered",
+      "route": "/practice?lessonId=unit-1-greetings-introduction&mode=speed"
+    }
+  },
+  "localStorage": {
+    "keyPattern": "p-english:lesson-progress:${lessonId}",
+    "unit1Key": "p-english:lesson-progress:unit-1-greetings-introduction",
+    "topLevelFields": [
+      "lessonId",
+      "flashcard",
+      "quiz",
+      "listening",
+      "reflex",
+      "typing",
+      "match",
+      "speed",
+      "srs"
+    ],
+    "srsItemFields": [
+      "itemId",
+      "type",
+      "level",
+      "lastReviewedAt",
+      "nextReviewAt",
+      "wrongCount",
+      "correctCount"
+    ],
+    "syncStatus": "localStorage-only"
+  },
+  "srs": {
+    "status": "PASS_WITH_COVERAGE_GAPS",
+    "confirmed": [
+      "markItemReviewed",
+      "getDueReviewItems",
+      "getWeakReviewItems",
+      "flashcard review=due",
+      "quiz SRS marking"
+    ],
+    "gaps": [
+      "Due-only quiz report missing/not found",
+      "Typing and speed SRS review mapping not confirmed complete",
+      "Progress is localStorage-only"
+    ]
+  },
+  "validation": {
+    "status": "PASS_AT_HELPER_SOURCE_LEVEL",
+    "helper": "apps/web/src/lib/p-english/lesson-content-validation.ts",
+    "unit1ContentQa": "docs/P_ENGLISH_UNIT_1_CONTENT_QA_REPORT.md",
+    "unit2ContentQa": "missing/not found",
+    "automation": "unknown/not confirmed"
+  },
+  "learningPath": {
+    "status": "IMPLEMENTED_WITH_KNOWN_PROJECT_BLOCKERS",
+    "route": "/learning-path",
+    "page": "apps/web/src/pages/LearningPathPage.tsx",
+    "report": "docs/P_ENGLISH_LEARNING_PATH_PAGE_REPORT.md",
+    "sidebarLink": "apps/web/src/components/Sidebar.tsx"
+  },
+  "homeRecommendation": {
+    "status": "missing/not found",
+    "report": "docs/P_ENGLISH_HOME_RECOMMENDATION_REPORT.md"
+  },
+  "practiceLauncher": {
+    "status": "missing/not found",
+    "report": "docs/P_ENGLISH_PRACTICE_LAUNCHER_REPORT.md"
+  },
+  "build": {
+    "command": "npm run build",
+    "status": "failed_known_vite_html_inline_proxy_path_space_issue",
+    "knownError": "[vite:html-inline-proxy] No matching HTML proxy module found for apps/web/index.html?html-proxy&inline-css&index=0.css under path containing Luyen Tu",
+    "fixedInThisTask": false
+  },
+  "typescript": {
+    "command": "npx tsc -p apps/web/tsconfig.json --noEmit",
+    "status": "failed_known_unrelated_errors",
+    "errors": [
+      "apps/web/src/pages/CategoriesPage.tsx(92,11): error TS2322 invalid Chakra transition delay prop",
+      "apps/web/src/pages/FoldersPage.tsx(82,11): error TS2322 invalid Chakra transition delay prop",
+      "apps/web/src/pages/StudyPage.tsx(110,15): error TS2783 duplicate transition prop"
+    ],
+    "fixedInThisTask": false
+  },
+  "remainingIssues": [
+    "Known TypeScript errors in CategoriesPage.tsx, FoldersPage.tsx, and StudyPage.tsx",
+    "Known Vite html-inline-proxy build failure due path containing Luyen Tu",
+    "Unit 2 data report missing/not found",
+    "Unit 2 linking report missing/not found",
+    "Unit 2 content QA report missing/not found",
+    "Home recommendation report missing/not found",
+    "Practice launcher report missing/not found",
+    "Dedicated mobile polish and accessibility reports missing/not found",
+    "Due-only quiz report missing/not found",
+    "Validation automation not confirmed"
+  ],
+  "deploymentBlockers": [
+    "TypeScript check does not pass",
+    "Production build does not pass",
+    "Vite path-space issue remains unresolved",
+    "Unit 2 implementation/QA not confirmed by available reports"
+  ],
+  "recommendedNextPrompts": [
+    "Fix the three known unrelated TypeScript errors and create docs/P_ENGLISH_TYPESCRIPT_CLEANUP_REPORT.md",
+    "Create docs/P_ENGLISH_WINDOWS_PATH_SPACE_BUILD_PLAN.md for safe path-space build unblock",
+    "Implement Unit 2 data-only lesson content and create docs/P_ENGLISH_UNIT_2_DATA_REPORT.md",
+    "Run Unit 2 content QA and create docs/P_ENGLISH_UNIT_2_CONTENT_QA_REPORT.md",
+    "Link Unit 2 into lesson navigation and create docs/P_ENGLISH_UNIT_2_LINKING_REPORT.md",
+    "Add Home recommendation logic and create docs/P_ENGLISH_HOME_RECOMMENDATION_REPORT.md",
+    "Add lesson practice launcher and create docs/P_ENGLISH_PRACTICE_LAUNCHER_REPORT.md",
+    "Complete Unit 1 mobile polish and accessibility reports",
+    "Consolidate progress helper usage and create docs/P_ENGLISH_PROGRESS_HELPER_MIGRATION_REPORT.md",
+    "Create docs/P_ENGLISH_UNIT_AUTHORING_TEMPLATE.md and docs/P_ENGLISH_UNIT_DEVELOPMENT_WORKFLOW.md"
+  ]
+}

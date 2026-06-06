@@ -1,0 +1,41 @@
+﻿Task 04 — Replace old Shadowing and English Speed mock content with GitHub-source-based architecture.
+
+Working directory:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Goal:
+Remove old mock Shadowing/English Speed lesson content and replace it with a proper architecture inspired by the cloned GitHub sources, while keeping the existing UI.
+
+Important:
+- Do not bundle copyrighted videos.
+- Shadowing should support curated YouTube IDs and user-uploaded video metadata later, but the first implementation can use safe placeholder metadata and local transcript schema.
+- English Speed should use browser-native speech APIs when available and graceful fallback when not available.
+- Keep Vietnamese guidance for learners.
+
+Requirements:
+1. Create Shadowing data/schema:
+   - apps/web/src/data/shadowing/shadowingTypes.ts
+   - apps/web/src/data/shadowing/generatedShadowingCatalog.ts
+   - apps/web/src/lib/p-english/shadowingAdapter.ts
+2. Shadowing lesson structure:
+   - title
+   - level
+   - sourceType: youtube | uploaded | sample
+   - videoId or local placeholder
+   - transcript segments
+   - Vietnamese instruction
+   - repeat/shadow/check flow
+3. Create English Speed/pronunciation adapter:
+   - apps/web/src/lib/p-english/speechPracticeAdapter.ts
+   - feature detection for SpeechRecognition / webkitSpeechRecognition
+   - fallback mode when speech recognition is unavailable
+4. UI:
+   - Put English Speed access clearly on the main learning/home screen.
+   - Keep the UI simple, not cluttered.
+   - Add keyboard hints only where useful.
+5. Remove old mock arrays/imports for these features.
+6. Run:
+   npx tsc -p apps/web/tsconfig.json --noEmit
+   npm run build
+7. Create:
+   reports/shadowing-english-speed-source-replacement-report.md

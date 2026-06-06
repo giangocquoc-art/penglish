@@ -1,0 +1,270 @@
+﻿You are working in:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Continue the P-English GitHub Source Replacement master task.
+
+CURRENT PHASE:
+PHASE 7 — Replace English Speed / Pronunciation.
+
+IMPORTANT CONTEXT:
+- Phase 1 audit is complete.
+- Phase 2 real GitHub integration plan is complete.
+- Phase 3 vocabulary/flashcards replacement is complete.
+- Phase 4 grammar replacement is complete.
+- Phase 5 reading/sentence practice replacement is complete.
+- Phase 6 shadowing replacement is complete.
+- Phase 6B extra repo expansion is complete.
+- Resource Hub route /resources has been added.
+- Do not redo previous phases unless needed to fix integration errors.
+- Continue from Phase 7.
+- Runtime app must not depend on external-sources.
+- Keep Vietnamese-first learner UI.
+- Keep ocean / whale / glass visual identity.
+- Keep source/license notes in metadata and reports, not noisy learner-facing UI.
+- Use PowerShell-compatible commands.
+- Do not run taskkill.
+- Do not close VS Code.
+- Do not require paid API keys.
+- Do not require Azure/Firebase/OpenAI/Replicate keys.
+- Do not bundle copyrighted media/audio.
+
+PRIMARY SOURCE:
+external-sources/speech
+
+EXTRA UX SOURCE TO CONSIDER:
+external-sources/candidates/english-pronunciation-app
+
+Use extra repo only for safe UX/workflow ideas after license review. Do not add Azure/Firebase dependency.
+
+TASK GOALS:
+Replace old English Speed multiple-choice/speech-synthesis-only behavior with a real app-native pronunciation practice layer.
+
+Create/update these files:
+1. apps/web/src/data/speech/speechTypes.ts
+2. apps/web/src/data/speech/generatedSpeechPrompts.ts
+3. apps/web/src/lib/p-english/speechAdapter.ts
+4. apps/web/src/pages/EnglishSpeedPage.tsx
+5. apps/web/src/pages/HomePage.tsx if needed
+6. reports/master-07-english-speed-pronunciation.md
+
+IMPLEMENTATION DETAILS:
+
+A. Inspect source
+Inspect:
+- external-sources/speech
+- external-sources/speech/LICENSE or equivalent
+- external-sources/speech/README.md
+- useful speech/pronunciation implementation files
+- external-sources/candidates/english-pronunciation-app if present
+
+Document:
+- license found
+- what logic is safe to adapt
+- what is not copied
+- whether browser-native SpeechRecognition can be used without paid keys
+
+B. speechTypes.ts
+Define typed schema.
+
+Include:
+- CEFR level: A1 | A2 | B1 | B2
+- prompt type:
+  - word
+  - phrase
+  - sentence
+  - mini-dialogue
+- source metadata:
+  - repoName
+  - repoUrl
+  - localSourcePath
+  - license
+  - attribution
+  - integrationMode
+  - licenseRiskNote
+- speech prompt:
+  - id
+  - level
+  - titleVi
+  - promptText
+  - vietnameseMeaning
+  - focusSounds
+  - slowHintVi
+  - commonMistakesVi
+  - targetWords
+  - retryTipsVi
+  - whaleCoachLines
+  - source
+
+C. generatedSpeechPrompts.ts
+Create app-native pronunciation prompts.
+
+Minimum:
+- A1: 12 prompts
+- A2: 12 prompts
+- B1: 10 prompts
+- B2: 8 prompts
+
+Prompt topics:
+A1:
+- greetings
+- numbers
+- school words
+- food
+- daily routine
+
+A2:
+- directions
+- shopping
+- travel
+- hobbies
+- simple plans
+
+B1:
+- study habits
+- teamwork
+- part-time job
+- online class
+- opinion sentences
+
+B2:
+- learning strategy
+- career goals
+- digital habits
+- environment
+- presentation sentences
+
+Each prompt should include:
+- English text to say
+- Vietnamese meaning
+- pronunciation focus
+- common mistake in Vietnamese
+- retry tip
+- whale coach line
+
+D. speechAdapter.ts
+Implement browser-native pronunciation utilities.
+
+Required features:
+1. SpeechRecognition detection:
+   - window.SpeechRecognition
+   - window.webkitSpeechRecognition
+2. Safe fallback:
+   - If browser speech recognition is unavailable, allow manual typed answer comparison.
+   - UI must explain in Vietnamese: browser may not support microphone recognition.
+3. Normalize text:
+   - lowercase
+   - remove punctuation
+   - trim extra spaces
+4. Similarity scoring:
+   - implement a simple local similarity function
+   - Levenshtein distance or token overlap is fine
+   - return score 0–100
+5. Feedback:
+   - excellent / good / needs practice
+   - Vietnamese feedback
+   - highlight missing or changed words if practical
+6. Retry:
+   - allow replay / retry
+   - do not block learner
+7. Export helpers for EnglishSpeedPage:
+   - getSpeechPrompts()
+   - getSpeechPromptById()
+   - isSpeechRecognitionSupported()
+   - createSpeechRecognizer() or equivalent
+   - compareSpeechAttempt()
+
+E. EnglishSpeedPage.tsx
+Replace old content source with generated speech prompts and speechAdapter.
+
+Current route should remain:
+/english-speed
+
+Required UI:
+- Vietnamese-first intro
+- clear prompt card
+- level filter A1/A2/B1/B2/all
+- start microphone practice if supported
+- fallback typed comparison if not supported
+- score display 0–100
+- Vietnamese feedback
+- retry button
+- next prompt button
+- keyboard:
+  - Enter checks typed fallback answer
+  - Enter advances after result if appropriate
+  - R retries if practical
+  - N next prompt if practical
+- do not clutter UI
+- keep ocean / whale / glass identity
+- keep mobile-friendly layout
+
+Do not remove old route.
+Do not depend on external-sources at runtime.
+
+F. HomePage.tsx
+Make sure English Speed dashboard card points to:
+/english-speed
+
+If copy still says placeholder or old game only, update copy to make it a real pronunciation feature:
+- luyện phát âm
+- nghe lại
+- nói theo câu
+- nhận phản hồi
+- có chế độ nhập tay nếu trình duyệt không hỗ trợ micro
+
+G. Report
+Create:
+reports/master-07-english-speed-pronunciation.md
+
+Report must include:
+- Status
+- Sources inspected
+- License findings
+- Integration decision
+- Files created
+- Files updated
+- Generated prompt counts by CEFR level
+- SpeechRecognition support
+- Manual fallback behavior
+- Similarity scoring logic
+- UI and route wiring
+- Keyboard UX
+- Runtime dependency note: app does not depend on external-sources
+- Validation result
+- Risks and follow-up
+- Next phase: Phase 8 unified lesson engine
+
+H. Validation
+Before validation, make sure PowerShell is in the project directory:
+cd "C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH"
+
+Run:
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+
+If TypeScript errors appear:
+- fix them
+- rerun typecheck
+
+Run:
+npm.cmd run build
+
+If build fails:
+- fix if practical
+- rerun build
+- document exact blocker if blocked
+
+Git status:
+First check whether this path is a Git repo:
+git rev-parse --show-toplevel
+
+If it fails:
+- search for the actual Git root under the current directory:
+  Get-ChildItem -Path . -Directory -Force -Recurse -Filter ".git" -ErrorAction SilentlyContinue | Select-Object -First 10 FullName
+- document the result in the report
+- do not treat missing git root as a build blocker
+
+Then run:
+git status --short
+
+Do not stop after planning.
+Implement the files, wire the app, validate, build, create the report, and show the final summary.

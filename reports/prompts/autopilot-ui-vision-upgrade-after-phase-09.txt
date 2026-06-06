@@ -1,0 +1,294 @@
+﻿You are working in:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+AUTOPILOT CONTINUATION TASK:
+Continue developing P-English after Phase 9, following the user's original product vision.
+
+DO NOT rush randomly.
+Think, inspect, implement, validate, screenshot, report.
+Use available MCP tools when helpful:
+- sequential-thinking for planning before large edits
+- context7 for library/API docs if needed
+- chrome-devtools or playwright for browser QA and screenshots
+- filesystem tools for safe file inspection/editing
+- repomix/serena/ast-grep for repo-wide code understanding and refactors if available
+
+IMPORTANT COMPLETED PHASES:
+Read these reports first if present:
+- reports/master-01-feature-audit.md
+- reports/master-02-real-github-integration-plan.md
+- reports/master-03-vocabulary-flashcards.md
+- reports/master-04-grammar.md
+- reports/master-05-reading.md
+- reports/master-06-shadowing.md
+- reports/master-06b-extra-repo-expansion.md
+- reports/master-07-english-speed-pronunciation.md
+- reports/master-08-unified-lesson-engine.md
+- reports/master-09-dashboard-progress-whale-ui.md
+
+CORE PRODUCT VISION:
+P-English should feel like a polished Vietnamese-first English learning web app with:
+- bright ocean background
+- soft sky / cloud / underwater atmosphere
+- glassmorphism learning widgets
+- a friendly whale mascot as the product symbol
+- subtle whale/ocean motion using GSAP where practical
+- clear CEFR learning journey
+- confidence-building progress UI
+- mobile-first layout similar to a real learning app
+- clean Vietnamese explanations
+- English only where learners practice English
+- no clutter
+- no noisy repo/license text in learner UI
+
+WHALE VISION:
+The whale is not decoration only.
+It should act as a calm learning companion:
+- subtly swims in the background
+- never chases or sticks too close to the cursor
+- never covers text/buttons
+- gives meaningful coaching based on progress/next unit/weak skill
+- streak can make the whale grow slightly
+- after a reasonable size threshold, small baby whales may appear
+- whale size must be capped so it never blocks the UI
+- respect prefers-reduced-motion
+- clean up GSAP timelines on unmount
+
+HARD CONSTRAINTS:
+- Do not run taskkill.
+- Do not close VS Code.
+- Do not require paid API keys.
+- Do not add OpenAI/Azure/Firebase/Replicate dependency.
+- Do not bundle copyrighted media/audio/video/text.
+- Runtime app must not import from external-sources.
+- Preserve routes:
+  - /home
+  - /learning-path
+  - /lessons/:lessonId
+  - /practice
+  - /vocabularies
+  - /words
+  - /shadowing
+  - /english-speed
+  - /resources
+- Keep generated modules working:
+  - vocabulary
+  - grammar
+  - reading
+  - shadowing
+  - speech/pronunciation
+  - unified lesson engine
+- Do not replace working logic with mock placeholders.
+- Do not create a messy UI with too many cards/buttons.
+- Prefer improving existing components before creating duplicates.
+
+AUTOPILOT STRUCTURE:
+Complete the following batches in order.
+After each batch:
+1. run typecheck
+2. run build if practical
+3. capture screenshots if UI changed
+4. create a report
+5. continue to next batch unless blocked
+
+BATCH A — Original Ocean/Whale UI Vision Upgrade
+
+Goal:
+Upgrade the app's main visual identity to match the original vision more strongly.
+
+Inspect:
+- apps/web/src/pages/HomePage.tsx
+- apps/web/src/pages/LearningPathPage.tsx
+- apps/web/src/pages/LessonPage.tsx
+- apps/web/src/pages/PracticePage.tsx
+- apps/web/src/pages/VocabPage.tsx
+- apps/web/src/pages/ShadowingPage.tsx
+- apps/web/src/pages/EnglishSpeedPage.tsx
+- apps/web/src/pages/ResourceHubPage.tsx
+- apps/web/src/components/**
+- apps/web/src/styles.css
+- apps/web/src/index.css
+- package.json for gsap availability
+
+Implement:
+- shared ocean/sky/glass styling system
+- reusable glass card style or component if helpful
+- reusable whale background/coach component if helpful
+- consistent page hero style across main learning pages
+- softer colors, better spacing, better font hierarchy
+- cleaner mobile layout
+- no clutter
+
+Suggested files to create only if needed:
+- apps/web/src/components/p-english/OceanBackdrop.tsx
+- apps/web/src/components/p-english/GlassLearningCard.tsx
+- apps/web/src/components/p-english/WhaleCompanion.tsx
+- apps/web/src/components/p-english/PEnglishPageShell.tsx
+
+Report:
+reports/master-09b-original-ocean-whale-ui.md
+
+Screenshots:
+Save under:
+reports/screenshots
+
+Required:
+- home-ocean-ui-phase-09b.png
+- learning-path-ocean-ui-phase-09b.png
+- lesson-ocean-ui-phase-09b.png
+- vocabulary-ocean-ui-phase-09b.png
+- shadowing-ocean-ui-phase-09b.png
+- english-speed-ocean-ui-phase-09b.png
+- resources-ocean-ui-phase-09b.png
+
+BATCH B — Phase 10 Keyboard UX and Accessibility Cleanup
+
+Goal:
+Make the app comfortable to use by keyboard and screen readers.
+
+Inspect all interactive learning pages:
+- PracticePage
+- LessonPage
+- VocabPage
+- ShadowingPage
+- EnglishSpeedPage
+- ResourceHubPage
+- LearningPathPage
+- HomePage
+
+Required:
+- Enter submits/checks answer where appropriate
+- Enter advances after correct result where appropriate
+- A/B/C/D and 1/2/3/4 select multiple-choice where appropriate
+- R retries where appropriate
+- N goes next where appropriate
+- focus returns to main input after next question
+- all buttons/links have clear focus states
+- visible keyboard hints are subtle, not noisy
+- no keyboard trap
+- aria labels where useful
+- reduced-motion support
+- color contrast check by visual inspection
+
+Report:
+reports/master-10-keyboard-accessibility.md
+
+Screenshots:
+- keyboard-practice-phase-10.png
+- focus-state-phase-10.png
+- mobile-accessibility-phase-10.png
+
+BATCH C — Phase 11 Validation and Browser QA
+
+Goal:
+Do full validation and browser QA.
+
+Run:
+cd "C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH"
+
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+npm.cmd run build
+npm.cmd run validate:lessons
+
+If validate:lessons does not exist or fails due unrelated old schema, document exact reason.
+
+Start local dev server safely.
+Do not run taskkill.
+If a server is already running, use it.
+If not, start:
+npm.cmd run dev:web
+
+Use chrome-devtools or playwright MCP if available.
+
+QA routes:
+- /home
+- /learning-path
+- /vocabularies
+- /shadowing
+- /english-speed
+- /resources
+- one generated grammar lesson route
+- one generated reading lesson route
+- practice route with valid mode
+- practice route with unavailable mode fallback
+
+Check:
+- console errors
+- broken routes
+- network errors
+- visual layout on desktop
+- mobile viewport
+- keyboard basics
+- reduced-motion if practical
+
+Save screenshots under:
+reports/screenshots
+
+Required screenshots:
+- qa-home-phase-11.png
+- qa-learning-path-phase-11.png
+- qa-lesson-phase-11.png
+- qa-practice-phase-11.png
+- qa-vocab-phase-11.png
+- qa-shadowing-phase-11.png
+- qa-english-speed-phase-11.png
+- qa-resources-phase-11.png
+- qa-mobile-home-phase-11.png
+
+Report:
+reports/master-11-validation-browser-qa.md
+
+BATCH D — Phase 12 Final Consolidated Report
+
+Goal:
+Create a final master report that summarizes all work from Phase 1 through current UI upgrade.
+
+Create:
+reports/master-12-final-consolidated-report.md
+
+Must include:
+- executive summary
+- phases completed
+- repos integrated or inspected
+- which repos were direct integration
+- which repos were workflow-only
+- which repos were blocked/limited by license
+- runtime dependency status
+- generated modules list
+- routes status
+- UI/UX status
+- whale/ocean design status
+- keyboard/accessibility status
+- validation/build status
+- screenshot index
+- known risks
+- recommended next backlog
+- deployment readiness notes
+
+Git status:
+Run:
+git rev-parse --show-toplevel
+
+If root git repo is unavailable:
+- document this
+- search for .git folders:
+  Get-ChildItem -Path . -Directory -Force -Recurse -Filter ".git" -ErrorAction SilentlyContinue | Select-Object -First 20 FullName
+- do not treat missing root git repo as build blocker
+
+Then run:
+git status --short if possible.
+
+FINAL VALIDATION:
+At the very end run:
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+npm.cmd run build
+
+AUTOPILOT BEHAVIOR RULE:
+If one batch is blocked:
+- document exact blocker
+- create the report for that batch
+- continue to the next batch if safe
+- do not stop silently
+
+Do not ask the user for clarification.
+Proceed with implementation, QA, screenshots, validation, and reports.

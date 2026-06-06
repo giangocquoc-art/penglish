@@ -1,0 +1,357 @@
+﻿You are working in:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+PROJECT:
+P-English — Vietnamese-first English learning web app.
+
+IMPORTANT WORK MODE:
+This is a staged redesign, not a full-app rewrite in one shot.
+
+You must work PART BY PART.
+Do not redesign the entire app at once.
+Do not continue to later phases automatically.
+After completing this phase, STOP and wait for human review.
+
+PRIMARY GOAL OF THIS PHASE:
+PHASE Z1 — Simplify the global shell and Home page only.
+
+The user says the current UI is irrational and visually overcomplicated.
+The app must become much simpler, calmer, more coherent, and more unified.
+
+==================================================
+CORE DESIGN RULES (NON-NEGOTIABLE)
+==================================================
+
+RULE 1 — Single visual idea across the whole app
+- The entire app should follow one clear visual system:
+  - transparent / semi-transparent glass widgets
+  - an ocean background
+  - one single whale mascot only
+- The whale must be the same whale identity as the current logo mascot.
+- Do not invent multiple whale characters.
+- Do not use multiple mascot styles.
+- The whale should subtly swim in the background and react gently to cursor direction / proximity, but never aggressively chase the cursor.
+- The whale must never cover important text or buttons.
+
+RULE 2 — Work in one small scope only
+- In this phase, only improve:
+  1. the global app shell
+  2. the Home page
+- Do NOT redesign all routes/pages yet.
+- Do NOT start Learning Path, Shadowing, English Speed, Resources, etc. in this phase, except for shared shell components if necessary.
+
+RULE 3 — Human review gate
+- At the end of this phase, STOP.
+- Create screenshots, QA notes, and a report.
+- Do not proceed to the next redesign phase automatically.
+
+RULE 4 — Use Zoo Code’s MCP strengths fully
+Use the installed MCP tools strategically and explicitly:
+- sequential-thinking: plan before editing
+- repomix: understand repo structure / architecture
+- ast-grep: find duplicated layout/card/shell patterns
+- filesystem: inspect/edit files safely
+- context7: consult docs for GSAP / Framer Motion / React / Chakra / CSS patterns if needed
+- chrome-devtools: inspect live UI, spacing, layout, and console
+- playwright: run visual QA and capture screenshots
+
+==================================================
+CURRENT UX PROBLEM TO SOLVE
+==================================================
+
+The current app feels too busy and irrational:
+- too many card styles
+- too many visual accents
+- weak visual hierarchy
+- cards feel crowded
+- the Home page feels fragmented instead of calm and focused
+- some areas are not readable enough
+- some cards look too decorative instead of useful
+- too much content density in the wrong places
+
+The redesign must make the UI:
+- simpler
+- cleaner
+- calmer
+- more premium
+- easier to scan
+- more “one product”
+- more emotionally consistent
+
+==================================================
+PHASE Z1 SCOPE
+==================================================
+
+ONLY redesign these areas:
+
+1. Global shell
+- left sidebar
+- top-right area / app header actions if relevant
+- page container spacing
+- common background treatment
+- overall page rhythm
+- common card styling baseline
+- common button styling baseline
+- shared surface tokens
+
+2. Home page
+- hero section
+- top summary area
+- dashboard cards
+- “next action” area
+- “skill overview” area
+- “today plan” area
+- lower sections if present on Home
+- simplify content density and visual clutter
+
+Do NOT redesign other pages deeply in this phase.
+
+==================================================
+DESIGN DIRECTION
+==================================================
+
+Visual direction must be:
+
+A. Background
+- calm ocean atmosphere
+- light blue / cyan / airy sea palette
+- subtle depth, not noisy
+- no heavy decorative overload
+- elegant, spacious, soft
+- use one coherent ocean backdrop system
+
+B. Whale
+- one single whale mascot based on the logo whale
+- subtle animated movement
+- soft floating / swimming behavior
+- may react gently to cursor movement direction, but:
+  - do not chase the cursor
+  - do not move too close to the cursor
+  - do not become annoying
+- support reduced-motion
+- clean up animations on unmount
+
+C. Glass widgets
+- all cards/widgets should feel related
+- use transparent or semi-transparent surfaces
+- soft blur
+- subtle border
+- soft shadow
+- rounded corners
+- maintain high readability
+- keep text contrast strong enough
+
+D. Simplicity
+- reduce visual noise
+- reduce unnecessary text
+- reduce redundant cards
+- merge or simplify sections if needed
+- make the Home page feel like a calm dashboard, not a collage
+
+==================================================
+CONTENT / INFORMATION HIERARCHY FOR HOME
+==================================================
+
+The Home page should feel simple and focused.
+
+Recommended priority:
+1. Hero / “What should I learn today?”
+2. One clear next action
+3. Short progress summary
+4. Skill overview
+5. Today’s suggested actions
+6. Optional secondary info below
+
+You may simplify or reduce section count if the current Home page has too many competing blocks.
+
+Do not remove useful information recklessly.
+Instead, reorganize it into a calmer, more readable structure.
+
+==================================================
+TECHNICAL CONSTRAINTS
+==================================================
+
+- Do not run taskkill.
+- Do not close VS Code.
+- Do not add paid APIs.
+- Do not add OpenAI/Azure/Firebase/Replicate dependencies.
+- Keep the app local-first.
+- Do not break routes.
+- Do not import runtime data from external-sources.
+- Do not bloat the bundle unnecessarily.
+- Respect reduced-motion.
+- Keep mobile responsiveness.
+- Keep desktop readability strong.
+- Do not create a cursor-chasing pet effect that feels annoying.
+
+==================================================
+IMPLEMENTATION STRATEGY
+==================================================
+
+STEP 1 — Understand the current shell and Home page
+Inspect:
+- apps/web/src/pages/HomePage.tsx
+- apps/web/src/App.tsx
+- apps/web/src/main.tsx
+- apps/web/src/components/p-english/*
+- apps/web/src/components/*
+- apps/web/src/styles.css
+- apps/web/src/index.css
+- any app shell / sidebar / layout files
+- any whale/ocean/background components already present
+
+Use:
+- repomix for repo understanding
+- ast-grep to find duplicated card/layout patterns
+- sequential-thinking to decide a low-risk redesign plan
+
+STEP 2 — Create a cleaner design system layer for this phase
+Create or improve only if needed:
+- a shared page shell
+- a shared glass card component or style utility
+- a shared ocean background component
+- a shared whale companion/background component
+- a simplified card spacing / typography system
+- a cleaner button hierarchy
+
+Possible files if useful:
+- apps/web/src/components/p-english/PEnglishPageShell.tsx
+- apps/web/src/components/p-english/OceanBackdrop.tsx
+- apps/web/src/components/p-english/WhaleCompanion.tsx
+- apps/web/src/components/p-english/GlassPanel.tsx
+- apps/web/src/components/p-english/SectionHeader.tsx
+
+Prefer improving existing components over duplicating them.
+
+STEP 3 — Apply only to global shell + Home
+Apply the simplified visual system to:
+- sidebar
+- page wrapper
+- Home page sections
+
+Key outcomes:
+- much calmer visual hierarchy
+- more breathing room
+- simpler cards
+- fewer competing accents
+- clearer action priority
+- more consistent surfaces
+- Home page feels purposeful and elegant
+
+STEP 4 — Whale behavior
+Implement or refine whale behavior:
+- one whale only
+- uses logo whale identity
+- soft motion only
+- subtle cursor response only
+- reduced-motion fallback
+- no obstruction of UI
+
+If GSAP is already present and safe, use GSAP well.
+If not, use CSS/Framer Motion carefully.
+If Framer Motion is used, do not reintroduce deprecated patterns.
+
+STEP 5 — QA
+Use:
+- chrome-devtools for live inspection
+- playwright for screenshots and layout checks
+
+Check:
+- Home page desktop
+- Home page mobile
+- shell/sidebar consistency
+- no visual clutter
+- no card text wrapping badly
+- no whale overlap with text/buttons
+- acceptable performance
+- no obvious console issues
+- reduced-motion behavior if practical
+
+==================================================
+REQUIRED SCREENSHOTS
+==================================================
+
+Save under:
+reports/screenshots
+
+Required:
+- zoo-z1-home-desktop-full.png
+- zoo-z1-home-desktop-mid.png
+- zoo-z1-home-mobile.png
+- zoo-z1-sidebar-shell.png
+
+==================================================
+VALIDATION
+==================================================
+
+Run from project root:
+cd "C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH"
+
+Run:
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+
+Then:
+npm.cmd run build
+
+If needed:
+npm.cmd run validate:lessons
+
+If something fails:
+- fix practical issues
+- rerun
+- document exact blocker if unresolved
+
+==================================================
+REPORTING
+==================================================
+
+Create:
+reports/zoo-phase-z1-global-shell-home.md
+
+Report must include:
+- Status
+- Scope completed
+- Files inspected
+- Files created
+- Files updated
+- Shell simplification summary
+- Home page simplification summary
+- Whale behavior summary
+- Glass widget system summary
+- MCPs used and how they were used
+- QA notes
+- Screenshot paths
+- TypeScript result
+- Build result
+- Risks / follow-up
+- Recommendation for next phase
+
+Also create a short handoff:
+reports/zoo-phase-z1-handoff.md
+
+The handoff must propose what Phase Z2 should do, but DO NOT implement Phase Z2 yet.
+
+==================================================
+DEFINITION OF DONE
+==================================================
+
+This phase is done only if:
+- the Home page is visibly simpler and calmer
+- the shell feels more unified
+- cards/widgets clearly use the same transparent/glass logic
+- the ocean background feels coherent
+- the whale is unified and subtle
+- desktop and mobile still work
+- build passes
+- screenshots exist
+- report exists
+
+==================================================
+STOP RULE
+==================================================
+
+When Phase Z1 is complete:
+- STOP
+- do not continue to any later phase
+- summarize what was completed
+- wait for human review

@@ -1,0 +1,187 @@
+{
+  "routes": [
+    {
+      "path": "/lessons/unit-1-greetings-introduction",
+      "status": "implemented",
+      "notes": "Route /lessons/:lessonId exists and renders LessonPage with local Unit 1 data."
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=flashcard",
+      "status": "implemented",
+      "notes": "PracticePage renders LessonFlashcardPractice when lesson exists."
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=quiz",
+      "status": "component_exists_not_wired",
+      "notes": "LessonQuizPractice exists, but PracticePage still routes non-flashcard lesson modes to placeholder."
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=listen",
+      "status": "placeholder",
+      "notes": "LessonPage links to listen, but PracticePage has no real local listen branch."
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=reflex",
+      "status": "placeholder",
+      "notes": "LessonPage links to reflex, but PracticePage has no real local reflex branch."
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=type",
+      "status": "placeholder",
+      "notes": "No LessonTypingPractice component or mode=type branch found."
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=match",
+      "status": "placeholder",
+      "notes": "No LessonMatchPractice component or mode=match branch found."
+    },
+    {
+      "path": "/practice?lessonId=unit-1-greetings-introduction&mode=speed",
+      "status": "placeholder",
+      "notes": "No LessonSpeedPractice component or mode=speed branch found."
+    }
+  ],
+  "implementedModes": [
+    {
+      "mode": "lesson-page",
+      "implemented": true,
+      "route": "/lessons/unit-1-greetings-introduction"
+    },
+    {
+      "mode": "flashcard",
+      "implemented": true,
+      "route": "/practice?lessonId=unit-1-greetings-introduction&mode=flashcard"
+    },
+    {
+      "mode": "quiz",
+      "implemented": false,
+      "componentExists": true,
+      "routeWired": false
+    },
+    {
+      "mode": "listen",
+      "implemented": false,
+      "previewOnly": true
+    },
+    {
+      "mode": "reflex",
+      "implemented": false,
+      "previewOnly": true
+    },
+    {
+      "mode": "type",
+      "implemented": false
+    },
+    {
+      "mode": "match",
+      "implemented": false
+    },
+    {
+      "mode": "speed",
+      "implemented": false
+    }
+  ],
+  "localStorage": {
+    "key": "p-english:lesson-progress:unit-1-greetings-introduction",
+    "implementedFields": {
+      "flashcard": {
+        "reviewedCardIds": "string[]",
+        "rememberedCardIds": "string[]",
+        "needsReviewCardIds": "string[]",
+        "lastReviewedAt": "ISO string",
+        "completedSessions": "number"
+      },
+      "quiz": {
+        "attempts": "number",
+        "bestScore": "number",
+        "lastScore": "number",
+        "lastPercentage": "number",
+        "wrongQuestionIds": "string[]",
+        "lastCompletedAt": "ISO string"
+      }
+    },
+    "expectedButNotFound": [
+      "listening",
+      "reflex",
+      "typing",
+      "match",
+      "speed",
+      "srs"
+    ],
+    "mergeBehavior": {
+      "flashcard": "Uses safeReadProgress/safeWriteProgress and object spread to preserve unknown fields.",
+      "quiz": "Uses safeReadProgress/safeWriteProgress and object spread to preserve unknown fields, but not route-wired yet."
+    },
+    "sharedHelperExists": false
+  },
+  "contentValidation": {
+    "lessonId": "unit-1-greetings-introduction",
+    "levelAppropriate": true,
+    "vocabularyCount": 18,
+    "flashcardCount": 18,
+    "flashcardsMatchVocabulary": true,
+    "quizQuestionCount": 10,
+    "quizAnswersMatchOptions": true,
+    "sentenceOrderingAnswersMatchWords": true,
+    "fillBlankAnswersClear": true,
+    "listeningQuestionsAnswerable": true,
+    "validationHelperExists": false,
+    "warnings": [
+      "Several quiz questions lack explanationVi.",
+      "Combined quiz session can contain duplicate-like reinforcement tasks.",
+      "No automated duplicate-id/content validation helper exists."
+    ]
+  },
+  "uiQa": {
+    "mobileOverflowRisk": "low_to_medium_source_level_only",
+    "wrappedButtonsAndChips": true,
+    "speechSynthesisGuarded": true,
+    "keyboardShortcutsGuardInputs": true,
+    "summaryScreens": {
+      "flashcard": true,
+      "quizComponent": true,
+      "quizRouteWired": false
+    },
+    "backToLessonLinks": true,
+    "risks": [
+      "LessonPage links to listen/reflex placeholders.",
+      "PracticePage placeholder copy says only flashcard is implemented, which is accurate for wired routes but stale relative to existing quiz component.",
+      "No browser/device visual QA was executed in this audit."
+    ]
+  },
+  "build": {
+    "command": "npm run build",
+    "cwd": "Luyen Tu",
+    "apiBuild": "passed",
+    "webBuild": "failed",
+    "status": "failed_known_issue",
+    "knownIssue": true,
+    "errorType": "vite:html-inline-proxy",
+    "message": "Could not load C:/Users/PC/OneDrive/P-English/Luyen Tu/apps/web/index.html?html-proxy&inline-css&index=0.css: No matching HTML proxy module found.",
+    "interpretedCause": "Known path-related issue with project folder containing a space: Luyen Tu.",
+    "pipelineChanged": false
+  },
+  "remainingIssues": [
+    "mode=quiz component exists but is not wired in PracticePage.",
+    "listen/reflex/type/match/speed remain placeholder-only for lessonId practice routes.",
+    "No shared lesson-progress.ts helper exists; progress logic is duplicated.",
+    "No content validation helper exists for duplicate IDs and answer consistency.",
+    "Production build remains blocked by known Vite html-inline-proxy path-space issue."
+  ],
+  "recommendedNextPrompts": [
+    "Wire LessonQuizPractice into PracticePage for mode=quiz while preserving flashcard and generic PracticePage behavior.",
+    "Implement real local listening mode for Unit 1 using lesson.listeningPractice.",
+    "Implement real local reflex mode for Unit 1 using speakingReflexPrompts.",
+    "Create shared lesson-progress.ts helper and migrate flashcard/quiz progress safely.",
+    "Add lesson-content-validation.ts and validate Unit 1 before creating Unit 2."
+  ],
+  "unit1ReadinessBeforeUnit2": {
+    "readyAsLessonAndFlashcardMvp": true,
+    "readyAsCompleteMultiModeUnit": false,
+    "recommendation": "Wire quiz and decide which remaining practice modes are required before expanding Unit 2."
+  },
+  "reports": {
+    "markdown": "docs/P_ENGLISH_UNIT_1_FINAL_QA_REPORT.md",
+    "json": "docs/P_ENGLISH_UNIT_1_FINAL_QA_REPORT.json"
+  }
+}

@@ -1,0 +1,49 @@
+﻿Task R05 — Replace reading and sentence practice using real GitHub repo data.
+
+Working directory:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Goal:
+Replace old reading/sentence mock content with real CEFR-aligned reading and sentence practice based on the selected GitHub repo from R02.
+
+Use R02 report:
+reports/r02-github-repo-real-integration-plan.md
+
+Expected source repo:
+- https://github.com/yukiar/CEFR-SP
+
+Requirements:
+1. Find old reading/sentence practice content.
+2. Remove old runtime reading mock data.
+3. Bring selected repo data/structure into app-native files.
+4. Create/update:
+   - apps/web/src/data/reading/readingTypes.ts
+   - apps/web/src/data/reading/generatedReadingLessons.ts
+   - apps/web/src/lib/p-english/readingAdapter.ts
+5. Add:
+   - A1: 8 mini readings
+   - A2: 8 mini readings
+   - B1: 6 mini readings
+   - B2: 4 mini readings
+6. Each mini reading should include:
+   - title
+   - CEFR level
+   - short passage
+   - Vietnamese context
+   - vocabulary preview
+   - comprehension questions
+   - sentence reorder or sentence meaning practice
+   - progress metadata
+   - source metadata
+7. UI:
+   - Replace cluttered reading UI with clean cards.
+   - Add "đọc chậm", "từ khóa", "kiểm tra hiểu bài".
+   - Keyboard support: Enter check, 1/2/3/4 select answer.
+8. No repo/source names in learner UI.
+
+Run:
+npx tsc -p apps/web/tsconfig.json --noEmit
+npm run build
+
+Create:
+reports/r05-reading-sentence-replacement.md

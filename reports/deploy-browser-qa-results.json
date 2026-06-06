@@ -1,0 +1,54 @@
+{
+  "baseUrl": "http://127.0.0.1:5180",
+  "checkedAt": "2026-06-05T15:11:25.960Z",
+  "results": [
+    {
+      "name": "home",
+      "route": "/home",
+      "status": 200,
+      "screenshot": "reports/screenshots/deploy-check-home.png"
+    },
+    {
+      "name": "learning-path",
+      "route": "/learning-path",
+      "status": 200,
+      "screenshot": "reports/screenshots/deploy-check-learning-path.png"
+    },
+    {
+      "name": "lesson",
+      "route": "/lessons/unit-1-greetings-introduction",
+      "status": 200,
+      "screenshot": "reports/screenshots/deploy-check-lesson.png"
+    },
+    {
+      "name": "shadowing",
+      "route": "/shadowing",
+      "status": 200,
+      "screenshot": "reports/screenshots/deploy-check-shadowing.png"
+    },
+    {
+      "name": "english-speed",
+      "route": "/english-speed",
+      "status": 200,
+      "screenshot": "reports/screenshots/deploy-check-english-speed.png"
+    },
+    {
+      "name": "vocabulary",
+      "route": "/vocabularies",
+      "status": 200,
+      "screenshot": "reports/screenshots/deploy-check-vocabulary.png"
+    },
+    {
+      "name": "resources",
+      "route": "/resources",
+      "status": 200,
+      "screenshot": "reports/screenshots/deploy-check-resources.png"
+    },
+    {
+      "name": "mobile-home",
+      "route": "/home",
+      "status": 200,
+      "screenshot": "reports/screenshots/deploy-check-mobile-home.png"
+    }
+  ]
+}

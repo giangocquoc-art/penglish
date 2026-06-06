@@ -1,0 +1,46 @@
+﻿Task R08 — Replace Guided Lesson Flow with unified generated lesson engine.
+
+Working directory:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Goal:
+Replace old guided lesson runtime flow with a unified engine that can run the newly replaced vocabulary, grammar, reading, shadowing, and speech modules.
+
+Use reports:
+- reports/r02-github-repo-real-integration-plan.md
+- reports/r03-vocabulary-flashcard-replacement.md
+- reports/r04-grammar-replacement.md
+- reports/r05-reading-sentence-replacement.md
+- reports/r06-shadowing-replacement.md
+- reports/r07-english-speed-pronunciation.md
+
+Requirements:
+1. Audit GuidedLessonFlow and related files.
+2. Remove old hardcoded guided lesson steps.
+3. Create/update:
+   - apps/web/src/lib/p-english/unifiedLessonEngine.ts
+   - apps/web/src/lib/p-english/lessonProgressAdapter.ts
+   - apps/web/src/data/lessons/generatedUnifiedLearningPath.ts
+4. The unified engine should support:
+   - intro screen
+   - vocabulary step
+   - grammar step
+   - reading step
+   - speaking/shadowing step
+   - quick recap
+   - completion/progress result
+5. Home/dashboard should send users to appropriate lesson.
+6. Keep Vietnamese learner-facing copy.
+7. Keep the UI clean and reduce duplicate cards/buttons.
+8. Keyboard UX:
+   - Enter advances/checks.
+   - 1/2/3/4 chooses answers.
+   - Escape exits or shows confirm if needed.
+9. Do not expose GitHub repo names to learners.
+
+Run:
+npx tsc -p apps/web/tsconfig.json --noEmit
+npm run build
+
+Create:
+reports/r08-unified-guided-lesson-engine.md

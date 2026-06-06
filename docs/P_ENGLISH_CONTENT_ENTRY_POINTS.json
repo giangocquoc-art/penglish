@@ -1,0 +1,190 @@
+{
+  "meta": {
+    "project": "P-English",
+    "auditDate": "2026-05-21",
+    "scope": "audit/export only; documentation files under docs only",
+    "architecture": {
+      "workspaceRoot": "Luyen Tu",
+      "frontend": "Vite + React 18 + TypeScript + React Router + Chakra UI",
+      "backend": "Express + TypeScript + JSON state/SQLite sync",
+      "routerFile": "Luyen Tu/apps/web/src/App.tsx",
+      "frontendEntry": "Luyen Tu/apps/web/src/main.tsx",
+      "apiEntry": "Luyen Tu/apps/api/src/main.ts"
+    }
+  },
+  "routes": [
+    { "path": "/", "file": "Luyen Tu/apps/web/src/pages/LandingPage.tsx", "component": "NewLandingPage", "title": "Landing", "shell": "none", "sections": ["hero", "marketing CTA"], "actions": ["login/start"], "status": "usable", "needsContent": true },
+    { "path": "/login", "file": "Luyen Tu/apps/web/src/pages/LoginPage.tsx", "component": "NewLoginPage", "title": "Đăng nhập", "shell": "none", "sections": ["login"], "actions": ["authenticate", "redirect to /home if user exists"], "status": "usable", "needsContent": false },
+    { "path": "/login/callback", "file": "Luyen Tu/apps/web/src/App.tsx", "component": "NewLoginCallbackPage", "title": "Login callback", "shell": "none", "sections": ["auth callback"], "actions": ["callback handling"], "status": "auth logic; do not edit for content", "needsContent": false },
+    { "path": "/home", "file": "Luyen Tu/apps/web/src/pages/HomePage.tsx", "component": "NewHomePage", "title": "Trang chủ", "shell": "NewShell", "sections": ["hero/dashboard", "stats", "streak", "quick actions", "LỘ TRÌNH HỌC"], "actions": ["/words?action=new", "/practice", "/leaderboard", "/chat", "/paths/:id"], "status": "usable; main learning dashboard", "needsContent": true },
+    { "path": "/paths/:id", "file": "Luyen Tu/apps/web/src/pages/StudyPage.tsx", "component": "NewStudyPage", "title": "Chi tiết lộ trình", "shell": "NewShell", "sections": ["breadcrumb", "path hero", "progress", "word cards"], "actions": ["/practice", "speech synthesis for pronunciation"], "status": "usable; strong candidate for lesson detail", "needsContent": true },
+    { "path": "/categories", "file": "Luyen Tu/apps/web/src/pages/CategoriesPage.tsx", "component": "NewCategoriesPage", "title": "Bộ từ vựng", "shell": "NewShell", "sections": ["search", "tabs", "category cards"], "actions": ["link to /categories/:id"], "status": "usable; detail route gap exists", "needsContent": true },
+    { "path": "/category-list", "file": "Luyen Tu/apps/web/src/pages/CategoriesPage.tsx", "component": "NewCategoriesPage", "title": "Bộ từ vựng", "shell": "NewShell", "sections": ["search", "tabs", "category cards"], "actions": ["link to /categories/:id"], "status": "alias of /categories", "needsContent": true },
+    { "path": "/vocabularies", "file": "Luyen Tu/apps/web/src/pages/VocabPage.tsx", "component": "NewVocabPage", "title": "Từ vựng", "shell": "NewShell", "sections": ["search", "filters", "vocabulary table"], "actions": ["filter learned/new", "add word button"], "status": "usable; add flow unclear", "needsContent": true },
+    { "path": "/words", "file": "Luyen Tu/apps/web/src/pages/VocabPage.tsx", "component": "NewVocabPage", "title": "Từ vựng", "shell": "NewShell", "sections": ["search", "filters", "vocabulary table"], "actions": ["filter learned/new", "add word button"], "status": "alias of /vocabularies", "needsContent": true },
+    { "path": "/games", "file": "Luyen Tu/apps/web/src/pages/GamesPage.tsx", "component": "NewGamesPage", "title": "Phản xạ", "shell": "NewShell", "sections": ["game cards", "selected game placeholder"], "actions": ["select game", "start placeholder"], "status": "placeholder-heavy", "needsContent": true },
+    { "path": "/practice", "file": "Luyen Tu/apps/web/src/pages/PracticePage.tsx", "component": "NewPracticePage", "title": "Luyện tập", "shell": "NewShell", "sections": ["practice modes", "stats", "category selector", "start panel"], "actions": ["select flashcard/quiz/listen/type/match/speed", "start placeholder"], "status": "partially usable; learning flow incomplete", "needsContent": true },
+    { "path": "/folders", "file": "Luyen Tu/apps/web/src/pages/FoldersPage.tsx", "component": "NewFoldersPage", "title": "Folders", "shell": "NewShell", "sections": ["folders"], "actions": ["folder management"], "status": "usable", "needsContent": false },
+    { "path": "/chat", "file": "Luyen Tu/apps/web/src/pages/ChatPage.tsx", "component": "NewChatPage", "title": "Cộng đồng", "shell": "NewShell", "sections": ["community choices"], "actions": ["choose Facebook/Zalo or chat channel"], "status": "usable", "needsContent": false },
+    { "path": "/ai", "file": "Luyen Tu/apps/web/src/pages/AiPage.tsx", "component": "NewAiPage", "title": "AI", "shell": "NewShell", "sections": ["AI page"], "actions": ["AI interactions"], "status": "not deeply audited", "needsContent": true },
+    { "path": "/leaderboard", "file": "Luyen Tu/apps/web/src/pages/LeaderboardPage.tsx", "component": "NewLeaderboardPage", "title": "Xếp hạng", "shell": "NewShell", "sections": ["leaderboard", "activity"], "actions": ["view ranking"], "status": "usable", "needsContent": false },
+    { "path": "/shop", "file": "Luyen Tu/apps/web/src/pages/ShopPage.tsx", "component": "NewShopPage", "title": "Cửa hàng", "shell": "NewShell", "sections": ["shop items"], "actions": ["buy/equip"], "status": "usable", "needsContent": false },
+    { "path": "/store", "file": "Luyen Tu/apps/web/src/pages/ShopPage.tsx", "component": "NewShopPage", "title": "Cửa hàng", "shell": "NewShell", "sections": ["shop items"], "actions": ["buy/equip"], "status": "alias of /shop", "needsContent": false },
+    { "path": "/pricing", "file": "Luyen Tu/apps/web/src/pages/PricingPage.tsx", "component": "NewPricingPage", "title": "Pricing", "shell": "NewShell", "sections": ["plans", "upgrade"], "actions": ["upgrade Pro"], "status": "usable", "needsContent": false },
+    { "path": "/subscriptions", "file": "Luyen Tu/apps/web/src/pages/PricingPage.tsx", "component": "NewPricingPage", "title": "Subscriptions", "shell": "NewShell", "sections": ["plans", "upgrade"], "actions": ["upgrade Pro"], "status": "alias of /pricing", "needsContent": false },
+    { "path": "/shared-streak", "file": "Luyen Tu/apps/web/src/pages/SharedStreakPage.tsx", "component": "NewSharedStreakPage", "title": "Shared streak", "shell": "NewShell", "sections": ["shared streak"], "actions": ["view/share streak"], "status": "usable", "needsContent": false },
+    { "path": "/profile", "file": "Luyen Tu/apps/web/src/pages/ProfilePage.tsx", "component": "NewProfilePage", "title": "Hồ sơ", "shell": "NewShell", "sections": ["profile", "stats"], "actions": ["view user stats"], "status": "usable", "needsContent": false },
+    { "path": "*", "file": "Luyen Tu/apps/web/src/App.tsx", "component": "SimpleTextPage", "title": "Không tìm thấy", "shell": "legacy Shell", "sections": ["fallback message"], "actions": [], "status": "fallback", "needsContent": false }
+  ],
+  "navItems": {
+    "desktopSidebar": [
+      { "label": "Trang chủ", "path": "/home", "file": "Luyen Tu/apps/web/src/components/Sidebar.tsx" },
+      { "label": "Từ vựng", "path": "/words", "file": "Luyen Tu/apps/web/src/components/Sidebar.tsx" },
+      { "label": "Luyện tập", "path": "/practice", "file": "Luyen Tu/apps/web/src/components/Sidebar.tsx" },
+      { "label": "Phản xạ", "path": "/games", "file": "Luyen Tu/apps/web/src/components/Sidebar.tsx" },
+      { "label": "Lộ trình", "path": "/home", "file": "Luyen Tu/apps/web/src/components/Sidebar.tsx", "note": "points to home section; no dedicated learning path route yet" },
+      { "label": "Xếp hạng", "path": "/leaderboard", "file": "Luyen Tu/apps/web/src/components/Sidebar.tsx" },
+      { "label": "Cộng đồng", "path": "/chat", "file": "Luyen Tu/apps/web/src/components/Sidebar.tsx" },
+      { "label": "Hồ sơ", "path": "/profile", "file": "Luyen Tu/apps/web/src/components/Sidebar.tsx" }
+    ],
+    "mobileBottomNav": [
+      { "label": "Trang chủ", "path": "/home", "file": "Luyen Tu/apps/web/src/components/BottomNav.tsx" },
+      { "label": "Bộ từ", "path": "/category-list", "file": "Luyen Tu/apps/web/src/components/BottomNav.tsx" },
+      { "label": "Luyện tập", "path": "/practice", "file": "Luyen Tu/apps/web/src/components/BottomNav.tsx" },
+      { "label": "Cửa hàng", "path": "/store", "file": "Luyen Tu/apps/web/src/components/BottomNav.tsx" },
+      { "label": "Profile", "path": "/profile", "file": "Luyen Tu/apps/web/src/components/BottomNav.tsx" }
+    ],
+    "topbar": [
+      { "label": "streak chip", "path": null, "file": "Luyen Tu/apps/web/src/components/Topbar.tsx" },
+      { "label": "NÂNG CẤP PRO", "path": "/pricing or subscription flow implied", "file": "Luyen Tu/apps/web/src/components/Topbar.tsx" },
+      { "label": "user avatar/menu", "path": null, "file": "Luyen Tu/apps/web/src/components/Topbar.tsx" }
+    ],
+    "quickAccessCards": [
+      { "label": "Thêm từ", "path": "/words?action=new", "file": "Luyen Tu/apps/web/src/pages/HomePage.tsx" },
+      { "label": "Luyện tập", "path": "/practice", "file": "Luyen Tu/apps/web/src/pages/HomePage.tsx" },
+      { "label": "Xếp hạng", "path": "/leaderboard", "file": "Luyen Tu/apps/web/src/pages/HomePage.tsx" },
+      { "label": "Cộng đồng", "path": "/chat", "file": "Luyen Tu/apps/web/src/pages/HomePage.tsx" }
+    ],
+    "learningCtas": [
+      { "label": "Lộ trình học card", "path": "/paths/:id", "file": "Luyen Tu/apps/web/src/pages/HomePage.tsx", "dataSource": "/paths/summary" },
+      { "label": "Luyện tập", "path": "/practice", "file": "Luyen Tu/apps/web/src/pages/StudyPage.tsx" }
+    ]
+  },
+  "learningSections": [
+    { "name": "Home learning card/dashboard", "file": "Luyen Tu/apps/web/src/pages/HomePage.tsx", "dataSources": ["/paths/groups", "/paths/summary", "user stats"], "status": "usable" },
+    { "name": "Lộ trình học", "file": "Luyen Tu/apps/web/src/pages/HomePage.tsx", "dataSources": ["/paths/summary", "/paths/groups"], "status": "usable; needs real unit/lesson model" },
+    { "name": "Path detail / unit cards", "file": "Luyen Tu/apps/web/src/pages/StudyPage.tsx", "dataSources": ["/paths/:id", "/word-sets/:id/vocabularies"], "status": "usable as detail page" },
+    { "name": "Từ vựng", "file": "Luyen Tu/apps/web/src/pages/VocabPage.tsx", "dataSources": ["/vocabularies"], "status": "usable" },
+    { "name": "Flashcard", "file": "Luyen Tu/apps/web/src/pages/PracticePage.tsx", "dataSources": ["local GAMES", "/categories", "/vocabularies/stats"], "status": "mode exists; flow incomplete" },
+    { "name": "Luyện tập", "file": "Luyen Tu/apps/web/src/pages/PracticePage.tsx", "dataSources": ["local GAMES", "/categories", "/vocabularies/stats"], "status": "placeholder after start" },
+    { "name": "Phản xạ", "file": "Luyen Tu/apps/web/src/pages/GamesPage.tsx", "dataSources": ["local GAMES"], "status": "placeholder-heavy" },
+    { "name": "Nghe", "file": "Luyen Tu/apps/web/src/pages/PracticePage.tsx", "dataSources": ["local listen mode"], "status": "label/mode only; missing audio/transcript schema" },
+    { "name": "Xếp hạng", "file": "Luyen Tu/apps/web/src/pages/LeaderboardPage.tsx", "dataSources": ["/activity/leaderboard"], "status": "usable" },
+    { "name": "Hồ sơ", "file": "Luyen Tu/apps/web/src/pages/ProfilePage.tsx", "dataSources": ["user", "activity/progress"], "status": "usable" },
+    { "name": "Local unit mock", "file": "Luyen Tu/apps/web/src/lib/p-english/learning-path-data.ts", "dataSources": ["learningPathUnits"], "status": "safe local mock; consumption should be verified" }
+  ],
+  "contentDataFiles": [
+    {
+      "file": "Luyen Tu/apps/api/data/state.json",
+      "type": "runtime JSON state",
+      "schemas": ["users", "groups", "paths", "pathWords", "categories", "vocabularies", "activity", "shop"],
+      "exampleFields": {
+        "path": ["id", "name", "description", "difficulty", "wordSetCount", "group"],
+        "word": ["id", "term", "meaning", "pronunciation", "partOfSpeech", "example", "learned", "srsLevel"],
+        "user": ["id", "name", "email", "coins", "xp", "streak", "avatar"]
+      },
+      "consumers": ["Luyen Tu/apps/api/src/main.ts", "Luyen Tu/apps/web/src/pages/HomePage.tsx", "Luyen Tu/apps/web/src/pages/StudyPage.tsx", "Luyen Tu/apps/web/src/pages/VocabPage.tsx", "Luyen Tu/apps/web/src/pages/CategoriesPage.tsx"],
+      "safeToEdit": "caution; runtime state, prefer seed/content module or migration"
+    },
+    {
+      "file": "Luyen Tu/apps/api/src/main.ts",
+      "type": "API endpoints and seed/state logic",
+      "schemas": ["AppState", "groups", "paths", "pathWords", "categories", "vocabularies", "activity", "SRS/progress"],
+      "consumers": ["frontend API client and pages"],
+      "safeToEdit": "not for audit; future backend lesson work only"
+    },
+    {
+      "file": "Luyen Tu/apps/web/src/lib/p-english/learning-path-data.ts",
+      "type": "frontend local mock data",
+      "schemas": ["LearningSkillType", "LearningUnitStatus", "LearningPathUnit", "learningPathUnits"],
+      "exampleFields": ["id", "title", "description", "skillType", "estimatedTime", "progress", "status", "xp", "reviewDue"],
+      "consumers": [],
+      "safeToEdit": "good candidate for local lesson mock after verifying/importing consumption"
+    },
+    {
+      "file": "Luyen Tu/apps/web/src/pages/PracticePage.tsx",
+      "type": "frontend local practice modes",
+      "schemas": ["GameDef", "GAMES"],
+      "exampleModes": ["flashcard", "quiz", "listen", "type", "match", "speed"],
+      "consumers": ["PracticePage UI"],
+      "safeToEdit": "safe for UI/practice flow tasks; avoid hardcoding full lessons here"
+    },
+    {
+      "file": "Luyen Tu/apps/web/src/pages/GamesPage.tsx",
+      "type": "frontend local game modes",
+      "schemas": ["Game", "GAMES"],
+      "exampleModes": ["memory", "scramble", "listening", "speed", "reflex", "champion"],
+      "consumers": ["GamesPage UI"],
+      "safeToEdit": "safe for game UI tasks; needs separate game content model"
+    },
+    {
+      "file": "Luyen Tu/apps/web/src/pages/VocabPage.tsx",
+      "type": "vocabulary page schema",
+      "schemas": ["Vocab"],
+      "exampleFields": ["id", "term", "meaning", "pronunciation", "partOfSpeech", "example", "isLearned", "categoryId"],
+      "consumers": ["/vocabularies"],
+      "safeToEdit": "safe for vocabulary UI tasks"
+    },
+    {
+      "file": "Luyen Tu/apps/web/src/pages/StudyPage.tsx",
+      "type": "path detail schema",
+      "schemas": ["Path", "Word"],
+      "exampleFields": ["id", "name", "description", "difficulty", "wordSetCount", "group", "term", "meaning", "learned", "srsLevel"],
+      "consumers": ["/paths/:id", "/word-sets/:id/vocabularies"],
+      "safeToEdit": "good future entry for lesson detail presentation"
+    }
+  ],
+  "recommendedEntryPoints": [
+    { "priority": 1, "file": "Luyen Tu/apps/web/src/lib/p-english/learning-path-data.ts", "reason": "Safest local/mock entry for units before backend lesson model exists." },
+    { "priority": 2, "file": "Luyen Tu/apps/web/src/pages/HomePage.tsx", "reason": "Controls dashboard learning path and CTA placement." },
+    { "priority": 3, "file": "Luyen Tu/apps/web/src/pages/StudyPage.tsx", "reason": "Best current detail page for path/unit/word content." },
+    { "priority": 4, "file": "Luyen Tu/apps/web/src/pages/PracticePage.tsx", "reason": "Entry point for flashcard, quiz, listening, typing, matching and speed practice." },
+    { "priority": 5, "file": "Luyen Tu/apps/web/src/pages/GamesPage.tsx", "reason": "Entry point for reflex/game experiences." },
+    { "priority": 6, "file": "Luyen Tu/apps/web/src/pages/VocabPage.tsx", "reason": "Vocabulary schema and list UI." },
+    { "priority": 7, "file": "Luyen Tu/apps/api/src/main.ts", "reason": "Required when designing backend-backed lessons/endpoints; do not edit during docs-only audit." },
+    { "priority": 8, "file": "Luyen Tu/apps/api/data/state.json", "reason": "Useful for sample groups/paths/pathWords/vocab schema; treat as runtime state." }
+  ],
+  "contentGaps": [
+    "No complete lesson schema with objectives, steps, examples, checks, review rules and completion criteria.",
+    "No dedicated learning path overview route; sidebar Lộ trình currently points to /home.",
+    "Practice start flow is still placeholder-like for flashcard/quiz/listen/type/match/speed.",
+    "Games/reflex detail is placeholder-heavy and lacks real game content engine.",
+    "Category detail links point to /categories/:id but router does not declare that route in the audited route list.",
+    "Listening mode lacks audio asset, transcript, question and answer schema.",
+    "Speaking/reflex communication lacks prompt, accepted answer and feedback schema.",
+    "Grammar appears in local mock skill type but lacks dedicated content/page flow.",
+    "XP/streak/progress exists at user/activity/path level but is not fully tied to local unit/lesson completion.",
+    "Some legacy brand/copy may remain in meta/manifest/home/state and should be handled in a separate brand cleanup task, not in this audit-only task."
+  ],
+  "filesToSendBackForLessonDevelopment": [
+    "Luyen Tu/docs/P_ENGLISH_CURRENT_STRUCTURE_AFTER_REDESIGN.md",
+    "Luyen Tu/docs/P_ENGLISH_CONTENT_ENTRY_POINTS.json",
+    "Luyen Tu/apps/web/src/lib/p-english/learning-path-data.ts",
+    "Luyen Tu/apps/web/src/pages/HomePage.tsx",
+    "Luyen Tu/apps/web/src/pages/StudyPage.tsx",
+    "Luyen Tu/apps/web/src/pages/PracticePage.tsx",
+    "Luyen Tu/apps/web/src/pages/GamesPage.tsx",
+    "Luyen Tu/apps/web/src/pages/VocabPage.tsx",
+    "Luyen Tu/apps/api/src/main.ts",
+    "Relevant excerpts from Luyen Tu/apps/api/data/state.json: groups, sample paths, one pathWords entry, sample vocabularies"
+  ],
+  "build": {
+    "command": "npm run build",
+    "cwd": "Luyen Tu",
+    "status": "failed",
+    "apiBuild": "passed",
+    "webBuild": "failed",
+    "errorSummary": "[vite:html-inline-proxy] Could not load apps/web/index.html?html-proxy&inline-css&index=0.css: No matching HTML proxy module found",
+    "notes": "Build was executed after docs were created. Failure appears related to Vite HTML inline proxy/build pipeline and was documented in P_ENGLISH_CURRENT_STRUCTURE_AFTER_REDESIGN.md. No app/backend/UI changes were made to fix it because the task scope is audit/export only."
+  }
+}

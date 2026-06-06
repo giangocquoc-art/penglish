@@ -1,0 +1,220 @@
+﻿You are working in:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Continue the P-English GitHub Source Replacement master task.
+
+CURRENT PHASE:
+PHASE 6 — Replace Shadowing using selected GitHub shadowing repos safely.
+
+IMPORTANT CONTEXT:
+- Phase 1 audit is done: reports/master-01-feature-audit.md
+- Phase 2 real GitHub integration plan is done: reports/master-02-real-github-integration-plan.md
+- Phase 3 vocabulary/flashcards replacement is done: reports/master-03-vocabulary-flashcards.md
+- Phase 4 grammar replacement is done: reports/master-04-grammar.md
+- Phase 5 reading/sentence practice is done: reports/master-05-reading.md
+- Continue from Phase 6. Do not go back to planning only.
+- Repos are selected for real integration, not reference-only.
+- Runtime app must not depend on external-sources.
+- Keep Vietnamese-first learner UI.
+- Keep ocean / whale / glass visual identity.
+- Keep repo/source/license details in metadata and reports, not learner-facing UI.
+- Use PowerShell-compatible commands.
+- Do not run taskkill.
+- Do not close VS Code.
+- Do not bundle copyrighted videos, YouTube videos, downloaded media, or copied transcript passages.
+- Do not require paid API keys.
+
+SOURCES TO INSPECT:
+1. external-sources/shadowing
+2. external-sources/shadowing_generator
+
+Known source decisions:
+- nhs000/shadowing: selected for workflow adaptation only until license is clarified. Do not copy code/media/transcripts directly if license is missing/private.
+- Skywalker-Harrison/shadowing_generator: selected for real workflow/data-shape integration. README badge indicates MIT, but verify local files. Use segmentation/repeat workflow ideas safely.
+- Do not bundle any copyrighted video/audio.
+- Use app-authored short scripts and learner-provided transcript/video flow.
+- Keep source notes in metadata/report, not learner-facing UI.
+
+TASK GOALS:
+Replace old shadowing catalog/data with app-native generated shadowing modules.
+
+Create/update these files:
+1. apps/web/src/data/shadowing/shadowingTypes.ts
+2. apps/web/src/data/shadowing/generatedShadowingCatalog.ts
+3. apps/web/src/lib/p-english/shadowingAdapter.ts
+4. apps/web/src/lib/p-english/shadowing-data.ts
+5. apps/web/src/pages/ShadowingPage.tsx if needed
+6. apps/web/src/pages/HomePage.tsx if needed to improve dashboard entry
+7. reports/master-06-shadowing.md
+
+IMPLEMENTATION DETAILS:
+
+A. shadowingTypes.ts
+Create typed schema for generated shadowing content.
+
+Include:
+- CEFR level: A1 | A2 | B1 | B2
+- shadowing mode:
+  - listen
+  - repeat
+  - chunk
+  - record
+  - compare
+- source metadata:
+  - repoName
+  - repoUrl
+  - localSourcePath
+  - license
+  - attribution
+  - integrationMode
+  - licenseRiskNote
+- catalog item:
+  - id
+  - titleVi
+  - titleEn
+  - level
+  - topic
+  - descriptionVi
+  - estimatedTime
+  - transcript
+  - chunks
+  - repeatPlan
+  - learnerTipsVi
+  - whaleCoachLines
+  - source
+
+B. generatedShadowingCatalog.ts
+Create app-native shadowing catalog.
+
+Do NOT copy external media/transcripts.
+Create original short P-English shadowing scripts.
+
+Minimum catalog:
+- A1: 4 shadowing scripts
+- A2: 4 shadowing scripts
+- B1: 3 shadowing scripts
+- B2: 3 shadowing scripts
+
+Suggested topics:
+A1:
+- greeting a friend
+- ordering water/coffee
+- talking about school
+- daily routine
+
+A2:
+- asking for directions
+- shopping conversation
+- simple travel plan
+- describing hobbies
+
+B1:
+- study habit explanation
+- part-time job interview
+- teamwork discussion
+- online learning reflection
+
+B2:
+- explaining a learning strategy
+- giving an opinion about digital habits
+- discussing career goals
+- presenting a small project idea
+
+Each script should include:
+- short English transcript
+- Vietnamese setup
+- chunks for repeat practice
+- repeat plan: listen once, repeat chunks, full shadowing, record, compare
+- pronunciation/speed tips in Vietnamese
+- whale coach lines
+- safe metadata
+
+C. shadowingAdapter.ts
+Adapt generated catalog into the shape used by current ShadowingPage.
+
+Read current:
+- apps/web/src/lib/p-english/shadowing-data.ts
+- apps/web/src/pages/ShadowingPage.tsx
+
+Preserve the existing ShadowingPage behavior:
+- video cards
+- transcript panel
+- custom transcript input
+- MediaRecorder recording
+- reduced motion
+- Vietnamese-first UI
+
+If current ShadowingPage expects old fields, map generated fields to that shape in the adapter to minimize UI churn.
+
+Expose:
+- generatedShadowingVideos or generatedShadowingCatalog adapted to old-compatible item shape
+- getGeneratedShadowingCatalog()
+- getShadowingItemById() if useful
+
+D. shadowing-data.ts
+Replace old handcrafted active catalog source with generated shadowing adapter exports.
+
+Old file may remain as compatibility shim, but active exported catalog must come from generated modules, not old handcrafted data.
+
+E. ShadowingPage.tsx
+Update only if necessary.
+
+Make sure learner-facing UI does NOT show repo names.
+Improve text if old copy says content is mock/placeholder.
+Keep:
+- custom transcript area
+- recording flow
+- transcript display
+- mobile-friendly layout
+- calm whale/ocean identity
+
+Add subtle shadowing workflow language:
+- Nghe mẫu
+- Chia câu
+- Lặp theo đoạn
+- Ghi âm
+- So sánh lại
+- Luyện lại chậm hơn
+
+F. HomePage.tsx
+If there is a dashboard card for shadowing, make sure it points to:
+/shadowing
+
+Keep the copy Vietnamese-first and make Shadowing visible as a real learning feature, not a placeholder.
+
+G. Report
+Create:
+reports/master-06-shadowing.md
+
+The report must include:
+- Status
+- Sources inspected
+- License findings
+- Integration decision
+- Why direct media/transcript copying is blocked/limited
+- How the GitHub repos are still used for real integration
+- Generated counts by CEFR level
+- Files created
+- Files updated
+- Catalog IDs generated
+- Runtime dependency note: app does not depend on external-sources
+- UI and route wiring
+- Recording/custom transcript status
+- Keyboard/accessibility status
+- Risks and follow-up
+- Next phase: Phase 7 English Speed / Pronunciation replacement
+
+H. Validation
+After implementation, run:
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+
+If TypeScript errors appear:
+- Fix them.
+- Re-run the command.
+- Document final result in the report.
+
+Also run:
+git status
+
+Do not stop after creating only a plan.
+Implement the files, wire the app, create the report, run validation, and show the final summary.

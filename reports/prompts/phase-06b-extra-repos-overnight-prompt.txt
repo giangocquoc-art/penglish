@@ -1,0 +1,252 @@
+﻿You are working in:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Continue AFTER Phase 6 is complete.
+
+CURRENT PHASE:
+PHASE 6B — Extra GitHub repo acquisition, license audit, and safe web development expansion.
+
+IMPORTANT:
+- Do NOT start Phase 7 yet.
+- Phase 6 shadowing should already be complete before this task starts.
+- Continue developing P-English by downloading/cloning additional useful repos, inspecting them, and integrating only safe app-native ideas/data.
+- Runtime app must not depend on external-sources.
+- Do not copy restricted/copyrighted text, media, audio, videos, or transcripts.
+- Do not require paid API keys.
+- Do not run taskkill.
+- Do not close VS Code.
+- Use PowerShell-compatible commands.
+- Keep Vietnamese-first learner UI.
+- Keep P-English whale/ocean/glass identity.
+- Keep repo names/license/source notes in metadata and reports, not noisy learner-facing UI.
+
+FIRST:
+Read these reports if present:
+- reports/master-01-feature-audit.md
+- reports/master-02-real-github-integration-plan.md
+- reports/master-03-vocabulary-flashcards.md
+- reports/master-04-grammar.md
+- reports/master-05-reading.md
+- reports/master-06-shadowing.md
+
+Then run:
+git status --short
+
+TASK 1 — Clone extra candidate repos safely
+
+Clone or update the following repos into external-sources/candidates.
+Use depth 1 where possible.
+If a repo already exists, run git pull --ff-only if possible.
+If clone/pull fails, document the failure and continue.
+
+Repos to clone:
+
+1. openlanguageprofiles/olp-en-cefrj
+URL: https://github.com/openlanguageprofiles/olp-en-cefrj.git
+Purpose: CEFR-J profile data for vocabulary/grammar/level balancing.
+
+2. yvoronoy/awesome-english
+URL: https://github.com/yvoronoy/awesome-english.git
+Purpose: curated English learning resource index.
+
+3. dnizfor/resources-for-english
+URL: https://github.com/dnizfor/resources-for-english.git
+Purpose: supplemental resource index if available.
+
+4. CloudBytes-Academy/English-Dictionary-Open-Source
+URL: https://github.com/CloudBytes-Academy/English-Dictionary-Open-Source.git
+Purpose: possible dictionary/definition enrichment after license review.
+
+5. cdf144/english-learning-app
+URL: https://github.com/cdf144/english-learning-app.git
+Purpose: inspect English/Vietnamese vocabulary and app structure. Do not copy data unless license is safe.
+
+6. furkanbingol/EnglishPronunciation-App
+URL: https://github.com/furkanbingol/EnglishPronunciation-App.git
+Purpose: pronunciation UX / scoring flow ideas. MIT shown on GitHub, verify local license before any reuse.
+
+7. chippeddog/english.now
+URL: https://github.com/chippeddog/english.now.git
+Purpose: inspect learning app structure, progress, speaking/vocabulary UX. Do not copy code unless license is safe.
+
+8. baturyilmaz/wordpecker-app
+URL: https://github.com/baturyilmaz/wordpecker-app.git
+Purpose: inspect vocabulary learning UX / spaced repetition ideas. Do not copy code unless license is safe.
+
+Suggested PowerShell clone loop:
+
+$candidateRoot = "external-sources\candidates"
+New-Item -ItemType Directory -Force -Path $candidateRoot | Out-Null
+
+$repos = @(
+  @{ name = "olp-en-cefrj"; url = "https://github.com/openlanguageprofiles/olp-en-cefrj.git" },
+  @{ name = "awesome-english"; url = "https://github.com/yvoronoy/awesome-english.git" },
+  @{ name = "resources-for-english"; url = "https://github.com/dnizfor/resources-for-english.git" },
+  @{ name = "english-dictionary-open-source"; url = "https://github.com/CloudBytes-Academy/English-Dictionary-Open-Source.git" },
+  @{ name = "english-learning-app"; url = "https://github.com/cdf144/english-learning-app.git" },
+  @{ name = "english-pronunciation-app"; url = "https://github.com/furkanbingol/EnglishPronunciation-App.git" },
+  @{ name = "english-now"; url = "https://github.com/chippeddog/english.now.git" },
+  @{ name = "wordpecker-app"; url = "https://github.com/baturyilmaz/wordpecker-app.git" }
+)
+
+foreach ($r in $repos) {
+  $target = Join-Path $candidateRoot $r.name
+  if (Test-Path $target) {
+    Write-Host "Updating $($r.name)..." -ForegroundColor Cyan
+    git -C $target pull --ff-only
+  } else {
+    Write-Host "Cloning $($r.name)..." -ForegroundColor Cyan
+    git clone --depth 1 $r.url $target
+  }
+}
+
+TASK 2 — License and usefulness audit
+
+For each cloned repo:
+- Check for LICENSE, COPYING, NOTICE, README, package metadata, and obvious license text.
+- Classify each repo:
+  - safe-direct-integration
+  - safe-workflow-adaptation
+  - resource-index-only
+  - blocked-license-risk
+  - blocked-source-unavailable
+- Do not directly import code/data from repos with unclear, missing, non-commercial, share-alike, or viral license risk.
+- If a repo has useful ideas but unsafe license, adapt only high-level workflow ideas and document this clearly.
+
+Create:
+reports/master-06b-extra-repo-audit.md
+
+Report must include:
+- repo name
+- local path
+- license found
+- files inspected
+- useful feature ideas
+- direct integration decision
+- blocked/limited reason if any
+- suggested P-English adaptation
+
+TASK 3 — Create app-native candidate manifest
+
+Create:
+apps/web/src/data/lessons/extraRepoCandidateManifest.ts
+
+Include typed entries for each extra repo:
+- repoName
+- repoUrl
+- localSourcePath
+- targetFeature
+- status
+- integrationMode
+- licenseFound
+- attributionNote
+- technicalRisk
+- safeUsePlan
+- filesCreatedOrPlanned
+- uiAdaptationNotes
+
+This manifest is developer/data metadata only. Do not make learner-facing UI noisy with repo names.
+
+TASK 4 — Safe web development expansion, not Phase 7
+
+Do NOT implement Phase 7 pronunciation yet.
+
+Instead, safely improve P-English using the newly cloned repo findings:
+
+A. Resource Hub
+Create a small app-native English resource hub from safe resource-index repos only.
+Do not copy long copyrighted descriptions.
+Use short original Vietnamese summaries.
+
+Create:
+- apps/web/src/data/resources/resourceTypes.ts
+- apps/web/src/data/resources/generatedEnglishResourceHub.ts
+- apps/web/src/pages/ResourceHubPage.tsx
+
+Resource categories:
+- Từ vựng
+- Ngữ pháp
+- Đọc
+- Nghe
+- Shadowing
+- Phát âm
+- Tự học miễn phí
+
+Learner UI should be Vietnamese-first.
+Keep ocean/glass/whale style.
+Show concise cards, not a long messy list.
+External links are okay if they point to legitimate free resources, but do not embed copyrighted content.
+
+B. Route wiring
+Update:
+- apps/web/src/App.tsx
+- apps/web/src/pages/HomePage.tsx if needed
+
+Add route:
+- /resources
+
+Add a dashboard card:
+- title: Kho tài nguyên học thêm
+- copy: Tài nguyên miễn phí được chọn lọc để học thêm sau bài chính.
+- link: /resources
+
+C. Home route cleanup
+If not already fixed, correct bad paths:
+- SPEED_PATH should be /english-speed
+- FLASHCARD_PATH should be /vocabularies
+- WEAK_REVIEW_PATH should be /vocabularies
+- SHADOWING_PATH should be /shadowing
+
+D. Do not overload UI
+Keep this simple and clean.
+No huge tables.
+No clutter.
+Mobile-first.
+
+TASK 5 — Validation
+
+Run:
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+
+If there are TypeScript errors:
+- fix them
+- rerun typecheck
+
+Run:
+npm run build
+
+If build fails:
+- fix if practical
+- rerun build
+- if blocked, document exact blocker
+
+Run:
+git status --short
+
+TASK 6 — Final report
+
+Create:
+reports/master-06b-extra-repo-expansion.md
+
+The report must include:
+- Status
+- Extra repos cloned/updated
+- License summary
+- Which repos are safe for direct integration
+- Which repos are workflow-only
+- Which repos are blocked/limited
+- Files created
+- Files updated
+- Resource Hub route status
+- Dashboard update status
+- Path cleanup status
+- Typecheck result
+- Build result
+- Git status summary
+- Recommendation for next phase
+
+Next phase recommendation should say:
+After this Phase 6B source expansion, continue to Phase 7 English Speed / Pronunciation replacement using huytd/speech and any safe pronunciation UX findings from the extra repo audit.
+
+Do not stop after planning.
+Clone, inspect, create manifest, implement safe Resource Hub/page/dashboard updates, validate, report.

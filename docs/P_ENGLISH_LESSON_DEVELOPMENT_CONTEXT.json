@@ -1,0 +1,155 @@
+{
+  "project": {
+    "name": "P-English",
+    "workspaceRoot": "Luyen Tu",
+    "frontend": "apps/web",
+    "backend": "apps/api",
+    "frontendStack": ["React 18", "Vite 5", "TypeScript", "Chakra UI", "React Router", "Axios", "Framer Motion", "lucide-react"],
+    "backendStack": ["Express", "TypeScript", "Zod", "JWT", "JSON runtime state", "better-sqlite3 sync"],
+    "scope": "audit/export only; documentation files under docs/ only",
+    "unit1RenderStatus": "data-only; no /lessons/:lessonId route currently active"
+  },
+  "routes": [
+    { "path": "/", "component": "LandingPage", "source": "apps/web/src/App.tsx", "lessonFit": "not a lesson entry point" },
+    { "path": "/home", "component": "HomePage", "source": "apps/web/src/pages/HomePage.tsx", "lessonFit": "best dashboard entry point for future lesson CTA/local path cards" },
+    { "path": "/paths/:id", "component": "StudyPage", "source": "apps/web/src/pages/StudyPage.tsx", "lessonFit": "API-backed path detail; can be adapted for local unit overview but currently fetches backend path id" },
+    { "path": "/practice", "component": "PracticePage", "source": "apps/web/src/pages/PracticePage.tsx", "lessonFit": "good target for lesson quiz/flashcard/listening modes after adapter" },
+    { "path": "/games", "component": "GamesPage", "source": "apps/web/src/pages/GamesPage.tsx", "lessonFit": "good target for reflex/game tasks; currently placeholder after selecting game" },
+    { "path": "/words", "component": "VocabPage", "source": "apps/web/src/pages/VocabPage.tsx", "lessonFit": "personal vocabulary table; could import lesson vocabulary later" },
+    { "path": "/vocabularies", "component": "VocabPage", "source": "apps/web/src/pages/VocabPage.tsx", "lessonFit": "alias of /words" },
+    { "path": "/categories", "component": "CategoriesPage", "source": "apps/web/src/pages/CategoriesPage.tsx", "lessonFit": "category collection UI; route gap exists for /categories/:id" },
+    { "path": "/category-list", "component": "CategoriesPage", "source": "apps/web/src/pages/CategoriesPage.tsx", "lessonFit": "mobile bottom nav target" },
+    { "path": "/lessons/:lessonId", "component": null, "source": "not implemented", "lessonFit": "primary missing route for Unit 1 render" }
+  ],
+  "lessonContentTypes": [
+    { "name": "LessonLevel", "kind": "union", "purpose": "CEFR/display level for lesson" },
+    { "name": "SkillTag", "kind": "union", "purpose": "skills shown on lesson/unit cards" },
+    { "name": "LessonDifficulty", "kind": "union", "purpose": "difficulty for vocab/reflex/practice items" },
+    { "name": "QuizQuestionType", "kind": "union", "purpose": "quiz rendering mode" },
+    { "name": "VocabularyItem", "kind": "object", "fields": ["id", "term", "pronunciation", "meaningVi", "partOfSpeechOrType", "example", "exampleMeaningVi", "difficulty", "tags"] },
+    { "name": "SentencePattern", "kind": "object", "fields": ["id", "pattern", "vietnameseExplanation", "examples"] },
+    { "name": "MiniDialogue", "kind": "object", "fields": ["id", "title", "lines", "vietnameseTranslation", "focusPhrases", "suggestedShadowingInstruction"] },
+    { "name": "GrammarNote", "kind": "object", "fields": ["id", "title", "explanationVi", "examples"] },
+    { "name": "PronunciationNote", "kind": "object", "fields": ["id", "noteVi", "examples"] },
+    { "name": "ListeningPracticeItem", "kind": "object", "fields": ["id", "text", "question", "options", "answer", "speechSynthesis"] },
+    { "name": "SpeakingReflexPrompt", "kind": "object", "fields": ["id", "promptVi", "expectedEnglish", "acceptableAnswers", "hint", "difficulty"] },
+    { "name": "FlashcardItem", "kind": "object", "fields": ["id", "front", "back", "example", "exampleMeaningVi", "tags"] },
+    { "name": "QuizQuestion", "kind": "object", "fields": ["id", "type", "question", "prompt", "vietnamese", "words", "pairs", "options", "answer", "explanationVi"] },
+    { "name": "SentenceOrderingTask", "kind": "object", "fields": ["id", "vietnamese", "words", "answer"] },
+    { "name": "FillBlankTask", "kind": "object", "fields": ["id", "prompt", "answer", "hint"] },
+    { "name": "ReviewRules", "kind": "object", "fields": ["newWordReviewAfterMinutes", "ifWrong", "ifCorrectTwice", "ifCorrectThreeTimesAcrossSessions", "priorityRule"] },
+    { "name": "CompletionCriteria", "kind": "object", "fields": ["flashcardsReviewed", "minimumQuizCorrect", "totalQuizQuestions", "minimumReflexPromptsCompleted", "totalReflexPrompts", "minimumListeningOrDialogueRepeats"] },
+    { "name": "EnglishLesson", "kind": "aggregate", "purpose": "complete lesson root containing content, practice tasks, review rules, and completion criteria" }
+  ],
+  "unit1Audit": {
+    "id": "unit-1-greetings-introduction",
+    "unitId": "unit-1-greetings",
+    "titleVi": "Chào hỏi và giới thiệu bản thân",
+    "titleEn": "Greetings and Self-introduction",
+    "level": "Beginner / A1",
+    "estimatedTime": "15–20 phút",
+    "counts": {
+      "vocabulary": 18,
+      "sentencePatterns": 5,
+      "miniDialogues": 3,
+      "grammarNotes": 4,
+      "pronunciationNotes": 5,
+      "listeningPractice": 3,
+      "speakingReflexPrompts": 8,
+      "flashcards": 18,
+      "quizQuestions": 10,
+      "sentenceOrderingTasks": 3,
+      "fillBlankTasks": 3
+    },
+    "strengths": [
+      "A1-friendly greeting/self-introduction scope",
+      "prioritizes practical chunks",
+      "has listening, speaking, flashcard, quiz, ordering, and fill-blank activities",
+      "has completion criteria and review rules",
+      "speechSynthesis metadata allows browser-based listening prototype"
+    ],
+    "risks": [
+      "not rendered yet",
+      "no persisted lesson progress",
+      "no scoring engine",
+      "no adapter to existing API/SRS schemas",
+      "no real audio or speech recognition"
+    ]
+  },
+  "uiInsertionPoints": [
+    { "file": "apps/web/src/App.tsx", "lineHint": 1491, "purpose": "add /lessons/:lessonId route later" },
+    { "file": "apps/web/src/pages/HomePage.tsx", "lineHint": 215, "purpose": "add local P-English unit/lesson CTA later" },
+    { "file": "apps/web/src/pages/StudyPage.tsx", "lineHint": 31, "purpose": "optionally adapt /paths/:id for local unit overview" },
+    { "file": "apps/web/src/pages/PracticePage.tsx", "lineHint": 154, "purpose": "accept lessonId/mode and render real lesson practice later" },
+    { "file": "apps/web/src/pages/GamesPage.tsx", "lineHint": 27, "purpose": "accept lessonId and feed game tasks later" },
+    { "file": "apps/web/src/components/Sidebar.tsx", "lineHint": 7, "purpose": "navigation labels/targets if lesson section becomes permanent" },
+    { "file": "apps/web/src/components/BottomNav.tsx", "lineHint": 13, "purpose": "mobile entry points if lesson path becomes primary" }
+  ],
+  "practiceModes": [
+    { "id": "flashcard", "label": "Flashcard", "currentSource": "PracticePage local GAMES", "lessonDataFit": "FlashcardItem[]" },
+    { "id": "quiz", "label": "Trắc nghiệm", "currentSource": "PracticePage local GAMES", "lessonDataFit": "QuizQuestion[]" },
+    { "id": "listen", "label": "Nghe", "currentSource": "PracticePage local GAMES", "lessonDataFit": "ListeningPracticeItem[]" },
+    { "id": "type", "label": "Gõ từ", "currentSource": "PracticePage local GAMES", "lessonDataFit": "VocabularyItem[] and FillBlankTask[]" },
+    { "id": "match", "label": "Ghép cặp", "currentSource": "PracticePage local GAMES", "lessonDataFit": "VocabularyItem[] / QuizQuestion match-meaning" },
+    { "id": "speed", "label": "Tốc độ", "currentSource": "PracticePage local GAMES", "lessonDataFit": "QuizQuestion[] / SpeakingReflexPrompt[]" },
+    { "id": "memory", "label": "Memory Match", "currentSource": "GamesPage local GAMES", "lessonDataFit": "VocabularyItem[]" },
+    { "id": "reflex", "label": "Reflex Game", "currentSource": "GamesPage local GAMES", "lessonDataFit": "SpeakingReflexPrompt[]" }
+  ],
+  "apiSchemas": [
+    { "name": "PathSummary", "endpoint": "GET /paths/summary", "shape": { "id": "string", "groupId": "string", "name": "string", "description": "string", "coverImage": "string|null", "difficulty": "number", "displayOrder": "number", "wordSetCount": "number", "group": "Group" } },
+    { "name": "Group", "endpoint": "GET /paths/groups", "shape": { "id": "string", "name": "string", "description": "string", "order": "number" } },
+    { "name": "WordItem", "endpoint": "GET /word-sets/:id/vocabularies", "shape": { "id": "string", "term": "string", "meaning": "string", "pronunciation": "string", "partOfSpeech": "string", "example": "string", "learned": "boolean", "srsLevel": "number" } },
+    { "name": "Vocab", "endpoint": "GET /vocabularies", "shape": { "id": "string", "term": "string", "meaning": "string", "pronunciation": "string?", "partOfSpeech": "string?", "example": "string?", "isLearned": "boolean", "categoryId": "string|null" } },
+    { "name": "Category", "endpoint": "GET /categories", "shape": { "id": "string", "name": "string", "description": "string", "icon": "string", "userId": "string", "ispublic": "boolean", "wordCount": "number", "user": "{ name: string }" } },
+    { "name": "Activity", "endpoint": "GET /activity/calendar", "shape": { "currentStreak": "number", "calendar": "Array<{date,count}>", "leaderboard": "Array<{user,activityCount}>" } }
+  ],
+  "contentGaps": [
+    "No active LessonPage.tsx",
+    "No active /lessons/:lessonId route",
+    "No lesson progress persistence",
+    "No lesson section components",
+    "No local lesson -> API/SRS adapter",
+    "No audio file pipeline",
+    "No speech recognition scoring",
+    "No route for /categories/:id despite category card links",
+    "Home currently renders API paths, not local p-english units"
+  ],
+  "recommendedNextSteps": [
+    "Create read-only LessonPage.tsx that loads getLessonById from local data",
+    "Add /lessons/:lessonId route in App.tsx",
+    "Render Unit 1 sections without mutating API/backend",
+    "Add Home CTA or local P-English unit section linking to /lessons/unit-1-greetings-introduction",
+    "Add localStorage progress for flashcard/quiz/listening/reflex completion",
+    "Add adapters from EnglishLesson to practice modes",
+    "Connect PracticePage query params to lesson modes",
+    "Connect GamesPage query params to lesson game tasks",
+    "Only after frontend proof, design backend lesson progress schema"
+  ],
+  "filesToSendBack": [
+    "apps/web/src/lib/p-english/lesson-content-data.ts",
+    "apps/web/src/lib/p-english/learning-path-data.ts",
+    "apps/web/src/App.tsx",
+    "apps/web/src/pages/HomePage.tsx",
+    "apps/web/src/pages/StudyPage.tsx",
+    "apps/web/src/pages/PracticePage.tsx",
+    "apps/web/src/pages/GamesPage.tsx",
+    "apps/web/src/pages/VocabPage.tsx",
+    "apps/web/src/components/Sidebar.tsx",
+    "apps/web/src/components/Topbar.tsx",
+    "apps/web/src/components/BottomNav.tsx",
+    "apps/web/src/api.ts",
+    "apps/api/src/main.ts relevant AppState/path/vocab/activity sections",
+    "apps/api/data/state.json small samples only",
+    "docs/P_ENGLISH_LESSON_DEVELOPMENT_CONTEXT.md",
+    "docs/P_ENGLISH_LESSON_DEVELOPMENT_CONTEXT.json",
+    "docs/P_ENGLISH_SOURCE_SNAPSHOT_FOR_CHATGPT.md"
+  ],
+  "buildStatus": {
+    "command": "npm run build",
+    "apiBuild": "pass",
+    "webBuild": "fail",
+    "knownPreExistingError": true,
+    "error": "[vite:html-inline-proxy] Could not load C:/Users/PC/OneDrive/P-English/Luyen Tu/apps/web/index.html?html-proxy&inline-css&index=0.css (imported by index.html): No matching HTML proxy module found",
+    "scopeDecision": "documented only; did not alter Vite/index/build pipeline"
+  }
+}

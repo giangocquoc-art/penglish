@@ -1,0 +1,274 @@
+﻿You are working in:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Continue the P-English GitHub Source Replacement master task.
+
+CURRENT PHASE:
+PHASE 9 — Rebuild dashboard, progress, and whale UI.
+
+IMPORTANT CONTEXT:
+Completed phases:
+- Phase 1 audit: reports/master-01-feature-audit.md
+- Phase 2 real GitHub integration plan: reports/master-02-real-github-integration-plan.md
+- Phase 3 vocabulary/flashcards: reports/master-03-vocabulary-flashcards.md
+- Phase 4 grammar: reports/master-04-grammar.md
+- Phase 5 reading/sentence practice: reports/master-05-reading.md
+- Phase 6 shadowing: reports/master-06-shadowing.md
+- Phase 6B extra repo/resource expansion: reports/master-06b-extra-repo-expansion.md
+- Phase 7 English Speed / pronunciation: reports/master-07-english-speed-pronunciation.md
+- Phase 8 unified lesson engine: reports/master-08-unified-lesson-engine.md
+
+Phase 8 created:
+- apps/web/src/data/learning/generatedUnifiedLearningPath.ts
+- apps/web/src/lib/p-english/unifiedLessonEngine.ts
+
+Phase 8 also updated:
+- learning-path-data.ts
+- learning-progress-summary.ts
+- lesson-progress.ts
+- HomePage.tsx
+- LearningPathPage.tsx
+- LessonPage.tsx
+- PracticePage.tsx
+
+Do not redo previous phases unless needed to fix UI integration.
+
+MAIN GOAL:
+Make the app feel like a coherent P-English learning product:
+- stronger dashboard
+- clearer CEFR progress
+- clearer skill coverage
+- more meaningful whale coaching
+- more polished ocean/glass visual system
+- dynamic guided lesson flow based on available modes
+- screenshots for visual QA
+
+Hard constraints:
+- Runtime app must not depend on external-sources.
+- Keep Vietnamese-first learner UI.
+- Keep ocean / whale / glass identity.
+- Use GSAP where practical for whale/ocean/page motion, but avoid over-animation.
+- Respect reduced-motion accessibility.
+- Clean up GSAP animations on unmount.
+- Do not require paid API keys.
+- Do not bundle copyrighted media/audio/text.
+- Use PowerShell-compatible commands.
+- Do not run taskkill.
+- Do not close VS Code.
+- Do not make learner UI noisy with repo/license details.
+- Keep mobile-first layout.
+- Do not create clutter.
+
+TASK 1 — Audit current UI state
+
+Inspect:
+- apps/web/src/pages/HomePage.tsx
+- apps/web/src/pages/LearningPathPage.tsx
+- apps/web/src/pages/LessonPage.tsx
+- apps/web/src/pages/PracticePage.tsx
+- apps/web/src/lib/p-english/unifiedLessonEngine.ts
+- apps/web/src/lib/p-english/learning-progress-summary.ts
+- apps/web/src/lib/p-english/lesson-progress.ts
+- existing whale/ocean components if present
+- existing CSS files used by the web app
+
+Identify:
+- which dashboard cards feel duplicated
+- which progress numbers are unclear
+- where whale UI is decorative only
+- where guided lesson flow still uses static steps
+- where generated modules are not visually connected yet
+
+TASK 2 — Create or improve unified dashboard components
+
+Create components if helpful:
+- apps/web/src/components/p-english/UnifiedProgressRing.tsx
+- apps/web/src/components/p-english/SkillCoverageGrid.tsx
+- apps/web/src/components/p-english/WhaleCoachCard.tsx
+- apps/web/src/components/p-english/CefrJourneyMap.tsx
+- apps/web/src/components/p-english/DynamicGuidedLessonFlow.tsx
+
+If similar components already exist, update existing ones instead of duplicating.
+
+Required UI behavior:
+- Show current CEFR level from unified engine.
+- Show path percentage.
+- Show next recommended action with a clear button.
+- Show skill coverage:
+  - Từ vựng
+  - Ngữ pháp
+  - Đọc
+  - Shadowing
+  - Phát âm
+  - Ôn tập
+- Show confidence goal / whale coach line from unified engine.
+- Make weak/incomplete areas feel encouraging, not negative.
+- Keep copy short and Vietnamese-first.
+- Use glass/ocean styling consistent with current app.
+- Mobile should stack cleanly.
+
+TASK 3 — Make whale coaching meaningful
+
+Use data from:
+- getUnifiedDashboardSnapshot()
+- getUnifiedSkillCoverage()
+- getUnifiedProgressSummary()
+- getAvailableLessonProgressModes()
+- local progress/streak if available
+
+Whale UI should:
+- recommend the next action
+- comment on streak/progress
+- mention the current weak or next skill
+- avoid annoying movement near cursor
+- move subtly in background only
+- support reduced motion
+- never cover important text/buttons
+
+If GSAP is available:
+- use subtle floating/bobbing animation
+- use timeline cleanup
+- respect reduced motion
+
+If GSAP is not available:
+- use CSS animation with prefers-reduced-motion fallback.
+
+TASK 4 — Dynamic guided lesson flow
+
+Phase 8 report says GuidedLessonFlow still has static step labels and static step modes.
+
+Fix this.
+
+In LessonPage or a new component:
+- Generate lesson flow steps from getAvailableLessonProgressModes(lesson).
+- Only show modes that actually have data.
+- Label modes in Vietnamese:
+  - flashcard: Flashcard
+  - quiz: Quiz
+  - listen: Luyện nghe
+  - reflex: Phản xạ
+  - type: Gõ câu
+  - match: Ghép cặp
+  - speed: Tốc độ / phát âm if relevant
+- CTA buttons should route only to valid modes.
+- If no practice mode exists, show a friendly fallback to /learning-path or relevant hub.
+- Keep existing routes working.
+- Do not break /practice?lessonId=...&mode=typing legacy normalization.
+
+TASK 5 — Improve HomePage
+
+Update HomePage to use unified dashboard data more clearly.
+
+Required:
+- Replace scattered/duplicated cards with a clean hierarchy:
+  1. Hero: current level + next action
+  2. Progress: CEFR/path percentage
+  3. Skills: coverage grid
+  4. Whale coach: next helpful suggestion
+  5. Quick actions: vocabulary, learning path, shadowing, pronunciation, resources
+- Keep /english-speed, /vocabularies, /shadowing, /resources links valid.
+- Remove old placeholder/source wording if still present.
+- Avoid too many buttons in one area.
+- Make mobile clean.
+
+TASK 6 — Improve LearningPathPage
+
+Update LearningPathPage if needed:
+- Show CEFR journey clearly.
+- Group or visually label A1/A2/B1/B2 units.
+- Skill focus badges should be easy to scan.
+- Hub fallback units such as vocabulary/shadowing/pronunciation should still route correctly.
+- Cards should not look like broken lesson cards when they point to a hub.
+- Keep Vietnamese-first copy.
+
+TASK 7 — Progress visualization
+
+Improve progress visualization using existing local progress only.
+
+Do not add backend dependency.
+
+Show:
+- total path percentage
+- completed units / total units
+- current level
+- next unit title
+- streak if available
+- skill coverage counts
+
+Do not fake completed data.
+If progress is unknown, show calm “bắt đầu từ đây” copy.
+
+TASK 8 — Screenshot QA
+
+After implementation, run the app and capture screenshots.
+
+Use Chrome DevTools MCP if available. If not available, use an existing Playwright/script approach if present. If neither is available, document clearly.
+
+Screenshots must be saved under:
+reports/screenshots
+
+Required screenshots:
+1. home-dashboard-phase-09.png
+2. learning-path-phase-09.png
+3. lesson-dynamic-flow-phase-09.png
+4. practice-unavailable-mode-fallback-phase-09.png
+5. english-speed-card-or-route-phase-09.png
+
+If a screenshot cannot be captured, document exactly why in the report.
+
+TASK 9 — Report
+
+Create:
+reports/master-09-dashboard-progress-whale-ui.md
+
+Report must include:
+- Status
+- Files inspected
+- Files created
+- Files updated
+- Dashboard changes
+- LearningPath changes
+- Dynamic guided flow changes
+- Whale coaching changes
+- GSAP/CSS animation notes
+- Reduced-motion/accessibility notes
+- Progress visualization behavior
+- Route compatibility
+- Screenshot paths
+- Validation results
+- Risks and follow-up
+- Next phase: Phase 10 keyboard UX and accessibility cleanup
+
+TASK 10 — Validation
+
+Before validation:
+cd "C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH"
+
+Run:
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+
+If errors appear:
+- fix them
+- rerun typecheck
+
+Run:
+npm.cmd run build
+
+If build fails:
+- fix if practical
+- rerun build
+- document exact blocker if blocked
+
+Git status:
+Run:
+git rev-parse --show-toplevel
+
+If it fails:
+- document that root Git repo is not available from this working directory
+- do not treat it as build blocker
+
+Then run:
+git status --short
+
+Do not stop after planning.
+Implement the UI, capture screenshots, validate, build, create report, and summarize final result.

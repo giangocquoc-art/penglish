@@ -1,0 +1,143 @@
+﻿You are working in:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+RECOVERY TASK:
+Finish Phase 9 only. Do NOT redo the whole implementation.
+
+The previous Phase 9 task partially succeeded but Cline stopped with:
+"Too many consecutive mistakes (3)"
+
+Current known status:
+- Phase 9 dashboard/progress/whale UI implementation appears to be mostly done.
+- Typecheck/build may have been run already.
+- Local app server is available at:
+  http://127.0.0.1:5175/
+- Some screenshots already exist under:
+  reports/screenshots
+- Existing screenshots include:
+  home-dashboard-phase-09.png
+  learning-path-phase-09.png
+
+Your job:
+1. Inspect the current files changed by Phase 9.
+2. Do not rewrite large UI sections unless a real error is found.
+3. Finish browser QA on the valid local app URL.
+4. Capture only missing screenshots.
+5. Create the final Phase 9 report.
+6. Run final validation.
+7. Summarize completion.
+
+Important:
+- Do not run taskkill.
+- Do not close VS Code.
+- Do not restart the whole implementation unless necessary.
+- Use PowerShell-compatible commands.
+- Runtime app must not depend on external-sources.
+- Keep Vietnamese-first UI.
+- Keep ocean/whale/glass identity.
+- Do not show noisy repo/license text in learner UI.
+
+Step 1 — Inspect current status
+
+Run or inspect:
+- reports/screenshots
+- apps/web/src/pages/HomePage.tsx
+- apps/web/src/pages/LearningPathPage.tsx
+- apps/web/src/pages/LessonPage.tsx
+- apps/web/src/pages/PracticePage.tsx
+- apps/web/src/components/p-english/DynamicGuidedLessonFlow.tsx if present
+- reports/master-09-dashboard-progress-whale-ui.md if present
+
+Step 2 — Check local server
+
+Use:
+curl.exe -I http://127.0.0.1:5175/
+
+If it returns 200, use this URL for QA.
+If it fails, start the web app safely with:
+npm.cmd --workspace @pshare/web run dev -- --host 127.0.0.1 --port 5175
+
+Do not pass the port incorrectly as a positional root argument.
+
+Step 3 — Finish screenshots
+
+Save screenshots under:
+reports/screenshots
+
+Required screenshots:
+- home-dashboard-phase-09.png
+- learning-path-phase-09.png
+- lesson-dynamic-flow-phase-09.png
+- practice-unavailable-mode-fallback-phase-09.png
+- english-speed-card-or-route-phase-09.png
+
+If some already exist, do not recapture unless broken.
+
+Use Chrome DevTools MCP or Playwright MCP if available.
+If screenshot tool cannot write directly to the repo path, save to the MCP allowed screenshot directory and then copy the file into:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH\reports\screenshots
+
+If a screenshot cannot be captured, document the exact reason in the report and continue.
+
+Suggested routes:
+- Home:
+  http://127.0.0.1:5175/home
+- Learning path:
+  http://127.0.0.1:5175/learning-path
+- Lesson dynamic flow:
+  use one valid lesson route from generated grammar or reading, for example inspect lesson ids first from generated data, then open /lessons/<id>
+- Practice unavailable fallback:
+  use a generated lesson id with an unavailable mode, for example /practice?lessonId=<validLessonId>&mode=listen if listen is unavailable
+- English Speed:
+  http://127.0.0.1:5175/english-speed
+
+Step 4 — Final validation
+
+Run:
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+
+Then:
+npm.cmd run build
+
+If errors appear:
+- fix only necessary errors
+- rerun validation
+- do not do a broad redesign
+
+Step 5 — Git status handling
+
+Run:
+git rev-parse --show-toplevel
+
+If it fails:
+- document root Git repo unavailable
+- do not treat it as build blocker
+
+Then run:
+git status --short
+
+Step 6 — Create/update report
+
+Create or update:
+reports/master-09-dashboard-progress-whale-ui.md
+
+Report must include:
+- Status
+- Files inspected
+- Files created
+- Files updated
+- Dashboard changes
+- LearningPath changes
+- Dynamic guided flow changes
+- Whale coaching changes
+- GSAP/CSS animation notes
+- Reduced-motion/accessibility notes
+- Progress visualization behavior
+- Route compatibility
+- Screenshot paths
+- Validation results
+- Risks and follow-up
+- Next phase: Phase 10 keyboard UX and accessibility cleanup
+
+Do not stop silently.
+Finish the report even if some screenshots fail.

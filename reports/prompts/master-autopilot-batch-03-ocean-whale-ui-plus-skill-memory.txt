@@ -1,0 +1,341 @@
+﻿You are working in:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+MASTER AUTOPILOT CONTINUATION:
+Continue after Master Autopilot Practice Experience Upgrade / Batch 2.
+
+CURRENT BATCH:
+Batch 3 — Original Ocean Whale UI Full Upgrade + Local Skill Memory Dashboard Integration.
+
+IMPORTANT CONTEXT:
+Batch 2 created:
+- apps/web/src/lib/p-english/localSkillMemory.ts
+- apps/web/src/lib/p-english/practiceSessionFeedback.ts
+
+Batch 2 integrated local-first session memory and compact Vietnamese feedback into:
+- LessonFlashcardPractice
+- LessonQuizPractice
+- LessonTypingPractice
+- LessonMatchPractice
+- LessonSpeedPractice
+- LessonListeningPractice
+- LessonReflexPractice
+
+Batch 2 report:
+- reports/master-autopilot-practice-experience-upgrade.md
+
+Batch 2 recommended next:
+- Add a lightweight dashboard widget that reads getRecentPracticeSessions() and shows recent local practice streak / skill averages.
+- Add Chrome QA for completion screens.
+- Consider sharing the feedback-card UI as a reusable component to reduce duplicated JSX.
+- Continue the stronger Ocean / Whale UI direction.
+
+DO NOT redo Batch 2.
+DO NOT remove local skill memory.
+DO NOT rewrite working practice logic unless fixing a real bug.
+
+AVAILABLE MCP STRATEGY:
+Use available MCP tools where helpful:
+- sequential-thinking for planning before large edits
+- context7 for React / Chakra / GSAP / Framer Motion / Playwright docs if needed
+- chrome-devtools for live UI inspection, console/network checks, screenshots
+- playwright for screenshot automation and viewport QA
+- filesystem tools for safe inspection/editing
+- repomix / serena / ast-grep for large-code understanding and safe refactors
+
+HARD CONSTRAINTS:
+- Do not run taskkill.
+- Do not close VS Code.
+- Do not require paid API keys.
+- Do not add OpenAI/Azure/Firebase/Replicate dependency.
+- Do not require backend to use learner-facing P-English features.
+- Runtime app must not import from external-sources.
+- Do not bundle copyrighted media/audio/video/text.
+- Keep learner UI Vietnamese-first.
+- Keep English only inside learning/practice content.
+- Keep ocean / whale / glass identity.
+- Do not clutter UI.
+- Mobile-first.
+- Respect reduced-motion.
+- Clean up GSAP animations on unmount.
+- Whale must not chase cursor, must not cover buttons/text, and must move subtly only.
+
+TASK 1 — Inspect current state
+
+Read if present:
+- reports/master-autopilot-practice-experience-upgrade.md
+- reports/master-09-dashboard-progress-whale-ui.md
+- reports/master-10-keyboard-accessibility.md
+- reports/master-08-unified-lesson-engine.md
+
+Inspect:
+- apps/web/src/lib/p-english/localSkillMemory.ts
+- apps/web/src/lib/p-english/practiceSessionFeedback.ts
+- apps/web/src/lib/p-english/unifiedLessonEngine.ts
+- apps/web/src/lib/p-english/learning-progress-summary.ts
+- apps/web/src/pages/HomePage.tsx
+- apps/web/src/pages/LearningPathPage.tsx
+- apps/web/src/pages/LessonPage.tsx
+- apps/web/src/pages/PracticePage.tsx
+- apps/web/src/pages/VocabPage.tsx
+- apps/web/src/pages/ShadowingPage.tsx
+- apps/web/src/pages/EnglishSpeedPage.tsx
+- apps/web/src/pages/ResourceHubPage.tsx
+- apps/web/src/components/p-english/*
+- apps/web/src/components/practice/*
+- apps/web/src/styles.css
+- apps/web/src/index.css
+- package.json for gsap/framer/playwright availability
+
+TASK 2 — Add dashboard widget from local skill memory
+
+Goal:
+Make the new Batch 2 local memory visible and useful on the dashboard.
+
+Create component if helpful:
+- apps/web/src/components/p-english/RecentPracticeMemoryCard.tsx
+
+Use local skill memory helpers from:
+- apps/web/src/lib/p-english/localSkillMemory.ts
+
+The widget should show:
+- recent practice sessions
+- average by skill or mode when available
+- last practiced mode/skill
+- weak-item count if available
+- gentle Vietnamese next suggestion
+- a clear button to continue learning
+
+Copy tone:
+- encouraging
+- not negative
+- short
+- Vietnamese-first
+- no fake mastery
+
+Empty state:
+If no local sessions exist, show calm copy:
+“Bạn chưa có dữ liệu luyện gần đây. Bắt đầu một bài ngắn để cá voi ghi nhớ nhịp học của bạn.”
+
+Wire into:
+- HomePage.tsx
+
+Do not make HomePage cluttered.
+Place it near progress / whale coach / next action area.
+
+TASK 3 — Optional reusable practice feedback component
+
+Batch 2 likely duplicated compact feedback card JSX across practice components.
+
+If duplication is obvious and safe to refactor:
+Create:
+- apps/web/src/components/practice/PracticeSessionFeedbackCard.tsx
+
+Use it in the practice components that currently display session feedback.
+
+Rules:
+- Keep behavior identical.
+- Do not break keyboard flow.
+- Do not create broad churn if current duplication is small or risky.
+- If skipped, document why.
+
+TASK 4 — Original Ocean Whale UI full upgrade
+
+Goal:
+Push the UI closer to the user's original vision now that logic is stable.
+
+Visual direction:
+- bright ocean / sky / learning island feeling
+- soft blue/cyan gradients
+- subtle clouds, waves, bubbles, light rays
+- glassmorphism widgets
+- rounded cards
+- clean spacing
+- readable Vietnamese copy
+- app-like mobile layout
+- whale as a calm companion, not decoration only
+
+Create/update shared UI components if helpful:
+- apps/web/src/components/p-english/OceanBackdrop.tsx
+- apps/web/src/components/p-english/GlassLearningCard.tsx
+- apps/web/src/components/p-english/WhaleCompanion.tsx
+- apps/web/src/components/p-english/PEnglishPageShell.tsx
+- apps/web/src/components/p-english/ConfidenceBadge.tsx
+- apps/web/src/components/p-english/NextActionPanel.tsx
+
+If similar components already exist, improve existing ones instead of duplicating.
+
+Apply consistent page visual shell to:
+- HomePage
+- LearningPathPage
+- LessonPage
+- PracticePage fallback/lesson mode wrapper if practical
+- VocabPage
+- ShadowingPage
+- EnglishSpeedPage
+- ResourceHubPage
+
+Keep current routes:
+- /home
+- /learning-path
+- /lessons/:lessonId
+- /practice
+- /vocabularies
+- /words
+- /shadowing
+- /english-speed
+- /resources
+
+Whale rules:
+- no aggressive cursor chasing
+- no sitting too close to cursor
+- subtle float/swim only
+- cap size
+- never cover text/buttons
+- reduced-motion support
+- cleanup GSAP timelines
+- baby whales are optional only if simple and non-cluttering
+
+TASK 5 — Improve lesson/practice visual consistency
+
+Do small safe UI polish:
+- practice summary cards should visually match ocean/glass theme
+- unavailable practice fallback should look intentional, not broken
+- LessonPage dynamic guided flow should feel connected to the ocean path
+- EnglishSpeed manual fallback should be visually calm and clear
+- Shadowing transcript/record area should feel like a focused practice panel
+- Vocab review should feel like part of the same product, not a separate table
+
+Do not rewrite core logic.
+Do not make the UI busy.
+
+TASK 6 — Browser QA and screenshots
+
+Use local dev server:
+http://127.0.0.1:5175/
+
+Check:
+curl.exe -I http://127.0.0.1:5175/
+
+If not available, start safely:
+npm.cmd --workspace @pshare/web run dev -- --host 127.0.0.1 --port 5175
+
+Use Chrome DevTools MCP or Playwright MCP if available.
+
+QA routes:
+- /home
+- /learning-path
+- /lessons/unit-1-greetings-introduction
+- one generated grammar lesson route
+- one generated reading lesson route
+- /practice?lessonId=reading-a1-my-morning&mode=quiz
+- /practice?lessonId=reading-a1-my-morning&mode=listen
+- /practice?lessonId=reading-a1-my-morning&mode=typing
+- /practice?lessonId=reading-a1-my-morning&mode=unknown
+- /vocabularies
+- /shadowing
+- /english-speed
+- /resources
+
+Check:
+- route loads
+- page does not crash
+- console errors
+- network errors
+- mobile viewport
+- whale does not cover UI
+- keyboard basics still work
+- reduced-motion if practical
+- local skill memory card handles empty state and existing sessions
+- practice feedback card still appears after completion if practical to test
+
+Screenshots:
+Save under:
+reports/screenshots
+
+Required:
+- autopilot-batch03-home-ocean-memory.png
+- autopilot-batch03-learning-path-ocean.png
+- autopilot-batch03-lesson-ocean.png
+- autopilot-batch03-practice-ocean.png
+- autopilot-batch03-vocab-ocean.png
+- autopilot-batch03-shadowing-ocean.png
+- autopilot-batch03-english-speed-ocean.png
+- autopilot-batch03-resources-ocean.png
+- autopilot-batch03-mobile-home-ocean.png
+
+TASK 7 — Validation
+
+Run from project root:
+cd "C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH"
+
+Run:
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+
+Fix errors if any, then rerun.
+
+Run:
+npm.cmd run build
+
+If build fails:
+- fix practical issues
+- rerun build
+- document blocker if blocked
+
+Optional if still relevant:
+npm.cmd run validate:lessons
+
+If validate:lessons fails due old schema or unrelated issue:
+- document exact output
+- do not treat as blocker unless current learner routes fail
+
+Git handling:
+Run:
+git rev-parse --show-toplevel
+
+If it fails:
+- document root Git repo unavailable
+- do not treat as blocker
+- search nested .git folders if useful:
+  Get-ChildItem -Path . -Directory -Force -Recurse -Filter ".git" -ErrorAction SilentlyContinue | Select-Object -First 20 FullName
+
+Then run:
+git status --short if possible.
+
+TASK 8 — Reports
+
+Create:
+reports/master-autopilot-ocean-whale-ui-upgrade.md
+
+Report must include:
+- Status
+- Files inspected
+- Files created
+- Files updated
+- Local skill memory dashboard integration
+- Reusable feedback card decision
+- Ocean/whale UI changes
+- Pages updated
+- GSAP/CSS animation notes
+- Reduced-motion notes
+- Route compatibility
+- Browser QA notes
+- Screenshot paths
+- TypeScript result
+- Build result
+- validate:lessons result if run
+- Git status handling
+- Risks and follow-up
+- Next recommended batch
+
+Also create/update a shorter batch handoff:
+reports/master-autopilot-batch03-handoff.md
+
+The handoff should say what the next batch should do:
+- full QA and console/network cleanup
+- investigate localhost:8080 refused calls
+- improve Resource Hub/dictionary/CEFR usage if safe
+- final consolidated report after QA
+
+Do not stop after planning.
+Implement, QA, screenshot, validate, and report.

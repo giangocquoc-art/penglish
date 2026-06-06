@@ -1,0 +1,315 @@
+{
+  "baseUrl": "http://127.0.0.1:5180",
+  "checkedAt": "2026-06-05T15:25:03.174Z",
+  "routeResults": [
+    {
+      "name": "home-desktop",
+      "route": "/home",
+      "width": 1440,
+      "height": 900,
+      "screenshot": "reports/screenshots/phase2-home-desktop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1440,
+        "htmlClientWidth": 1440,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "home-laptop",
+      "route": "/home",
+      "width": 1366,
+      "height": 768,
+      "screenshot": "reports/screenshots/phase2-home-laptop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1366,
+        "htmlClientWidth": 1366,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "home-mobile",
+      "route": "/home",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase2-home-mobile.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "learning-path-desktop",
+      "route": "/learning-path",
+      "width": 1440,
+      "height": 900,
+      "screenshot": "reports/screenshots/phase2-learning-path-desktop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1440,
+        "htmlClientWidth": 1440,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "learning-path-laptop",
+      "route": "/learning-path",
+      "width": 1366,
+      "height": 768,
+      "screenshot": "reports/screenshots/phase2-learning-path-laptop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1366,
+        "htmlClientWidth": 1366,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "learning-path-mobile",
+      "route": "/learning-path",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase2-learning-path-mobile.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "foundation48-desktop",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc",
+      "width": 1440,
+      "height": 900,
+      "screenshot": "reports/screenshots/phase2-foundation48-desktop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1440,
+        "htmlClientWidth": 1440,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "foundation48-laptop",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc",
+      "width": 1366,
+      "height": 768,
+      "screenshot": "reports/screenshots/phase2-foundation48-laptop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1366,
+        "htmlClientWidth": 1366,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "foundation48-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase2-foundation48-mobile.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "english-speed-desktop",
+      "route": "/english-speed",
+      "width": 1440,
+      "height": 900,
+      "screenshot": "reports/screenshots/phase2-english-speed-desktop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1440,
+        "htmlClientWidth": 1440,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "english-speed-laptop",
+      "route": "/english-speed",
+      "width": 1366,
+      "height": 768,
+      "screenshot": "reports/screenshots/phase2-english-speed-laptop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1366,
+        "htmlClientWidth": 1366,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "english-speed-mobile",
+      "route": "/english-speed",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase2-english-speed-mobile.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "shadowing-desktop",
+      "route": "/shadowing",
+      "width": 1440,
+      "height": 900,
+      "screenshot": "reports/screenshots/phase2-shadowing-desktop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1440,
+        "htmlClientWidth": 1440,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "shadowing-laptop",
+      "route": "/shadowing",
+      "width": 1366,
+      "height": 768,
+      "screenshot": "reports/screenshots/phase2-shadowing-laptop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1366,
+        "htmlClientWidth": 1366,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "shadowing-mobile",
+      "route": "/shadowing",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase2-shadowing-mobile.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "practice-desktop",
+      "route": "/practice",
+      "width": 1440,
+      "height": 900,
+      "screenshot": "reports/screenshots/phase2-practice-desktop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1440,
+        "htmlClientWidth": 1440,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "practice-laptop",
+      "route": "/practice",
+      "width": 1366,
+      "height": 768,
+      "screenshot": "reports/screenshots/phase2-practice-laptop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1366,
+        "htmlClientWidth": 1366,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "practice-mobile",
+      "route": "/practice",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase2-practice-mobile.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "words-desktop",
+      "route": "/words",
+      "width": 1440,
+      "height": 900,
+      "screenshot": "reports/screenshots/phase2-words-desktop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1440,
+        "htmlClientWidth": 1440,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "words-laptop",
+      "route": "/words",
+      "width": 1366,
+      "height": 768,
+      "screenshot": "reports/screenshots/phase2-words-laptop.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 1366,
+        "htmlClientWidth": 1366,
+        "hasHorizontalOverflow": false
+      }
+    },
+    {
+      "name": "words-mobile",
+      "route": "/words",
+      "width": 390,
+      "height": 844,
+      "screenshot": "reports/screenshots/phase2-words-mobile.png",
+      "text": {},
+      "status": 200,
+      "overflow": {
+        "bodyScrollWidth": 390,
+        "htmlClientWidth": 390,
+        "hasHorizontalOverflow": false
+      }
+    }
+  ],
+  "interactiveLesson": {
+    "route": "/learning-path/lesson/path-a1-greetings-core/path-a1-greetings-core-flashcard-0",
+    "screenshot": "reports/screenshots/phase2-learning-path-completed-lesson.png"
+  },
+  "foundation48DayOne": {
+    "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/1",
+    "screenshot": "reports/screenshots/phase2-foundation48-day1-lesson.png"
+  },
+  "shadowingAdvanced": {
+    "advancedTranscriptCollapsed": true,
+    "screenshot": "reports/screenshots/phase2-shadowing-collapsed-advanced.png"
+  },
+  "consoleErrors": [],
+  "failedRequests": [],
+  "errors": []
+}

@@ -1,0 +1,294 @@
+﻿You are working in:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+CLINE LESSON DEVELOPMENT — PART L1R:
+Vocabulary / Flashcard Review Fix.
+
+IMPORTANT:
+L1 is NOT approved yet.
+Do NOT continue to L2 Grammar.
+Do NOT redesign the whole app.
+Do NOT change unrelated pages.
+This is a focused review-fix pass for Vocabulary / Flashcard only.
+
+==================================================
+FIRST-USER REVIEW RESULT
+==================================================
+
+The reviewer says L1 improved the vocabulary area, but it is not approved yet.
+
+Good progress:
+- Vocabulary page now has clearer A1–B2 grouping.
+- CEFR/topic cards are useful.
+- Flashcard and Match flows load.
+- Ocean/glass shell is consistent.
+
+Problems to fix before approval:
+
+1. Search/filter bug:
+   - Searching "hello" on the Vocabulary page currently shows:
+     "Không có từ khớp bộ lọc"
+   - For an A1 vocabulary page, this feels wrong and damages user trust.
+   - Search must match common A1 words reliably.
+
+2. Vocabulary page action clarity:
+   - The page still feels more like a statistics dashboard than a learning surface.
+   - The main learning actions should be clearer:
+     - Học nhóm này
+     - Ôn từ yếu
+     - Bắt đầu flashcard
+     - Ghép cặp
+   - Do not add clutter.
+
+3. Flashcard / Match connection:
+   - Users should feel they are learning vocabulary, not accidentally entering a Reading lesson flow.
+   - Keep route compatibility, but improve labels/copy so vocabulary practice feels intentional.
+
+4. Loading fallback:
+   - “Đang mở vùng học P-English...” appears as a very empty full screen.
+   - Make the route loading fallback feel less blank and more branded if it appears.
+   - Keep it lightweight.
+
+==================================================
+USER RULES
+==================================================
+
+RULE 1:
+Keep following the original idea: each learning part should be developed from downloaded repos as much as safely possible.
+For L1R, continue using:
+- external-sources/words-cefr-dataset
+- external-sources/olp-en-cefrj
+- external-sources/candidates/english-dictionary-open-source only for tiny app-authored hints if already done safely
+
+Do not import runtime code/data from external-sources.
+
+RULE 2:
+Work only on Vocabulary / Flashcard review fix.
+Do not touch Grammar, Reading, Shadowing, English Speed, Resource Hub, or global UI except the shared loading fallback if necessary.
+
+RULE 3:
+Stop after this fix for human review.
+
+RULE 4:
+Use MCPs well:
+- sequential-thinking for diagnosis plan
+- ast-grep to find search/filter logic and vocab selectors
+- filesystem for precise edits
+- chrome-devtools/playwright for browser QA and screenshots
+- context7 only if needed
+- repomix/serena only if useful for code understanding
+
+==================================================
+TASK 1 — Inspect current L1 changes
+==================================================
+
+Read if present:
+- reports/cline-l1-vocabulary-learning-upgrade.md
+- reports/cline-l1-handoff.md
+- reports/cline-l1-vocabulary-source-audit.md
+
+Inspect:
+- apps/web/src/pages/VocabPage.tsx
+- apps/web/src/data/vocabulary/generatedCefrVocabulary.ts
+- apps/web/src/data/vocabulary/vocabularyLearningGroups.ts if present
+- apps/web/src/data/dictionary/curatedDictionaryHints.ts if present
+- apps/web/src/lib/p-english/vocabularyAdapter.ts
+- apps/web/src/lib/p-english/vocabularyLearningEngine.ts if present
+- apps/web/src/lib/p-english/vocabulary-review.ts
+- apps/web/src/components/practice/LessonFlashcardPractice.tsx
+- apps/web/src/components/practice/LessonMatchPractice.tsx
+- apps/web/src/pages/PracticePage.tsx
+- apps/web/src/App.tsx or loading fallback component if route fallback is there
+
+==================================================
+TASK 2 — Fix Vocabulary search/filter reliability
+==================================================
+
+Investigate why searching "hello" with A1/filter state returns no result.
+
+Fix search so it matches at least:
+- word text
+- Vietnamese meaning if available
+- simple English meaning if available
+- examples if available
+- aliases/synonyms if present
+- normalized lowercase text
+
+Requirements:
+- Searching "hello" should show relevant A1 result(s), or at minimum a helpful suggestion if the exact word is not in the imported dataset.
+- Searching common A1 words should work:
+  - hello
+  - morning
+  - school
+  - family
+  - water
+  - food
+  - go
+  - study
+- Filters should not unexpectedly hide obvious search results.
+- If CEFR filter conflicts with search, show a helpful Vietnamese note or allow “all levels” suggestion.
+- Empty state should be useful:
+  - “Không thấy từ này trong bộ lọc hiện tại. Thử Tất cả cấp độ hoặc xóa bộ lọc.”
+- Keep existing data-testid selectors:
+  - vocab-search-input
+  - vocab-status-filter-all
+  - vocab-lesson-filter
+
+Add stable selectors only if useful.
+
+==================================================
+TASK 3 — Improve vocabulary learning actions
+==================================================
+
+Make VocabPage feel more like a learning module.
+
+Keep it simple:
+- Add or improve one clear “Bắt đầu học từ” primary action.
+- Add or improve “Ôn từ yếu” action.
+- Add or improve group action such as “Học nhóm A1 này”.
+- Add flashcard/match entry points if data supports them.
+- Avoid too many buttons per card.
+
+Copy should be Vietnamese-first and short.
+
+Suggested copy:
+- “Học nhóm này”
+- “Ôn từ yếu”
+- “Bắt đầu flashcard”
+- “Ghép nghĩa nhanh”
+
+Do not make the page visually heavier.
+
+==================================================
+TASK 4 — Make Flashcard / Match feel vocabulary-native
+==================================================
+
+If flashcard/match currently use a reading lesson route, keep compatibility but improve learner-facing copy so it is clear:
+- this is vocabulary practice,
+- the words are from a vocabulary group or reading vocabulary,
+- the goal is remembering word meaning and example usage.
+
+Fix if safe:
+- headings,
+- subheadings,
+- empty/fallback copy,
+- CTA labels,
+- completion feedback.
+
+Do not break PracticePage mode compatibility.
+
+==================================================
+TASK 5 — Improve route loading fallback lightly
+==================================================
+
+If the route fallback currently shows only:
+“Đang mở vùng học P-English...”
+on a blank screen, improve it lightly.
+
+Requirements:
+- still lightweight,
+- ocean/glass style,
+- maybe small whale/logo,
+- role=status and aria-live polite,
+- not heavy animation,
+- reduced-motion friendly.
+
+Do not overbuild.
+
+==================================================
+TASK 6 — Browser QA and screenshots
+==================================================
+
+Use production preview if available:
+http://127.0.0.1:4175/
+
+Otherwise use dev:
+http://127.0.0.1:5175/
+
+Do not run taskkill.
+
+QA:
+- /vocabularies
+- /words
+- /practice?lessonId=reading-a1-my-morning&mode=flashcard
+- /practice?lessonId=reading-a1-my-morning&mode=match
+- /practice?lessonId=reading-a1-my-morning&mode=does-not-exist
+
+Specific QA checks:
+- Search “hello” returns result or useful suggestion.
+- Search “morning” returns result.
+- A1 group is readable.
+- Empty state is useful.
+- Main learning actions are visible.
+- Mobile vocabulary page is readable.
+- Flashcard flow loads and copy is clear.
+- Match flow loads and copy is clear.
+- No failed requests.
+- No localhost:8080 requests.
+
+Required screenshots:
+- reports/screenshots/cline-l1r-vocab-search-hello-fixed.png
+- reports/screenshots/cline-l1r-vocab-search-morning.png
+- reports/screenshots/cline-l1r-vocab-actions.png
+- reports/screenshots/cline-l1r-vocab-mobile.png
+- reports/screenshots/cline-l1r-flashcard-copy.png
+- reports/screenshots/cline-l1r-match-copy.png
+- reports/screenshots/cline-l1r-loading-fallback.png
+
+==================================================
+TASK 7 — Validation
+==================================================
+
+Run:
+cd "C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH"
+
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+npm.cmd run validate:lessons
+npm.cmd run build
+
+If something fails:
+- fix practical issues
+- rerun
+- document exact blocker if unresolved
+
+==================================================
+TASK 8 — Report
+==================================================
+
+Create:
+reports/cline-l1r-vocabulary-review-fix.md
+
+Report must include:
+- Status
+- First-user issues fixed
+- Files inspected
+- Files updated
+- Search/filter root cause
+- Search/filter fix summary
+- Vocabulary action improvements
+- Flashcard/Match copy improvements
+- Loading fallback improvement
+- Browser QA notes
+- Screenshot paths
+- TypeScript result
+- validate:lessons result
+- Build result
+- Remaining risks
+- Human review checklist
+
+Create:
+reports/cline-l1r-handoff.md
+
+The handoff must say:
+- whether L1R is ready for human review
+- do not start L2 automatically
+- propose L2 only if reviewer approves
+
+==================================================
+STOP RULE
+==================================================
+
+After L1R:
+- STOP
+- do not continue to L2
+- wait for human review.

@@ -1,0 +1,36 @@
+﻿Task R10 — Keyboard UX, accessibility, and interaction cleanup.
+
+Working directory:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Goal:
+Make the learning app easier to use with keyboard and less confusing after the real repo/module replacement.
+
+Requirements:
+1. Audit all interactive learning screens:
+   - vocabulary
+   - grammar
+   - reading
+   - shadowing
+   - English Speed
+   - guided lesson
+   - completion/progress screen
+2. Add consistent keyboard behavior:
+   - Enter checks/submits/continues depending on context.
+   - Input auto-focuses after next question.
+   - 1/2/3/4 chooses multiple choice answers.
+   - A/B/C/D can choose answers where relevant.
+   - Arrow keys can navigate flashcards.
+3. Add tiny contextual keyboard hints without clutter.
+4. Fix focus states.
+5. Ensure buttons have accessible labels.
+6. Ensure reduced motion is respected for GSAP/CSS animations.
+7. Ensure no feature traps keyboard focus.
+8. Remove duplicate or confusing controls.
+
+Run:
+npx tsc -p apps/web/tsconfig.json --noEmit
+npm run build
+
+Create:
+reports/r10-keyboard-accessibility-cleanup.md

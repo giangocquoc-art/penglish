@@ -1,0 +1,8 @@
+﻿Before doing anything, read DESIGN.md from the project root and follow it.
+
+Do not redesign the whole app at once.
+Work in small reviewed phases.
+Keep the ocean/glass/one-whale identity.
+Keep Vietnamese-first and local-first behavior.
+Run validation and create screenshots/reports when UI changes.
+Stop for human review after the phase.

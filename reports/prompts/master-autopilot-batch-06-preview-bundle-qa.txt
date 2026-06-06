@@ -1,0 +1,323 @@
+﻿You are working in:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+MASTER AUTOPILOT CONTINUATION:
+Continue after Master Autopilot Batch 5.
+
+CURRENT BATCH:
+Batch 6 — Production Preview QA + Deeper Bundle Splitting + Stable QA Selectors.
+
+IMPORTANT CONTEXT:
+Batch 5 is complete.
+
+Read first:
+- reports/master-autopilot-batch05-resource-performance-polish.md
+- reports/master-autopilot-batch05-handoff.md
+- reports/batch05-browser-qa-results.json
+- reports/master-autopilot-batch04-layout-network-deep-qa.md
+- reports/master-autopilot-batch03-handoff.md
+- reports/master-10-keyboard-accessibility.md
+- reports/master-09-dashboard-progress-whale-ui.md
+- reports/master-08-unified-lesson-engine.md
+
+Batch 5 completed:
+- Resource Hub enriched with CEFR, skill filters, search, learner guidance.
+- CEFR learner milestones added for A1–B2.
+- Heavy P-English routes lazy-loaded.
+- Framer motion() deprecation fixed with motion.create().
+- Whale preload warning fixed by removing unused preload.
+- Browser QA result: failedRequests 0, localhost8080Requests 0.
+- TypeScript passed.
+- validate:lessons passed.
+- build passed.
+
+Known follow-ups:
+1. Main index chunk remains above Vite 500 kB warning.
+2. Need production preview QA, not only dev-server QA.
+3. Need stable test IDs/selectors for vocab and typing practice flows.
+4. Optional tiny typed A1/A2 dictionary hints using app-authored explanations only.
+5. Final consolidated product report after QA.
+
+HARD CONSTRAINTS:
+- Do not run taskkill.
+- Do not close VS Code.
+- Do not require paid API keys.
+- Do not add OpenAI/Azure/Firebase/Replicate dependency.
+- Do not require backend to use P-English learner features.
+- Runtime app must not import from external-sources.
+- Do not bundle copyrighted media/audio/video/text.
+- Keep learner UI Vietnamese-first.
+- Keep English only inside learning/practice content.
+- Keep ocean/whale/glass identity.
+- Do not clutter UI.
+- Mobile-first and desktop-safe.
+- Respect reduced-motion.
+- Whale must not cover buttons/text.
+- Use PowerShell-compatible commands.
+- Do not make risky dependency upgrades.
+
+AVAILABLE MCP STRATEGY:
+Use installed MCP tools where useful:
+- sequential-thinking for planning.
+- context7 for Vite/manualChunks/React.lazy/Playwright docs if needed.
+- chrome-devtools for production preview console/network/layout checks.
+- playwright for deterministic QA and screenshots.
+- filesystem tools for safe inspection/editing.
+- repomix / serena / ast-grep for codebase-wide search/refactor.
+
+TASK 1 — Inspect bundle and route structure
+
+Inspect:
+- apps/web/src/App.tsx
+- apps/web/src/main.tsx
+- apps/web/vite.config.ts
+- package.json
+- apps/web/src/pages/*
+- apps/web/src/components/*
+- apps/web/src/components/practice/*
+- apps/web/src/components/p-english/*
+- apps/web/src/data/*
+- build output if available
+
+Goal:
+Understand why the main index chunk remains large after Batch 5 route-level lazy loading.
+
+Look for:
+- eager imports in App.tsx
+- large shared imports pulled into main chunk
+- old/legacy routes still eagerly imported
+- big data modules imported from shell/global components
+- heavy icons/libs imported globally
+- practice modules accidentally imported eagerly
+- Chakra/layout/vendor bundling issue
+
+TASK 2 — Deeper safe bundle splitting
+
+Goal:
+Reduce the main chunk where practical without breaking routes.
+
+Safe options:
+- Keep existing route lazy loading.
+- Move any remaining heavy learner pages to lazy imports if missed.
+- Avoid importing heavy generated data in shell/global components.
+- Lazy-load practice-heavy modules if they are pulled too early.
+- Add Vite manualChunks only if low-risk and clearly beneficial.
+- Split vendor chunks for React/Chakra/Framer/GSAP only if safe.
+- Do not change business logic.
+- Do not add dependencies.
+
+If manualChunks is used:
+- keep it simple
+- document exact grouping
+- verify build and production preview
+
+After changes:
+- run npm.cmd run build
+- record chunk output before/after if practical
+- document whether warning improved or remains
+
+TASK 3 — Stable QA selectors / test IDs
+
+Batch 5 QA had selector skips:
+- vocab hint search fill skipped
+- typing answer fill skipped
+
+Add stable selectors only where useful and non-invasive.
+
+Preferred attributes:
+- data-testid on key learner controls
+- aria-label improvements where appropriate
+
+Target pages/flows:
+- Resource Hub search/filter
+- Vocab search/review controls
+- Practice typing input
+- Practice quiz options/check
+- Practice fallback card
+- English Speed manual textarea
+- Shadowing transcript/custom input controls
+
+Rules:
+- Do not clutter UI.
+- Do not change visual layout unless needed.
+- Keep accessibility useful.
+- Do not add test IDs everywhere; add only high-value selectors.
+
+TASK 4 — Optional tiny dictionary hints
+
+Only if low-risk and quick:
+Create small app-authored A1/A2 dictionary hints.
+
+Do NOT bulk-import dictionary source.
+Do NOT import external-sources at runtime.
+Do NOT copy large dictionary entries.
+
+Possible files:
+- apps/web/src/data/dictionary/curatedDictionaryHints.ts
+- apps/web/src/lib/p-english/dictionaryHintAdapter.ts
+
+Use only app-authored explanations for 20–40 common A1/A2 words.
+Fields:
+- word
+- level
+- simpleEnglishMeaning
+- meaningVi
+- example
+- learnerTipVi
+
+Wire lightly if useful:
+- VocabPage helper note
+- ResourceHub dictionary/resource guidance
+
+If risky or too much scope:
+- skip and document.
+
+TASK 5 — Production preview QA
+
+Run static validation first:
+
+cd "C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH"
+
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+npm.cmd run validate:lessons
+npm.cmd run build
+
+Then run production preview safely.
+
+Preferred:
+npm.cmd run start:web -- --host 127.0.0.1 --port 4175
+
+If that does not work because of workspace script behavior, use:
+npm.cmd --workspace @pshare/web run preview -- --host 127.0.0.1 --port 4175
+
+Do not run taskkill.
+If port is busy, use 4176 and document.
+
+Production preview base URL:
+http://127.0.0.1:4175/
+
+TASK 6 — Faster deterministic production QA script
+
+Create or update:
+- scripts/batch06-production-preview-qa.cjs
+
+The script should:
+- use production preview base URL
+- use stable selectors where added
+- capture screenshots
+- collect console messages
+- collect failed network requests
+- collect localhost8080 requests
+- keep waits short and deterministic
+- avoid long completion attempts
+- save JSON result
+
+QA routes:
+- /home
+- /learning-path
+- /resources
+- /vocabularies
+- /shadowing
+- /english-speed
+- /lessons/unit-1-greetings-introduction
+- /practice?lessonId=reading-a1-my-morning&mode=quiz
+- /practice?lessonId=reading-a1-my-morning&mode=typing
+- /practice?lessonId=reading-a1-my-morning&mode=does-not-exist
+
+Screenshots under:
+reports/screenshots
+
+Required screenshots:
+- batch06-preview-home.png
+- batch06-preview-learning-path.png
+- batch06-preview-resources.png
+- batch06-preview-vocab.png
+- batch06-preview-shadowing.png
+- batch06-preview-english-speed.png
+- batch06-preview-lesson.png
+- batch06-preview-practice-quiz.png
+- batch06-preview-practice-typing.png
+- batch06-preview-practice-fallback.png
+- batch06-preview-mobile-home.png
+- batch06-preview-console-network.png
+
+JSON output:
+- reports/batch06-production-preview-qa-results.json
+
+TASK 7 — Production QA checks
+
+Check:
+- route loads from preview
+- no page crash
+- no failed requests
+- no localhost8080 requests
+- service worker does not break preview
+- lazy routes load correctly
+- Resource Hub filters/search work
+- Vocab page controls load
+- typing practice input can be selected reliably
+- fallback practice route displays correctly
+- Shadowing transcript-only fallback still works
+- English Speed manual fallback still works
+- mobile Home still readable
+- whale does not cover UI
+- reduced-motion if practical
+
+TASK 8 — Final validation and git handling
+
+Run again after fixes:
+
+npx.cmd tsc -p apps/web/tsconfig.json --noEmit
+npm.cmd run validate:lessons
+npm.cmd run build
+
+Git handling:
+Run:
+git -C "C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH" rev-parse --show-toplevel
+
+If it fails:
+- document root Git repo unavailable
+- do not treat as blocker
+- search nested .git folders if useful:
+  Get-ChildItem -Path . -Directory -Force -Recurse -Filter ".git" -ErrorAction SilentlyContinue | Select-Object -First 20 FullName
+
+Then run if possible:
+git -C "C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH" status --short
+
+TASK 9 — Reports
+
+Create:
+reports/master-autopilot-batch06-preview-bundle-qa.md
+
+Report must include:
+- Status
+- Files inspected
+- Files created
+- Files updated
+- Bundle investigation
+- Bundle/code-splitting changes
+- Chunk-size result
+- Stable QA selectors added
+- Dictionary hints decision
+- Production preview server status
+- Production QA route summary
+- Console/network findings
+- Screenshot paths
+- TypeScript result
+- validate:lessons result
+- Build result
+- Git status handling
+- Risks and follow-up
+- Next recommended batch
+
+Also create:
+reports/master-autopilot-batch06-handoff.md
+
+Next recommended batch should be:
+- Final consolidated product report
+- deployment readiness check
+- optional final copy/visual density polish
+- optional production deployment checklist
+
+Do not stop after planning.
+Implement safe bundle/QA improvements, run production preview QA, screenshot, validate, and report.

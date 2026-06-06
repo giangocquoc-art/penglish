@@ -1,0 +1,12 @@
+﻿{
+  "servers": {
+    "hermes-agent": {
+      "type": "stdio",
+      "command": "python",
+      "args": [
+        "C:\\AI-Tools\\hermes-agent\\mcp_server.py"
+      ],
+      "env": {}
+    }
+  }
+}

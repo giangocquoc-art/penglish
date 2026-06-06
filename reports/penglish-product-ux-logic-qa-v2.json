@@ -1,0 +1,62 @@
+{
+  "ok": true,
+  "baseUrl": "http://127.0.0.1:5182",
+  "routesTested": [
+    "/home",
+    "/learning-path",
+    "/lessons/unit-1-greetings-introduction",
+    "/english-speed",
+    "/shadowing",
+    "/words"
+  ],
+  "viewports": [
+    "desktop 1366x768",
+    "mobile 390x844"
+  ],
+  "screenshotsDir": "c:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\penglish-product-ux-logic-fix-v2",
+  "homeProgressCases": [
+    {
+      "name": "empty",
+      "expected": "0%"
+    },
+    {
+      "name": "vocabulary review",
+      "expected": "33%"
+    },
+    {
+      "name": "shadowing practice",
+      "expected": "33%"
+    },
+    {
+      "name": "completed lesson",
+      "expected": "33%"
+    },
+    {
+      "name": "combination",
+      "expected": "100%"
+    },
+    {
+      "name": "empty",
+      "expected": "0%"
+    },
+    {
+      "name": "vocabulary review",
+      "expected": "33%"
+    },
+    {
+      "name": "shadowing practice",
+      "expected": "33%"
+    },
+    {
+      "name": "completed lesson",
+      "expected": "33%"
+    },
+    {
+      "name": "combination",
+      "expected": "100%"
+    }
+  ],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "errors": []
+}

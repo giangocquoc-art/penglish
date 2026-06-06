@@ -1,0 +1,53 @@
+﻿Task R06 — Replace Shadowing using real GitHub repo architecture/code/data.
+
+Working directory:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Goal:
+Replace old Shadowing mock feature with a real app-native Shadowing module built from the selected GitHub repo architecture/code/data from R02.
+
+Use R02 report:
+reports/r02-github-repo-real-integration-plan.md
+
+Expected source repos:
+- https://github.com/nhs000/shadowing
+- https://github.com/Skywalker-Harrison/shadowing_generator
+
+Important:
+- Do not bundle copyrighted videos.
+- Do not download YouTube videos.
+- It is okay to support YouTube IDs and uploaded-video metadata.
+- Bring useful transcript/video/repeat/shadowing logic into this project.
+
+Requirements:
+1. Find existing Shadowing pages/components/mock data.
+2. Remove old runtime Shadowing mock content.
+3. Create/update:
+   - apps/web/src/data/shadowing/shadowingTypes.ts
+   - apps/web/src/data/shadowing/generatedShadowingCatalog.ts
+   - apps/web/src/lib/p-english/shadowingAdapter.ts
+4. Shadowing lesson structure:
+   - title
+   - CEFR level
+   - sourceType: "sample" | "youtube" | "uploaded"
+   - videoId optional
+   - transcript segments with start/end/text/viHint
+   - repeat count
+   - shadow instruction
+   - learner checklist
+5. UI:
+   - Step 1: nghe
+   - Step 2: lặp lại
+   - Step 3: nói đuổi
+   - Step 4: tự đánh giá
+   - Keep Vietnamese instruction.
+   - Add keyboard hints without clutter.
+6. Add clear entry point from home dashboard.
+7. Preserve whale/ocean identity but avoid visual noise.
+
+Run:
+npx tsc -p apps/web/tsconfig.json --noEmit
+npm run build
+
+Create:
+reports/r06-shadowing-replacement.md

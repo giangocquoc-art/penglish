@@ -1,0 +1,45 @@
+﻿Task R07 — Replace English Speed / Pronunciation using real GitHub repo logic.
+
+Working directory:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Goal:
+Replace old English Speed/pronunciation mock content with a real browser-native pronunciation practice module using selected GitHub repo logic from R02.
+
+Use R02 report:
+reports/r02-github-repo-real-integration-plan.md
+
+Expected source repo:
+- https://github.com/huytd/speech
+
+Requirements:
+1. Find old English Speed/mock pronunciation content.
+2. Remove old runtime mock content.
+3. Bring useful selected repo pronunciation/speech practice logic into this project where practical.
+4. Create/update:
+   - apps/web/src/data/speech/speechPracticeTypes.ts
+   - apps/web/src/data/speech/generatedSpeechPrompts.ts
+   - apps/web/src/lib/p-english/speechPracticeAdapter.ts
+5. Implement:
+   - feature detection for SpeechRecognition / webkitSpeechRecognition
+   - fallback manual mode
+   - sentence prompt
+   - learner transcript
+   - simple similarity score
+   - Vietnamese feedback
+   - retry flow
+6. UI:
+   - English Speed must appear clearly on the home/learning dashboard.
+   - Keep it simple and friendly.
+   - Avoid scary score language; use confidence feedback.
+7. Keyboard support:
+   - Enter to start/check when safe.
+   - R to retry.
+8. Do not require paid API keys.
+
+Run:
+npx tsc -p apps/web/tsconfig.json --noEmit
+npm run build
+
+Create:
+reports/r07-english-speed-pronunciation.md

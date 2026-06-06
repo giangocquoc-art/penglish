@@ -1,0 +1,39 @@
+﻿Final Consolidation Report — GitHub-source lesson replacement.
+
+Working directory:
+C:\Users\nltn0\OneDrive\Máy tính\PSVip_RELEASE_KH
+
+Create one final report:
+reports/github-source-lesson-replacement-final-report.md
+
+The report must summarize:
+1. What old lesson content was deleted.
+2. What GitHub repositories were cloned/used.
+3. Which repos were imported directly and which were reference-only because of license/content concerns.
+4. New lesson architecture:
+   - generated lesson data
+   - adapters
+   - schema/validators
+   - UI wiring
+5. Current available learning sections:
+   - vocabulary
+   - grammar
+   - reading/sentence practice
+   - shadowing
+   - English Speed/pronunciation
+   - progress/confidence screen
+6. Validation results:
+   - npm run import:github-lessons
+   - npm run validate:lessons
+   - npx tsc -p apps/web/tsconfig.json --noEmit
+   - npm run build
+7. Browser QA:
+   - routes tested
+   - Chrome DevTools MCP console/network findings
+   - screenshot paths
+8. Remaining risks:
+   - license risks
+   - data quality risks
+   - huge dataset risks
+   - what should be improved next
+9. Do not output many separate task reports to the user. This final report is the single consolidated result.
