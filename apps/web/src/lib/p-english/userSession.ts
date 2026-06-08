@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { AuthChangeEvent, Session } from '@supabase/supabase-js';
+import type { AuthChangeEvent, Session, User } from '@supabase/supabase-js';
 import { isSupabaseConfigured, supabase } from '../supabaseClient';
+import { PENGUISH_AUTH_UPDATED_EVENT, useAuth } from '../../features/auth/AuthProvider';
 
 export type PEnglishAuthMode = 'guest' | 'supabase';
 
@@ -13,7 +14,7 @@ export type PEnglishUserSession = {
   email: string | null;
   displayName: string;
   avatarUrl: string;
-  dataModeLabel: 'Lưu trên thiết bị' | 'Đã đồng bộ' | 'Chưa đồng bộ được';
+  dataModeLabel: 'Tiến độ lưu trên thiết bị này' | 'Đã đồng bộ' | 'Chưa đồng bộ được';
   syncError: string | null;
 };
 
@@ -28,7 +29,7 @@ type LocalUser = {
   vip?: boolean;
 };
 
-export const SUPABASE_AUTH_EVENT = 'p-english:supabase-auth-updated';
+export const SUPABASE_AUTH_EVENT = PENGUISH_AUTH_UPDATED_EVENT;
 
 function getLocalUser(): LocalUser | null {
   if (typeof window === 'undefined') return null;
@@ -40,16 +41,16 @@ function getLocalUser(): LocalUser | null {
   }
 }
 
-function displayNameFromUser(user: any, fallback = 'Bạn học P-English') {
+export function displayNameFromUser(user: User | null | undefined, fallback = 'Bạn học P-English') {
   return user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || fallback;
 }
 
-function avatarFromUser(user: any) {
+export function avatarFromUser(user: User | null | undefined) {
   return user?.user_metadata?.avatar_url || user?.user_metadata?.picture || '';
 }
 
 export function getGuestDataModeLabel() {
-  return 'Lưu trên thiết bị' as const;
+  return 'Tiến độ lưu trên thiết bị này' as const;
 }
 
 export async function getCurrentSupabaseUser() {
@@ -61,7 +62,7 @@ export async function getCurrentSupabaseUser() {
 
 export async function signInWithGoogle() {
   if (!supabase) {
-    return { ok: false, message: 'Google chưa bật. Bạn vẫn có thể học ở chế độ local.' };
+    return { ok: false, message: 'Đăng nhập Google chưa bật. Bạn vẫn có thể học thử trên thiết bị này.' };
   }
 
   const redirectTo = `${window.location.origin}/auth/callback`;
@@ -72,7 +73,7 @@ export async function signInWithGoogle() {
 
   if (error) {
     console.error('Supabase Google OAuth failed', error);
-    return { ok: false, message: 'Chưa mở được đăng nhập Google. Bạn vẫn có thể học ở chế độ local.' };
+    return { ok: false, message: 'Chưa mở được đăng nhập Google. Tiến độ trên thiết bị này vẫn an toàn.' };
   }
 
   return { ok: true, message: null };
@@ -100,69 +101,44 @@ export async function upsertSignedInProfile() {
 }
 
 export function usePEnglishSession(): PEnglishUserSession {
-  const [loading, setLoading] = useState(true);
-  const [supabaseUser, setSupabaseUser] = useState<any>(null);
+  const auth = useAuth();
   const [syncError, setSyncError] = useState<string | null>(null);
   const [localUser, setLocalUser] = useState<LocalUser | null>(() => getLocalUser());
 
   useEffect(() => {
-    let active = true;
-
-    const refresh = async () => {
-      setLocalUser(getLocalUser());
-      if (!supabase) {
-        setSupabaseUser(null);
-        setLoading(false);
-        return;
-      }
-
-      const { data, error } = await supabase.auth.getUser();
-      if (!active) return;
-      if (error) {
-        setSyncError(error.message);
-        setSupabaseUser(null);
-      } else {
-        setSyncError(null);
-        setSupabaseUser(data.user ?? null);
-      }
-      setLoading(false);
-    };
-
-    refresh();
-    window.addEventListener('storage', refresh);
-    window.addEventListener(SUPABASE_AUTH_EVENT, refresh);
-
-    const subscription = supabase?.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
-      setSupabaseUser(session?.user ?? null);
-      setSyncError(null);
-      setLoading(false);
-      window.dispatchEvent(new Event(SUPABASE_AUTH_EVENT));
-    });
-
+    const refreshLocalUser = () => setLocalUser(getLocalUser());
+    window.addEventListener('storage', refreshLocalUser);
+    window.addEventListener(SUPABASE_AUTH_EVENT, refreshLocalUser);
     return () => {
-      active = false;
-      window.removeEventListener('storage', refresh);
-      window.removeEventListener(SUPABASE_AUTH_EVENT, refresh);
-      subscription?.data.subscription.unsubscribe();
+      window.removeEventListener('storage', refreshLocalUser);
+      window.removeEventListener(SUPABASE_AUTH_EVENT, refreshLocalUser);
     };
   }, []);
 
+  useEffect(() => {
+    const subscription = supabase?.auth.onAuthStateChange((_event: AuthChangeEvent, _session: Session | null) => {
+      setSyncError(null);
+      window.dispatchEvent(new Event(SUPABASE_AUTH_EVENT));
+    });
+    return () => subscription?.data.subscription.unsubscribe();
+  }, []);
+
   return useMemo(() => {
-    const isSignedIn = Boolean(supabaseUser?.id);
+    const isSignedIn = Boolean(auth.user?.id);
     const mode: PEnglishAuthMode = isSignedIn ? 'supabase' : 'guest';
-    const dataModeLabel = isSignedIn ? (syncError ? 'Chưa đồng bộ được' : 'Đã đồng bộ') : 'Lưu trên thiết bị';
+    const dataModeLabel = isSignedIn ? (syncError ? 'Chưa đồng bộ được' : 'Đã đồng bộ') : 'Tiến độ lưu trên thiết bị này';
 
     return {
       mode,
       isSupabaseEnabled: isSupabaseConfigured,
       isSignedIn,
-      loading,
-      userId: supabaseUser?.id ?? null,
-      email: supabaseUser?.email ?? localUser?.email ?? null,
-      displayName: isSignedIn ? displayNameFromUser(supabaseUser) : (localUser?.name ?? 'Khách'),
-      avatarUrl: isSignedIn ? avatarFromUser(supabaseUser) : (localUser?.avatar ?? ''),
+      loading: auth.loading,
+      userId: auth.user?.id ?? null,
+      email: auth.user?.email ?? (isSignedIn ? null : localUser?.email ?? null),
+      displayName: isSignedIn ? displayNameFromUser(auth.user) : 'Khách',
+      avatarUrl: isSignedIn ? avatarFromUser(auth.user) : '',
       dataModeLabel,
       syncError,
     };
-  }, [loading, localUser, supabaseUser, syncError]);
+  }, [auth.loading, auth.user, localUser?.email, syncError]);
 }

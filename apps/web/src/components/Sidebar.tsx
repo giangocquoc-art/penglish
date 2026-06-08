@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Box, Flex, HStack, Icon, Text, VStack, Avatar, IconButton, useColorMode } from '@chakra-ui/react';
+import { Box, Flex, HStack, Icon, Text, VStack, Avatar, IconButton, useColorMode, Button } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Route, BookOpen, Dumbbell, Timer, Mic2, Moon, Sun, Coins, ChevronRight, Waves } from 'lucide-react';
+import { Home, Route, BookOpen, Dumbbell, Timer, Mic2, Moon, Sun, Coins, ChevronRight, Waves, LogOut, RefreshCw } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 import { LearningHeartsBadge } from './learning/LearningHeartsBadge';
 import { StreakWhaleBadge } from './streak/AdaptiveWhaleStreak';
@@ -9,6 +9,8 @@ import { OCEAN_TOKENS } from './p-english/OceanBackdrop';
 import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState } from '../lib/p-english/daily-rewards';
 import { LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
 import { usePEnglishSession } from '../lib/p-english/userSession';
+import { useAuth } from '../features/auth/AuthProvider';
+import { syncLocalFoundation48ProgressToCloud } from '../features/foundation48/foundation48CloudProgress';
 
 type NavItem = { label: string; to: string; icon: any; tint: string; description: string };
 
@@ -35,6 +37,7 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const [rewardState, setRewardState] = useState(() => getDailyRewardState());
   const session = usePEnglishSession();
+  const auth = useAuth();
   const isActive = (to: string) => {
     const [pathname, query = ''] = to.split('?');
     if (query) return location.pathname === pathname && location.search === `?${query}`;
@@ -147,13 +150,13 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
             _hover={{ bg: 'rgba(255, 255, 255, 0.72)', borderColor: OCEAN_TOKENS.border }}
             gap="3"
           >
-            <Avatar name={user?.name} src={user?.avatar} size="sm" borderWidth="2px" borderColor={OCEAN_TOKENS.whaleBlue} />
+            <Avatar name={session.displayName} src={session.avatarUrl} size="sm" borderWidth="2px" borderColor={OCEAN_TOKENS.whaleBlue} />
             <Box flex="1" minW="0">
               <Text fontWeight="850" fontSize="sm" noOfLines={1} color={OCEAN_TOKENS.text}>
-                {user?.name ?? 'Khách'}
+                {session.displayName}
               </Text>
               <Text fontSize="xs" color={OCEAN_TOKENS.muted} fontWeight="650" noOfLines={1}>
-                {user?.bio ?? 'Học nhẹ, đều mỗi ngày'}
+                {session.isSignedIn ? session.email : 'Tiến độ lưu trên thiết bị này'}
               </Text>
               <Text data-testid="data-mode-indicator" mt="1" display="inline-flex" px="2" py="0.5" borderRadius="full" bg={session.isSignedIn ? '#EAFBF0' : '#E8F4FF'} color={session.isSignedIn ? '#16803A' : OCEAN_TOKENS.deepBlue} fontSize="10px" fontWeight="850" noOfLines={1}>
                 {session.dataModeLabel}
@@ -162,6 +165,23 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
             <Icon as={ChevronRight} color={OCEAN_TOKENS.muted} boxSize="4" />
           </HStack>
         </Link>
+
+        <VStack mt="3" align="stretch" gap="2">
+          {session.isSignedIn ? (
+            <>
+              <Button size="xs" borderRadius="full" leftIcon={<Icon as={RefreshCw} />} onClick={() => session.userId && syncLocalFoundation48ProgressToCloud(session.userId)}>
+                Đồng bộ tiến độ
+              </Button>
+              <Button size="xs" borderRadius="full" variant="outline" leftIcon={<Icon as={LogOut} />} onClick={() => void auth.signOut()}>
+                Đăng xuất
+              </Button>
+            </>
+          ) : (
+            <Button size="xs" borderRadius="full" bg="#1F6FD6" color="white" onClick={() => void auth.signInWithGoogle()} _hover={{ bg: '#185BB2' }}>
+              Đăng nhập Google để đồng bộ
+            </Button>
+          )}
+        </VStack>
 
         <Box mt="3">
           <LearningHeartsBadge compact />

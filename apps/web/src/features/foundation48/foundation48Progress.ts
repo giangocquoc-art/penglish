@@ -61,6 +61,10 @@ export function getFoundation48Progress(): Foundation48ProgressState {
 }
 
 function saveFoundation48Progress(next: Foundation48ProgressState) {
+  saveFoundation48ProgressSnapshot(next);
+}
+
+export function saveFoundation48ProgressSnapshot(next: Foundation48ProgressState) {
   const storage = getStorage();
   if (!storage) return;
   storage.setItem(STORAGE_KEY, JSON.stringify(next));
@@ -117,12 +121,27 @@ export function markFoundation48Started(dayNumber: number) {
   syncFoundation48Activity(dayNumber, 2);
 }
 
+function saveSignedInFoundation48Day(dayNumber: number, day: Foundation48ProgressDay) {
+  void import('./foundation48CloudProgress')
+    .then(async ({ saveCloudFoundation48DayProgress }) => {
+      const { supabase } = await import('../../lib/supabaseClient');
+      if (!supabase) return;
+      const { data } = await supabase.auth.getSession();
+      const userId = data.session?.user?.id;
+      if (!userId) return;
+      await saveCloudFoundation48DayProgress(userId, { ...day, dayNumber });
+    })
+    .catch(() => undefined);
+}
+
 export function markFoundation48StepCompleted(dayNumber: number, stepId: string) {
   const state = getFoundation48Progress();
   const current = normalizeDay(state.days[dayNumber]);
   const completedSteps = new Set(current.completedSteps || []);
   completedSteps.add(stepId);
-  saveFoundation48Progress(touchProgress(state, dayNumber, { ...current, completedSteps: Array.from(completedSteps) }));
+  const nextDay = { ...current, completedSteps: Array.from(completedSteps) };
+  saveFoundation48Progress(touchProgress(state, dayNumber, nextDay));
+  saveSignedInFoundation48Day(dayNumber, nextDay);
   syncFoundation48Activity(dayNumber, 1);
 }
 
@@ -160,7 +179,9 @@ export function recordFoundation48ChallengeResult(dayNumber: number, challenge: 
   const right = Object.values(challengeResults).filter((item) => item.correct).length;
   const score = total > 0 ? Math.round((right / total) * 100) : current.score;
 
-  saveFoundation48Progress(touchProgress(state, dayNumber, { ...current, challengeResults, mistakes, score }));
+  const nextDay = { ...current, challengeResults, mistakes, score };
+  saveFoundation48Progress(touchProgress(state, dayNumber, nextDay));
+  saveSignedInFoundation48Day(dayNumber, nextDay);
   syncFoundation48Activity(dayNumber, correct ? 4 : 1);
   if (correct) {
     resolveLearningLoopMistake(mistakeId);
@@ -183,7 +204,9 @@ export function markFoundation48Completed(dayNumber: number, stepIds: string[] =
   const state = getFoundation48Progress();
   const current = normalizeDay(state.days[dayNumber]);
   const completedSteps = new Set([...(current.completedSteps || []), ...stepIds]);
-  saveFoundation48Progress(touchProgress(state, dayNumber, { ...current, started: true, completed: true, completedAt: new Date().toISOString(), completedSteps: Array.from(completedSteps), miniTestScore: miniTestScore ?? current.miniTestScore }));
+  const nextDay = { ...current, started: true, completed: true, completedAt: new Date().toISOString(), completedSteps: Array.from(completedSteps), miniTestScore: miniTestScore ?? current.miniTestScore };
+  saveFoundation48Progress(touchProgress(state, dayNumber, nextDay));
+  saveSignedInFoundation48Day(dayNumber, nextDay);
   markLearningLoopCompleted('foundation48', `day-${dayNumber}`, 25);
   syncFoundation48Words(dayNumber);
 }

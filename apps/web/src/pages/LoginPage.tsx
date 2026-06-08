@@ -1,10 +1,9 @@
 import { Box, Center, VStack, HStack, Text, Button, Icon, Alert, AlertIcon } from '@chakra-ui/react';
 import { ArrowRight, Globe } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BrandLogo } from '../components/BrandLogo';
-import { isSupabaseConfigured } from '../lib/supabaseClient';
-import { signInWithGoogle } from '../lib/p-english/userSession';
+import { useAuth } from '../features/auth/AuthProvider';
 import { OceanMascot } from '../components/p-english/OceanMascot';
 import { OceanPageShell } from '../components/p-english/OceanPageShell';
 
@@ -22,20 +21,20 @@ type LocalGuestUser = {
 function ensureLocalGuestProfile(): LocalGuestUser {
   const fallbackGuest: LocalGuestUser = {
     id: 'local-guest-learner',
-    name: 'Bạn học nhỏ',
+    name: 'Khách',
     email: 'guest@p-english.local',
     avatar: '',
     coin: 0,
     streak: 0,
     vip: false,
-    bio: 'Không cần đăng nhập, tiến độ lưu trên thiết bị này',
+    bio: 'Tiến độ lưu trên thiết bị này',
   };
 
   try {
     const raw = window.localStorage.getItem('currentUser');
     if (raw) {
       const existing = JSON.parse(raw) as Partial<LocalGuestUser>;
-      const merged = { ...fallbackGuest, ...existing };
+      const merged = { ...fallbackGuest, ...existing, name: existing.name || fallbackGuest.name };
       window.localStorage.setItem('currentUser', JSON.stringify(merged));
       return merged;
     }
@@ -51,6 +50,7 @@ export function LoginPage() {
   const navigate = useNavigate();
   const [authMessage, setAuthMessage] = useState<string | null>(null);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const auth = useAuth();
 
   const continueAsGuest = () => {
     ensureLocalGuestProfile();
@@ -60,8 +60,8 @@ export function LoginPage() {
   const connectGoogle = async () => {
     setGoogleLoading(true);
     setAuthMessage(null);
-    const result = await signInWithGoogle();
-    if (!result.ok) setAuthMessage(result.message);
+    const result = await auth.signInWithGoogle();
+    if (!result.ok) setAuthMessage(result.message ?? 'Chưa mở được đăng nhập Google.');
     setGoogleLoading(false);
   };
 
@@ -86,44 +86,50 @@ export function LoginPage() {
         <VStack gap="2">
           <Text fontSize="2xl" fontWeight="800" color="ink.900">Bắt đầu học P-English</Text>
           <Text color="gray.600" fontSize="sm" textAlign="center">
-            Không cần đăng nhập, tiến độ sẽ lưu trên thiết bị này.
+            Đăng nhập Google để đồng bộ tiến độ, hoặc học thử trên thiết bị này.
           </Text>
         </VStack>
 
         <Button
-          data-testid="login-continue-local"
-          onClick={continueAsGuest}
+          data-testid="login-google-supabase"
+          isLoading={googleLoading || auth.loading}
+          onClick={connectGoogle}
           w="100%"
           h="52px"
           bg="#1F6FD6"
           color="white"
           border="2px solid"
           borderColor="#1F6FD6"
-          leftIcon={<Icon as={ArrowRight} />}
-          _hover={{ bg: '#185BB2', borderColor: '#185BB2' }}
+          leftIcon={<Icon as={Globe} />}
           fontWeight="800"
           boxShadow="0 16px 34px rgba(31, 111, 214, 0.20)"
           borderRadius="xl"
+          _hover={{ bg: '#185BB2', borderColor: '#185BB2' }}
         >
-          Bắt đầu học ngay
+          Đăng nhập bằng Google
         </Button>
 
         <Button
-          data-testid="login-google-supabase"
-          isLoading={googleLoading}
-          onClick={connectGoogle}
+          data-testid="login-continue-local"
+          onClick={continueAsGuest}
           w="100%"
           h="46px"
           bg="rgba(255,255,255,0.92)"
           border="1px solid"
           borderColor="#BAE6FD"
-          leftIcon={<Icon as={Globe} color="#1F6FD6" />}
-          fontWeight="700"
+          leftIcon={<Icon as={ArrowRight} color="#1F6FD6" />}
+          fontWeight="800"
           borderRadius="xl"
-          opacity="0.92"
         >
-          Đăng nhập bằng Google
+          Học thử trên thiết bị này
         </Button>
+
+        {auth.authUnavailable ? (
+          <Alert status="info" borderRadius="2xl" bg="#E8F4FF" color="#1F6FD6" fontSize="sm" fontWeight="700">
+            <AlertIcon />
+            Đăng nhập Google chưa bật. Chế độ học thử vẫn lưu tiến độ trên thiết bị này.
+          </Alert>
+        ) : null}
 
         {authMessage ? (
           <Alert status="info" borderRadius="2xl" bg="#E8F4FF" color="#1F6FD6" fontSize="sm" fontWeight="700">
@@ -133,19 +139,14 @@ export function LoginPage() {
         ) : null}
 
         <HStack gap="2" flexWrap="wrap" justify="center">
-          <Text fontSize="xs" px="3" py="1.5" bg="#E8F4FF" color="#1F6FD6" borderRadius="full" fontWeight="700">🫧 Chuỗi học đại dương</Text>
-          <Text fontSize="xs" px="3" py="1.5" bg="#F8FCFF" color="#102A43" border="1px solid" borderColor="#BAE6FD" borderRadius="full" fontWeight="700">📚 Lộ trình IELTS/TOEIC</Text>
-          <Text fontSize="xs" px="3" py="1.5" bg="#F0FDF4" color="#166534" border="1px solid" borderColor="#BBF7D0" borderRadius="full" fontWeight="700">🎮 6 game tương tác</Text>
+          <Text fontSize="xs" px="3" py="1.5" bg="#E8F4FF" color="#1F6FD6" borderRadius="full" fontWeight="700">Chuỗi học đại dương</Text>
+          <Text fontSize="xs" px="3" py="1.5" bg="#F8FCFF" color="#102A43" border="1px solid" borderColor="#BAE6FD" borderRadius="full" fontWeight="700">Lộ trình IELTS/TOEIC</Text>
+          <Text fontSize="xs" px="3" py="1.5" bg="#F0FDF4" color="#166534" border="1px solid" borderColor="#BBF7D0" borderRadius="full" fontWeight="700">6 game tương tác</Text>
         </HStack>
 
-        <VStack gap="1">
-          <Text fontSize="xs" color="gray.500" textAlign="center">
-            {isSupabaseConfigured ? 'Bạn có thể học local hoặc đăng nhập để tách dữ liệu theo tài khoản.' : 'Đăng nhập Google chưa bật. Bạn vẫn có thể học ngay ở chế độ local.'}
-          </Text>
-          <Text fontSize="xs" color="gray.400" textAlign="center">
-            Khi có đăng nhập thật, P-English sẽ ghi rõ trước khi kết nối tài khoản.
-          </Text>
-        </VStack>
+        <Text fontSize="xs" color="gray.500" textAlign="center">
+          Frontend chỉ dùng VITE_SUPABASE_URL và VITE_SUPABASE_ANON_KEY. Không dùng service role key.
+        </Text>
       </VStack>
       </Center>
     </OceanPageShell>
@@ -154,20 +155,40 @@ export function LoginPage() {
 
 export function LoginCallbackPage() {
   const [params] = useSearchParams();
-  const navigate = useNavigate();
+  return <AuthCallbackContent params={params} />;
+}
 
-  useEffect(() => {
-    const access = params.get('accessToken');
-    const refresh = params.get('refreshToken');
-    if (access) localStorage.setItem('accessToken', access);
-    if (refresh) localStorage.setItem('refreshToken', refresh);
-    const t = setTimeout(() => navigate('/home', { replace: true }), 200);
-    return () => clearTimeout(t);
-  }, [params, navigate]);
+function AuthCallbackContent({ params }: { params: URLSearchParams }) {
+  const navigate = useNavigate();
+  const auth = useAuth();
+
+  useState(() => {
+    const run = async () => {
+      const session = await auth.refreshSession();
+      const fallback = params.get('next') || '/luyen-tieng-anh/48-ngay-lay-goc';
+      let intended = fallback;
+      try {
+        intended = window.sessionStorage.getItem('penglish-auth-redirect') || fallback;
+        window.sessionStorage.removeItem('penglish-auth-redirect');
+      } catch {
+        intended = fallback;
+      }
+      window.setTimeout(() => navigate(session?.user ? intended : '/home', { replace: true }), 450);
+    };
+    void run();
+    return null;
+  });
 
   return (
-    <Center minH="100vh">
-      <Box>Đang đăng nhập...</Box>
-    </Center>
+    <OceanPageShell variant="login" overlayStrength="medium" minH="100vh">
+      <Center minH="100vh" px="4">
+        <VStack bg="rgba(255,255,255,0.90)" border="1px solid #BAE6FD" borderRadius="3xl" boxShadow="0 24px 64px rgba(31,111,214,0.16)" p="8" maxW="520px" textAlign="center" gap="4">
+          <OceanMascot mascot="poo" pose="happy" size="lg" decorative motion="float" />
+          <Text fontSize="sm" fontWeight="950" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">P-English Google Auth</Text>
+          <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" color="#102A43">Poo đang xác nhận phiên đăng nhập...</Text>
+          <Text color="#52667A" fontWeight="700" lineHeight="1.7">Nếu kết nối Google thành công, bạn sẽ được đưa về vùng học và tiến độ Foundation48 sẽ được tách theo tài khoản.</Text>
+        </VStack>
+      </Center>
+    </OceanPageShell>
   );
 }
