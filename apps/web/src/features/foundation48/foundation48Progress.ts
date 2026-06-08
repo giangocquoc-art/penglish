@@ -1,5 +1,6 @@
 import { markLearningLoopCompleted, recordLearningLoopActivity, recordLearningLoopMistake, resolveLearningLoopMistake, upsertLearningLoopWords } from '../../lib/p-english/learning-loop';
-import { foundation48DeepLessons } from './foundation48DeepLessons';
+import type { Foundation48DeepLesson } from './foundation48DeepLessons';
+import { getFoundation48CachedDeepLesson, getFoundation48DeepLesson } from './foundation48DeepLessonResolver';
 import type { Foundation48Challenge, Foundation48MistakeItem, Foundation48ProgressDay, Foundation48ProgressState } from './foundation48Types';
 
 const STORAGE_KEY = 'penglish-foundation48-progress-v1';
@@ -66,8 +67,7 @@ function saveFoundation48Progress(next: Foundation48ProgressState) {
   window.dispatchEvent(new Event(FOUNDATION48_PROGRESS_UPDATED_EVENT));
 }
 
-function syncFoundation48Words(dayNumber: number) {
-  const deepLesson = foundation48DeepLessons[dayNumber];
+function upsertFoundation48WordsFromLesson(dayNumber: number, deepLesson?: Foundation48DeepLesson) {
   if (!deepLesson?.vocabulary.length) return;
   upsertLearningLoopWords(deepLesson.vocabulary.map((item) => ({
     id: `foundation48:day-${dayNumber}:word:${item.term.toLowerCase().replace(/\s+/g, '-')}`,
@@ -79,6 +79,13 @@ function syncFoundation48Words(dayNumber: number) {
     cefrLevel: 'A1',
     topic: deepLesson.learnerTitle,
   })));
+}
+
+function syncFoundation48Words(dayNumber: number) {
+  upsertFoundation48WordsFromLesson(dayNumber, getFoundation48CachedDeepLesson(dayNumber));
+  void getFoundation48DeepLesson(dayNumber)
+    .then((deepLesson) => upsertFoundation48WordsFromLesson(dayNumber, deepLesson))
+    .catch(() => undefined);
 }
 
 function syncFoundation48Activity(dayNumber: number, xp = 3) {

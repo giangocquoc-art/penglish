@@ -1,0 +1,382 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T04:06:23.679Z",
+  "baseUrl": "http://127.0.0.1:5180",
+  "checks": [
+    {
+      "name": "foundation48-stage5-roadmap-desktop",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc",
+      "width": 1440,
+      "height": 950,
+      "screenshot": "foundation48-stage5-roadmap-desktop.png",
+      "expected": {},
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-roadmap-desktop.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": false,
+        "bottomNavOverlap": true,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": false
+      },
+      "stage5ModuleRequests": [],
+      "textSample": "P-English\n\nHọc tiếng Anh mỗi ngày\n\n0\n\n5/5\n\n0\n\nTrang chủ\n\nTổng quan hôm nay\n\nLộ trình\n\nCEFR A1–B2\n\n48 ngày lấy gốc\n\nHọc lại nền tảng\n\nEnglish Speed\n\nPhát âm nhanh\n\nShadowing\n\nLuyện nói theo nhịp\n\nLuyện tập\n\nÔn kỹ năng\n\nTừ vựng\n\nKho từ\n\nKhách\n\nHọc nhẹ, đều mỗi ngày\n\nLưu trên thiết bị\n\nBỌT BIỂN\n\n5/5\n\n🌙\n\nGiao diện\n\nP-English · vùng học yên tĩnh\n\n0\n\nBọt biển 5/5\n\nHọc miễn phí\n48 ngày lấy gốc\n\nMỗi ngày một lesson flow ngắn: nghe mẫu, làm bài tương tác, nói lại và lưu lỗi sai để ôn.\n\nHôm nay học Ngày "
+    },
+    {
+      "name": "foundation48-stage5-roadmap-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc",
+      "width": 390,
+      "height": 844,
+      "screenshot": "foundation48-stage5-roadmap-mobile.png",
+      "expected": {},
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-roadmap-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": false
+      },
+      "stage5ModuleRequests": [],
+      "textSample": "0\n\nBọt biển 5/5\n\n48 ngày lấy gốc\n\nMỗi ngày một lesson flow ngắn: nghe mẫu, làm bài tương tác, nói lại và lưu lỗi sai để ôn.\n\nHôm nay học Ngày 21\n\n20/48 đã hoàn thành\n\nLuyện nghe số và tên\n\nBấm học tiếp, Poo sẽ dẫn từng bước như một app luyện nền tảng.\n\nHọc tiếp\n\nÔn lỗi sai\n\nChưa có lỗi sai nào. Cứ học tiếp để hệ thống tự lưu.\n\nTiến độ\n\n42%\n\nStreak local\n\n0 ngày\n\nCần ôn\n\n0 lỗi\n\nLộ trình mỗi ngày một bài\n\nHọc tiếp hôm nay\n\nLuyện nghe số và tên\n\nNgày 21 · Chặng 4\n\nHọc tiếp\n\nChặng 1\n\nCâu nền tảng vớ"
+    },
+    {
+      "name": "foundation48-stage5-roadmap-mobile-375",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc",
+      "width": 375,
+      "height": 812,
+      "screenshot": "foundation48-stage5-roadmap-mobile-375.png",
+      "expected": {},
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-roadmap-mobile-375.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": false
+      },
+      "stage5ModuleRequests": [],
+      "textSample": "0\n\nBọt biển 5/5\n\n48 ngày lấy gốc\n\nMỗi ngày một lesson flow ngắn: nghe mẫu, làm bài tương tác, nói lại và lưu lỗi sai để ôn.\n\nHôm nay học Ngày 21\n\n20/48 đã hoàn thành\n\nLuyện nghe số và tên\n\nBấm học tiếp, Poo sẽ dẫn từng bước như một app luyện nền tảng.\n\nHọc tiếp\n\nÔn lỗi sai\n\nChưa có lỗi sai nào. Cứ học tiếp để hệ thống tự lưu.\n\nTiến độ\n\n42%\n\nStreak local\n\n0 ngày\n\nCần ôn\n\n0 lỗi\n\nLộ trình mỗi ngày một bài\n\nHọc tiếp hôm nay\n\nLuyện nghe số và tên\n\nNgày 21 · Chặng 4\n\nHọc tiếp\n\nChặng 1\n\nCâu nền tảng vớ"
+    },
+    {
+      "name": "foundation48-stage5-day22-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/22",
+      "width": 390,
+      "height": 844,
+      "screenshot": "foundation48-stage5-day22-mobile.png",
+      "expected": {},
+      "lazy": true,
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day22-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [
+        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+      ],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 22\n\nBước 1/26\n\n0/19 câu đúng\n\nĐộng từ khuyết thiếu\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nĐộng từ khuyết thiếu\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học cách nói nên, phải, có thể, được phép bằng các động từ khuyết thiếu quen thuộc.\n\nQuay lại\nTiếp tục\nNgày 21\nNgày 23\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
+    },
+    {
+      "name": "foundation48-stage5-day23-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/23",
+      "width": 390,
+      "height": 844,
+      "screenshot": "foundation48-stage5-day23-mobile.png",
+      "expected": {},
+      "lazy": true,
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day23-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [
+        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+      ],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 23\n\nBước 1/26\n\n0/19 câu đúng\n\nLiên từ And, But, Or, So và Because\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nLiên từ And, But, Or, So và Because\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học nối hai ý ngắn bằng and, but, or, so, because để nói tự nhiên hơn.\n\nQuay lại\nTiếp tục\nNgày 22\nNgày 24\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
+    },
+    {
+      "name": "foundation48-stage5-day24-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/24",
+      "width": 375,
+      "height": 812,
+      "screenshot": "foundation48-stage5-day24-mobile.png",
+      "expected": {},
+      "lazy": true,
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day24-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [
+        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+      ],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 24\n\nBước 1/26\n\n0/19 câu đúng\n\nLiên từ chỉ thời gian\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nLiên từ chỉ thời gian\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học nói thời điểm hành động xảy ra bằng before, after, when, while và until trong các câu rất ngắn.\n\nQuay lại\nTiếp tục\nNgày 23\nNgày 25\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
+    },
+    {
+      "name": "foundation48-stage5-day25-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/25",
+      "width": 390,
+      "height": 844,
+      "screenshot": "foundation48-stage5-day25-mobile.png",
+      "expected": {},
+      "lazy": true,
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day25-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [
+        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+      ],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 25\n\nBước 1/26\n\n0/19 câu đúng\n\nLiên từ chỉ sự đối lập\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nLiên từ chỉ sự đối lập\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học cách nói hai ý trái nhau bằng but, although, however và even though mà vẫn giữ câu dễ hiểu.\n\nQuay lại\nTiếp tục\nNgày 24\nNgày 26\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
+    },
+    {
+      "name": "foundation48-stage5-day26-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/26",
+      "width": 390,
+      "height": 844,
+      "screenshot": "foundation48-stage5-day26-mobile.png",
+      "expected": {},
+      "lazy": true,
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day26-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [
+        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+      ],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 26\n\nBước 1/26\n\n0/19 câu đúng\n\nCâu điều kiện loại 1\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nCâu điều kiện loại 1\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học cách nói nếu điều này xảy ra, điều kia có thể xảy ra.\n\nQuay lại\nTiếp tục\nNgày 25\nNgày 27\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
+    },
+    {
+      "name": "foundation48-stage5-day27-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/27",
+      "width": 375,
+      "height": 812,
+      "screenshot": "foundation48-stage5-day27-mobile.png",
+      "expected": {},
+      "lazy": true,
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day27-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [
+        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+      ],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 27\n\nBước 1/26\n\n0/19 câu đúng\n\nCâu điều kiện loại 2\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nCâu điều kiện loại 2\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học nói một điều tưởng tượng ở hiện tại bằng If + quá khứ đơn, would + động từ.\n\nQuay lại\nTiếp tục\nNgày 26\nNgày 28\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
+    },
+    {
+      "name": "foundation48-stage5-day28-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/28",
+      "width": 390,
+      "height": 844,
+      "screenshot": "foundation48-stage5-day28-mobile.png",
+      "expected": {},
+      "lazy": true,
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day28-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [
+        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+      ],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 28\n\nBước 1/26\n\n0/19 câu đúng\n\nCâu điều kiện loại 3\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nCâu điều kiện loại 3\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học nói điều đáng tiếc trong quá khứ bằng If + had + V3, would have + V3.\n\nQuay lại\nTiếp tục\nNgày 27\nNgày 29\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
+    },
+    {
+      "name": "foundation48-stage5-day22-desktop",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/22",
+      "width": 1440,
+      "height": 950,
+      "screenshot": "foundation48-stage5-day22-desktop.png",
+      "expected": {},
+      "lazy": true,
+      "preview": true,
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day22-desktop.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": false,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [
+        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+      ],
+      "textSample": "P-English\n\nHọc tiếng Anh mỗi ngày\n\n0\n\n5/5\n\n0\n\nTrang chủ\n\nTổng quan hôm nay\n\nLộ trình\n\nCEFR A1–B2\n\n48 ngày lấy gốc\n\nHọc lại nền tảng\n\nEnglish Speed\n\nPhát âm nhanh\n\nShadowing\n\nLuyện nói theo nhịp\n\nLuyện tập\n\nÔn kỹ năng\n\nTừ vựng\n\nKho từ\n\nKhách\n\nHọc nhẹ, đều mỗi ngày\n\nLưu trên thiết bị\n\nBỌT BIỂN\n\n5/5\n\n🌙\n\nGiao diện\n\nP-English · vùng học yên tĩnh\n\n0\n\nBọt biển 5/5\n\nHọc miễn phí\nVề lộ trình 48 ngày\n\nNgày 22\n\nBước 1/26\n\n0/19 câu đúng\n\nĐộng từ khuyết thiếu\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ less"
+    },
+    {
+      "name": "foundation48-stage5-day28-desktop",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/28",
+      "width": 1440,
+      "height": 950,
+      "screenshot": "foundation48-stage5-day28-desktop.png",
+      "expected": {},
+      "lazy": true,
+      "preview": true,
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day28-desktop.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": false,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [
+        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+      ],
+      "textSample": "P-English\n\nHọc tiếng Anh mỗi ngày\n\n0\n\n5/5\n\n0\n\nTrang chủ\n\nTổng quan hôm nay\n\nLộ trình\n\nCEFR A1–B2\n\n48 ngày lấy gốc\n\nHọc lại nền tảng\n\nEnglish Speed\n\nPhát âm nhanh\n\nShadowing\n\nLuyện nói theo nhịp\n\nLuyện tập\n\nÔn kỹ năng\n\nTừ vựng\n\nKho từ\n\nKhách\n\nHọc nhẹ, đều mỗi ngày\n\nLưu trên thiết bị\n\nBỌT BIỂN\n\n5/5\n\n🌙\n\nGiao diện\n\nP-English · vùng học yên tĩnh\n\n0\n\nBọt biển 5/5\n\nHọc miễn phí\nVề lộ trình 48 ngày\n\nNgày 28\n\nBước 1/26\n\n0/19 câu đúng\n\nCâu điều kiện loại 3\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ less"
+    },
+    {
+      "name": "foundation48-stage5-regression-day13-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/13",
+      "width": 390,
+      "height": 844,
+      "screenshot": "foundation48-stage5-regression-day13-mobile.png",
+      "expected": {},
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-regression-day13-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 13\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nHỏi chuyện đã xảy ra — Did you...? và câu trả lời ngắn\n\nChặng 3: Từ loại và các thì căn bản\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nHỏi chuyện đã xảy ra — Did you...? và câu trả lời ngắn\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nBiết hỏi việc đã xảy ra bằng Did và trả lời Yes/No ngắn mà không thêm -ed sau Did.\n\nQuay lại\nTiếp tục\n\nĐã lưu ngày 13\n\nTiến độ và lỗi sai được giữ trên thiết bị này để ô"
+    },
+    {
+      "name": "foundation48-stage5-regression-day17-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/17",
+      "width": 390,
+      "height": 844,
+      "screenshot": "foundation48-stage5-regression-day17-mobile.png",
+      "expected": {},
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-regression-day17-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 17\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nTôi có thể làm — can / can’t cho khả năng\n\nChặng 3: Từ loại và các thì căn bản\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nTôi có thể làm — can / can’t cho khả năng\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nNói khả năng, xin phép đơn giản và phủ định bằng can/can’t + động từ nguyên mẫu.\n\nQuay lại\nTiếp tục\n\nĐã lưu ngày 17\n\nTiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.\n\nSang ngày 18\nNgày 16"
+    },
+    {
+      "name": "foundation48-stage5-regression-day18-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/18",
+      "width": 390,
+      "height": 844,
+      "screenshot": "foundation48-stage5-regression-day18-mobile.png",
+      "expected": {},
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-regression-day18-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 18\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nHọc ngữ âm với giáo viên nước ngoài\n\nChặng 4: Phát âm, trọng âm và câu hỏi\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nHọc ngữ âm với giáo viên nước ngoài\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nLàm quen cách nghe và bắt chước âm tiếng Anh chậm, rõ, không cần nói nhanh.\n\nQuay lại\nTiếp tục\n\nĐã lưu ngày 18\n\nTiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.\n\nSang ngày 19\nNgày 17\nNgày 19\n\nHọc\n\n"
+    },
+    {
+      "name": "foundation48-stage5-regression-day21-mobile",
+      "route": "/luyen-tieng-anh/48-ngay-lay-goc/ngay/21",
+      "width": 390,
+      "height": 844,
+      "screenshot": "foundation48-stage5-regression-day21-mobile.png",
+      "expected": {},
+      "screenshotPath": "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-regression-day21-mobile.png",
+      "layout": {
+        "titleVisible": true,
+        "progressVisible": true,
+        "ctaVisible": true,
+        "bottomNavVisible": true,
+        "bottomNavOverlap": false,
+        "hasHorizontalOverflow": false,
+        "introPreviewVisible": true
+      },
+      "stage5ModuleRequests": [
+        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+      ],
+      "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 21\n\nBước 1/26\n\n0/19 câu đúng\n\nLuyện nghe số và tên\n\nChặng 4: Phát âm, trọng âm và câu hỏi\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nLuyện nghe số và tên\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nNghe số, tên người và đánh vần ngắn trong tình huống cơ bản.\n\nQuay lại\nTiếp tục\nNgày 20\nNgày 22\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "failedRequests": [],
+  "stage5ModuleRequests": [
+    "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+  ],
+  "screenshots": [
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-roadmap-desktop.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-roadmap-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-roadmap-mobile-375.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day22-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day23-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day24-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day25-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day26-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day27-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day28-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day22-desktop.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-day28-desktop.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-regression-day13-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-regression-day17-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-regression-day18-mobile.png",
+    "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-stage5-regression-day21-mobile.png"
+  ]
+}

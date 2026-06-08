@@ -30,7 +30,7 @@ export function Foundation48Page() {
   }, []);
 
   return (
-    <OceanPageShell data-testid="foundation48-roadmap-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} pt={{ base: '2', md: '0' }} pb={{ base: 'var(--penglish-mobile-safe-bottom)', lg: '8' }}>
+    <OceanPageShell data-testid="foundation48-roadmap-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 132px)', lg: '8' }}>
       <Box maxW="1120px" mx="auto" minW="0">
         <Box className="penglish-glass-card" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '4', md: '6' }} bg="rgba(255,255,255,0.82)" mb="4" overflow="hidden" position="relative">
           <Box position="absolute" inset="0" bg="radial-gradient(circle at 90% 16%, rgba(91,188,235,0.16), transparent 30%)" pointerEvents="none" />

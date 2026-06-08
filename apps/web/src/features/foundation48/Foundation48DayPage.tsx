@@ -6,7 +6,8 @@ import { OceanPageShell } from '../../components/p-english/OceanPageShell';
 import { OceanMascot } from '../../components/p-english/OceanMascot';
 import { Foundation48AudioPlayer } from './Foundation48AudioPlayer';
 import { FOUNDATION48_BASE_PATH, foundation48Days, getFoundation48Day, getFoundation48DayPath } from './foundation48Data';
-import { foundation48DeepLessons } from './foundation48DeepLessons';
+import type { Foundation48DeepLesson } from './foundation48DeepLessons';
+import { getFoundation48CachedDeepLesson, getFoundation48DeepLesson, preloadFoundation48DeepLesson } from './foundation48DeepLessonResolver';
 import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48DayProgress, markFoundation48Completed, markFoundation48Started, markFoundation48StepCompleted, recordFoundation48ChallengeResult } from './foundation48Progress';
 import type { Foundation48Challenge, Foundation48Day, Foundation48LessonStep } from './foundation48Types';
 
@@ -57,12 +58,35 @@ export function Foundation48DayPage() {
   const [version, setVersion] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
   const [canContinue, setCanContinue] = useState(true);
+  const [resolvedDeepLesson, setResolvedDeepLesson] = useState<Foundation48DeepLesson | undefined>(() => day ? getFoundation48CachedDeepLesson(day.dayNumber) : undefined);
   const progress = useMemo(() => day ? getFoundation48DayProgress(day.dayNumber) : {}, [day, version]);
-  const steps = useMemo(() => day ? buildFoundation48Steps(day) : [], [day]);
+  const steps = useMemo(() => day ? buildFoundation48Steps(day, resolvedDeepLesson) : [], [day, resolvedDeepLesson]);
 
   useEffect(() => {
     if (day) markFoundation48Started(day.dayNumber);
   }, [day]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const currentDay = day?.dayNumber;
+    setResolvedDeepLesson(currentDay ? getFoundation48CachedDeepLesson(currentDay) : undefined);
+
+    if (!currentDay) return;
+
+    getFoundation48DeepLesson(currentDay).then((lesson) => {
+      if (!cancelled) setResolvedDeepLesson(lesson);
+    }).catch(() => {
+      if (!cancelled) setResolvedDeepLesson(getFoundation48CachedDeepLesson(currentDay));
+    });
+
+    if (currentDay < foundation48Days.length) {
+      void preloadFoundation48DeepLesson(currentDay + 1);
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, [day?.dayNumber]);
 
   useEffect(() => {
     setStepIndex(0);
@@ -111,13 +135,13 @@ export function Foundation48DayPage() {
   }
 
   return (
-    <OceanPageShell data-testid="foundation48-day-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} pt={{ base: '2', md: '0' }} pb={{ base: 'var(--penglish-mobile-safe-bottom)', lg: '8' }}>
+    <OceanPageShell data-testid="foundation48-day-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 156px)', lg: '8' }}>
       <Box maxW="960px" mx="auto" minW="0">
         <Button as={Link} to={FOUNDATION48_BASE_PATH} leftIcon={<Icon as={ChevronLeft} />} variant="ghost" color={COLORS.blue} borderRadius="full" mb="3">
           Về lộ trình 48 ngày
         </Button>
 
-        <Box className="penglish-glass-card" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '4', md: '6' }} bg="rgba(255,255,255,0.84)" mb="4" overflow="hidden" position="relative">
+        <Box className="penglish-glass-card" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '3', md: '6' }} bg="rgba(255,255,255,0.84)" mb={{ base: '3', md: '4' }} overflow="hidden" position="relative">
           <Box position="absolute" inset="0" bg="radial-gradient(circle at 92% 18%, rgba(102,217,200,0.16), transparent 30%)" pointerEvents="none" />
           <Flex position="relative" justify="space-between" align={{ base: 'start', md: 'center' }} gap="4" direction={{ base: 'column', md: 'row' }}>
             <Box minW="0" flex="1">
@@ -126,11 +150,11 @@ export function Foundation48DayPage() {
                 <Text px="3" py="1.5" borderRadius="full" bg={completed ? '#ECFDF5' : '#F8FAFC'} color={completed ? COLORS.green : COLORS.muted} fontWeight="950" fontSize="xs">{completed ? 'Đã hoàn thành' : `Bước ${stepIndex + 1}/${steps.length}`}</Text>
                 <Text px="3" py="1.5" borderRadius="full" bg="#FFF7ED" color="#B45309" fontWeight="950" fontSize="xs">{rightCount}/{challengeCount} câu đúng</Text>
               </HStack>
-              <Text as="h1" mt="2" color={COLORS.text} fontSize={{ base: '2xl', md: '4xl' }} lineHeight="1.08" fontWeight="950">
+              <Text as="h1" mt={{ base: '1.5', md: '2' }} color={COLORS.text} fontSize={{ base: 'xl', md: '4xl' }} lineHeight="1.12" fontWeight="950">
                 {day.title}
               </Text>
-              <Text mt="2" color={COLORS.muted} fontWeight="750" lineHeight="1.55">Chặng {day.stageId}: {day.stageTitle}</Text>
-              <Box mt="4">
+              <Text mt={{ base: '1', md: '2' }} color={COLORS.muted} fontWeight="750" lineHeight="1.45" fontSize={{ base: 'sm', md: 'md' }}>Chặng {day.stageId}: {day.stageTitle}</Text>
+              <Box mt={{ base: '3', md: '4' }}>
                 <HStack justify="space-between" mb="1">
                   <Text fontSize="xs" color={COLORS.muted} fontWeight="900">Tiến độ lesson flow</Text>
                   <Text fontSize="xs" color={COLORS.blue} fontWeight="950">{stepIndex + 1}/{steps.length}</Text>
@@ -167,8 +191,10 @@ export function Foundation48DayPage() {
               <HStack gap="3" align="center">
                 <OceanMascot mascot="saoNhi" pose="reward" size="sm" decorative motion="celebrate" />
                 <Box>
-                  <Text color={COLORS.green} fontWeight="950">Đã lưu ngày {day.dayNumber}</Text>
-                  <Text color={COLORS.text} fontWeight="800" lineHeight="1.55">Tiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.</Text>
+                  <Text color={COLORS.green} fontWeight="950">{day.dayNumber === foundation48Days.length ? 'Đã hoàn thành 48/48 ngày' : `Đã lưu ngày ${day.dayNumber}`}</Text>
+                  <Text color={COLORS.text} fontWeight="800" lineHeight="1.55">
+                    {day.dayNumber === foundation48Days.length ? 'Bạn đã hoàn thành lộ trình 48 ngày lấy gốc. Hãy ôn lại các ngày khó, luyện Shadowing và duy trì thói quen nghe/nói mỗi ngày.' : 'Tiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.'}
+                  </Text>
                 </Box>
               </HStack>
               {nextDay ? (
@@ -176,9 +202,14 @@ export function Foundation48DayPage() {
                   Sang ngày {nextDay}
                 </Button>
               ) : (
-                <Button as={Link} to={FOUNDATION48_BASE_PATH} bg={COLORS.green} color="white" _hover={{ bg: '#15803D' }} borderRadius="full">
-                  Về lộ trình
-                </Button>
+                <HStack gap="2" wrap="wrap">
+                  <Button as={Link} to={FOUNDATION48_BASE_PATH} bg={COLORS.green} color="white" _hover={{ bg: '#15803D' }} borderRadius="full">
+                    Về lộ trình
+                  </Button>
+                  <Button as={Link} to="/shadowing" variant="outline" borderColor="#86EFAC" color={COLORS.green} borderRadius="full">
+                    Luyện Shadowing
+                  </Button>
+                </HStack>
               )}
             </Flex>
           </Box>
@@ -202,16 +233,16 @@ function LessonStepperCard({ day, step, completed, onReadyChange }: { day: Found
   const icon = step.type === 'listening' ? Headphones : step.type === 'speaking' ? Mic : step.type === 'complete' ? Sparkles : Play;
 
   return (
-    <Box className="penglish-glass-card" border="1px solid" borderColor={completed ? '#BBF7D0' : COLORS.border} borderRadius="3xl" p={{ base: '4', md: '6' }} bg="rgba(255,255,255,0.86)" data-testid={`foundation48-step-${step.type}`} minH={{ base: '360px', md: '420px' }}>
-      <VStack align="stretch" gap="4">
+    <Box className="penglish-glass-card" border="1px solid" borderColor={completed ? '#BBF7D0' : COLORS.border} borderRadius="3xl" p={{ base: '3', md: '6' }} bg="rgba(255,255,255,0.86)" data-testid={`foundation48-step-${step.type}`} minH={{ base: step.type === 'intro' ? '220px' : '300px', md: '420px' }}>
+      <VStack align="stretch" gap={{ base: '3', md: '4' }}>
         <HStack justify="space-between" align="start" gap="3">
           <HStack gap="3" align="center">
-            <Box w="46px" h="46px" borderRadius="2xl" bg="#EFF6FF" color={COLORS.blue} display="grid" placeItems="center" border="1px solid rgba(186,230,253,0.92)">
+            <Box w={{ base: '38px', md: '46px' }} h={{ base: '38px', md: '46px' }} borderRadius="2xl" bg="#EFF6FF" color={COLORS.blue} display="grid" placeItems="center" border="1px solid rgba(186,230,253,0.92)" flexShrink={0}>
               <Icon as={icon} boxSize="5" />
             </Box>
             <Box>
               <Text color={COLORS.blue} fontWeight="950" fontSize="xs" textTransform="uppercase" letterSpacing="0.08em">{step.type === 'challenge' ? step.challenge?.type : step.type}</Text>
-              <Text color={COLORS.text} fontWeight="950" fontSize={{ base: 'xl', md: '3xl' }} lineHeight="1.12">{step.title}</Text>
+              <Text color={COLORS.text} fontWeight="950" fontSize={{ base: 'lg', md: '3xl' }} lineHeight="1.14">{step.title}</Text>
             </Box>
           </HStack>
           {completed ? <Icon as={CheckCircle2} color={COLORS.green} boxSize="5" /> : null}
@@ -219,7 +250,20 @@ function LessonStepperCard({ day, step, completed, onReadyChange }: { day: Found
 
         {step.subtitle ? <Text color={COLORS.muted} fontWeight="800" lineHeight="1.6">{step.subtitle}</Text> : null}
         {step.body ? <Text color={COLORS.text} fontWeight="750" lineHeight="1.75" whiteSpace="pre-line">{step.body}</Text> : null}
-        {step.bullets?.length ? <SimpleGrid columns={{ base: 1, md: 2 }} gap="3">{step.bullets.map((item) => <Text key={item} border="1px solid" borderColor={COLORS.border} bg="#F8FAFC" borderRadius="2xl" p="3" color={COLORS.text} fontWeight="800" lineHeight="1.6">{item}</Text>)}</SimpleGrid> : null}
+        {step.type === 'intro' && step.bullets?.length ? (
+          <Text display={{ base: 'block', md: 'none' }} color={COLORS.blue} fontSize="xs" fontWeight="950" lineHeight="1.45" bg="#EFF6FF" border="1px solid" borderColor={COLORS.border} borderRadius="full" px="3" py="2" data-testid="foundation48-mobile-intro-preview">
+            {step.bullets.map((item) => item.replace(/^(\d+)\s+/, '$1 ')).join(' · ')}
+          </Text>
+        ) : null}
+        {step.type === 'intro' && step.bullets?.length ? (
+          <Box display={{ base: 'none', md: 'block' }} border="1px solid" borderColor={COLORS.border} bg="linear-gradient(135deg, rgba(239,246,255,0.92), rgba(240,253,250,0.88))" borderRadius="2xl" p="4" data-testid="foundation48-intro-preview">
+            <Text color={COLORS.blue} fontWeight="950" fontSize="sm" mb="3">Hôm nay bạn sẽ luyện</Text>
+            <SimpleGrid columns={{ md: 5 }} gap="3">
+              {step.bullets.map((item) => <Text key={item} border="1px solid" borderColor="rgba(186,230,253,0.9)" bg="white" borderRadius="2xl" p="3" color={COLORS.text} fontWeight="900" lineHeight="1.35" textAlign="center">{item}</Text>)}
+            </SimpleGrid>
+          </Box>
+        ) : null}
+        {step.bullets?.length && step.type !== 'intro' ? <SimpleGrid columns={{ base: 1, md: 2 }} gap="3">{step.bullets.map((item) => <Text key={item} border="1px solid" borderColor={COLORS.border} bg="#F8FAFC" borderRadius="2xl" p="3" color={COLORS.text} fontWeight="800" lineHeight="1.6">{item}</Text>)}</SimpleGrid> : null}
 
         {step.type === 'listening' ? (
           <VStack align="stretch" gap="3">
@@ -348,6 +392,26 @@ function SpeakButton({ text, label, slow }: { text: string; label: string; slow?
 }
 
 function CompletePrompt({ day }: { day: Foundation48Day }) {
+  if (day.dayNumber === foundation48Days.length) {
+    return (
+      <VStack align="stretch" gap="3" border="1px solid" borderColor="#BBF7D0" bg="linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 100%)" borderRadius="2xl" p="4">
+        <HStack gap="3" align="start">
+          <OceanMascot mascot="saoNhi" pose="sparkle" size="sm" decorative motion="float" />
+          <Box>
+            <Text color={COLORS.green} fontWeight="950">Bạn đã hoàn thành lộ trình 48 ngày lấy gốc</Text>
+            <Text color={COLORS.text} fontWeight="800" lineHeight="1.6">Bấm “Hoàn thành ngày học” để lưu mốc cuối khóa. Sau đó hãy ôn lại các ngày khó, luyện Shadowing, luyện English Speed và xem lại từ vựng.</Text>
+          </Box>
+        </HStack>
+        <HStack gap="2" wrap="wrap">
+          <Button as={Link} to={FOUNDATION48_BASE_PATH} size="sm" borderRadius="full" variant="outline" borderColor="#86EFAC" color={COLORS.green}>Ôn ngày khó</Button>
+          <Button as={Link} to="/shadowing" size="sm" borderRadius="full" variant="outline" borderColor={COLORS.border} color={COLORS.blue}>Shadowing</Button>
+          <Button as={Link} to="/english-speed" size="sm" borderRadius="full" variant="outline" borderColor={COLORS.border} color={COLORS.blue}>English Speed</Button>
+          <Button as={Link} to="/vocabularies" size="sm" borderRadius="full" variant="outline" borderColor={COLORS.border} color={COLORS.blue}>Ôn từ vựng</Button>
+        </HStack>
+      </VStack>
+    );
+  }
+
   return (
     <HStack gap="3" align="start" border="1px solid" borderColor="#BBF7D0" bg="#F0FDF4" borderRadius="2xl" p="4">
       <OceanMascot mascot="saoNhi" pose="sparkle" size="sm" decorative motion="float" />
@@ -372,8 +436,8 @@ function normalizeAnswer(value: string) {
   return value.toLowerCase().replace(/[.,!?;:'"“”‘’]/g, '').replace(/\s+/g, ' ').trim();
 }
 
-function buildFoundation48Steps(day: Foundation48Day): Foundation48LessonStep[] {
-  const deepLesson = foundation48DeepLessons[day.dayNumber];
+function buildFoundation48Steps(day: Foundation48Day, resolvedDeepLesson?: Foundation48DeepLesson): Foundation48LessonStep[] {
+  const deepLesson = resolvedDeepLesson ?? getFoundation48CachedDeepLesson(day.dayNumber);
 
   if (deepLesson?.readiness === 'complete') {
     const listeningChallenges = deepLesson.listening.map((item): Foundation48Challenge => ({
@@ -411,7 +475,7 @@ function buildFoundation48Steps(day: Foundation48Day): Foundation48LessonStep[] 
     const vocabularyBullets = deepLesson.vocabulary.map((item) => `${item.term} — ${item.meaningVi}. Ví dụ: ${item.example}`);
 
     const steps: Foundation48LessonStep[] = [
-      { id: 'intro', type: 'intro', title: deepLesson.learnerTitle, subtitle: 'Bài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.', body: deepLesson.goalVi },
+      { id: 'intro', type: 'intro', title: deepLesson.learnerTitle, subtitle: 'Bài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.', body: deepLesson.goalVi, bullets: [`${deepLesson.vocabulary.length} Từ vựng`, `${deepLesson.patterns.length} Mẫu câu`, `${deepLesson.listening.length} Nghe`, `${deepLesson.speaking.length} Nói lại`, `${deepLesson.quiz.length} Mini quiz`] },
       { id: 'explain', type: 'explain', title: deepLesson.grammarPoint.title, subtitle: 'Poo giải thích bằng tiếng Việt trước khi luyện.', body: deepLesson.grammarPoint.explanationVi, bullets: deepLesson.grammarPoint.examples },
       { id: 'patterns', type: 'example', title: 'Mẫu câu cần nhớ', subtitle: 'Đọc mẫu chậm, chú ý trật tự từ.', bullets: patternBullets },
       { id: 'vocabulary', type: 'practice', title: 'Từ/cụm dùng ngay', subtitle: `${deepLesson.vocabulary.length} từ và cụm chính của ngày ${day.dayNumber}.`, bullets: vocabularyBullets },

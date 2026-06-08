@@ -165,6 +165,9 @@ function buildDeepLesson(dayNumber: number, seed: DaySeed): Foundation48DeepLess
   };
 }
 
+export { buildDeepLesson };
+export type { DaySeed };
+
 const seeds: Record<number, DaySeed> = {
   1: {
     title: 'Tôi là ai? — nói câu khẳng định/phủ định với to be',

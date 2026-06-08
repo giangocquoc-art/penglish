@@ -25,6 +25,60 @@ const foundation48DisplayTitles: Record<number, string> = {
   6: 'Ngày 6: Tôi không làm — don’t / doesn’t',
 };
 
+const stage3InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
+  13: { learnerTitle: 'Hỏi chuyện đã xảy ra — Did you...? và câu trả lời ngắn', readiness: 'complete' },
+  14: { learnerTitle: 'Tôi đã không làm — phủ định quá khứ với didn’t', readiness: 'complete' },
+  15: { learnerTitle: 'Đã từng ở đâu? — was/were trong câu hỏi và phủ định', readiness: 'complete' },
+  16: { learnerTitle: 'Tương lai gần — be going to', readiness: 'complete' },
+  17: { learnerTitle: 'Tôi có thể làm — can / can’t cho khả năng', readiness: 'complete' },
+};
+
+const stage4InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
+  18: { learnerTitle: 'Học ngữ âm với giáo viên nước ngoài', readiness: 'complete' },
+  19: { learnerTitle: 'Tìm hiểu về trọng âm trong tiếng Anh', readiness: 'complete' },
+  20: { learnerTitle: 'Các câu hỏi với từ để hỏi khác trong tiếng Anh', readiness: 'complete' },
+  21: { learnerTitle: 'Luyện nghe số và tên', readiness: 'complete' },
+};
+
+const stage5InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
+  22: { learnerTitle: 'Động từ khuyết thiếu', readiness: 'complete' },
+  23: { learnerTitle: 'Liên từ And, But, Or, So và Because', readiness: 'complete' },
+  24: { learnerTitle: 'Liên từ chỉ thời gian', readiness: 'complete' },
+  25: { learnerTitle: 'Liên từ chỉ sự đối lập', readiness: 'complete' },
+  26: { learnerTitle: 'Câu điều kiện loại 1', readiness: 'complete' },
+  27: { learnerTitle: 'Câu điều kiện loại 2', readiness: 'complete' },
+  28: { learnerTitle: 'Câu điều kiện loại 3', readiness: 'complete' },
+};
+
+const stage6InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
+  29: { learnerTitle: 'Luyện nghe điền từ', readiness: 'complete' },
+  30: { learnerTitle: 'Luyện nghe chép chính tả', readiness: 'complete' },
+  31: { learnerTitle: 'Luyện nghe về giờ', readiness: 'complete' },
+  32: { learnerTitle: 'Luyện nghe ngày tháng', readiness: 'complete' },
+  33: { learnerTitle: 'Luyện nghe địa điểm', readiness: 'complete' },
+  34: { learnerTitle: 'Luyện nghe về tiền bạc', readiness: 'complete' },
+};
+
+const stage7InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
+  35: { learnerTitle: 'Đại từ phản thân', readiness: 'complete' },
+  36: { learnerTitle: 'Sự hòa hợp về thì', readiness: 'complete' },
+  37: { learnerTitle: 'Tiếng Anh giao tiếp 1', readiness: 'complete' },
+  38: { learnerTitle: 'Liên từ tương hỗ', readiness: 'complete' },
+};
+
+const stage8InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
+  39: { learnerTitle: 'Luyện nghe về các quốc gia và châu lục', readiness: 'complete' },
+  40: { learnerTitle: 'Luyện nghe về sở thích', readiness: 'complete' },
+  41: { learnerTitle: 'Luyện nghe về giao thông', readiness: 'complete' },
+  42: { learnerTitle: 'Luyện nghe về thể thao', readiness: 'complete' },
+  43: { learnerTitle: 'Luyện nghe về nghề nghiệp', readiness: 'complete' },
+  44: { learnerTitle: 'Luyện nghe về công nghệ', readiness: 'complete' },
+  45: { learnerTitle: 'Tiếng Anh giao tiếp 2', readiness: 'complete' },
+  46: { learnerTitle: 'Kỹ năng Note-taking', readiness: 'complete' },
+  47: { learnerTitle: 'Kỹ năng Paraphrasing', readiness: 'complete' },
+  48: { learnerTitle: 'Tự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh', readiness: 'complete' },
+};
+
 const polishedLessons: Record<number, Foundation48PolishedLesson> = {
   1: {
     goal: 'Nhận diện chủ ngữ cơ bản và dùng am/is/are để tạo câu khẳng định, phủ định thật chắc.',
@@ -118,7 +172,7 @@ const fallbackSummary = (dayNumber: number, title: string) => ({
 
 export const foundation48Days: Foundation48Day[] = foundation48SourceIndex.map((sourceDay) => {
   const day = sourceDay as unknown as Foundation48SourceDay;
-  const title = foundation48DeepLessons[day.dayNumber]?.learnerTitle ?? foundation48DisplayTitles[day.dayNumber] ?? day.title;
+  const title = foundation48DeepLessons[day.dayNumber]?.learnerTitle ?? stage3InteractiveMeta[day.dayNumber]?.learnerTitle ?? stage4InteractiveMeta[day.dayNumber]?.learnerTitle ?? stage5InteractiveMeta[day.dayNumber]?.learnerTitle ?? stage6InteractiveMeta[day.dayNumber]?.learnerTitle ?? stage7InteractiveMeta[day.dayNumber]?.learnerTitle ?? stage8InteractiveMeta[day.dayNumber]?.learnerTitle ?? foundation48DisplayTitles[day.dayNumber] ?? day.title;
 
   return {
     ...day,
@@ -135,8 +189,8 @@ export const foundation48Stats = {
   mp3Count: foundation48Days.reduce((sum, day) => sum + day.audio.length, 0),
   audioDays: foundation48Days.filter((day) => day.audio.length > 0).map((day) => day.dayNumber),
   videoDays: foundation48Days.filter((day) => day.hasVideo).map((day) => day.dayNumber),
-  polishedDays: foundation48Days.filter((day) => day.polished || foundation48DeepLessons[day.dayNumber]?.readiness === 'complete').map((day) => day.dayNumber),
-  sourceRenderedDays: foundation48Days.filter((day) => !day.polished && foundation48DeepLessons[day.dayNumber]?.readiness !== 'complete').map((day) => day.dayNumber),
+  polishedDays: foundation48Days.filter((day) => day.polished || foundation48DeepLessons[day.dayNumber]?.readiness === 'complete' || stage3InteractiveMeta[day.dayNumber]?.readiness === 'complete' || stage4InteractiveMeta[day.dayNumber]?.readiness === 'complete' || stage5InteractiveMeta[day.dayNumber]?.readiness === 'complete' || stage6InteractiveMeta[day.dayNumber]?.readiness === 'complete' || stage7InteractiveMeta[day.dayNumber]?.readiness === 'complete' || stage8InteractiveMeta[day.dayNumber]?.readiness === 'complete').map((day) => day.dayNumber),
+  sourceRenderedDays: foundation48Days.filter((day) => !day.polished && foundation48DeepLessons[day.dayNumber]?.readiness !== 'complete' && stage3InteractiveMeta[day.dayNumber]?.readiness !== 'complete' && stage4InteractiveMeta[day.dayNumber]?.readiness !== 'complete' && stage5InteractiveMeta[day.dayNumber]?.readiness !== 'complete' && stage6InteractiveMeta[day.dayNumber]?.readiness !== 'complete' && stage7InteractiveMeta[day.dayNumber]?.readiness !== 'complete' && stage8InteractiveMeta[day.dayNumber]?.readiness !== 'complete').map((day) => day.dayNumber),
 };
 
 export function getFoundation48Day(dayNumber: number) {
@@ -145,4 +199,8 @@ export function getFoundation48Day(dayNumber: number) {
 
 export function getFoundation48DayPath(dayNumber: number) {
   return `${FOUNDATION48_BASE_PATH}/ngay/${dayNumber}`;
+}
+
+export function getFoundation48InteractiveReadiness(dayNumber: number) {
+  return foundation48DeepLessons[dayNumber]?.readiness ?? stage3InteractiveMeta[dayNumber]?.readiness ?? stage4InteractiveMeta[dayNumber]?.readiness ?? stage5InteractiveMeta[dayNumber]?.readiness ?? stage6InteractiveMeta[dayNumber]?.readiness ?? stage7InteractiveMeta[dayNumber]?.readiness ?? stage8InteractiveMeta[dayNumber]?.readiness ?? 'future';
 }
