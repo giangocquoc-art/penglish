@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "generatedAt": "2026-06-08T16:56:25.034Z",
+  "baseUrl": "http://127.0.0.1:5180",
+  "errors": [],
+  "consoleErrors": [],
+  "screenshots": [
+    "reports/screenshots/ocean-rise-loader-0.png",
+    "reports/screenshots/ocean-rise-loader-50.png",
+    "reports/screenshots/ocean-rise-loader-100.png",
+    "reports/screenshots/ocean-rise-loader-mobile.png",
+    "reports/screenshots/ocean-rise-loader-after-home.png"
+  ],
+  "desktopAfter": {
+    "loaderVisible": false,
+    "progress": null,
+    "hasHorizontalOverflow": false,
+    "appVisible": true,
+    "textSample": "P-English\n\nHọc tiếng Anh mỗi ngày\n\n0\n\n5/5\n\n0\n\nTrang chủ\n\nTổng quan hôm nay\n\nLộ trình\n\nCEFR A1–B2\n\n48 ngày lấy gốc\n\nHọc lại nền tảng\n\nEnglish Speed\n\nPhát âm nhanh\n\nShadowing\n\nLuyện nói theo nhịp\n\nLuyện tập\n\nÔn kỹ năng\n\nTừ vựng\n\nKho từ\n\nK\n\nKhách\n\nTiến độ lưu trên thiết bị này\n\nTiến độ lưu trên thiết bị này\n\nĐăng nhập Google để đồng bộ\n\nBỌT BIỂN\n\n5/5\n\n🌙\n\nGiao diện\n\nP-English · vùng học yên tĩnh\n\n0\n\nBọt biển 5/5\n\nHọc miễn phí\nTrang chủ\nDashboard hôm nay\nA1 · Nền tảng\nLưu trên thiết bị\nHọc tiếng Anh"
+  }
+}

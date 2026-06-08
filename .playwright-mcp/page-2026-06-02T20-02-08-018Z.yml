@@ -1,0 +1,177 @@
+- generic [ref=e1]:
+  - generic [ref=e6]:
+    - complementary [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - img "P-English logo" [ref=e12]
+          - generic [ref=e13]:
+            - paragraph [ref=e14]: P-English
+            - paragraph [ref=e15]: Học tiếng Anh mỗi ngày
+        - generic [ref=e16]:
+          - paragraph [ref=e19]: "0"
+          - generic "Bọt biển 5/5" [ref=e20]:
+            - img [ref=e21]
+            - paragraph [ref=e25]: 5/5
+          - generic [ref=e26]:
+            - img [ref=e27]
+            - paragraph [ref=e32]: "0"
+      - navigation "Điều hướng chính" [ref=e33]:
+        - link "Trang chủ Tổng quan hôm nay" [ref=e34] [cursor=pointer]:
+          - /url: /home
+          - generic [ref=e35]:
+            - img [ref=e37]
+            - generic [ref=e40]:
+              - paragraph [ref=e41]: Trang chủ
+              - paragraph [ref=e42]: Tổng quan hôm nay
+        - link "Lộ trình CEFR A1–B2" [ref=e43] [cursor=pointer]:
+          - /url: /learning-path
+          - generic [ref=e44]:
+            - img [ref=e46]
+            - generic [ref=e50]:
+              - paragraph [ref=e51]: Lộ trình
+              - paragraph [ref=e52]: CEFR A1–B2
+        - link "48 ngày lấy gốc Học lại nền tảng" [ref=e53] [cursor=pointer]:
+          - /url: /luyen-tieng-anh/48-ngay-lay-goc
+          - generic [ref=e54]:
+            - img [ref=e56]
+            - generic [ref=e60]:
+              - paragraph [ref=e61]: 48 ngày lấy gốc
+              - paragraph [ref=e62]: Học lại nền tảng
+        - link "English Speed Phát âm nhanh" [ref=e63] [cursor=pointer]:
+          - /url: /english-speed
+          - generic [ref=e64]:
+            - img [ref=e66]
+            - generic [ref=e69]:
+              - paragraph [ref=e70]: English Speed
+              - paragraph [ref=e71]: Phát âm nhanh
+        - link "Shadowing Luyện nói theo nhịp" [ref=e72] [cursor=pointer]:
+          - /url: /shadowing
+          - generic [ref=e73]:
+            - img [ref=e75]
+            - generic [ref=e79]:
+              - paragraph [ref=e80]: Shadowing
+              - paragraph [ref=e81]: Luyện nói theo nhịp
+        - link "Luyện tập Ôn kỹ năng" [ref=e82] [cursor=pointer]:
+          - /url: /practice
+          - generic [ref=e83]:
+            - img [ref=e85]
+            - generic [ref=e91]:
+              - paragraph [ref=e92]: Luyện tập
+              - paragraph [ref=e93]: Ôn kỹ năng
+        - link "Từ vựng Kho từ" [ref=e94] [cursor=pointer]:
+          - /url: /words
+          - generic [ref=e95]:
+            - img [ref=e97]
+            - generic [ref=e99]:
+              - paragraph [ref=e100]: Từ vựng
+              - paragraph [ref=e101]: Kho từ
+      - generic [ref=e102]:
+        - link "avatar Khách Học nhẹ, đều mỗi ngày Lưu trên thiết bị" [ref=e103] [cursor=pointer]:
+          - /url: /profile
+          - generic [ref=e104]:
+            - img "avatar" [ref=e106]
+            - generic [ref=e109]:
+              - paragraph [ref=e110]: Khách
+              - paragraph [ref=e111]: Học nhẹ, đều mỗi ngày
+              - paragraph [ref=e112]: Lưu trên thiết bị
+            - img [ref=e113]
+        - generic [ref=e117]:
+          - generic [ref=e118]:
+            - paragraph [ref=e119]: Bọt biển
+            - paragraph [ref=e120]: 5/5
+          - generic "5/5 bọt biển" [ref=e121]:
+            - img "Bọt biển còn" [ref=e122]
+            - img "Bọt biển còn" [ref=e132]
+            - img "Bọt biển còn" [ref=e142]
+            - img "Bọt biển còn" [ref=e152]
+            - img "Bọt biển còn" [ref=e162]
+        - generic [ref=e172] [cursor=pointer]:
+          - paragraph [ref=e173]: 🌙
+          - paragraph [ref=e174]: Giao diện
+          - button "Toggle theme" [ref=e175]:
+            - img [ref=e176]
+    - generic [ref=e178]:
+      - banner [ref=e179]:
+        - generic [ref=e180]: P-English · vùng học yên tĩnh
+        - generic [ref=e181]:
+          - paragraph [ref=e184]: "0"
+          - generic "Bọt biển 5/5" [ref=e185]:
+            - img [ref=e186]
+            - paragraph [ref=e190]: Bọt biển 5/5
+          - button "Học miễn phí" [ref=e191] [cursor=pointer]:
+            - img [ref=e193]
+            - text: Học miễn phí
+      - generic [ref=e197]:
+        - link "Quay lại roadmap" [ref=e198] [cursor=pointer]:
+          - /url: /luyen-tieng-anh/48-ngay-lay-goc
+          - img [ref=e200]
+          - text: Quay lại roadmap
+        - generic [ref=e203]:
+          - generic [ref=e204]:
+            - paragraph [ref=e205]: Ngày 1 · Chặng 1
+            - heading "Thể khẳng định và phủ định của động từ to be" [level=1] [ref=e206]
+            - paragraph [ref=e207]: Câu nền tảng với “to be”
+            - generic [ref=e209]:
+              - img [ref=e210]
+              - paragraph [ref=e213]: Có tài liệu PDF
+          - button "Đã hoàn thành" [active] [ref=e275] [cursor=pointer]:
+            - img [ref=e216]
+            - text: Đã hoàn thành
+        - generic [ref=e219]:
+          - generic [ref=e221]:
+            - paragraph [ref=e222]: Nguồn học local
+            - paragraph [ref=e223]: Nội dung ngày này được dựng từ Markdown đã chuyển đổi trong bộ 48 ngày. Giao diện chỉ hiển thị nội dung học và file nghe đã copy vào public assets; PDF gốc không được mở trực tiếp tại đây.
+            - generic [ref=e225]:
+              - img [ref=e226]
+              - paragraph [ref=e229]: Có tài liệu PDF
+          - generic [ref=e230]:
+            - generic [ref=e231]:
+              - paragraph [ref=e232]: Mục tiêu
+              - paragraph [ref=e233]: Nhận diện chủ ngữ cơ bản và dùng am/is/are để tạo câu khẳng định, phủ định thật chắc.
+            - generic [ref=e234]:
+              - paragraph [ref=e235]: Giải thích ngắn
+              - paragraph [ref=e236]: Động từ to be là “khung xương” đầu tiên để nói ai/cái gì là gì hoặc đang ở trạng thái nào. Học viên chỉ cần ghép đúng chủ ngữ với am/is/are, sau đó thêm not khi muốn phủ định.
+            - generic [ref=e237]:
+              - paragraph [ref=e238]: Công thức / mẫu câu chính
+              - list [ref=e239]:
+                - listitem [ref=e240]: I + am + noun/adjective
+                - listitem [ref=e241]: You/We/They + are + noun/adjective
+                - listitem [ref=e242]: He/She/It + is + noun/adjective
+                - listitem [ref=e243]: Subject + am/is/are + not + noun/adjective
+            - generic [ref=e244]:
+              - paragraph [ref=e245]: Ví dụ
+              - list [ref=e246]:
+                - listitem [ref=e247]: I am a student.
+                - listitem [ref=e248]: She is happy.
+                - listitem [ref=e249]: They are teachers.
+                - listitem [ref=e250]: He is not tall.
+                - listitem [ref=e251]: We are not sad.
+            - generic [ref=e252]:
+              - paragraph [ref=e253]: Câu luyện tập
+              - list [ref=e254]:
+                - listitem [ref=e255]: "Điền am/is/are: I ___ a teacher."
+                - listitem [ref=e256]: "Chuyển sang phủ định: She is my sister."
+                - listitem [ref=e257]: Viết 3 câu giới thiệu người thân bằng to be.
+                - listitem [ref=e258]: "Chọn đúng: They (is/are) students."
+            - generic [ref=e259]:
+              - paragraph [ref=e260]: Daily test
+              - list [ref=e261]:
+                - listitem [ref=e262]: I ___ not a baby.
+                - listitem [ref=e263]: My father ___ tall.
+                - listitem [ref=e264]: You ___ my friend.
+                - listitem [ref=e265]: It ___ not small.
+                - listitem [ref=e266]: Viết một câu khẳng định và một câu phủ định về bản thân.
+            - generic [ref=e267]:
+              - paragraph [ref=e268]: Nhiệm vụ cuối ngày
+              - paragraph [ref=e269]: Tự giới thiệu 5 câu dùng to be, trong đó có ít nhất 2 câu phủ định.
+          - link "Ngày 2" [ref=e271] [cursor=pointer]:
+            - /url: /luyen-tieng-anh/48-ngay-lay-goc/ngay/2
+            - text: Ngày 2
+            - img [ref=e273]
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

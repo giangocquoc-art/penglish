@@ -1,0 +1,5538 @@
+[
+  {
+    "route": "/",
+    "viewport": "desktop",
+    "bodyScrollWidth": 1366,
+    "htmlClientWidth": 1366,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "P-English",
+      "Vào học miễn phí",
+      "HỌC TẬP LÀ MIỄN PHÍ, P-ENGLISH KHÔNG BẮT BẤT KỲ AI TRẢ PHÍ CHO VIỆC HỌC",
+      "Học từ vựng tiếng Anh hiệu quả gấp 3 lần",
+      "Flashcard thông minh + Spaced Repetition + lộ trình TOEIC, IELTS, THPT. Hơn 100.000 người Việt đang dùng mỗi ngày.",
+      "Vào học miễn phí",
+      "Xem demo",
+      "100k+",
+      "người học",
+      "70+",
+      "lộ trình",
+      "6",
+      "game",
+      "Bài hôm nay",
+      "Unit 1 • Greetings A1",
+      "+60 XP",
+      "FLASHCARD THÔNG MINH",
+      "Nice to meet you",
+      "Rất vui được gặp bạn • Lặp lại đúng thời điểm để nhớ lâu hơn.",
+      "TỪ VỰNG",
+      "NGHE",
+      "PHẢN XẠ",
+      "5 ngày",
+      "Chuỗi học đại dương",
+      "84%",
+      "Tiến độ hôm nay",
+      "Mini lesson path",
+      "3/4"
+    ],
+    "detailsStates": []
+  },
+  {
+    "route": "/home",
+    "viewport": "desktop",
+    "bodyScrollWidth": 1366,
+    "htmlClientWidth": 1366,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "P-English",
+      "Học tiếng Anh mỗi ngày",
+      "0",
+      "0",
+      "Trang chủ",
+      "Tổng quan hôm nay",
+      "Lộ trình",
+      "CEFR A1–B2",
+      "English Speed",
+      "Phát âm nhanh",
+      "Shadowing",
+      "Luyện nói theo nhịp",
+      "Luyện tập",
+      "Ôn kỹ năng",
+      "Từ vựng",
+      "Kho từ",
+      "Khách",
+      "Học nhẹ, đều mỗi ngày",
+      "Lưu trên thiết bị",
+      "BỌT BIỂN",
+      "5/5",
+      "🌙",
+      "Giao diện",
+      "P-English · vùng học yên tĩnh",
+      "0",
+      "Học miễn phí",
+      "Trang chủ",
+      "Dashboard hôm nay"
+    ],
+    "detailsStates": []
+  },
+  {
+    "route": "/learning-path",
+    "viewport": "desktop",
+    "bodyScrollWidth": 1366,
+    "htmlClientWidth": 1366,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "P-English",
+      "Học tiếng Anh mỗi ngày",
+      "0",
+      "0",
+      "Trang chủ",
+      "Tổng quan hôm nay",
+      "Lộ trình",
+      "CEFR A1–B2",
+      "English Speed",
+      "Phát âm nhanh",
+      "Shadowing",
+      "Luyện nói theo nhịp",
+      "Luyện tập",
+      "Ôn kỹ năng",
+      "Từ vựng",
+      "Kho từ",
+      "Khách",
+      "Học nhẹ, đều mỗi ngày",
+      "Lưu trên thiết bị",
+      "BỌT BIỂN",
+      "5/5",
+      "🌙",
+      "Giao diện",
+      "P-English · vùng học yên tĩnh",
+      "0",
+      "Học miễn phí",
+      "Trang chủ",
+      "/"
+    ],
+    "detailsStates": [
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Xem chi tiết"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Xem chi tiết"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Xem chi tiết"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Xem chi tiết"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      }
+    ]
+  },
+  {
+    "route": "/lessons/unit-1-greetings-introduction",
+    "viewport": "desktop",
+    "bodyScrollWidth": 1366,
+    "htmlClientWidth": 1366,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "P-English",
+      "Học tiếng Anh mỗi ngày",
+      "0",
+      "0",
+      "Trang chủ",
+      "Tổng quan hôm nay",
+      "Lộ trình",
+      "CEFR A1–B2",
+      "English Speed",
+      "Phát âm nhanh",
+      "Shadowing",
+      "Luyện nói theo nhịp",
+      "Luyện tập",
+      "Ôn kỹ năng",
+      "Từ vựng",
+      "Kho từ",
+      "Khách",
+      "Học nhẹ, đều mỗi ngày",
+      "Lưu trên thiết bị",
+      "BỌT BIỂN",
+      "5/5",
+      "🌙",
+      "Giao diện",
+      "P-English · vùng học yên tĩnh",
+      "0",
+      "Học miễn phí",
+      "Trang chủ",
+      "/"
+    ],
+    "detailsStates": [
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Xem tất cả từ vựng"
+      },
+      {
+        "testid": null,
+        "open": true,
+        "summary": "Mực Mơ gợi ý"
+      },
+      {
+        "testid": "lesson-step-nav",
+        "open": true,
+        "summary": "Bước học trong bài · Tổng quan"
+      },
+      {
+        "testid": "lesson-mobile-progress-details",
+        "open": true,
+        "summary": "Tiến độ bài học"
+      },
+      {
+        "testid": null,
+        "open": true,
+        "summary": "Ôn tập thông minh"
+      },
+      {
+        "testid": null,
+        "open": true,
+        "summary": "Mục tiêu sau bài học"
+      }
+    ]
+  },
+  {
+    "route": "/english-speed",
+    "viewport": "desktop",
+    "bodyScrollWidth": 1366,
+    "htmlClientWidth": 1366,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "P-English",
+      "Học tiếng Anh mỗi ngày",
+      "0",
+      "0",
+      "Trang chủ",
+      "Tổng quan hôm nay",
+      "Lộ trình",
+      "CEFR A1–B2",
+      "English Speed",
+      "Phát âm nhanh",
+      "Shadowing",
+      "Luyện nói theo nhịp",
+      "Luyện tập",
+      "Ôn kỹ năng",
+      "Từ vựng",
+      "Kho từ",
+      "Khách",
+      "Học nhẹ, đều mỗi ngày",
+      "Lưu trên thiết bị",
+      "BỌT BIỂN",
+      "5/5",
+      "🌙",
+      "Giao diện",
+      "P-English · vùng học yên tĩnh",
+      "0",
+      "Học miễn phí",
+      "Về lộ trình",
+      "Chế độ phát âm nhanh"
+    ],
+    "detailsStates": [
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Huấn luyện viên tốc độ"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Tập trung âm"
+      }
+    ]
+  },
+  {
+    "route": "/shadowing",
+    "viewport": "desktop",
+    "bodyScrollWidth": 1366,
+    "htmlClientWidth": 1366,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "P-English",
+      "Học tiếng Anh mỗi ngày",
+      "0",
+      "0",
+      "Trang chủ",
+      "Tổng quan hôm nay",
+      "Lộ trình",
+      "CEFR A1–B2",
+      "English Speed",
+      "Phát âm nhanh",
+      "Shadowing",
+      "Luyện nói theo nhịp",
+      "Luyện tập",
+      "Ôn kỹ năng",
+      "Từ vựng",
+      "Kho từ",
+      "Khách",
+      "Học nhẹ, đều mỗi ngày",
+      "Lưu trên thiết bị",
+      "BỌT BIỂN",
+      "5/5",
+      "🌙",
+      "Giao diện",
+      "P-English · vùng học yên tĩnh",
+      "0",
+      "Học miễn phí",
+      "Transcript",
+      "Ghi âm"
+    ],
+    "detailsStates": [
+      {
+        "testid": "shadowing-video-reference-details",
+        "open": false,
+        "summary": "Video tham khảo"
+      },
+      {
+        "testid": "shadowing-lesson-picker",
+        "open": true,
+        "summary": "Chọn bài Shadowing"
+      },
+      {
+        "testid": "shadowing-transcript-panel",
+        "open": true,
+        "summary": "Transcript"
+      },
+      {
+        "testid": "shadowing-custom-transcript",
+        "open": true,
+        "summary": "Tự tạo transcript"
+      }
+    ]
+  },
+  {
+    "route": "/words",
+    "viewport": "desktop",
+    "bodyScrollWidth": 1366,
+    "htmlClientWidth": 1366,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "P-English",
+      "Học tiếng Anh mỗi ngày",
+      "0",
+      "0",
+      "Trang chủ",
+      "Tổng quan hôm nay",
+      "Lộ trình",
+      "CEFR A1–B2",
+      "English Speed",
+      "Phát âm nhanh",
+      "Shadowing",
+      "Luyện nói theo nhịp",
+      "Luyện tập",
+      "Ôn kỹ năng",
+      "Từ vựng",
+      "Kho từ",
+      "Khách",
+      "Học nhẹ, đều mỗi ngày",
+      "Lưu trên thiết bị",
+      "BỌT BIỂN",
+      "5/5",
+      "🌙",
+      "Giao diện",
+      "P-English · vùng học yên tĩnh",
+      "0",
+      "Học miễn phí",
+      "Từ vựng cá nhân",
+      "⭐ Vocabulary Review"
+    ],
+    "detailsStates": [
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-a-determiner-001",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-a-m-adverb-002",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-about-adverb-003",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-about-preposition-004",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-above-adverb-005",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-above-preposition-006",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-action-noun-007",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-activity-noun-008",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-actor-noun-009",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-add-verb-010",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-address-noun-011",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-aeroplane-noun-012",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-afraid-adjective-013",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-after-preposition-014",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-afternoon-noun-015",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-again-adverb-016",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-age-noun-017",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-ago-adverb-018",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-agree-verb-019",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-airplane-noun-020",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-airport-noun-021",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-album-noun-022",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-all-determiner-023",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-all-pronoun-024",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-almost-adverb-025",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-alone-adverb-026",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-along-adverb-027",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-already-adverb-028",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-also-adverb-029",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-always-adverb-030",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-am-adverb-031",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-am-be-verb-032",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-an-determiner-033",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-and-conjunction-034",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-angry-adjective-035",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-animal-noun-036",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-another-determiner-037",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-answer-noun-038",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-answer-verb-039",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-any-determiner-040",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-any-pronoun-041",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-anybody-pronoun-042",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-anyone-pronoun-043",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-anything-pronoun-044",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-apple-noun-045",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-april-noun-046",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-apron-noun-047",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-are-be-verb-048",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-arm-noun-049",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-around-preposition-050",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-arrive-verb-051",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-art-noun-052",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-article-noun-053",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-as-preposition-054",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-ask-verb-055",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-at-preposition-056",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-august-noun-057",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-aunt-noun-058",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-autumn-noun-059",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-awake-adjective-060",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-away-adverb-061",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-baby-noun-062",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-back-adverb-063",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-back-noun-064",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bad-adjective-065",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bag-noun-066",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-ball-noun-067",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-banana-noun-068",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-band-noun-069",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bank-noun-070",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bar-noun-071",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-baseball-noun-072",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-basketball-noun-073",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bat-noun-074",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bath-noun-075",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bathroom-noun-076",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-be-be-verb-077",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-beach-noun-078",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bean-noun-079",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bear-noun-080",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ability-noun-081",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-abroad-adverb-082",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-accept-verb-083",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-acceptable-adjective-084",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-accident-noun-085",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-account-noun-086",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-achieve-verb-087",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-across-adverb-088",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-across-preposition-089",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-act-noun-090",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-actually-adverb-091",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-addition-noun-092",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-additional-adjective-093",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-adjective-noun-094",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-adjust-verb-095",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-admire-verb-096",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-admit-verb-097",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-adult-adjective-098",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-adult-noun-099",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advanced-adjective-100",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advantage-noun-101",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-adventure-noun-102",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advertisement-noun-103",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advertising-noun-104",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advice-noun-105",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advise-verb-106",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-affair-noun-107",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-after-adverb-108",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-against-preposition-109",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-aged-adjective-110",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-agency-noun-111",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-agent-noun-112",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ahead-adverb-113",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-air-noun-114",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-aisle-noun-115",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-alarm-noun-116",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-alive-adjective-117",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-all-adverb-118",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-allow-verb-119",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-alone-adjective-120",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-along-preposition-121",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-alright-adjective-122",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-alright-adverb-123",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-although-conjunction-124",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ambition-noun-125",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-among-preposition-126",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-amused-adjective-127",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-amusement-noun-128",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ancestor-noun-129",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ancient-adjective-130",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-angel-noun-131",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-angrily-adverb-132",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ankle-noun-133",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-anniversary-noun-134",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-annoy-verb-135",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-annoying-adjective-136",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-another-pronoun-137",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-anxious-adjective-138",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-anymore-adverb-139",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-anyway-adverb-140",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-anywhere-adverb-141",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apart-adverb-142",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apartment-noun-143",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apologise-verb-144",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apologize-verb-145",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apparently-adverb-146",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-appear-verb-147",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-appearance-noun-148",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apply-verb-149",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-appointment-noun-150",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-appreciate-verb-151",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-appropriate-adjective-152",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-architecture-noun-153",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-area-noun-154",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-argue-verb-155",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-argument-noun-156",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-armchair-noun-157",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-armed-adjective-158",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-around-adverb-159",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-artificial-adjective-160",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-abandon-verb-161",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-able-adjective-162",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-abnormal-adjective-163",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-aboard-adverb-164",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-aborigine-noun-165",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-above-adjective-166",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-absence-noun-167",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-absent-adjective-168",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-absolute-adjective-169",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-absolutely-adverb-170",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-absorb-verb-171",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-abstract-adjective-172",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-abundance-noun-173",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-abundant-adjective-174",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-academic-adjective-175",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-academy-noun-176",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accent-noun-177",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acceptance-noun-178",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-access-noun-179",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accessible-adjective-180",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accessory-noun-181",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accidental-adjective-182",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accidentally-adverb-183",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accompany-verb-184",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accomplish-verb-185",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-account-verb-186",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accountant-noun-187",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accuracy-noun-188",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accurate-adjective-189",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accurately-adverb-190",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accuse-verb-191",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accustom-verb-192",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-ache-noun-193",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-achievement-noun-194",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acknowledge-verb-195",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acknowledgement-noun-196",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acknowledgment-noun-197",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acquaintance-noun-198",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acquire-verb-199",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-act-verb-200",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-active-adjective-201",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-actress-noun-202",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-ad-noun-203",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adapt-verb-204",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-address-verb-205",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-addressee-noun-206",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-administration-noun-207",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-admiration-noun-208",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-admission-noun-209",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adopt-verb-210",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adorable-adjective-211",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-advance-verb-212",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adverb-noun-213",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adverbial-adjective-214",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-advert-noun-215",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-advertise-verb-216",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adviser-noun-217",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-advisor-noun-218",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-aerobics-noun-219",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-affect-verb-220",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-abandoned-adjective-221",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-abnormally-adverb-222",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-abolish-verb-223",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-aboriginal-adjective-224",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-abruptly-adverb-225",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-absentee-noun-226",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-absurd-adjective-227",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-abuse-noun-228",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-access-verb-229",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-accessibility-noun-230",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-accommodation-noun-231",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-accordingly-adverb-232",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-accumulate-verb-233",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-accusation-noun-234",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-ache-verb-235",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-achievable-adjective-236",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-acid-noun-237",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-acquisition-noun-238",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-actively-adverb-239",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-actual-adjective-240",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-acute-adjective-241",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adaptable-adjective-242",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-addict-noun-243",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-addicted-adjective-244",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-addiction-noun-245",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-additionally-adverb-246",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adequate-adjective-247",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adequately-adverb-248",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adjustment-noun-249",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-administrative-adjective-250",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-admirable-adjective-251",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-admiringly-adverb-252",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-admittedly-adverb-253",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adopted-adjective-254",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adoption-noun-255",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adore-verb-256",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adorn-verb-257",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-advance-noun-258",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-advancement-noun-259",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-advent-noun-260",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-blanket-noun-exp-001",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bottle-noun-exp-002",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-brush-noun-exp-003",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-button-noun-exp-004",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-calendar-noun-exp-005",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-camera-noun-exp-006",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-candle-noun-exp-007",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-carpet-noun-exp-008",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-cartoon-noun-exp-009",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-ceiling-noun-exp-010",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-chair-noun-exp-011",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-channel-noun-exp-012",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-clean-verb-exp-013",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-climb-verb-exp-014",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-close-verb-exp-015",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-color-verb-exp-016",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-count-verb-exp-017",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-cover-verb-exp-018",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-dance-verb-exp-019",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-draw-verb-exp-020",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-dream-verb-exp-021",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-drop-verb-exp-022",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-dry-verb-exp-023",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-enjoy-verb-exp-024",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bright-adjective-exp-025",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-calm-adjective-exp-026",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-careful-adjective-exp-027",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-clean-adjective-exp-028",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-cloudy-adjective-exp-029",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-cold-adjective-exp-030",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-cute-adjective-exp-031",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-early-adjective-exp-032",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-empty-adjective-exp-033",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-fast-adjective-exp-034",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-friendly-adjective-exp-035",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-full-adjective-exp-036",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-carefully-adverb-exp-037",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-daily-adverb-exp-038",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-easily-adverb-exp-039",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-first-adverb-exp-040",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-here-adverb-exp-041",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-inside-adverb-exp-042",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-later-adverb-exp-043",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-nearby-adverb-exp-044",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-outside-adverb-exp-045",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-slowly-adverb-exp-046",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-together-adverb-exp-047",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-upstairs-adverb-exp-048",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-clinic-visit-noun-exp-049",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-backpack-noun-exp-050",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-balcony-noun-exp-051",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-cafeteria-noun-exp-052",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-crosswalk-noun-exp-053",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-discount-noun-exp-054",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-entrance-noun-exp-055",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-exercise-noun-exp-056",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-festival-noun-exp-057",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-forecast-noun-exp-058",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-instruction-noun-exp-059",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-receipt-noun-exp-060",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-borrow-verb-exp-061",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-cancel-verb-exp-062",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-compare-verb-exp-063",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-continue-verb-exp-064",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-describe-verb-exp-065",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-explain-verb-exp-066",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-invite-verb-exp-067",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-prepare-verb-exp-068",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-repair-verb-exp-069",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-return-verb-exp-070",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-share-verb-exp-071",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-suggest-verb-exp-072",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-available-adjective-exp-073",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-comfortable-adjective-exp-074",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-delicious-adjective-exp-075",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-different-adjective-exp-076",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-helpful-adjective-exp-077",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-important-adjective-exp-078",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-local-adjective-exp-079",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-modern-adjective-exp-080",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-popular-adjective-exp-081",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-possible-adjective-exp-082",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ready-adjective-exp-083",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-safe-adjective-exp-084",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-clearly-adverb-exp-085",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-finally-adverb-exp-086",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-usually-adverb-exp-087",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-recently-adverb-exp-088",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-quickly-adverb-exp-089",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-politely-adverb-exp-090",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-probably-adverb-exp-091",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-simply-adverb-exp-092",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-sometimes-adverb-exp-093",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-straight-adverb-exp-094",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-twice-adverb-exp-095",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-warmly-adverb-exp-096",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-advantage-noun-exp-097",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-challenge-noun-exp-098",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-confidence-noun-exp-099",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-connection-noun-exp-100",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-decision-noun-exp-101",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-experience-noun-exp-102",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-improvement-noun-exp-103",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-opinion-noun-exp-104",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-opportunity-noun-exp-105",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-process-noun-exp-106",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-solution-noun-exp-107",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-volunteer-noun-exp-108",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adjust-verb-exp-109",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-avoid-verb-exp-110",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-connect-verb-exp-111",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-consider-verb-exp-112",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-develop-verb-exp-113",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-encourage-verb-exp-114",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-focus-verb-exp-115",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-improve-verb-exp-116",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-organize-verb-exp-117",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-protect-verb-exp-118",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-reduce-verb-exp-119",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-support-verb-exp-120",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-exact-adjective-exp-121",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-balanced-adjective-exp-122",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-creative-adjective-exp-123",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-effective-adjective-exp-124",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-familiar-adjective-exp-125",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-flexible-adjective-exp-126",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-independent-adjective-exp-127",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-practical-adjective-exp-128",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-reliable-adjective-exp-129",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-specific-adjective-exp-130",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-successful-adjective-exp-131",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-useful-adjective-exp-132",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-actively-adverb-exp-133",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-carelessly-adverb-exp-134",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-especially-adverb-exp-135",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-gradually-adverb-exp-136",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-honestly-adverb-exp-137",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-normally-adverb-exp-138",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-properly-adverb-exp-139",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-regularly-adverb-exp-140",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-seriously-adverb-exp-141",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-smoothly-adverb-exp-142",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-widely-adverb-exp-143",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-yet-adverb-exp-144",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-analysis-noun-exp-145",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-approach-noun-exp-146",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-awareness-noun-exp-147",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-capacity-noun-exp-148",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-commitment-noun-exp-149",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-consequence-noun-exp-150",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-context-noun-exp-151",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-evidence-noun-exp-152",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-impact-noun-exp-153",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-insight-noun-exp-154",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-perspective-noun-exp-155",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-priority-noun-exp-156",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-assess-verb-exp-157",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-clarify-verb-exp-158",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-combine-verb-exp-159",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-demonstrate-verb-exp-160",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-emphasize-verb-exp-161",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-evaluate-verb-exp-162",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-illustrate-verb-exp-163",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-maintain-verb-exp-164",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-negotiate-verb-exp-165",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-prioritize-verb-exp-166",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-recommend-verb-exp-167",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-resolve-verb-exp-168",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-appropriate-adjective-exp-169",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-consistent-adjective-exp-170",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-crucial-adjective-exp-171",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-efficient-adjective-exp-172",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-meaningful-adjective-exp-173",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-relevant-adjective-exp-174",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-significant-adjective-exp-175",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-sustainable-adjective-exp-176",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-transparent-adjective-exp-177",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-valuable-adjective-exp-178",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-visual-adjective-exp-179",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-vulnerable-adjective-exp-180",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-approximately-adverb-exp-181",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-deliberately-adverb-exp-182",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-effectively-adverb-exp-183",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-initially-adverb-exp-184",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-nevertheless-adverb-exp-185",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-precisely-adverb-exp-186",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-primarily-adverb-exp-187",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-respectively-adverb-exp-188",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-subsequently-adverb-exp-189",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-ultimately-adverb-exp-190",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-visibly-adverb-exp-191",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-widely-adverb-exp-192",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      }
+    ]
+  },
+  {
+    "route": "/english-speed?debugPoo=1",
+    "viewport": "desktop",
+    "bodyScrollWidth": 1366,
+    "htmlClientWidth": 1366,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "P-English",
+      "Học tiếng Anh mỗi ngày",
+      "0",
+      "0",
+      "Trang chủ",
+      "Tổng quan hôm nay",
+      "Lộ trình",
+      "CEFR A1–B2",
+      "English Speed",
+      "Phát âm nhanh",
+      "Shadowing",
+      "Luyện nói theo nhịp",
+      "Luyện tập",
+      "Ôn kỹ năng",
+      "Từ vựng",
+      "Kho từ",
+      "Khách",
+      "Học nhẹ, đều mỗi ngày",
+      "Lưu trên thiết bị",
+      "BỌT BIỂN",
+      "5/5",
+      "🌙",
+      "Giao diện",
+      "P-English · vùng học yên tĩnh",
+      "0",
+      "Học miễn phí",
+      "Poo preset: speed · subtle far-right background current",
+      "Về lộ trình"
+    ],
+    "detailsStates": [
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Huấn luyện viên tốc độ"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Tập trung âm"
+      }
+    ]
+  },
+  {
+    "route": "/",
+    "viewport": "mobile-390",
+    "bodyScrollWidth": 390,
+    "htmlClientWidth": 390,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "P-English",
+      "Vào học miễn phí",
+      "HỌC TẬP LÀ MIỄN PHÍ, P-ENGLISH KHÔNG BẮT BẤT KỲ AI TRẢ PHÍ CHO VIỆC HỌC",
+      "Học từ vựng tiếng Anh hiệu quả gấp 3 lần",
+      "Flashcard thông minh + Spaced Repetition + lộ trình TOEIC, IELTS, THPT. Hơn 100.000 người Việt đang dùng mỗi ngày.",
+      "Vào học miễn phí",
+      "Xem demo",
+      "Bài hôm nay",
+      "Unit 1 • Greetings A1",
+      "+60 XP",
+      "FLASHCARD THÔNG MINH",
+      "Nice to meet you",
+      "Rất vui được gặp bạn • Lặp lại đúng thời điểm để nhớ lâu hơn.",
+      "TỪ VỰNG",
+      "NGHE",
+      "PHẢN XẠ",
+      "5 ngày",
+      "Chuỗi học đại dương",
+      "84%",
+      "Tiến độ hôm nay",
+      "Mini lesson path",
+      "3/4",
+      "Flashcard",
+      "Quiz",
+      "Listening",
+      "Review",
+      "Spaced Repetition",
+      "Ôn tập đúng thời điểm, ghi nhớ lâu hơn gấp 3 lần."
+    ],
+    "detailsStates": []
+  },
+  {
+    "route": "/home",
+    "viewport": "mobile-390",
+    "bodyScrollWidth": 390,
+    "htmlClientWidth": 390,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "0",
+      "Trang chủ",
+      "Hôm nay học gì?",
+      "Một lựa chọn chính cho hôm nay: học tiếp bài phù hợp, sau đó luyện nói hoặc ôn từ nếu còn năng lượng.",
+      "Học tiếp ngay",
+      "0%",
+      "Tiến độ hôm nay",
+      "0 ngày",
+      "Chuỗi học",
+      "0/12",
+      "Unit xong",
+      "0%",
+      "CEFR",
+      "KẾ HOẠCH HÔM NAY",
+      "Ba việc chính, ít nhiễu hơn",
+      "Học tiếp bài đang mở",
+      "ƯU TIÊN HÔM NAY",
+      "Đi tiếp A1 · Chào hỏi tự tin. P-English đã chọn bước phù hợp nhất từ dữ liệu bài học hiện có.",
+      "Vào bài học",
+      "Luyện phát âm English Speed",
+      "ƯU TIÊN HÔM NAY",
+      "Một lượt nói ngắn để làm nóng miệng trước khi học bài mới; vẫn có nhập tay nếu micro không khả dụng.",
+      "Luyện phát âm",
+      "Ôn từ yếu",
+      "Kho từ vựng A1–B2 đang sẵn sàng để ôn nhẹ theo nhịp của bạn.",
+      "Ôn ngay",
+      "Trang chủ",
+      "Lộ trình"
+    ],
+    "detailsStates": []
+  },
+  {
+    "route": "/learning-path",
+    "viewport": "mobile-390",
+    "bodyScrollWidth": 390,
+    "htmlClientWidth": 390,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "0",
+      "A1 · Nền tảng",
+      "0/12 unit",
+      "Lộ trình CEFR rõ bước tiếp theo",
+      "Chọn level, xem mục tiêu ngắn, rồi vào bài học tiếp theo.",
+      "Học bài gợi ý",
+      "Mức hiện tại",
+      "A1 · Nền tảng",
+      "Unit hoàn thành",
+      "0/12",
+      "Vùng A1",
+      "Nền tảng sinh tồn",
+      "4 unit · Hiểu câu rất ngắn, chào hỏi, giới thiệu bản thân và nói nhu cầu đơn giản.",
+      "Xem chi tiết",
+      "Đang học",
+      "A1",
+      "UNIT 1",
+      "A1 · Chào hỏi tự tin",
+      "Bắt đầu bằng câu chào, giới thiệu tên và phản xạ rất ngắn.",
+      "Vào bài học",
+      "A1",
+      "UNIT 2",
+      "A1 · Gia đình và lớp học",
+      "Nối các câu giới thiệu người thân, bạn bè và đồ dùng lớp học.",
+      "Vào bài học",
+      "A1",
+      "UNIT 3",
+      "A1 · Câu đúng và đọc câu ngắn"
+    ],
+    "detailsStates": [
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Xem chi tiết"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Xem chi tiết"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Xem chi tiết"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Xem chi tiết"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ghi chú ngắn"
+      }
+    ]
+  },
+  {
+    "route": "/lessons/unit-1-greetings-introduction",
+    "viewport": "mobile-390",
+    "bodyScrollWidth": 390,
+    "htmlClientWidth": 390,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "0",
+      "Beginner / A1",
+      "15–20 phút",
+      "Chào hỏi và giới thiệu bản thân",
+      "Greetings and Self-introduction",
+      "Học cách chào hỏi, nói tên, hỏi tên và giới thiệu bản thân thật ngắn bằng tiếng Anh.",
+      "Bước 1/7",
+      "Flashcard",
+      "Tập trung một hoạt động trước, các mode khác nằm gọn bên dưới.",
+      "Flashcard",
+      "Quiz",
+      "Luyện nghe",
+      "Phản xạ",
+      "Gõ câu",
+      "Ghép cặp",
+      "Tốc độ / phát âm",
+      "Thẻ 1/18",
+      "hello",
+      "/həˈloʊ/",
+      "Nghe",
+      "xin chào",
+      "Hello, I’m Nam.",
+      "Xin chào, mình là Nam.",
+      "Trước",
+      "Thẻ tiếp",
+      "Xem tất cả từ vựng",
+      "Luyện ngay",
+      "Tiếp tục"
+    ],
+    "detailsStates": [
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Xem tất cả từ vựng"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Mực Mơ gợi ý"
+      },
+      {
+        "testid": "lesson-step-nav",
+        "open": false,
+        "summary": "Bước học trong bài · Tổng quan"
+      },
+      {
+        "testid": "lesson-mobile-progress-details",
+        "open": false,
+        "summary": "Tiến độ bài học"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Ôn tập thông minh"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Mục tiêu sau bài học"
+      }
+    ]
+  },
+  {
+    "route": "/english-speed",
+    "viewport": "mobile-390",
+    "bodyScrollWidth": 390,
+    "htmlClientWidth": 390,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "0",
+      "Về lộ trình",
+      "Chế độ phát âm nhanh",
+      "English Speed",
+      "Một phòng phát âm gọn: nghe mẫu, đọc theo, ghi âm câu đọc và nhận góp ý về phát âm, nhịp đọc, độ rõ bằng API.",
+      "PROMPT",
+      "24",
+      "ĐÃ LUYỆN",
+      "0",
+      "BEST",
+      "0",
+      "MIC",
+      "Sẵn sàng",
+      "A1",
+      "phrase",
+      "Chào hỏi rõ âm cuối",
+      "Xin chào, tên tôi là Anna.",
+      "Tất cả cấp độ",
+      "A1 · câu ngắn",
+      "A2 · tình huống quen",
+      "B1 · câu dài hơn",
+      "B2 · trình bày rõ ý",
+      "Câu luyện 1/24",
+      "Hello, my name is Anna.",
+      "Đọc chậm theo cụm: Hello, my name / is Anna.",
+      "Nghe mẫu",
+      "Nghe chậm",
+      "Ghi âm câu đọc"
+    ],
+    "detailsStates": [
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Huấn luyện viên tốc độ"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Tập trung âm"
+      }
+    ]
+  },
+  {
+    "route": "/shadowing",
+    "viewport": "mobile-390",
+    "bodyScrollWidth": 390,
+    "htmlClientWidth": 390,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "0",
+      "Shadowing cùng Poo",
+      "Nghe mẫu, nói theo nhịp, ghi âm rồi để Poo góp ý phát âm, nhịp nói và độ tự nhiên.",
+      "Bài đang luyện",
+      "A1 · Greeting a friend",
+      "A1 · 5 câu · 3 phút · Greeting a friend",
+      "Câu hiện tại",
+      "Câu 1/5",
+      "Tốc độ nghe 1x",
+      "Hi, Mia. How are you today?",
+      "Chào Mia. Hôm nay bạn thế nào?",
+      "Focus: Giữ âm /h/ rõ ở hi và how. · Đọc How are you như một cụm.",
+      "Nghe / lặp",
+      "Speed áp dụng cho video nếu có và giọng đọc trình duyệt; không phải bản audio mẫu riêng.",
+      "0.75x",
+      "1x",
+      "1.25x",
+      "Nghe câu",
+      "Lặp câu",
+      "Bài này đang ở chế độ transcript-only. Nút nghe dùng giọng đọc trình duyệt nếu được hỗ trợ.",
+      "Ghi âm câu bạn vừa nói",
+      "Chọn câu, nghe mẫu, ghi âm, rồi gửi AI góp ý khi bạn sẵn sàng.",
+      "AI feedback",
+      "Sẵn sàng ghi âm",
+      "Poo sẽ nghe bản ghi và góp ý phát âm, nhịp, từ thiếu hoặc từ lệch.",
+      "Bắt đầu ghi âm",
+      "Câu tiếp theo",
+      "Chọn bài Shadowing"
+    ],
+    "detailsStates": [
+      {
+        "testid": "shadowing-video-reference-details",
+        "open": false,
+        "summary": "Video tham khảo"
+      },
+      {
+        "testid": "shadowing-lesson-picker",
+        "open": false,
+        "summary": "Chọn bài Shadowing"
+      },
+      {
+        "testid": "shadowing-transcript-panel",
+        "open": false,
+        "summary": "Transcript"
+      },
+      {
+        "testid": "shadowing-custom-transcript",
+        "open": false,
+        "summary": "Tự tạo transcript"
+      }
+    ]
+  },
+  {
+    "route": "/words",
+    "viewport": "mobile-390",
+    "bodyScrollWidth": 390,
+    "htmlClientWidth": 390,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "0",
+      "Từ vựng cá nhân",
+      "Từ vựng của bạn",
+      "Chọn một nhóm từ, bắt đầu flashcard hoặc ghép cặp để học ngay. Bộ CEFR A1–B2 vẫn lưu trạng thái ôn tập trên thiết bị này và ưu tiên các từ hay sai hoặc đã đến hạn ôn.",
+      "Tất cả (452)",
+      "Cần ôn (0)",
+      "Hay sai (0)",
+      "Đang học (0)",
+      "Đã thuộc (0)",
+      "Tất cả nhóm CEFR",
+      "CEFR A1 · Nền tảng A1",
+      "CEFR A2 · Mở rộng A2",
+      "CEFR B1 · Tự tin B1",
+      "CEFR B2 · Linh hoạt B2",
+      "a",
+      "một; dùng trước danh từ số ít bắt đầu bằng âm phụ âm",
+      "Chưa có phát âm",
+      "TỪ MỚI",
+      "VÍ DỤ TIẾNG ANH",
+      "I have a book in my bag.",
+      "Tôi có một quyển sách trong cặp.",
+      "CEFR A1",
+      "từ hạn định",
+      "MẸO HỌC NHÓM A1",
+      "Nhìn cảnh, đọc nghĩa tiếng Việt, sau đó nghe lại từ trước khi chọn trạng thái ôn.",
+      "Ôn từ này",
+      "Đánh dấu đã thuộc",
+      "Cần ôn lại"
+    ],
+    "detailsStates": [
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-a-determiner-001",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-a-m-adverb-002",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-about-adverb-003",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-about-preposition-004",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-above-adverb-005",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-above-preposition-006",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-action-noun-007",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-activity-noun-008",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-actor-noun-009",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-add-verb-010",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-address-noun-011",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-aeroplane-noun-012",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-afraid-adjective-013",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-after-preposition-014",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-afternoon-noun-015",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-again-adverb-016",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-age-noun-017",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-ago-adverb-018",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-agree-verb-019",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-airplane-noun-020",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-airport-noun-021",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-album-noun-022",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-all-determiner-023",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-all-pronoun-024",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-almost-adverb-025",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-alone-adverb-026",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-along-adverb-027",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-already-adverb-028",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-also-adverb-029",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-always-adverb-030",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-am-adverb-031",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-am-be-verb-032",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-an-determiner-033",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-and-conjunction-034",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-angry-adjective-035",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-animal-noun-036",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-another-determiner-037",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-answer-noun-038",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-answer-verb-039",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-any-determiner-040",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-any-pronoun-041",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-anybody-pronoun-042",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-anyone-pronoun-043",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-anything-pronoun-044",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-apple-noun-045",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-april-noun-046",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-apron-noun-047",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-are-be-verb-048",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-arm-noun-049",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-around-preposition-050",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-arrive-verb-051",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-art-noun-052",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-article-noun-053",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-as-preposition-054",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-ask-verb-055",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-at-preposition-056",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-august-noun-057",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-aunt-noun-058",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-autumn-noun-059",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-awake-adjective-060",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-away-adverb-061",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-baby-noun-062",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-back-adverb-063",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-back-noun-064",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bad-adjective-065",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bag-noun-066",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-ball-noun-067",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-banana-noun-068",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-band-noun-069",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bank-noun-070",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bar-noun-071",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-baseball-noun-072",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-basketball-noun-073",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bat-noun-074",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bath-noun-075",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bathroom-noun-076",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-be-be-verb-077",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-beach-noun-078",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bean-noun-079",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bear-noun-080",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ability-noun-081",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-abroad-adverb-082",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-accept-verb-083",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-acceptable-adjective-084",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-accident-noun-085",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-account-noun-086",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-achieve-verb-087",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-across-adverb-088",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-across-preposition-089",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-act-noun-090",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-actually-adverb-091",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-addition-noun-092",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-additional-adjective-093",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-adjective-noun-094",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-adjust-verb-095",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-admire-verb-096",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-admit-verb-097",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-adult-adjective-098",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-adult-noun-099",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advanced-adjective-100",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advantage-noun-101",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-adventure-noun-102",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advertisement-noun-103",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advertising-noun-104",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advice-noun-105",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-advise-verb-106",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-affair-noun-107",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-after-adverb-108",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-against-preposition-109",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-aged-adjective-110",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-agency-noun-111",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-agent-noun-112",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ahead-adverb-113",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-air-noun-114",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-aisle-noun-115",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-alarm-noun-116",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-alive-adjective-117",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-all-adverb-118",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-allow-verb-119",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-alone-adjective-120",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-along-preposition-121",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-alright-adjective-122",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-alright-adverb-123",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-although-conjunction-124",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ambition-noun-125",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-among-preposition-126",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-amused-adjective-127",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-amusement-noun-128",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ancestor-noun-129",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ancient-adjective-130",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-angel-noun-131",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-angrily-adverb-132",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ankle-noun-133",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-anniversary-noun-134",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-annoy-verb-135",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-annoying-adjective-136",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-another-pronoun-137",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-anxious-adjective-138",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-anymore-adverb-139",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-anyway-adverb-140",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-anywhere-adverb-141",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apart-adverb-142",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apartment-noun-143",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apologise-verb-144",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apologize-verb-145",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apparently-adverb-146",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-appear-verb-147",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-appearance-noun-148",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-apply-verb-149",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-appointment-noun-150",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-appreciate-verb-151",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-appropriate-adjective-152",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-architecture-noun-153",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-area-noun-154",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-argue-verb-155",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-argument-noun-156",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-armchair-noun-157",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-armed-adjective-158",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-around-adverb-159",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-artificial-adjective-160",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-abandon-verb-161",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-able-adjective-162",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-abnormal-adjective-163",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-aboard-adverb-164",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-aborigine-noun-165",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-above-adjective-166",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-absence-noun-167",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-absent-adjective-168",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-absolute-adjective-169",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-absolutely-adverb-170",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-absorb-verb-171",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-abstract-adjective-172",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-abundance-noun-173",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-abundant-adjective-174",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-academic-adjective-175",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-academy-noun-176",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accent-noun-177",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acceptance-noun-178",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-access-noun-179",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accessible-adjective-180",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accessory-noun-181",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accidental-adjective-182",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accidentally-adverb-183",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accompany-verb-184",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accomplish-verb-185",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-account-verb-186",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accountant-noun-187",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accuracy-noun-188",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accurate-adjective-189",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accurately-adverb-190",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accuse-verb-191",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-accustom-verb-192",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-ache-noun-193",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-achievement-noun-194",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acknowledge-verb-195",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acknowledgement-noun-196",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acknowledgment-noun-197",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acquaintance-noun-198",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-acquire-verb-199",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-act-verb-200",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-active-adjective-201",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-actress-noun-202",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-ad-noun-203",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adapt-verb-204",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-address-verb-205",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-addressee-noun-206",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-administration-noun-207",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-admiration-noun-208",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-admission-noun-209",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adopt-verb-210",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adorable-adjective-211",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-advance-verb-212",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adverb-noun-213",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adverbial-adjective-214",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-advert-noun-215",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-advertise-verb-216",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adviser-noun-217",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-advisor-noun-218",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-aerobics-noun-219",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-affect-verb-220",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-abandoned-adjective-221",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-abnormally-adverb-222",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-abolish-verb-223",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-aboriginal-adjective-224",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-abruptly-adverb-225",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-absentee-noun-226",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-absurd-adjective-227",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-abuse-noun-228",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-access-verb-229",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-accessibility-noun-230",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-accommodation-noun-231",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-accordingly-adverb-232",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-accumulate-verb-233",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-accusation-noun-234",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-ache-verb-235",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-achievable-adjective-236",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-acid-noun-237",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-acquisition-noun-238",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-actively-adverb-239",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-actual-adjective-240",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-acute-adjective-241",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adaptable-adjective-242",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-addict-noun-243",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-addicted-adjective-244",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-addiction-noun-245",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-additionally-adverb-246",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adequate-adjective-247",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adequately-adverb-248",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adjustment-noun-249",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-administrative-adjective-250",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-admirable-adjective-251",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-admiringly-adverb-252",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-admittedly-adverb-253",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adopted-adjective-254",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adoption-noun-255",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adore-verb-256",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-adorn-verb-257",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-advance-noun-258",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-advancement-noun-259",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-advent-noun-260",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-blanket-noun-exp-001",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bottle-noun-exp-002",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-brush-noun-exp-003",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-button-noun-exp-004",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-calendar-noun-exp-005",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-camera-noun-exp-006",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-candle-noun-exp-007",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-carpet-noun-exp-008",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-cartoon-noun-exp-009",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-ceiling-noun-exp-010",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-chair-noun-exp-011",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-channel-noun-exp-012",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-clean-verb-exp-013",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-climb-verb-exp-014",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-close-verb-exp-015",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-color-verb-exp-016",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-count-verb-exp-017",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-cover-verb-exp-018",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-dance-verb-exp-019",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-draw-verb-exp-020",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-dream-verb-exp-021",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-drop-verb-exp-022",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-dry-verb-exp-023",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-enjoy-verb-exp-024",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-bright-adjective-exp-025",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-calm-adjective-exp-026",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-careful-adjective-exp-027",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-clean-adjective-exp-028",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-cloudy-adjective-exp-029",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-cold-adjective-exp-030",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-cute-adjective-exp-031",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-early-adjective-exp-032",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-empty-adjective-exp-033",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-fast-adjective-exp-034",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-friendly-adjective-exp-035",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-full-adjective-exp-036",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-carefully-adverb-exp-037",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-daily-adverb-exp-038",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-easily-adverb-exp-039",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-first-adverb-exp-040",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-here-adverb-exp-041",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-inside-adverb-exp-042",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-later-adverb-exp-043",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-nearby-adverb-exp-044",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-outside-adverb-exp-045",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-slowly-adverb-exp-046",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-together-adverb-exp-047",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a1-core:a1-upstairs-adverb-exp-048",
+        "open": false,
+        "summary": "Mẹo học nhóm A1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-clinic-visit-noun-exp-049",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-backpack-noun-exp-050",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-balcony-noun-exp-051",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-cafeteria-noun-exp-052",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-crosswalk-noun-exp-053",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-discount-noun-exp-054",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-entrance-noun-exp-055",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-exercise-noun-exp-056",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-festival-noun-exp-057",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-forecast-noun-exp-058",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-instruction-noun-exp-059",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-receipt-noun-exp-060",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-borrow-verb-exp-061",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-cancel-verb-exp-062",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-compare-verb-exp-063",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-continue-verb-exp-064",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-describe-verb-exp-065",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-explain-verb-exp-066",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-invite-verb-exp-067",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-prepare-verb-exp-068",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-repair-verb-exp-069",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-return-verb-exp-070",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-share-verb-exp-071",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-suggest-verb-exp-072",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-available-adjective-exp-073",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-comfortable-adjective-exp-074",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-delicious-adjective-exp-075",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-different-adjective-exp-076",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-helpful-adjective-exp-077",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-important-adjective-exp-078",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-local-adjective-exp-079",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-modern-adjective-exp-080",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-popular-adjective-exp-081",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-possible-adjective-exp-082",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-ready-adjective-exp-083",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-safe-adjective-exp-084",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-clearly-adverb-exp-085",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-finally-adverb-exp-086",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-usually-adverb-exp-087",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-recently-adverb-exp-088",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-quickly-adverb-exp-089",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-politely-adverb-exp-090",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-probably-adverb-exp-091",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-simply-adverb-exp-092",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-sometimes-adverb-exp-093",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-straight-adverb-exp-094",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-twice-adverb-exp-095",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-a2-core:a2-warmly-adverb-exp-096",
+        "open": false,
+        "summary": "Mẹo học nhóm A2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-advantage-noun-exp-097",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-challenge-noun-exp-098",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-confidence-noun-exp-099",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-connection-noun-exp-100",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-decision-noun-exp-101",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-experience-noun-exp-102",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-improvement-noun-exp-103",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-opinion-noun-exp-104",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-opportunity-noun-exp-105",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-process-noun-exp-106",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-solution-noun-exp-107",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-volunteer-noun-exp-108",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-adjust-verb-exp-109",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-avoid-verb-exp-110",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-connect-verb-exp-111",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-consider-verb-exp-112",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-develop-verb-exp-113",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-encourage-verb-exp-114",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-focus-verb-exp-115",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-improve-verb-exp-116",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-organize-verb-exp-117",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-protect-verb-exp-118",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-reduce-verb-exp-119",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-support-verb-exp-120",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-exact-adjective-exp-121",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-balanced-adjective-exp-122",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-creative-adjective-exp-123",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-effective-adjective-exp-124",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-familiar-adjective-exp-125",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-flexible-adjective-exp-126",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-independent-adjective-exp-127",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-practical-adjective-exp-128",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-reliable-adjective-exp-129",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-specific-adjective-exp-130",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-successful-adjective-exp-131",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-useful-adjective-exp-132",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-actively-adverb-exp-133",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-carelessly-adverb-exp-134",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-especially-adverb-exp-135",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-gradually-adverb-exp-136",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-honestly-adverb-exp-137",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-normally-adverb-exp-138",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-properly-adverb-exp-139",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-regularly-adverb-exp-140",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-seriously-adverb-exp-141",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-smoothly-adverb-exp-142",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-widely-adverb-exp-143",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b1-core:b1-yet-adverb-exp-144",
+        "open": false,
+        "summary": "Mẹo học nhóm B1"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-analysis-noun-exp-145",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-approach-noun-exp-146",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-awareness-noun-exp-147",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-capacity-noun-exp-148",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-commitment-noun-exp-149",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-consequence-noun-exp-150",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-context-noun-exp-151",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-evidence-noun-exp-152",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-impact-noun-exp-153",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-insight-noun-exp-154",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-perspective-noun-exp-155",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-priority-noun-exp-156",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-assess-verb-exp-157",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-clarify-verb-exp-158",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-combine-verb-exp-159",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-demonstrate-verb-exp-160",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-emphasize-verb-exp-161",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-evaluate-verb-exp-162",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-illustrate-verb-exp-163",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-maintain-verb-exp-164",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-negotiate-verb-exp-165",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-prioritize-verb-exp-166",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-recommend-verb-exp-167",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-resolve-verb-exp-168",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-appropriate-adjective-exp-169",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-consistent-adjective-exp-170",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-crucial-adjective-exp-171",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-efficient-adjective-exp-172",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-meaningful-adjective-exp-173",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-relevant-adjective-exp-174",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-significant-adjective-exp-175",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-sustainable-adjective-exp-176",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-transparent-adjective-exp-177",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-valuable-adjective-exp-178",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-visual-adjective-exp-179",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-vulnerable-adjective-exp-180",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-approximately-adverb-exp-181",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-deliberately-adverb-exp-182",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-effectively-adverb-exp-183",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-initially-adverb-exp-184",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-nevertheless-adverb-exp-185",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-precisely-adverb-exp-186",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-primarily-adverb-exp-187",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-respectively-adverb-exp-188",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-subsequently-adverb-exp-189",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-ultimately-adverb-exp-190",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-visibly-adverb-exp-191",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      },
+      {
+        "testid": "vocab-learning-hint-cefr-b2-core:b2-widely-adverb-exp-192",
+        "open": false,
+        "summary": "Mẹo học nhóm B2"
+      }
+    ]
+  },
+  {
+    "route": "/english-speed?debugPoo=1",
+    "viewport": "mobile-390",
+    "bodyScrollWidth": 390,
+    "htmlClientWidth": 390,
+    "horizontalOverflow": false,
+    "ambientPresent": true,
+    "ambientVisible": false,
+    "ambientOpacity": null,
+    "ambientRect": null,
+    "ambientOverlaps": [],
+    "coveredActions": [],
+    "firstScreenText": [
+      "0",
+      "Poo preset: speed · subtle far-right background current",
+      "Về lộ trình",
+      "Chế độ phát âm nhanh",
+      "English Speed",
+      "Một phòng phát âm gọn: nghe mẫu, đọc theo, ghi âm câu đọc và nhận góp ý về phát âm, nhịp đọc, độ rõ bằng API.",
+      "PROMPT",
+      "24",
+      "ĐÃ LUYỆN",
+      "0",
+      "BEST",
+      "0",
+      "MIC",
+      "Sẵn sàng",
+      "A1",
+      "phrase",
+      "Chào hỏi rõ âm cuối",
+      "Xin chào, tên tôi là Anna.",
+      "Tất cả cấp độ",
+      "A1 · câu ngắn",
+      "A2 · tình huống quen",
+      "B1 · câu dài hơn",
+      "B2 · trình bày rõ ý",
+      "Câu luyện 1/24",
+      "Hello, my name is Anna.",
+      "Đọc chậm theo cụm: Hello, my name / is Anna.",
+      "Nghe mẫu",
+      "Nghe chậm"
+    ],
+    "detailsStates": [
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Huấn luyện viên tốc độ"
+      },
+      {
+        "testid": null,
+        "open": false,
+        "summary": "Tập trung âm"
+      }
+    ]
+  }
+]

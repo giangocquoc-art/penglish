@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Flex, HStack, Icon, SimpleGrid, Text, VStack } from '@chakra-ui/react';
-import { CheckCircle2, Flame, Play, RotateCcw, Sparkles, Target } from 'lucide-react';
+import { Box, Button, Flex, HStack, Icon, Text, VStack } from '@chakra-ui/react';
+import { CheckCircle2, Play, Sparkles } from 'lucide-react';
 import { OceanPageShell } from '../../components/p-english/OceanPageShell';
 import { OceanMascot } from '../../components/p-english/OceanMascot';
 import { foundation48Days, getFoundation48DayPath } from './foundation48Data';
 import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48ProgressSummary } from './foundation48Progress';
 import { Foundation48Roadmap } from './Foundation48Roadmap';
 
-const COLORS = { text: '#102A43', muted: '#52667A', blue: '#1F6FD6', border: '#BAE6FD', green: '#16A34A', coral: '#F9735B' };
+const COLORS = { text: '#102A43', muted: '#52667A', blue: '#1F6FD6', border: '#BAE6FD', green: '#16A34A' };
 
 export function Foundation48Page() {
   const [version, setVersion] = useState(0);
@@ -16,6 +16,10 @@ export function Foundation48Page() {
   const recommendedDay = foundation48Days.find((day) => !progress.days[day.dayNumber]?.completed)?.dayNumber || foundation48Days.length;
   const nextDay = progress.lastDayOpened && !progress.days[progress.lastDayOpened]?.completed ? progress.lastDayOpened : recommendedDay;
   const nextDayData = foundation48Days.find((day) => day.dayNumber === nextDay) ?? foundation48Days[0];
+  const nextState = progress.days[nextDay];
+  const todayTitle = getFriendlyDayTitle(nextDayData.title);
+  const exampleSentence = nextDayData.summary.examples[0] || nextDayData.polished?.examples[0] || 'I am ready to learn.';
+  const primaryCta = nextState?.started ? 'Học tiếp hôm nay' : 'Bắt đầu học';
 
   useEffect(() => {
     const refresh = () => setVersion((value) => value + 1);
@@ -31,67 +35,52 @@ export function Foundation48Page() {
 
   return (
     <OceanPageShell data-testid="foundation48-roadmap-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 132px)', lg: '8' }}>
-      <Box maxW="1120px" mx="auto" minW="0">
-        <Box className="penglish-glass-card" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '4', md: '6' }} bg="rgba(255,255,255,0.82)" mb="4" overflow="hidden" position="relative">
-          <Box position="absolute" inset="0" bg="radial-gradient(circle at 90% 16%, rgba(91,188,235,0.16), transparent 30%)" pointerEvents="none" />
-          <Flex position="relative" justify="space-between" align={{ base: 'start', md: 'center' }} gap="4" direction={{ base: 'column', md: 'row' }}>
-            <Box minW="0" maxW="760px">
-              <Text as="h1" fontSize={{ base: '3xl', md: '5xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.04">
+      <Box maxW="940px" mx="auto" minW="0">
+        <Box className="penglish-glass-card" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '3.5', md: '4' }} bg="rgba(255,255,255,0.80)" mb="3" overflow="hidden" position="relative">
+          <Box position="absolute" inset="0" bg="radial-gradient(circle at 92% 12%, rgba(91,188,235,0.14), transparent 24%)" pointerEvents="none" />
+          <Flex position="relative" justify="space-between" align="center" gap="3">
+            <Box minW="0" maxW="640px">
+              <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.04">
                 48 ngày lấy gốc
               </Text>
-              <Text mt="2" color={COLORS.muted} fontSize={{ base: 'md', md: 'lg' }} fontWeight="750" lineHeight="1.55">
-                Mỗi ngày một lesson flow ngắn: nghe mẫu, làm bài tương tác, nói lại và lưu lỗi sai để ôn.
+              <Text mt="1" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="800" lineHeight="1.35">
+                Mỗi ngày 5 phút. Học từng bước.
               </Text>
             </Box>
-            <Box display={{ base: 'none', md: 'block' }} pr="2">
-              <OceanMascot mascot="poo" pose="coach" size="hero" decorative motion="float" />
+            <Box display={{ base: 'none', md: 'block' }} pr="1" w="92px" flexShrink={0}>
+              <OceanMascot mascot="poo" pose="coach" size="md" decorative motion="float" />
             </Box>
           </Flex>
         </Box>
 
-        <SimpleGrid columns={{ base: 1, lg: 3 }} gap="4" mb="5">
-          <Box className="penglish-glass-card" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '4', md: '5' }} bg="linear-gradient(135deg, rgba(239,246,255,0.90), rgba(255,255,255,0.84))" data-testid="foundation48-continue-card" gridColumn={{ base: 'auto', lg: 'span 2' }}>
-            <Flex justify="space-between" align={{ base: 'start', md: 'center' }} gap="4" direction={{ base: 'column', md: 'row' }}>
-              <HStack gap="3" align="center" minW="0">
-                <Box display={{ base: 'none', sm: 'block' }}>
-                  <OceanMascot mascot="poo" pose="coach" size="sm" decorative motion="float" />
-                </Box>
-                <Box minW="0">
-                  <HStack gap="2" wrap="wrap" mb="1">
-                    <Text px="3" py="1" borderRadius="full" bg="#DBEAFE" color={COLORS.blue} fontWeight="950" fontSize="xs">Hôm nay học Ngày {nextDay}</Text>
-                    <Text px="3" py="1" borderRadius="full" bg="#ECFDF5" color={COLORS.green} fontWeight="950" fontSize="xs">{progress.completed}/48 đã hoàn thành</Text>
-                  </HStack>
-                  <Text color={COLORS.text} fontWeight="950" fontSize={{ base: 'lg', md: '2xl' }} lineHeight="1.2" noOfLines={2}>{nextDayData.title}</Text>
-                  <Text mt="1.5" color={COLORS.blue} fontWeight="850" lineHeight="1.5">Bấm học tiếp, Poo sẽ dẫn từng bước như một app luyện nền tảng.</Text>
-                  <Box mt="3" h="10px" bg="#E8F4FF" borderRadius="full" overflow="hidden" border="1px solid rgba(186,230,253,0.86)">
-                    <Box h="100%" w={`${progress.percent}%`} bg="linear-gradient(90deg, #1F6FD6, #5BBCEB, #66D9C8)" borderRadius="full" transition="width .25s ease" />
-                  </Box>
-                </Box>
-              </HStack>
-              <Button as={Link} to={getFoundation48DayPath(nextDay)} leftIcon={<Icon as={Play} />} bg={COLORS.blue} color="white" _hover={{ bg: '#185BB2' }} borderRadius="full" size="lg" w={{ base: '100%', md: 'auto' }}>
-                Học tiếp
-              </Button>
-            </Flex>
-          </Box>
-
-          <Box className="penglish-glass-card" border="1px solid" borderColor={progress.mistakesDue ? '#FED7AA' : COLORS.border} borderRadius="3xl" p="4" bg={progress.mistakesDue ? '#FFF7ED' : 'rgba(255,255,255,0.84)'} data-testid="foundation48-review-card">
-            <HStack gap="3" align="start">
-              <Box w="42px" h="42px" borderRadius="2xl" bg={progress.mistakesDue ? '#FFEDD5' : '#EFF6FF'} color={progress.mistakesDue ? COLORS.coral : COLORS.blue} display="grid" placeItems="center" flexShrink={0}>
-                <Icon as={RotateCcw} boxSize="5" />
+        <Box className="penglish-glass-card" border="1px solid" borderColor="#7DD3FC" borderRadius="3xl" p={{ base: '4', md: '5' }} bg="linear-gradient(135deg, rgba(239,246,255,0.96), rgba(255,255,255,0.90))" boxShadow="0 24px 64px rgba(31,111,214,0.14)" data-testid="foundation48-continue-card" mb={{ base: '5', md: '4' }} overflow="hidden" position="relative">
+          <Box position="absolute" right="-48px" top="-54px" w="160px" h="160px" borderRadius="full" bg="rgba(91,188,235,0.16)" filter="blur(2px)" pointerEvents="none" />
+          <Flex position="relative" align={{ base: 'stretch', md: 'center' }} justify="space-between" gap={{ base: '4', md: '6' }} direction={{ base: 'column', md: 'row' }}>
+            <HStack gap="4" align="center" minW="0">
+              <Box display={{ base: 'none', md: 'block' }} flexShrink={0}>
+                <OceanMascot mascot="poo" pose="happy" size="md" decorative motion="float" />
               </Box>
-              <Box minW="0">
-                <Text color={COLORS.text} fontWeight="950">Ôn lỗi sai</Text>
-                <Text mt="1" color={COLORS.muted} fontWeight="750" lineHeight="1.5">{progress.mistakesDue ? `${progress.mistakesDue} lỗi đang chờ ôn trên thiết bị này.` : 'Chưa có lỗi sai nào. Cứ học tiếp để hệ thống tự lưu.'}</Text>
-              </Box>
+              <VStack align="start" gap="2" minW="0">
+                <Text color={COLORS.blue} fontWeight="950" fontSize="sm" letterSpacing="0.08em" textTransform="uppercase">
+                  Hôm nay học
+                </Text>
+                <HStack gap="2" wrap="wrap">
+                  <Text px="3" py="1" borderRadius="full" bg="#DBEAFE" color={COLORS.blue} fontWeight="950" fontSize="sm">Ngày {nextDay}</Text>
+                  {nextState?.completed ? <Text px="3" py="1" borderRadius="full" bg="#ECFDF5" color={COLORS.green} fontWeight="950" fontSize="sm">Đã xong</Text> : null}
+                </HStack>
+                <Text color={COLORS.text} fontWeight="950" fontSize={{ base: '2xl', md: '3xl' }} lineHeight="1.08" noOfLines={2}>
+                  {todayTitle}
+                </Text>
+                <Text display={{ base: 'none', md: 'block' }} color={COLORS.muted} fontWeight="800" fontSize="md" lineHeight="1.5" noOfLines={1}>
+                  Ví dụ: {exampleSentence}
+                </Text>
+              </VStack>
             </HStack>
-          </Box>
-        </SimpleGrid>
-
-        <SimpleGrid columns={{ base: 1, md: 3 }} gap="3" mb="5">
-          <Metric icon={Target} label="Tiến độ" value={`${progress.percent}%`} tone="blue" />
-          <Metric icon={Flame} label="Streak local" value={`${progress.streak || 0} ngày`} tone="coral" />
-          <Metric icon={RotateCcw} label="Cần ôn" value={`${progress.mistakesDue || 0} lỗi`} tone="green" />
-        </SimpleGrid>
+            <Button as={Link} to={getFoundation48DayPath(nextDay)} leftIcon={<Icon as={Play} />} bg={COLORS.blue} color="white" _hover={{ bg: '#185BB2', transform: 'translateY(-1px)' }} _focusVisible={{ outline: '3px solid rgba(31,111,214,0.35)', outlineOffset: '2px' }} borderRadius="full" size="lg" minH="56px" px="8" fontSize="lg" boxShadow="0 16px 34px rgba(31,111,214,0.22)" w={{ base: '100%', md: 'auto' }} data-testid="foundation48-primary-cta">
+              {primaryCta}
+            </Button>
+          </Flex>
+        </Box>
 
         {progress.completed === foundation48Days.length ? (
           <Box className="penglish-glass-card" border="1px solid" borderColor="#BBF7D0" borderRadius="3xl" p="4" bg="rgba(240,253,244,0.86)" mb="4">
@@ -99,7 +88,7 @@ export function Foundation48Page() {
               <Icon as={CheckCircle2} color={COLORS.green} boxSize="6" />
               <Box>
                 <Text color={COLORS.green} fontWeight="950">Bạn đã hoàn thành 48/48 ngày.</Text>
-                <Text color={COLORS.text} fontWeight="800">Sao Nhi đã lưu hành trình này trên thiết bị của bạn.</Text>
+                <Text color={COLORS.text} fontWeight="800">Poo đã lưu hành trình này trên thiết bị của bạn.</Text>
               </Box>
             </HStack>
           </Box>
@@ -109,24 +98,14 @@ export function Foundation48Page() {
 
         <VStack mt="5" align="center" gap="1" color={COLORS.muted}>
           <Icon as={Sparkles} color={COLORS.blue} />
-          <Text fontSize="sm" fontWeight="800" textAlign="center">MVP hiện lưu tiến độ bằng localStorage; các thuật toán ôn thông minh hơn sẽ được thêm sau khi luồng học ổn định.</Text>
+          <Text fontSize="sm" fontWeight="800" textAlign="center">Học mỗi ngày một chút, Poo sẽ lưu tiến độ cho bạn.</Text>
         </VStack>
       </Box>
     </OceanPageShell>
   );
 }
 
-function Metric({ icon, label, value, tone }: { icon: any; label: string; value: string; tone: 'blue' | 'green' | 'coral' }) {
-  const color = tone === 'green' ? COLORS.green : tone === 'coral' ? COLORS.coral : COLORS.blue;
-  return (
-    <Box className="penglish-glass-card" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="4" bg="rgba(255,255,255,0.82)">
-      <HStack gap="3">
-        <Icon as={icon} color={color} boxSize="5" />
-        <Box>
-          <Text color={COLORS.muted} fontWeight="850" fontSize="xs">{label}</Text>
-          <Text color={COLORS.text} fontWeight="950" fontSize="lg">{value}</Text>
-        </Box>
-      </HStack>
-    </Box>
-  );
+function getFriendlyDayTitle(title: string) {
+  const withoutDay = title.replace(/^Ngày \d+:\s*/, '').trim();
+  return withoutDay.split('—')[0]?.trim() || withoutDay;
 }

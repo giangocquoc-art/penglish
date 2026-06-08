@@ -17,11 +17,8 @@ import {
 } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  Home,
-  Route,
   BookOpen,
   Joystick,
-  Timer,
   Menu,
   Moon,
   Sun,
@@ -48,11 +45,8 @@ const NAV_OCEAN = {
 };
 
 const NAV: NavItem[] = [
-  { label: 'Trang chủ', to: '/home', icon: Home, tint: NAV_OCEAN.oceanBlue },
-  { label: 'Lộ trình', to: '/learning-path', icon: Route, tint: NAV_OCEAN.deepBlue },
-  { label: '48 ngày lấy gốc', to: '/luyen-tieng-anh/48-ngay-lay-goc', icon: Waves, tint: NAV_OCEAN.whaleBlue },
-  { label: 'English Speed', to: '/english-speed', icon: Timer, tint: NAV_OCEAN.oceanBlue },
-  { label: 'Luyện tập', to: '/practice', icon: Joystick, tint: NAV_OCEAN.deepBlue },
+  { label: 'Học', to: '/luyen-tieng-anh/48-ngay-lay-goc', icon: Waves, tint: NAV_OCEAN.whaleBlue },
+  { label: 'Ôn tập', to: '/practice', icon: Joystick, tint: NAV_OCEAN.deepBlue },
   { label: 'Từ vựng', to: '/words', icon: BookOpen, tint: NAV_OCEAN.whaleBlue },
   { label: 'Hồ sơ', to: '/profile', icon: UserCircle, tint: NAV_OCEAN.muted },
 ];

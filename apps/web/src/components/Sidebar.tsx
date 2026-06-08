@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Flex, HStack, Icon, Text, VStack, Avatar, IconButton, useColorMode, Button } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Route, BookOpen, Dumbbell, Timer, Mic2, Moon, Sun, Coins, ChevronRight, Waves, LogOut, RefreshCw } from 'lucide-react';
+import { Home, BookOpen, Dumbbell, Moon, Sun, Coins, ChevronRight, Waves, LogOut, RefreshCw } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 import { LearningHeartsBadge } from './learning/LearningHeartsBadge';
 import { StreakWhaleBadge } from './streak/AdaptiveWhaleStreak';
@@ -15,13 +15,10 @@ import { syncLocalFoundation48ProgressToCloud } from '../features/foundation48/f
 type NavItem = { label: string; to: string; icon: any; tint: string; description: string };
 
 const NAV: NavItem[] = [
-  { label: 'Trang chủ', to: '/home', icon: Home, tint: OCEAN_TOKENS.oceanBlue, description: 'Tổng quan hôm nay' },
-  { label: 'Lộ trình', to: '/learning-path', icon: Route, tint: OCEAN_TOKENS.deepBlue, description: 'CEFR A1–B2' },
-  { label: '48 ngày lấy gốc', to: '/luyen-tieng-anh/48-ngay-lay-goc', icon: Waves, tint: OCEAN_TOKENS.whaleBlue, description: 'Học lại nền tảng' },
-  { label: 'English Speed', to: '/english-speed', icon: Timer, tint: OCEAN_TOKENS.oceanBlue, description: 'Phát âm nhanh' },
-  { label: 'Shadowing', to: '/shadowing', icon: Mic2, tint: OCEAN_TOKENS.whaleBlue, description: 'Luyện nói theo nhịp' },
-  { label: 'Luyện tập', to: '/practice', icon: Dumbbell, tint: OCEAN_TOKENS.deepBlue, description: 'Ôn kỹ năng' },
+  { label: 'Học', to: '/luyen-tieng-anh/48-ngay-lay-goc', icon: Waves, tint: OCEAN_TOKENS.whaleBlue, description: 'Bài hôm nay' },
+  { label: 'Ôn tập', to: '/practice', icon: Dumbbell, tint: OCEAN_TOKENS.deepBlue, description: 'Lỗi sai' },
   { label: 'Từ vựng', to: '/words', icon: BookOpen, tint: OCEAN_TOKENS.whaleBlue, description: 'Kho từ' },
+  { label: 'Trang chủ', to: '/home', icon: Home, tint: OCEAN_TOKENS.oceanBlue, description: 'Tổng quan' },
 ];
 
 export type SidebarUser = {
@@ -177,8 +174,8 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
               </Button>
             </>
           ) : (
-            <Button size="xs" borderRadius="full" bg="#1F6FD6" color="white" onClick={() => void auth.signInWithGoogle()} _hover={{ bg: '#185BB2' }}>
-              Đăng nhập Google để đồng bộ
+            <Button size="xs" borderRadius="full" variant="ghost" color={OCEAN_TOKENS.deepBlue} fontWeight="800" onClick={() => void auth.signInWithGoogle()} _hover={{ bg: 'rgba(232, 244, 255, 0.70)' }}>
+              Đồng bộ bằng Google
             </Button>
           )}
         </VStack>

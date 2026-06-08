@@ -1,0 +1,89 @@
+{
+	"mcpServers": {
+		"context7": {
+			"command": "cmd",
+			"args": [
+				"/c",
+				"npx.cmd",
+				"-y",
+				"@upstash/context7-mcp@latest"
+			],
+			"env": {},
+			"disabled": true,
+			"autoApprove": [
+				"query-docs"
+			],
+			"alwaysAllow": []
+		},
+		"chrome-devtools": {
+			"command": "cmd",
+			"args": [
+				"/c",
+				"npx.cmd",
+				"-y",
+				"chrome-devtools-mcp@latest"
+			],
+			"env": {},
+			"disabled": true,
+			"autoApprove": [],
+			"alwaysAllow": []
+		},
+		"sequential-thinking": {
+			"command": "cmd",
+			"args": [
+				"/c",
+				"npx.cmd",
+				"-y",
+				"@modelcontextprotocol/server-sequential-thinking"
+			],
+			"env": {},
+			"disabled": true,
+			"autoApprove": [],
+			"alwaysAllow": []
+		},
+		"serena-penglish": {
+			"command": "C:\\Users\\nltn0\\.local\\bin\\serena.exe",
+			"args": [
+				"start-mcp-server",
+				"--context=vscode",
+				"--project",
+				"C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH"
+			],
+			"env": {},
+			"disabled": true,
+			"autoApprove": [
+				"initial_instructions"
+			],
+			"alwaysAllow": []
+		},
+		"ast-grep": {
+			"command": "cmd",
+			"args": [
+				"/c",
+				"uvx",
+				"--from",
+				"git+https://github.com/ast-grep/ast-grep-mcp",
+				"ast-grep-server"
+			],
+			"env": {},
+			"disabled": true,
+			"autoApprove": [],
+			"alwaysAllow": []
+		},
+		"supabase": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"@supabase/mcp-server-supabase@0.5.5",
+				"--access-token",
+				"sbp_491dcfbf191a62e7e37a8494403dccb2f51df5ba"
+			],
+			"alwaysAllow": [
+				"list_tables",
+				"get_project_url",
+				"list_migrations",
+				"execute_sql"
+			]
+		}
+	}
+}

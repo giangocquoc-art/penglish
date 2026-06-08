@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Sidebar as ChakraSidebar } from './components/Sidebar';
 import { Topbar as ChakraTopbar, Shell as ChakraShell } from './components/Topbar';
@@ -6,6 +6,7 @@ import { Button, Text, VStack } from '@chakra-ui/react';
 import { RouteMetadataUpdater } from './components/seo/RouteMetadataUpdater';
 import { AuthProvider, useAuth } from './features/auth/AuthProvider';
 import { avatarFromUser, displayNameFromUser } from './lib/p-english/userSession';
+import { PooOceanRiseLoader } from './features/shell/PooOceanRiseLoader';
 
 const NewVocabPage = lazy(() => import('./pages/VocabPage').then((module) => ({ default: module.VocabPage })));
 const NewLandingPage = lazy(() => import('./pages/LandingPage').then((module) => ({ default: module.LandingPage })));
@@ -60,43 +61,70 @@ function useUserFromAuth(): User | null {
 }
 
 function RouteLoadingFallback() {
-  return (
-    <div
-      role="status"
-      aria-live="polite"
-      style={{
-        minHeight: '42vh',
-        display: 'grid',
-        placeItems: 'center',
-        padding: 24,
-        color: '#0F172A',
-        background: 'linear-gradient(180deg, #DDF5FF 0%, #F8FCFF 100%)',
-      }}
-    >
-      <div
-        style={{
-          width: 'min(420px, 100%)',
-          border: '1px solid #BAE6FD',
-          borderRadius: 28,
-          padding: 28,
-          background: 'rgba(255,255,255,0.9)',
-          boxShadow: '0 18px 45px rgba(31, 111, 214, 0.12)',
-          textAlign: 'center',
-        }}
-      >
-        <div style={{ fontSize: 34, lineHeight: 1, marginBottom: 12 }}>🐋</div>
-        <div style={{ color: '#1F6FD6', fontSize: 13, fontWeight: 900, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-          P-English
-        </div>
-        <div style={{ marginTop: 8, fontSize: 22, fontWeight: 950 }}>
-          Đang mở vùng học...
-        </div>
-        <div style={{ marginTop: 8, color: '#64748B', fontSize: 14, fontWeight: 700, lineHeight: 1.6 }}>
-          Poo đang chuẩn bị flashcard, ghép cặp và dữ liệu từ vựng cho bạn.
-        </div>
-      </div>
-    </div>
-  );
+  const [visible, setVisible] = useState(false);
+  const [progress, setProgress] = useState(18);
+
+  useEffect(() => {
+    const showTimer = window.setTimeout(() => setVisible(true), 260);
+    const progressTimer = window.setInterval(() => {
+      setProgress((current) => Math.min(88, current + (current < 56 ? 8 : 3)));
+    }, 180);
+    return () => {
+      window.clearTimeout(showTimer);
+      window.clearInterval(progressTimer);
+    };
+  }, []);
+
+  if (!visible) return null;
+  return <PooOceanRiseLoader progress={progress} delayed label="Đang mở trang P-English" />;
+}
+
+function useInitialOceanRiseLoaderReady(authLoading: boolean) {
+  const [progress, setProgress] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const [exiting, setExiting] = useState(false);
+  const [qaHoldComplete, setQaHoldComplete] = useState(false);
+
+  const qaEnabled = useMemo(() => {
+    if (typeof window === 'undefined') return false;
+    return new URLSearchParams(window.location.search).get('oceanLoaderQa') === '1';
+  }, []);
+
+  useEffect(() => {
+    if (!qaEnabled) {
+      setQaHoldComplete(true);
+      return undefined;
+    }
+    const timer = window.setTimeout(() => setQaHoldComplete(true), 2400);
+    return () => window.clearTimeout(timer);
+  }, [qaEnabled]);
+
+  useEffect(() => {
+    if (!visible || exiting) return undefined;
+    const timer = window.setInterval(() => {
+      setProgress((current) => {
+        if (!authLoading && qaHoldComplete) return current;
+        const ceiling = qaEnabled ? 82 : 80;
+        const increment = current < 34 ? 5 : current < 62 ? 3 : 1;
+        return Math.min(ceiling, current + increment);
+      });
+    }, qaEnabled ? 110 : 160);
+    return () => window.clearInterval(timer);
+  }, [authLoading, exiting, qaEnabled, qaHoldComplete, visible]);
+
+  useEffect(() => {
+    if (authLoading || !qaHoldComplete || !visible) return undefined;
+    const completeTimer = window.setTimeout(() => setProgress(100), qaEnabled ? 120 : 80);
+    const exitTimer = window.setTimeout(() => setExiting(true), qaEnabled ? 980 : 760);
+    const hideTimer = window.setTimeout(() => setVisible(false), qaEnabled ? 1400 : 1120);
+    return () => {
+      window.clearTimeout(completeTimer);
+      window.clearTimeout(exitTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, [authLoading, qaEnabled, qaHoldComplete, visible]);
+
+  return { progress, visible, exiting };
 }
 
 function NotFoundPage() {
@@ -137,13 +165,16 @@ function AppRoutes() {
   const location = useLocation();
   const auth = useAuth();
   const user = useUserFromAuth();
+  const initialLoader = useInitialOceanRiseLoaderReady(auth.loading);
   const isPublicRoute = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/login/callback' || location.pathname === '/auth/google' || location.pathname === '/auth/callback';
 
   if (!isPublicRoute && auth.loading) {
     return (
       <>
         <RouteMetadataUpdater />
-        <div style={{ padding: 32 }}>Đang tải...</div>
+        {initialLoader.visible ? (
+          <PooOceanRiseLoader progress={initialLoader.progress} exiting={initialLoader.exiting} />
+        ) : null}
       </>
     );
   }
@@ -189,6 +220,9 @@ function AppRoutes() {
         <Route path="*" element={<NewShell user={user}><NotFoundPage /></NewShell>} />
         </Routes>
       </Suspense>
+      {initialLoader.visible ? (
+        <PooOceanRiseLoader progress={initialLoader.progress} exiting={initialLoader.exiting} />
+      ) : null}
     </>
   );
 }
