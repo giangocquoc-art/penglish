@@ -121,12 +121,12 @@ export async function syncLocalFoundation48ProgressToCloud(userId: string) {
   const local = getFoundation48Progress();
   if (isEmptyLocalProgress(local)) return { ok: false, reason: 'empty-local-progress' as const };
 
-  const rows = Object.entries(local.days || {}).map(([dayNumber, day]) => dayToUpsertRow(userId, Number(dayNumber), day));
-  if (rows.length === 0) return { ok: false, reason: 'empty-local-progress' as const };
-
-  const { error } = await supabase.from(TABLE_NAME).upsert(rows, { onConflict: 'user_id,day_number' });
-  if (error) return { ok: false, reason: error.message };
-  return { ok: true };
+  try {
+    const mergeResult = await mergeCloudAndLocalFoundation48Progress(userId);
+    return mergeResult.ok ? { ok: true as const, merged: mergeResult.merged } : mergeResult;
+  } catch (error) {
+    return { ok: false, reason: error instanceof Error ? error.message : String(error) };
+  }
 }
 
 export async function mergeCloudAndLocalFoundation48Progress(userId: string) {

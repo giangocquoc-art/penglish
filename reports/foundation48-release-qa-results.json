@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "generatedAt": "2026-06-08T09:51:00.250Z",
+  "generatedAt": "2026-06-08T16:33:00.475Z",
   "baseUrl": "http://127.0.0.1:5180",
   "checks": [
     {
@@ -25,7 +25,7 @@
         "completionPanelVisible": false
       },
       "lazyModuleRequests": [],
-      "textSample": "📚\n\nP-English\n\nHọc tiếng Anh mỗi ngày\n\n0\n\n5/5\n\n0\n\nTrang chủ\n\nTổng quan hôm nay\n\nLộ trình\n\nCEFR A1–B2\n\n48 ngày lấy gốc\n\nHọc lại nền tảng\n\nEnglish Speed\n\nPhát âm nhanh\n\nShadowing\n\nLuyện nói theo nhịp\n\nLuyện tập\n\nÔn kỹ năng\n\nTừ vựng\n\nKho từ\n\nK\n\nKhách\n\nTiến độ lưu trên thiết bị này\n\nTiến độ lưu trên thiết bị này\n\nĐăng nhập Google để đồng bộ\n\nBỌT BIỂN\n\n5/5\n\n🌙\n\nGiao diện\n\nP-English · vùng học yên tĩnh\n\n0\n\nBọt biển 5/5\n\nHọc miễn phí\n48 ngày lấy gốc\n\nMỗi ngày một lesson flow ngắn: nghe mẫu, làm bài tương tác, nói lại và lưu lỗi sai để ôn.\n\nHôm nay học Ngày 39\n\n7/48 đã hoàn thành\n\nLuyện nghe về các qu"
+      "textSample": "P-English\n\nHọc tiếng Anh mỗi ngày\n\n0\n\n5/5\n\n0\n\nTrang chủ\n\nTổng quan hôm nay\n\nLộ trình\n\nCEFR A1–B2\n\n48 ngày lấy gốc\n\nHọc lại nền tảng\n\nEnglish Speed\n\nPhát âm nhanh\n\nShadowing\n\nLuyện nói theo nhịp\n\nLuyện tập\n\nÔn kỹ năng\n\nTừ vựng\n\nKho từ\n\nK\n\nKhách\n\nTiến độ lưu trên thiết bị này\n\nTiến độ lưu trên thiết bị này\n\nĐăng nhập Google để đồng bộ\n\nBỌT BIỂN\n\n5/5\n\n🌙\n\nGiao diện\n\nP-English · vùng học yên tĩnh\n\n0\n\nBọt biển 5/5\n\nHọc miễn phí\n48 ngày lấy gốc\n\nMỗi ngày một lesson flow ngắn: nghe mẫu, làm bài tương tác, nói lại và lưu lỗi sai để ôn.\n\nHôm nay học Ngày 39\n\n7/48 đã hoàn thành\n\nLuyện nghe về các quốc g"
     },
     {
       "name": "foundation48-release-roadmap-mobile",
@@ -165,7 +165,7 @@
         "completionPanelVisible": true
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage3.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage3.lazy-BF53fN_t.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 13\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nHỏi chuyện đã xảy ra — Did you...? và câu trả lời ngắn\n\nChặng 3: Từ loại và các thì căn bản\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nHỏi chuyện đã xảy ra — Did you...? và câu trả lời ngắn\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nBiết hỏi việc đã xảy ra bằng Did và trả lời Yes/No ngắn mà không thêm -ed sau Did.\n\n8 Từ vựng · 3 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\n\nĐã lưu ngày 13\n\nTiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.\n\nSang ngày 14\nNgày 12\nNgày 14\n\nHọc\n"
     },
@@ -190,8 +190,8 @@
         "completionPanelVisible": true
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage3.lazy.ts",
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage4.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage3.lazy-BF53fN_t.js",
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage4.lazy-BZREX2zy.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 17\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nTôi có thể làm — can / can’t cho khả năng\n\nChặng 3: Từ loại và các thì căn bản\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nTôi có thể làm — can / can’t cho khả năng\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nNói khả năng, xin phép đơn giản và phủ định bằng can/can’t + động từ nguyên mẫu.\n\n8 Từ vựng · 3 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\n\nĐã lưu ngày 17\n\nTiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.\n\nSang ngày 18\nNgày 16\nNgày 18\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -216,7 +216,7 @@
         "completionPanelVisible": false
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage4.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage4.lazy-BZREX2zy.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 18\n\nBước 1/26\n\n0/19 câu đúng\n\nHọc ngữ âm với giáo viên nước ngoài\n\nChặng 4: Phát âm, trọng âm và câu hỏi\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nHọc ngữ âm với giáo viên nước ngoài\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nLàm quen cách nghe và bắt chước âm tiếng Anh chậm, rõ, không cần nói nhanh.\n\n8 Từ vựng · 3 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\nNgày 17\nNgày 19\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -241,8 +241,8 @@
         "completionPanelVisible": false
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage4.lazy.ts",
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage4.lazy-BZREX2zy.js",
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage5.lazy-DmqJLPQs.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 21\n\nBước 1/26\n\n0/19 câu đúng\n\nLuyện nghe số và tên\n\nChặng 4: Phát âm, trọng âm và câu hỏi\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nLuyện nghe số và tên\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nNghe số, tên người và đánh vần ngắn trong tình huống cơ bản.\n\n8 Từ vựng · 3 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\nNgày 20\nNgày 22\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -269,7 +269,7 @@
         "completionPanelVisible": true
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage5.lazy-DmqJLPQs.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 22\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nĐộng từ khuyết thiếu\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nĐộng từ khuyết thiếu\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học cách nói nên, phải, có thể, được phép bằng các động từ khuyết thiếu quen thuộc.\n\n6 Từ vựng · 4 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\n\nĐã lưu ngày 22\n\nTiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.\n\nSang ngày 23\nNgày 21\nNgày 23\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -296,8 +296,8 @@
         "completionPanelVisible": true
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts",
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage6.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage5.lazy-DmqJLPQs.js",
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage6.lazy-CNaMEwdI.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 28\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nCâu điều kiện loại 3\n\nChặng 5: Liên từ và câu điều kiện\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nCâu điều kiện loại 3\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học nói điều đáng tiếc trong quá khứ bằng If + had + V3, would have + V3.\n\n6 Từ vựng · 3 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\n\nĐã lưu ngày 28\n\nTiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.\n\nSang ngày 29\nNgày 27\nNgày 29\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -322,7 +322,7 @@
         "completionPanelVisible": false
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage6.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage6.lazy-CNaMEwdI.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 29\n\nBước 1/26\n\n0/19 câu đúng\n\nLuyện nghe điền từ\n\nChặng 6: Luyện nghe nền tảng\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nLuyện nghe điền từ\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn luyện nghe một câu ngắn và bắt đúng từ còn thiếu.\n\n6 Từ vựng · 3 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\nNgày 28\nNgày 30\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -349,8 +349,8 @@
         "completionPanelVisible": true
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage6.lazy.ts",
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage7.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage6.lazy-CNaMEwdI.js",
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage7.lazy-BdRduWgi.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 34\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nLuyện nghe về tiền bạc\n\nChặng 6: Luyện nghe nền tảng\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nLuyện nghe về tiền bạc\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn luyện nghe giá tiền để không nhầm số khi mua đồ.\n\n6 Từ vựng · 3 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\n\nĐã lưu ngày 34\n\nTiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.\n\nSang ngày 35\nNgày 33\nNgày 35\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -375,7 +375,7 @@
         "completionPanelVisible": false
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage7.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage7.lazy-BdRduWgi.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 35\n\nBước 1/26\n\n0/19 câu đúng\n\nĐại từ phản thân\n\nChặng 7: Củng cố ngữ pháp và giao tiếp\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nĐại từ phản thân\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học cách nói tự mình làm việc gì bằng myself, yourself, himself…\n\n6 Từ vựng · 3 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\nNgày 34\nNgày 36\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -402,8 +402,8 @@
         "completionPanelVisible": true
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage7.lazy.ts",
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage8.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage7.lazy-BdRduWgi.js",
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage8.lazy-jDnO9NkO.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 38\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nLiên từ tương hỗ\n\nChặng 7: Củng cố ngữ pháp và giao tiếp\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nLiên từ tương hỗ\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học cách nối hai lựa chọn hoặc hai ý song song bằng both...and, either...or.\n\n6 Từ vựng · 4 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\n\nĐã lưu ngày 38\n\nTiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.\n\nSang ngày 39\nNgày 37\nNgày 39\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -428,7 +428,7 @@
         "completionPanelVisible": false
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage8.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage8.lazy-jDnO9NkO.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 39\n\nBước 1/26\n\n0/19 câu đúng\n\nLuyện nghe về các quốc gia và châu lục\n\nChặng 8: Nghe chủ đề đời sống và đầu ra cuối khóa\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nLuyện nghe về các quốc gia và châu lục\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn luyện nghe tên quốc gia, châu lục và cách nói mình đến từ đâu.\n\n6 Từ vựng · 3 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\nNgày 38\nNgày 40\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -455,7 +455,7 @@
         "completionPanelVisible": false
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage8.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage8.lazy-jDnO9NkO.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 45\n\nBước 1/26\n\n0/19 câu đúng\n\nTiếng Anh giao tiếp 2\n\nChặng 8: Nghe chủ đề đời sống và đầu ra cuối khóa\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nTiếng Anh giao tiếp 2\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn học thêm các câu giao tiếp ngắn để xin giúp đỡ và xử lý khi chưa hiểu.\n\n6 Từ vựng · 4 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\nNgày 44\nNgày 46\n\nHọc\n\nÔn tập\n\nTừ vựng\n\nHồ sơ"
     },
@@ -484,7 +484,7 @@
         "completionPanelVisible": true
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage8.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage8.lazy-jDnO9NkO.js"
       ],
       "textSample": "0\n\nBọt biển 5/5\n\nVề lộ trình 48 ngày\n\nNgày 48\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nTự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh\n\nChặng 8: Nghe chủ đề đời sống và đầu ra cuối khóa\n\nTiến độ lesson flow\n\n1/26\n\nINTRO\n\nTự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh\n\nBài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và mini test.\n\nHôm nay bạn ghép những gì đã học thành một đoạn giới thiệu bản thân ngắn và tự tin.\n\n6 Từ vựng · 4 Mẫu câu · 5 Nghe · 5 Nói lại · 9 Mini quiz\n\nQuay lại\nTiếp tục\n\nĐã hoàn thành 48/48 ngày\n\nBạn đã hoàn thành lộ trình 48 ngày lấy gốc. Hãy ôn lại các ng"
     },
@@ -513,7 +513,7 @@
         "completionPanelVisible": true
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage8.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage8.lazy-jDnO9NkO.js"
       ],
       "textSample": "P-English\n\nHọc tiếng Anh mỗi ngày\n\n0\n\n5/5\n\n0\n\nTrang chủ\n\nTổng quan hôm nay\n\nLộ trình\n\nCEFR A1–B2\n\n48 ngày lấy gốc\n\nHọc lại nền tảng\n\nEnglish Speed\n\nPhát âm nhanh\n\nShadowing\n\nLuyện nói theo nhịp\n\nLuyện tập\n\nÔn kỹ năng\n\nTừ vựng\n\nKho từ\n\nK\n\nKhách\n\nTiến độ lưu trên thiết bị này\n\nTiến độ lưu trên thiết bị này\n\nĐăng nhập Google để đồng bộ\n\nBỌT BIỂN\n\n5/5\n\n🌙\n\nGiao diện\n\nP-English · vùng học yên tĩnh\n\n0\n\nBọt biển 5/5\n\nHọc miễn phí\nVề lộ trình 48 ngày\n\nNgày 48\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nTự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh\n\nChặng 8: Nghe chủ đề đời sống và đầu ra cuối khóa\n\nTiế"
     },
@@ -540,7 +540,7 @@
         "completionPanelVisible": true
       },
       "lazyModuleRequests": [
-        "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage8.lazy.ts"
+        "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage8.lazy-jDnO9NkO.js"
       ],
       "textSample": "P-English\n\nHọc tiếng Anh mỗi ngày\n\n0\n\n5/5\n\n0\n\nTrang chủ\n\nTổng quan hôm nay\n\nLộ trình\n\nCEFR A1–B2\n\n48 ngày lấy gốc\n\nHọc lại nền tảng\n\nEnglish Speed\n\nPhát âm nhanh\n\nShadowing\n\nLuyện nói theo nhịp\n\nLuyện tập\n\nÔn kỹ năng\n\nTừ vựng\n\nKho từ\n\nK\n\nKhách\n\nTiến độ lưu trên thiết bị này\n\nTiến độ lưu trên thiết bị này\n\nĐăng nhập Google để đồng bộ\n\nBỌT BIỂN\n\n5/5\n\n🌙\n\nGiao diện\n\nP-English · vùng học yên tĩnh\n\n0\n\nBọt biển 5/5\n\nHọc miễn phí\nVề lộ trình 48 ngày\n\nNgày 48\n\nĐã hoàn thành\n\n0/19 câu đúng\n\nTự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh\n\nChặng 8: Nghe chủ đề đời sống và đầu ra cuối khóa\n\nTiế"
     }
@@ -549,12 +549,12 @@
   "consoleErrors": [],
   "failedRequests": [],
   "lazyModuleRequests": [
-    "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage3.lazy.ts",
-    "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage4.lazy.ts",
-    "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage5.lazy.ts",
-    "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage6.lazy.ts",
-    "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage7.lazy.ts",
-    "http://127.0.0.1:5180/src/features/foundation48/foundation48DeepLessons.stage8.lazy.ts"
+    "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage3.lazy-BF53fN_t.js",
+    "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage4.lazy-BZREX2zy.js",
+    "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage5.lazy-DmqJLPQs.js",
+    "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage6.lazy-CNaMEwdI.js",
+    "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage7.lazy-BdRduWgi.js",
+    "http://127.0.0.1:5180/assets/foundation48DeepLessons.stage8.lazy-jDnO9NkO.js"
   ],
   "screenshots": [
     "C:\\Users\\nltn0\\OneDrive\\Máy tính\\PSVip_RELEASE_KH\\reports\\screenshots\\foundation48-release-roadmap-desktop.png",

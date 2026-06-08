@@ -1,6 +1,6 @@
 import { Box, Center, VStack, HStack, Text, Button, Icon, Alert, AlertIcon } from '@chakra-ui/react';
 import { ArrowRight, Globe } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BrandLogo } from '../components/BrandLogo';
 import { useAuth } from '../features/auth/AuthProvider';
@@ -162,7 +162,8 @@ function AuthCallbackContent({ params }: { params: URLSearchParams }) {
   const navigate = useNavigate();
   const auth = useAuth();
 
-  useState(() => {
+  useEffect(() => {
+    let active = true;
     const run = async () => {
       const session = await auth.refreshSession();
       const fallback = params.get('next') || '/luyen-tieng-anh/48-ngay-lay-goc';
@@ -173,11 +174,15 @@ function AuthCallbackContent({ params }: { params: URLSearchParams }) {
       } catch {
         intended = fallback;
       }
-      window.setTimeout(() => navigate(session?.user ? intended : '/home', { replace: true }), 450);
+      window.setTimeout(() => {
+        if (active) navigate(session?.user ? intended : '/home', { replace: true });
+      }, 450);
     };
     void run();
-    return null;
-  });
+    return () => {
+      active = false;
+    };
+  }, [auth, navigate, params]);
 
   return (
     <OceanPageShell variant="login" overlayStrength="medium" minH="100vh">
