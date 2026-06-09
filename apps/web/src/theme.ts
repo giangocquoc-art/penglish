@@ -5,6 +5,8 @@ const config: ThemeConfig = {
   useSystemColorMode: false,
 };
 
+const fontStack = `"Be Vietnam Pro", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+
 // Brand color palette
 const green = {
   50: '#f0fff4',
@@ -146,8 +148,8 @@ export const theme = extendTheme({
     },
   },
   fonts: {
-    heading: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif`,
-    body: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif`,
+    heading: fontStack,
+    body: fontStack,
     mono: `'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', monospace`,
   },
   fontWeights: {
@@ -189,6 +191,20 @@ export const theme = extendTheme({
         bg: props.colorMode === 'dark' ? 'gray.900' : 'gray.50',
         color: props.colorMode === 'dark' ? 'white' : 'gray.800',
         minHeight: '100vh',
+        fontFamily: 'body',
+      },
+      body: {
+        fontWeight: 400,
+        lineHeight: 1.55,
+        textRendering: 'optimizeLegibility',
+        WebkitFontSmoothing: 'antialiased',
+        MozOsxFontSmoothing: 'grayscale',
+      },
+      'h1, h2, h3, h4, h5, h6': {
+        fontFamily: 'heading',
+        fontWeight: 700,
+        letterSpacing: '-0.02em',
+        lineHeight: 1.14,
       },
       a: { textDecoration: 'none' },
     }),

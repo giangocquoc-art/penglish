@@ -106,15 +106,15 @@ function JourneyHero({ currentUnit, currentLevel, currentLevelLabel, unitProgres
       <Flex position="relative" align={{ base: 'stretch', md: 'center' }} justify="space-between" direction={{ base: 'column', md: 'row' }} gap={{ base: '4', md: '6' }}>
         <VStack align="start" gap={{ base: '3', md: '4' }} flex="1" minW="0">
           <HStack wrap="wrap" gap="2">
-            <Tag borderRadius="full" bg="#ECFDF5" color="#047857" fontWeight="950" data-testid="learning-path-current-level-chip">{currentLevel} · {currentLevelLabel}</Tag>
-            <Tag borderRadius="full" bg="#EFF6FF" color={COLORS.blue} fontWeight="900" data-testid="learning-path-completed-units-chip">{unitProgressText} unit</Tag>
+            <Tag borderRadius="full" bg="#ECFDF5" color="#047857" fontWeight="700" data-testid="learning-path-current-level-chip">{currentLevel} · {currentLevelLabel}</Tag>
+            <Tag borderRadius="full" bg="#EFF6FF" color={COLORS.blue} fontWeight="700" data-testid="learning-path-completed-units-chip">{unitProgressText} unit</Tag>
           </HStack>
           <Box minW="0">
-            <Text color={COLORS.blue} fontSize="xs" fontWeight="950" letterSpacing="0.12em" textTransform="uppercase">Bạn đang ở đâu?</Text>
-            <Text as="h1" mt="1" color={COLORS.text} fontWeight="950" lineHeight="1.08" fontSize={{ base: '2xl', md: '4xl' }}>
+            <Text color={COLORS.blue} fontSize="xs" fontWeight="700" letterSpacing="0.12em" textTransform="uppercase">Bạn đang ở đâu?</Text>
+            <Text as="h1" mt="1" color={COLORS.text} fontWeight="700" lineHeight="1.08" fontSize={{ base: '2xl', md: '4xl' }}>
               {currentUnit?.titleVi ?? 'A1 · Chào hỏi tự tin'}
             </Text>
-            <Text mt="2" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="750" lineHeight="1.6" maxW="640px">
+            <Text mt="2" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="600" lineHeight="1.6" maxW="640px">
               {currentUnit?.subtitleVi ?? 'Học một bước nhỏ: nghe, hiểu, luyện nói, rồi kiểm tra nhanh.'}
             </Text>
           </Box>
@@ -122,7 +122,7 @@ function JourneyHero({ currentUnit, currentLevel, currentLevelLabel, unitProgres
             <Button as={Link} to={currentLessonPath} bg={COLORS.blue} color="white" size={{ base: 'md', md: 'lg' }} leftIcon={<Icon as={Play} />} borderRadius="full" _hover={{ bg: '#1D4ED8' }} data-testid="learning-path-continue-cta">
               Tiếp tục học
             </Button>
-            <Text color={COLORS.muted} fontWeight="850" fontSize="sm">{Math.max(0, pathPercentage)}% toàn lộ trình</Text>
+            <Text color={COLORS.muted} fontWeight="700" fontSize="sm">{Math.max(0, pathPercentage)}% toàn lộ trình</Text>
           </HStack>
         </VStack>
         <Box alignSelf={{ base: 'center', md: 'auto' }} pointerEvents="none">
@@ -138,8 +138,8 @@ function SimpleStagePath({ currentLevel, pathPercentage }: { currentLevel: Unifi
     <Box className="penglish-glass-card" bg="rgba(255,255,255,0.76)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3', md: '4' }} data-testid="learning-path-stage-dots">
       <HStack justify="space-between" align="center" gap="3" mb="3">
         <Box>
-          <Text color={COLORS.text} fontWeight="950">Đường học rất gọn</Text>
-          <Text color={COLORS.muted} fontWeight="750" fontSize="sm">Đi từng vùng, không cần mở nhiều thẻ.</Text>
+          <Text color={COLORS.text} fontWeight="700">Đường học rất gọn</Text>
+          <Text color={COLORS.muted} fontWeight="600" fontSize="sm">Đi từng vùng, không cần mở nhiều thẻ.</Text>
         </Box>
         <Icon as={Waves} color={COLORS.blue} boxSize="6" display={{ base: 'none', sm: 'block' }} />
       </HStack>
@@ -165,8 +165,8 @@ function StageDot({ stage, active, passed }: { stage: { level: UnifiedCefrLevel;
           <Icon as={passed ? CheckCircle2 : active ? Sparkles : Circle} boxSize="4" />
         </Flex>
         <Box minW="0">
-          <Text color={COLORS.text} fontWeight="950" noOfLines={1}>{stage.level}: {stage.title}</Text>
-          <Text color={COLORS.muted} fontSize="xs" fontWeight="750" noOfLines={2}>{stage.note}</Text>
+          <Text color={COLORS.text} fontWeight="700" noOfLines={1}>{stage.level}: {stage.title}</Text>
+          <Text color={COLORS.muted} fontSize="xs" fontWeight="600" noOfLines={2}>{stage.note}</Text>
         </Box>
       </HStack>
     </Box>
@@ -178,8 +178,8 @@ function FuturePreviewPanel({ currentUnit, nextUnits, showFutureUnits, onToggleF
     <Box className="penglish-glass-card" bg="rgba(255,255,255,0.66)" border="1px solid" borderColor="rgba(186,230,253,0.86)" borderRadius="3xl" overflow="hidden">
       <Button onClick={onToggleFuture} variant="ghost" w="100%" justifyContent="space-between" px="4" py="5" h="auto" borderRadius="none" rightIcon={<Icon as={ChevronDown} transform={showFutureUnits ? 'rotate(180deg)' : 'rotate(0deg)'} transition="transform .2s ease" />}>
         <Box textAlign="left">
-          <Text color={COLORS.text} fontWeight="950">Bài sau để xem nhẹ</Text>
-          <Text color={COLORS.muted} fontWeight="750" fontSize="sm">Không cần học ngay. Mở khi bạn muốn nhìn trước.</Text>
+          <Text color={COLORS.text} fontWeight="700">Bài sau để xem nhẹ</Text>
+          <Text color={COLORS.muted} fontWeight="600" fontSize="sm">Không cần học ngay. Mở khi bạn muốn nhìn trước.</Text>
         </Box>
       </Button>
       <Collapse in={showFutureUnits} unmountOnExit={false}>
@@ -199,7 +199,7 @@ function ReducedFutureUnit({ unit, currentUnit }: { unit: UnifiedLearningUnit; c
         <Icon as={locked ? LockKeyhole : Circle} boxSize="4" />
       </Flex>
       <Box minW="0">
-        <Text color={COLORS.text} fontWeight="900" fontSize="sm" noOfLines={1}>{unit.titleVi}</Text>
+        <Text color={COLORS.text} fontWeight="700" fontSize="sm" noOfLines={1}>{unit.titleVi}</Text>
         <Text color={COLORS.muted} fontWeight="700" fontSize="xs" noOfLines={1}>{unit.subtitleVi}</Text>
       </Box>
     </HStack>
@@ -214,8 +214,8 @@ function CalmSupportPanel({ streak, vocabularyReviewCount, shadowingPracticedLin
       <HStack gap="3" align="start">
         <OceanMascot mascot="poo" pose="coach" size="xs" decorative motion="float" />
         <Box minW="0" flex="1">
-          <Text color={COLORS.text} fontWeight="950">Poo nhắc nhỏ</Text>
-          <Text color={COLORS.muted} fontWeight="750" fontSize="sm" lineHeight="1.55">Học bài hiện tại trước. Ôn tập và shadowing chỉ là phần phụ.</Text>
+          <Text color={COLORS.text} fontWeight="700">Poo nhắc nhỏ</Text>
+          <Text color={COLORS.muted} fontWeight="600" fontSize="sm" lineHeight="1.55">Học bài hiện tại trước. Ôn tập và shadowing chỉ là phần phụ.</Text>
           {hasActivity ? (
             <SimpleGrid columns={{ base: 3, sm: 3 }} gap="2" mt="3">
               <MiniMetric label="Streak" value={`${streak}`} />
@@ -236,8 +236,9 @@ function CalmSupportPanel({ streak, vocabularyReviewCount, shadowingPracticedLin
 function MiniMetric({ label, value }: { label: string; value: string }) {
   return (
     <Box bg="#F8FCFF" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="3" textAlign="center">
-      <Text color={COLORS.blue} fontWeight="950" fontSize="xl">{value}</Text>
-      <Text color={COLORS.muted} fontSize="xs" fontWeight="800">{label}</Text>
+      <Text color={COLORS.blue} fontWeight="700" fontSize="xl">{value}</Text>
+      <Text color={COLORS.muted} fontSize="xs" fontWeight="700">{label}</Text>
     </Box>
   );
 }
+

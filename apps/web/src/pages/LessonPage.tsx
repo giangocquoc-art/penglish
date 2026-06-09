@@ -141,7 +141,7 @@ export function LessonPage() {
           <Button as={Link} to="/home" leftIcon={<Icon as={ArrowLeft} />} variant="ghost" mb="5">
             Về trang chủ
           </Button>
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Không tìm thấy bài học</Text>
+          <Text fontSize="2xl" fontWeight="700" color={COLORS.text}>Không tìm thấy bài học</Text>
           <Text mt="2" color={COLORS.muted}>Lesson ID hiện tại chưa có nội dung trong kho P-English.</Text>
         </Box>
       </Box>
@@ -188,12 +188,12 @@ export function LessonPage() {
           <Flex position="relative" align={{ base: 'stretch', md: 'center' }} justify="space-between" direction={{ base: 'column', md: 'row' }} gap="4">
             <VStack align="start" gap="3" minW="0" flex="1">
               <HStack wrap="wrap" gap="2">
-                <Tag borderRadius="full" bg="#ECFDF5" color="#047857" fontWeight="950"><TagLabel>{lesson.level} · Beginner</TagLabel></Tag>
-                <Tag borderRadius="full" bg="#EFF6FF" color={COLORS.primary} fontWeight="900"><TagLabel>Bước {activeLessonSection + 1}/{lessonSections.length}</TagLabel></Tag>
+                <Tag borderRadius="full" bg="#ECFDF5" color="#047857" fontWeight="700"><TagLabel>{lesson.level} · Beginner</TagLabel></Tag>
+                <Tag borderRadius="full" bg="#EFF6FF" color={COLORS.primary} fontWeight="700"><TagLabel>Bước {activeLessonSection + 1}/{lessonSections.length}</TagLabel></Tag>
               </HStack>
               <Box minW="0">
-                <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.08">{lesson.title}</Text>
-                <Text mt="2" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="750" lineHeight="1.55" maxW="620px">Học từng bước một. Mỗi màn hình chỉ có một việc chính.</Text>
+                <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="700" color={COLORS.text} lineHeight="1.08">{lesson.title}</Text>
+                <Text mt="2" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="600" lineHeight="1.55" maxW="620px">Học từng bước một. Mỗi màn hình chỉ có một việc chính.</Text>
               </Box>
               {learningLocked ? <LearningLockedLessonNotice state={heartsState} /> : null}
             </VStack>
@@ -206,10 +206,10 @@ export function LessonPage() {
         <Box data-testid="lesson-step-nav" className="penglish-glass-card" bg="rgba(255,255,255,0.76)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3', md: '4' }} mb="3" boxShadow="0 14px 34px rgba(31,111,214,0.07)">
           <HStack justify="space-between" align="center" gap="3" mb="3">
             <Box minW="0">
-              <Text color={COLORS.text} fontWeight="950">{activeLessonSectionMeta.vi}</Text>
-              <Text color={COLORS.muted} fontSize="sm" fontWeight="750">Bước {activeLessonSection + 1}/{lessonSections.length}: {activeLessonSectionMeta.task}</Text>
+              <Text color={COLORS.text} fontWeight="700">{activeLessonSectionMeta.vi}</Text>
+              <Text color={COLORS.muted} fontSize="sm" fontWeight="600">Bước {activeLessonSection + 1}/{lessonSections.length}: {activeLessonSectionMeta.task}</Text>
             </Box>
-            <Text color={COLORS.primary} fontWeight="950" flexShrink={0}>{Math.round(lessonSectionProgress)}%</Text>
+            <Text color={COLORS.primary} fontWeight="700" flexShrink={0}>{Math.round(lessonSectionProgress)}%</Text>
           </HStack>
           <Progress value={lessonSectionProgress} colorScheme="blue" bg="#E2E8F0" borderRadius="full" h="8px" mb="3" />
           <HStack gap="2" overflowX="auto" pb="1" sx={{ scrollbarWidth: 'thin' }}>
@@ -226,8 +226,8 @@ export function LessonPage() {
             <HStack align="center" gap="3">
               <OceanMascot mascot="poo" pose={activeLessonSection >= 5 ? 'happy' : 'coach'} size="xs" decorative motion="float" />
               <Box minW="0">
-                <Text color={COLORS.text} fontWeight="950">Poo nói</Text>
-                <Text color={COLORS.primary} fontWeight="850" lineHeight="1.55">{activeLessonSectionMeta.guide}</Text>
+                <Text color={COLORS.text} fontWeight="700">Poo nói</Text>
+                <Text color={COLORS.primary} fontWeight="700" lineHeight="1.55">{activeLessonSectionMeta.guide}</Text>
               </Box>
             </HStack>
           </Box>
@@ -236,12 +236,12 @@ export function LessonPage() {
             <StepShell icon={Headphones} title="Bước 1: Nghe" helperLabel="Listen" task="Nghe câu mẫu trước. Chưa cần dịch ngay.">
               {firstListening ? (
                 <VStack align="stretch" gap="3">
-                  <Text color={COLORS.text} fontWeight="900" fontSize={{ base: 'lg', md: 'xl' }}>{firstListening.text}</Text>
+                  <Text color={COLORS.text} fontWeight="700" fontSize={{ base: 'lg', md: 'xl' }}>{firstListening.text}</Text>
                   <Button onClick={() => speakEnglish(firstListening.text)} bg={COLORS.primary} color="white" borderRadius="full" leftIcon={<Icon as={Volume2} />} alignSelf="start" _hover={{ bg: '#1D4ED8' }}>Nghe câu này</Button>
                   <Box as="details" bg="#F8FAFC" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="3">
-                    <Box as="summary" cursor="pointer" fontWeight="950" color={COLORS.primary}>Xem thêm</Box>
+                    <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.primary}>Xem thêm</Box>
                     <Text mt="2" color={COLORS.muted}>{firstListening.question}</Text>
-                    <RevealAnswer><Text fontWeight="850">{firstListening.answer}</Text></RevealAnswer>
+                    <RevealAnswer><Text fontWeight="700">{firstListening.answer}</Text></RevealAnswer>
                   </Box>
                 </VStack>
               ) : <Text color={COLORS.muted}>Bài này chưa có câu nghe mẫu.</Text>}
@@ -255,13 +255,13 @@ export function LessonPage() {
                   <Box key={item.id} bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="4">
                     <HStack justify="space-between" align="start" gap="2">
                       <Box minW="0">
-                        <Text color={COLORS.text} fontWeight="950" fontSize="lg">{item.term}</Text>
-                        <Text color={COLORS.primary} fontWeight="850">{item.meaningVi}</Text>
+                        <Text color={COLORS.text} fontWeight="700" fontSize="lg">{item.term}</Text>
+                        <Text color={COLORS.primary} fontWeight="700">{item.meaningVi}</Text>
                       </Box>
                       <SpeakButton text={item.term} />
                     </HStack>
                     <Box as="details" mt="3">
-                      <Box as="summary" cursor="pointer" fontWeight="900" color={COLORS.muted} fontSize="sm">Xem thêm</Box>
+                      <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.muted} fontSize="sm">Xem thêm</Box>
                       <Text mt="2" color={COLORS.text}>{item.example}</Text>
                       <Text color={COLORS.muted} fontSize="sm">{item.exampleMeaningVi}</Text>
                     </Box>
@@ -275,11 +275,11 @@ export function LessonPage() {
             <StepShell icon={MessageCircle} title="Bước 3: Luyện" helperLabel="Practice" task="Đọc một mẫu câu, rồi thử thay bằng tên của bạn.">
               {lesson.sentencePatterns[0] ? (
                 <Box bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="4">
-                  <Text color={COLORS.text} fontWeight="950" fontSize="xl">{lesson.sentencePatterns[0].pattern}</Text>
-                  <Text mt="2" color={COLORS.muted} fontWeight="750">{lesson.sentencePatterns[0].vietnameseExplanation}</Text>
+                  <Text color={COLORS.text} fontWeight="700" fontSize="xl">{lesson.sentencePatterns[0].pattern}</Text>
+                  <Text mt="2" color={COLORS.muted} fontWeight="600">{lesson.sentencePatterns[0].vietnameseExplanation}</Text>
                   <Button mt="3" onClick={() => speakEnglish(lesson.sentencePatterns[0].examples[0]?.text ?? lesson.sentencePatterns[0].pattern)} borderRadius="full" bg={COLORS.primary} color="white" leftIcon={<Icon as={Volume2} />}>Nghe mẫu</Button>
                   <Box as="details" mt="4" bg="#F8FAFC" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="3">
-                    <Box as="summary" cursor="pointer" fontWeight="950" color={COLORS.primary}>Xem thêm ví dụ</Box>
+                    <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.primary}>Xem thêm ví dụ</Box>
                     <VStack align="stretch" gap="2" mt="2">
                       {lesson.sentencePatterns[0].examples.map((example) => <Text key={example.text} color={COLORS.text}>{example.text} · <Text as="span" color={COLORS.muted}>{example.meaningVi}</Text></Text>)}
                     </VStack>
@@ -294,13 +294,13 @@ export function LessonPage() {
               {lesson.miniDialogues[0] ? (
                 <Box bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="4">
                   <HStack justify="space-between" align="start" gap="3">
-                    <Text color={COLORS.text} fontWeight="950" fontSize="lg">{lesson.miniDialogues[0].title}</Text>
+                    <Text color={COLORS.text} fontWeight="700" fontSize="lg">{lesson.miniDialogues[0].title}</Text>
                     <SpeakButton text={lesson.miniDialogues[0].lines.map((line) => line.text).join(' ')} label="Nghe hội thoại" />
                   </HStack>
                   <VStack align="stretch" gap="2" mt="3">
                     {lesson.miniDialogues[0].lines.slice(0, 2).map((line, index) => (
                       <Box key={`${lesson.miniDialogues[0].id}-${index}`} bg={line.speaker === 'A' ? '#EFF6FF' : '#F0FDF4'} borderRadius="xl" p="3">
-                        <Text color={line.speaker === 'A' ? COLORS.primary : '#15803D'} fontWeight="900">{line.speaker}: {line.text}</Text>
+                        <Text color={line.speaker === 'A' ? COLORS.primary : '#15803D'} fontWeight="700">{line.speaker}: {line.text}</Text>
                         <Text color={COLORS.muted} fontSize="sm">{lesson.miniDialogues[0].vietnameseTranslation[index]}</Text>
                       </Box>
                     ))}
@@ -315,7 +315,7 @@ export function LessonPage() {
             <StepShell icon={Play} title="Bước 5: Kiểm tra nhanh" helperLabel="Quick check" task="Tự trả lời một câu ngắn, rồi mở đáp án.">
               {firstQuiz ? (
                 <PreviewCard title={firstQuiz.question ?? firstQuiz.prompt ?? firstQuiz.vietnamese ?? 'Quiz preview'} prompt={firstQuiz.options ? firstQuiz.options.join(' • ') : firstQuiz.words?.join(' / ') ?? 'Tự trả lời trước khi mở đáp án.'}>
-                  <Text fontWeight="900">{answerToText(firstQuiz.answer)}</Text>
+                  <Text fontWeight="700">{answerToText(firstQuiz.answer)}</Text>
                   {firstQuiz.explanationVi ? <Text fontSize="sm" color={COLORS.muted}>{firstQuiz.explanationVi}</Text> : null}
                 </PreviewCard>
               ) : null}
@@ -326,7 +326,7 @@ export function LessonPage() {
           {activeLessonSection === 5 ? (
             <StepShell icon={CheckCircle2} title="Bước 6: Hoàn tất" helperLabel="Finish" task="Lưu tiến độ bài học và chọn luyện thêm nếu muốn.">
               <Box bg={COLORS.text} color="white" borderRadius="3xl" p={{ base: '5', md: '6' }} position="relative" overflow="hidden" className="lesson-final-challenge" willChange="transform, opacity">
-                <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950">Hoàn thành bài học</Text>
+                <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700">Hoàn thành bài học</Text>
                 <Text color="#CBD5E1" mt="1">Poo sẽ lưu tiến độ trên thiết bị này.</Text>
                 <HStack mt="4" gap="2" wrap="wrap">
                   <Button data-testid="lesson-complete-button" borderRadius="full" bg={COLORS.green} color="white" _hover={{ bg: '#16A34A' }} onClick={completeLesson}>Lưu hoàn thành</Button>
@@ -335,7 +335,7 @@ export function LessonPage() {
                   ))}
                 </HStack>
                 <Box as="details" mt="4" bg="whiteAlpha.200" border="1px solid" borderColor="whiteAlpha.300" borderRadius="2xl" p="3">
-                  <Box as="summary" cursor="pointer" fontWeight="950">Xem thêm tiến độ</Box>
+                  <Box as="summary" cursor="pointer" fontWeight="700">Xem thêm tiến độ</Box>
                   {progressSummary ? <LessonProgressDashboard summary={progressSummary} hasProgress={Boolean(progress)} /> : null}
                 </Box>
               </Box>
@@ -344,7 +344,7 @@ export function LessonPage() {
 
           <HStack gap="2" justify="space-between" className="penglish-glass-card" bg="rgba(255,255,255,0.80)" border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" p="3" position={{ base: 'sticky', md: 'static' }} bottom={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 12px)', md: 'auto' }} zIndex="4">
             <Button borderRadius="full" variant="outline" onClick={goPreviousLessonSection} isDisabled={!canGoPreviousLessonSection}>Quay lại</Button>
-            <Text display={{ base: 'none', sm: 'block' }} fontWeight="900" color={COLORS.muted}>{activeLessonSectionMeta.vi}</Text>
+            <Text display={{ base: 'none', sm: 'block' }} fontWeight="700" color={COLORS.muted}>{activeLessonSectionMeta.vi}</Text>
             {canGoNextLessonSection ? (
               <Button borderRadius="full" bg={COLORS.primary} color="white" onClick={goNextLessonSection} _hover={{ bg: '#1D4ED8' }}>Tiếp tục</Button>
             ) : (
@@ -365,9 +365,9 @@ function StepShell({ icon, title, helperLabel, task, children }: { icon: any; ti
           <Icon as={icon} color={COLORS.primary} boxSize="5" />
         </Flex>
         <Box minW="0">
-          <Text color={COLORS.primary} fontWeight="950" fontSize="xs" letterSpacing="0.08em" textTransform="uppercase">{helperLabel}</Text>
-          <Text as="h2" color={COLORS.text} fontWeight="950" fontSize={{ base: 'xl', md: '2xl' }}>{title}</Text>
-          <Text mt="1" color={COLORS.muted} fontWeight="800" lineHeight="1.55">{task}</Text>
+          <Text color={COLORS.primary} fontWeight="700" fontSize="xs" letterSpacing="0.08em" textTransform="uppercase">{helperLabel}</Text>
+          <Text as="h2" color={COLORS.text} fontWeight="700" fontSize={{ base: 'xl', md: '2xl' }}>{title}</Text>
+          <Text mt="1" color={COLORS.muted} fontWeight="700" lineHeight="1.55">{task}</Text>
         </Box>
       </HStack>
       {children}
@@ -380,7 +380,7 @@ function LearningLockedLessonNotice({ state }: { state: LearningHeartsState }) {
     <Box bg="#E8F4FF" border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" p="4" w="100%" maxW="560px">
       <HStack align="start" gap="3">
         <Box flex="1">
-          <Text color="#1F6FD6" fontWeight="950">Đang hồi bọt biển — mở lại sau {getLockRemainingText(state)}</Text>
+          <Text color="#1F6FD6" fontWeight="700">Đang hồi bọt biển — mở lại sau {getLockRemainingText(state)}</Text>
           <Text mt="1" color="#52667A" fontSize="sm">Hết bọt biển rồi, nghỉ một chút để hồi lại nhé. Bạn vẫn có thể đọc nội dung bài học.</Text>
         </Box>
         <Box w="190px" display={{ base: 'none', sm: 'block' }}>
@@ -404,17 +404,17 @@ function LessonProgressDashboard({
     <Box bg="white" color={COLORS.text} border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" p="4" mt="3">
       {completed ? (
         <Box border="1px solid" borderColor="#BBF7D0" bg="#F0FDF4" borderRadius="2xl" p="4" mb="4">
-          <Text color="#15803D" fontWeight="950">Hoàn thành tốt bài này rồi.</Text>
+          <Text color="#15803D" fontWeight="700">Hoàn thành tốt bài này rồi.</Text>
           <Text mt="1" color={COLORS.muted} fontWeight="700">Tiến độ hiện tại là {summary.overallPercentage}%.</Text>
         </Box>
       ) : null}
       <HStack justify="space-between" mb="2" align="center">
-        <Text fontWeight="900" color={COLORS.text}>Tổng tiến độ</Text>
-        <Text fontWeight="950" color={COLORS.primary}>{summary.overallPercentage}%</Text>
+        <Text fontWeight="700" color={COLORS.text}>Tổng tiến độ</Text>
+        <Text fontWeight="700" color={COLORS.primary}>{summary.overallPercentage}%</Text>
       </HStack>
       <Progress value={summary.overallPercentage} colorScheme="blue" bg="#E2E8F0" borderRadius="full" h="10px" />
       <Text mt="2" color={COLORS.muted} fontWeight="700">{summary.completedModes.length}/{summary.modeSummaries.length} mode đã hoàn thành</Text>
-      {!hasProgress ? <Text mt="2" color={COLORS.amber} fontWeight="800">Bạn chưa bắt đầu bài này. Nên bắt đầu bằng {summary.nextRecommendedLabel}.</Text> : null}
+      {!hasProgress ? <Text mt="2" color={COLORS.amber} fontWeight="700">Bạn chưa bắt đầu bài này. Nên bắt đầu bằng {summary.nextRecommendedLabel}.</Text> : null}
     </Box>
   );
 }
@@ -434,7 +434,7 @@ function PreviewCard({
     <Box border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="5" bg="#FFFFFF">
       <HStack justify="space-between" align="start" gap="4" mb="4">
         <Box>
-          <Text fontSize="lg" fontWeight="900" color={COLORS.text}>{title}</Text>
+          <Text fontSize="lg" fontWeight="700" color={COLORS.text}>{title}</Text>
           <Text mt="2" color={COLORS.muted}>{prompt}</Text>
         </Box>
         {onSpeak ? <IconButton aria-label="Nghe preview" icon={<Icon as={Volume2} />} borderRadius="full" color={COLORS.primary} bg="#EFF6FF" onClick={onSpeak} /> : null}
@@ -443,3 +443,4 @@ function PreviewCard({
     </Box>
   );
 }
+

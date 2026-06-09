@@ -47,6 +47,9 @@ function ensureLocalGuestProfile(): LocalGuestUser {
   return fallbackGuest;
 }
 
+const cardHeadingWeight = '700';
+const softEmphasisWeight = '600';
+
 export function LoginPage() {
   const navigate = useNavigate();
   const [authMessage, setAuthMessage] = useState<string | null>(null);
@@ -87,20 +90,21 @@ export function LoginPage() {
             <Box display={{ base: 'none', lg: 'block' }}>
               <BrandLogo variant="compact" size="lg" />
             </Box>
-            <Box position="relative" w={{ base: '168px', md: '210px', lg: '248px' }} h={{ base: '134px', md: '168px', lg: '198px' }} pointerEvents="none">
-              <Box position="absolute" inset="auto 0 0" h="46%" borderRadius="50%" bg="rgba(7, 89, 133, 0.24)" filter="blur(20px)" />
-              <Box data-testid="login-poo-mascot" position="absolute" left="50%" top="50%" transform="translate(-50%, -50%)">
-                <OceanMascot mascot="poo" pose="idle" size="hero" decorative motion="swim" />
+            <Box position="relative" w={{ base: '158px', md: '198px', lg: '222px' }} h={{ base: '128px', md: '158px', lg: '178px' }} pointerEvents="none">
+              <Box position="absolute" inset="auto 5% 0" h="42%" borderRadius="50%" bg="rgba(7, 89, 133, 0.20)" filter="blur(22px)" />
+              <Box position="absolute" inset={{ base: '10px 13px 18px', md: '8px 16px 20px', lg: '6px 18px 22px' }} borderRadius="999px" bg="radial-gradient(circle at 42% 32%, rgba(255,255,255,0.62), rgba(186,230,253,0.28) 52%, rgba(14,165,233,0.12) 100%)" border="1px solid rgba(224, 242, 254, 0.42)" boxShadow="inset 0 1px 0 rgba(255,255,255,0.56), 0 18px 42px rgba(8,47,73,0.12)" />
+              <Box data-testid="login-poo-mascot" position="absolute" left="50%" top="50%" transform="translate(-50%, -50%)" sx={{ img: { imageRendering: 'auto', transform: 'translateZ(0)', backfaceVisibility: 'hidden' } }}>
+                <OceanMascot mascot="poo" pose="idle" size="hero" decorative motion="float" w={{ base: '132px', md: '166px', lg: '188px', xl: '198px' }} />
               </Box>
             </Box>
             <VStack align={{ base: 'center', lg: 'start' }} gap="2" maxW="520px">
-              <Text fontSize={{ base: 'sm', md: 'md' }} fontWeight="900" letterSpacing="0.16em" textTransform="uppercase" color="rgba(224, 242, 254, 0.92)">
+              <Text fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" letterSpacing="0.16em" textTransform="uppercase" color="rgba(224, 242, 254, 0.92)">
                 P-English ocean start
               </Text>
-              <Text as="h1" fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }} fontWeight="950" lineHeight="0.98" letterSpacing="-0.06em" textShadow="0 18px 46px rgba(8, 47, 73, 0.28)">
+              <Text as="h1" fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }} fontWeight="800" lineHeight="1.05" letterSpacing="-0.03em" textShadow="0 18px 46px rgba(8, 47, 73, 0.28)">
                 Bắt đầu học cùng Poo
               </Text>
-              <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="750" color="rgba(240, 249, 255, 0.88)" lineHeight="1.65">
+              <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="600" color="rgba(240, 249, 255, 0.88)" lineHeight="1.65">
                 Mỗi ngày một bài nhỏ. Không cần đăng nhập để bắt đầu.
               </Text>
             </VStack>
@@ -130,10 +134,10 @@ export function LoginPage() {
                   <Box display={{ base: 'block', lg: 'none' }}>
                     <BrandLogo variant="compact" size="lg" />
                   </Box>
-                  <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" color="#082F49" letterSpacing="-0.035em">
+                  <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight={cardHeadingWeight} color="#082F49" letterSpacing="-0.02em">
                     Vào vùng học yên tĩnh
                   </Text>
-                  <Text color="#475569" fontSize="sm" fontWeight="700" lineHeight="1.7" maxW="340px">
+                  <Text color="#475569" fontSize="sm" fontWeight={softEmphasisWeight} lineHeight="1.7" maxW="340px">
                     Poo sẽ lưu tiến độ trên thiết bị này trước. Khi Google sẵn sàng, bạn có thể đồng bộ sau.
                   </Text>
                 </VStack>
@@ -148,7 +152,7 @@ export function LoginPage() {
                     color="white"
                     border="1px solid rgba(255,255,255,0.46)"
                     rightIcon={<Icon as={ArrowRight} boxSize="5" />}
-                    fontWeight="950"
+                    fontWeight="700"
                     fontSize={{ base: 'md', md: 'lg' }}
                     borderRadius="2xl"
                     boxShadow="0 18px 42px rgba(14, 165, 233, 0.30)"
@@ -168,7 +172,7 @@ export function LoginPage() {
                     color="#0F172A"
                     border="1px solid rgba(14, 165, 233, 0.28)"
                     leftIcon={<Icon as={Globe} color="#1F6FD6" />}
-                    fontWeight="900"
+                    fontWeight="700"
                     borderRadius="2xl"
                     boxShadow="0 12px 30px rgba(15, 23, 42, 0.06)"
                     _hover={{ bg: 'rgba(240,249,255,0.96)', borderColor: 'rgba(14,165,233,0.48)' }}
@@ -179,17 +183,17 @@ export function LoginPage() {
 
                 <HStack data-testid="login-single-info-message" gap="2.5" align="start" bg="rgba(232,244,255,0.72)" border="1px solid rgba(186,230,253,0.86)" borderRadius="2xl" p="3.5">
                   <Icon as={ShieldCheck} color="#1F6FD6" boxSize="5" flexShrink={0} mt="0.5" />
-                  <Text fontSize="sm" color="#24506B" fontWeight="750" lineHeight="1.55">
+                  <Text fontSize="sm" color="#24506B" fontWeight="600" lineHeight="1.55">
                     {visibleInfoMessage}
                   </Text>
                 </HStack>
 
                 <HStack gap="2" flexWrap="wrap" justify="center" pt="1">
-                  <HStack fontSize="xs" px="3" py="1.5" bg="rgba(255,255,255,0.64)" color="#075985" border="1px solid rgba(186,230,253,0.72)" borderRadius="full" fontWeight="850">
+                  <HStack fontSize="xs" px="3" py="1.5" bg="rgba(255,255,255,0.64)" color="#075985" border="1px solid rgba(186,230,253,0.72)" borderRadius="full" fontWeight="700">
                     <Icon as={Sparkles} boxSize="3" />
                     <Text>Nhẹ nhàng</Text>
                   </HStack>
-                  <Text fontSize="xs" px="3" py="1.5" bg="rgba(240,253,244,0.74)" color="#166534" border="1px solid #BBF7D0" borderRadius="full" fontWeight="850">Không cần tài khoản</Text>
+                  <Text fontSize="xs" px="3" py="1.5" bg="rgba(240,253,244,0.74)" color="#166534" border="1px solid #BBF7D0" borderRadius="full" fontWeight="700">Không cần tài khoản</Text>
                 </HStack>
               </VStack>
             </Box>
@@ -343,8 +347,8 @@ function AuthCallbackContent({ params }: { params: URLSearchParams }) {
       <Center minH="100vh" px="4" position="relative" zIndex={1}>
         <VStack bg="rgba(255,255,255,0.90)" border="1px solid #BAE6FD" borderRadius="3xl" boxShadow="0 24px 64px rgba(31,111,214,0.16)" p="8" maxW="520px" textAlign="center" gap="4">
           <OceanMascot mascot="poo" pose="happy" size="lg" decorative motion="float" />
-          <Text fontSize="sm" fontWeight="950" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">P-English Google Auth</Text>
-          <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" color="#102A43">Poo đang xác nhận phiên đăng nhập...</Text>
+          <Text fontSize="sm" fontWeight="700" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">P-English Google Auth</Text>
+          <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color="#102A43">Poo đang xác nhận phiên đăng nhập...</Text>
           <Text color="#52667A" fontWeight="700" lineHeight="1.7">Nếu kết nối Google thành công, bạn sẽ được đưa về vùng học và tiến độ Foundation48 sẽ được tách theo tài khoản.</Text>
         </VStack>
       </Center>

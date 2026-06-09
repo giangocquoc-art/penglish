@@ -283,7 +283,7 @@ export function EnglishSpeedPage() {
               <Tag borderRadius="full" bg={COLORS.softAqua} color={COLORS.deepBlue}><Icon as={Waves} boxSize="4" mr="1.5" /> Chạy trực tiếp trên web</Tag>
               <Tag borderRadius="full" bg="#F0FDF4" color="#166534"><Icon as={Mic2} boxSize="4" mr="1.5" /> Âm thanh trên thiết bị</Tag>
             </HStack>
-            <Text as="h1" fontSize={{ base: 'xl', sm: '2xl', md: '4xl', xl: '5xl' }} lineHeight="0.98" fontWeight="950" color={COLORS.text}>English Speed</Text>
+            <Text as="h1" fontSize={{ base: 'xl', sm: '2xl', md: '4xl', xl: '5xl' }} lineHeight="1.05" fontWeight="800" color={COLORS.text}>English Speed</Text>
             <Text mt={{ base: '1', md: '3' }} fontSize={{ base: 'xs', sm: 'sm', md: 'md', xl: 'lg' }} color={COLORS.muted} maxW="640px" lineHeight={{ base: '1.35', md: '1.5' }} noOfLines={{ base: 2, md: undefined }}>
               Ba chế độ rõ ràng: Speed Reading để đọc đều, Speed Listening để nghe nhịp, Speed Speaking để ghi âm và phá kỷ lục nhẹ nhàng.
             </Text>
@@ -309,8 +309,8 @@ export function EnglishSpeedPage() {
                 <HStack align="start" gap="3">
                   <Circle size="38px" bg="white" color={COLORS.deepBlue} flexShrink={0}><Icon as={mode.icon} boxSize="5" /></Circle>
                   <Box>
-                    <Text fontWeight="950" color={COLORS.text}>{mode.title}</Text>
-                    <Text fontSize="sm" color={COLORS.deepBlue} fontWeight="850">{mode.vi}</Text>
+                    <Text fontWeight="700" color={COLORS.text}>{mode.title}</Text>
+                    <Text fontSize="sm" color={COLORS.deepBlue} fontWeight="700">{mode.vi}</Text>
                     <Text mt="1" fontSize="xs" color={COLORS.muted} fontWeight="700">{mode.goal}</Text>
                   </Box>
                 </HStack>
@@ -327,7 +327,7 @@ export function EnglishSpeedPage() {
                   <Tag borderRadius="full" bg={COLORS.softBlue} color={COLORS.deepBlue}>{prompt?.level}</Tag>
                   <Tag borderRadius="full" bg="#F0FDF4" color="#166534">{prompt?.type}</Tag>
                 </HStack>
-                <Text mt={{ base: '2', md: '3' }} fontSize={{ base: 'lg', md: '2xl' }} fontWeight="950" color={COLORS.text}>{prompt?.titleVi}</Text>
+                <Text mt={{ base: '2', md: '3' }} fontSize={{ base: 'lg', md: '2xl' }} fontWeight="700" color={COLORS.text}>{prompt?.titleVi}</Text>
                 <Text mt="1" color={COLORS.muted} fontWeight="700" fontSize={{ base: 'sm', md: 'md' }} noOfLines={{ base: 1, md: undefined }}>{prompt?.vietnameseMeaning}</Text>
               </Box>
               <Select aria-label="Chọn cấp độ luyện phát âm" maxW={{ base: '100%', sm: '210px' }} value={level} onChange={(event) => setLevel(event.target.value as SpeechLevelFilter)} bg="white" borderColor={COLORS.border} borderRadius="2xl" h="46px">
@@ -336,9 +336,9 @@ export function EnglishSpeedPage() {
             </HStack>
 
             <Box mt={{ base: '2', md: '4' }} p={{ base: 3, md: 5 }} borderRadius="3xl" bg="linear-gradient(135deg, rgba(248,252,255,0.72) 0%, rgba(255,255,255,0.82) 100%)" border="1px solid" borderColor="#BAE6FD" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 160px)">
-              <Text fontSize="sm" color={COLORS.muted} fontWeight="900">{selectedSpeedMode.title} · Câu luyện {promptIndex + 1}/{prompts.length} · Điểm nhẹ {gentleScore}</Text>
-              <Text mt={{ base: '2', md: '3' }} fontSize={{ base: 'xl', md: '3xl', xl: '4xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.16">{prompt?.promptText}</Text>
-              <Text mt="2" color={COLORS.deepBlue} fontWeight="800" fontSize={{ base: 'sm', md: 'md' }} noOfLines={{ base: 2, md: undefined }}>{prompt?.slowHintVi}</Text>
+              <Text fontSize="sm" color={COLORS.muted} fontWeight="700">{selectedSpeedMode.title} · Câu luyện {promptIndex + 1}/{prompts.length} · Điểm nhẹ {gentleScore}</Text>
+              <Text mt={{ base: '2', md: '3' }} fontSize={{ base: 'xl', md: '3xl', xl: '4xl' }} fontWeight="700" color={COLORS.text} lineHeight="1.16">{prompt?.promptText}</Text>
+              <Text mt="2" color={COLORS.deepBlue} fontWeight="700" fontSize={{ base: 'sm', md: 'md' }} noOfLines={{ base: 2, md: undefined }}>{prompt?.slowHintVi}</Text>
               <Progress mt={{ base: '3', md: '4' }} value={sessionProgress} colorScheme="blue" borderRadius="full" h="8px" bg={COLORS.softBlue} />
 
               <HStack mt={{ base: '3', md: '4' }} gap={{ base: '2', md: '3' }} wrap="wrap" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 160px)">
@@ -357,7 +357,7 @@ export function EnglishSpeedPage() {
                 <HStack align="start" gap="3">
                   <Circle size="28px" bg="white" color={isRecording ? COLORS.red : hasRecordedAudio ? '#166534' : COLORS.deepBlue} flexShrink="0"><Icon as={isRecording ? Waves : Mic2} boxSize="4" /></Circle>
                   <Box>
-                    <Text fontWeight="950" color={COLORS.text}>
+                    <Text fontWeight="700" color={COLORS.text}>
                       {isRecording ? `Đang ghi âm câu đọc... ${formatDuration(durationSeconds)}` : isRequestingPermission ? 'Đang xin quyền micro...' : hasRecordedAudio ? `Đã ghi âm ${formatDuration(durationSeconds)}` : 'Quy trình luyện phát âm'}
                     </Text>
                     <Text mt="1" color={COLORS.muted} fontWeight="700" noOfLines={{ base: 2, md: undefined }}>
@@ -389,13 +389,13 @@ export function EnglishSpeedPage() {
 
           <VStack align="stretch" gap="3" gridColumn={{ lg: 'span 4' }} order={{ base: 2, lg: 0 }}>
             <Box as="details" className="penglish-glass-card" bg="rgba(255,255,255,0.76)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p="4" boxShadow="0 10px 24px rgba(31, 111, 214, 0.05)">
-              <Box as="summary" cursor="pointer" fontWeight="950" color={COLORS.text}><HStack gap="3" align="center" display="inline-flex"><OceanMascot mascot="caNguaToc" pose="coach" size="sm" decorative motion="pulse" /><Text fontSize="lg" fontWeight="950" color={COLORS.text}>Huấn luyện viên tốc độ</Text></HStack></Box>
+              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}><HStack gap="3" align="center" display="inline-flex"><OceanMascot mascot="caNguaToc" pose="coach" size="sm" decorative motion="pulse" /><Text fontSize="lg" fontWeight="700" color={COLORS.text}>Huấn luyện viên tốc độ</Text></HStack></Box>
               <VStack align="stretch" mt="3" gap="2">
                 {prompt?.whaleCoachLines.slice(0, 2).map((line) => <Tip key={line} text={line} />)}
               </VStack>
             </Box>
             <Box as="details" className="penglish-glass-card" bg="rgba(248,252,255,0.72)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="4" boxShadow="0 10px 24px rgba(31, 111, 214, 0.045)">
-              <Box as="summary" cursor="pointer" fontSize="lg" fontWeight="950" color={COLORS.text}>Tập trung âm</Box>
+              <Box as="summary" cursor="pointer" fontSize="lg" fontWeight="700" color={COLORS.text}>Tập trung âm</Box>
               <HStack mt="3" wrap="wrap" gap="2">{prompt?.focusSounds.map((sound) => <Tag key={sound} borderRadius="full" bg={COLORS.softAqua} color={COLORS.deepBlue}>{sound}</Tag>)}</HStack>
               <VStack align="stretch" mt="3" gap="2">{prompt?.retryTipsVi.slice(0, 2).map((tip) => <Tip key={tip} text={tip} />)}</VStack>
             </Box>
@@ -406,11 +406,11 @@ export function EnglishSpeedPage() {
           <Box data-testid="speed-feedback-panel" ref={resultRef} className="penglish-glass-card" mt="6" bg="rgba(255,255,255,0.78)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: 4, md: 6 }} boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" role="status" aria-live="polite">
             <HStack justify="space-between" align="start" wrap="wrap" gap="4">
               <Box>
-                <HStack gap="2" wrap="wrap"><Icon as={Sparkles} color={COLORS.oceanBlue} /><Text fontSize="2xl" fontWeight="950" color={COLORS.text}>Bản ghi của bạn đã sẵn sàng</Text></HStack>
+                <HStack gap="2" wrap="wrap"><Icon as={Sparkles} color={COLORS.oceanBlue} /><Text fontSize="2xl" fontWeight="700" color={COLORS.text}>Bản ghi của bạn đã sẵn sàng</Text></HStack>
                 <Text mt="2" color={COLORS.muted} fontWeight="700">{RECORDED_FEEDBACK_MESSAGE}</Text>
-                <Text mt="2" color={COLORS.deepBlue} fontWeight="800">Âm thanh được giữ trong trạng thái trình duyệt của phiên này, không gửi lên máy chủ. Điểm nhẹ hiện tại: {progress.lastScore ?? gentleScore}. Nếu điểm còn thấp, Poo đã đưa câu này vào Practice để ôn lại.</Text>
+                <Text mt="2" color={COLORS.deepBlue} fontWeight="700">Âm thanh được giữ trong trạng thái trình duyệt của phiên này, không gửi lên máy chủ. Điểm nhẹ hiện tại: {progress.lastScore ?? gentleScore}. Nếu điểm còn thấp, Poo đã đưa câu này vào Practice để ôn lại.</Text>
               </Box>
-              <Circle size="92px" bg="#F0FDF4" color="#166534" fontWeight="950" fontSize="lg">{formatDuration(durationSeconds)}</Circle>
+              <Circle size="92px" bg="#F0FDF4" color="#166534" fontWeight="700" fontSize="lg">{formatDuration(durationSeconds)}</Circle>
             </HStack>
           </Box>
         )}
@@ -430,8 +430,8 @@ function StatCard({ label, value, tone }: { label: string; value: string; tone: 
     <Box data-testid={`english-speed-stat-${label.toLowerCase().replace(/\s+/g, '-')}`} bg={palette.bg} color={palette.color} border="1px solid rgba(255,255,255,0.72)" borderRadius="2xl" p={{ base: '1.5', sm: '2', md: '3' }} minH={{ base: '58px', sm: '64px', md: '78px' }} minW="0" overflow="visible">
       <HStack justify="space-between" align="start" gap={{ base: '1.5', md: '2' }} h="100%">
         <Box minW="0" flex="1">
-          <Text fontSize={{ base: '9px', sm: '10px', md: 'xs' }} fontWeight="900" textTransform="uppercase" opacity="0.78" letterSpacing={{ base: '0.01em', md: '0.04em' }} lineHeight="1.1" whiteSpace="nowrap" wordBreak="normal">{label}</Text>
-          <Text mt="1" fontSize={{ base: 'xs', sm: 'sm', md: 'lg', lg: 'xl' }} fontWeight="950" lineHeight="1.12" whiteSpace={value.length <= 10 ? 'nowrap' : 'normal'} overflowWrap="normal">{value}</Text>
+          <Text fontSize={{ base: '9px', sm: '10px', md: 'xs' }} fontWeight="700" textTransform="uppercase" opacity="0.78" letterSpacing={{ base: '0.01em', md: '0.04em' }} lineHeight="1.1" whiteSpace="nowrap" wordBreak="normal">{label}</Text>
+          <Text mt="1" fontSize={{ base: 'xs', sm: 'sm', md: 'lg', lg: 'xl' }} fontWeight="700" lineHeight="1.12" whiteSpace={value.length <= 10 ? 'nowrap' : 'normal'} overflowWrap="normal">{value}</Text>
         </Box>
         <Icon as={palette.icon} boxSize="5" flexShrink="0" display="none" />
       </HStack>
@@ -447,3 +447,4 @@ function Tip({ text }: { text: string }) {
     </HStack>
   );
 }
+

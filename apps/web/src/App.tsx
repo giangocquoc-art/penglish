@@ -140,8 +140,8 @@ function AuthGoogleSafePage() {
   const auth = useAuth();
   return (
     <VStack align="start" gap="4" p={{ base: '5', md: '7' }} m={{ base: '4', md: '8' }} borderRadius="3xl" bg="rgba(255,255,255,0.88)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 18px 46px rgba(31, 111, 214, 0.10)">
-      <Text fontSize="sm" fontWeight="900" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">P-English Supabase Auth</Text>
-      <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" color="#0F172A" lineHeight="1.12">Đăng nhập Google</Text>
+      <Text fontSize="sm" fontWeight="700" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">P-English Supabase Auth</Text>
+      <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color="#0F172A" lineHeight="1.12">Đăng nhập Google</Text>
       <Text color="#475569" fontWeight="650" lineHeight="1.7">
         {auth.authUnavailable ? 'Đăng nhập Google chưa bật. Bạn vẫn có thể học thử trên thiết bị này.' : 'Bạn có thể đăng nhập bằng Google để đồng bộ tiến độ theo tài khoản.'}
       </Text>
@@ -239,3 +239,4 @@ export default function App() {
     </AuthProvider>
   );
 }
+

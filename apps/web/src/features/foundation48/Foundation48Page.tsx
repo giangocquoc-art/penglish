@@ -40,10 +40,10 @@ export function Foundation48Page() {
           <Box position="absolute" inset="0" bg="radial-gradient(circle at 92% 12%, rgba(91,188,235,0.14), transparent 24%)" pointerEvents="none" />
           <Flex position="relative" justify="space-between" align="center" gap="3">
             <Box minW="0" maxW="640px">
-              <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.04">
+              <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="700" color={COLORS.text} lineHeight="1.08">
                 48 ngày lấy gốc
               </Text>
-              <Text mt="1" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="800" lineHeight="1.35">
+              <Text mt="1" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" lineHeight="1.35">
                 Mỗi ngày 5 phút. Học từng bước.
               </Text>
             </Box>
@@ -61,17 +61,17 @@ export function Foundation48Page() {
                 <OceanMascot mascot="poo" pose="happy" size="md" decorative motion="float" />
               </Box>
               <VStack align="start" gap="2" minW="0">
-                <Text color={COLORS.blue} fontWeight="950" fontSize="sm" letterSpacing="0.08em" textTransform="uppercase">
+                <Text color={COLORS.blue} fontWeight="700" fontSize="sm" letterSpacing="0.08em" textTransform="uppercase">
                   Hôm nay học
                 </Text>
                 <HStack gap="2" wrap="wrap">
-                  <Text px="3" py="1" borderRadius="full" bg="#DBEAFE" color={COLORS.blue} fontWeight="950" fontSize="sm">Ngày {nextDay}</Text>
-                  {nextState?.completed ? <Text px="3" py="1" borderRadius="full" bg="#ECFDF5" color={COLORS.green} fontWeight="950" fontSize="sm">Đã xong</Text> : null}
+                  <Text px="3" py="1" borderRadius="full" bg="#DBEAFE" color={COLORS.blue} fontWeight="700" fontSize="sm">Ngày {nextDay}</Text>
+                  {nextState?.completed ? <Text px="3" py="1" borderRadius="full" bg="#ECFDF5" color={COLORS.green} fontWeight="700" fontSize="sm">Đã xong</Text> : null}
                 </HStack>
-                <Text color={COLORS.text} fontWeight="950" fontSize={{ base: '2xl', md: '3xl' }} lineHeight="1.08" noOfLines={2}>
+                <Text color={COLORS.text} fontWeight="700" fontSize={{ base: '2xl', md: '3xl' }} lineHeight="1.08" noOfLines={2}>
                   {todayTitle}
                 </Text>
-                <Text display={{ base: 'none', md: 'block' }} color={COLORS.muted} fontWeight="800" fontSize="md" lineHeight="1.5" noOfLines={1}>
+                <Text display={{ base: 'none', md: 'block' }} color={COLORS.muted} fontWeight="700" fontSize="md" lineHeight="1.5" noOfLines={1}>
                   Ví dụ: {exampleSentence}
                 </Text>
               </VStack>
@@ -87,8 +87,8 @@ export function Foundation48Page() {
             <HStack gap="3">
               <Icon as={CheckCircle2} color={COLORS.green} boxSize="6" />
               <Box>
-                <Text color={COLORS.green} fontWeight="950">Bạn đã hoàn thành 48/48 ngày.</Text>
-                <Text color={COLORS.text} fontWeight="800">Poo đã lưu hành trình này trên thiết bị của bạn.</Text>
+                <Text color={COLORS.green} fontWeight="700">Bạn đã hoàn thành 48/48 ngày.</Text>
+                <Text color={COLORS.text} fontWeight="700">Poo đã lưu hành trình này trên thiết bị của bạn.</Text>
               </Box>
             </HStack>
           </Box>
@@ -98,7 +98,7 @@ export function Foundation48Page() {
 
         <VStack mt="5" align="center" gap="1" color={COLORS.muted}>
           <Icon as={Sparkles} color={COLORS.blue} />
-          <Text fontSize="sm" fontWeight="800" textAlign="center">Học mỗi ngày một chút, Poo sẽ lưu tiến độ cho bạn.</Text>
+          <Text fontSize="sm" fontWeight="700" textAlign="center">Học mỗi ngày một chút, Poo sẽ lưu tiến độ cho bạn.</Text>
         </VStack>
       </Box>
     </OceanPageShell>
@@ -109,3 +109,4 @@ function getFriendlyDayTitle(title: string) {
   const withoutDay = title.replace(/^Ngày \d+:\s*/, '').trim();
   return withoutDay.split('—')[0]?.trim() || withoutDay;
 }
+

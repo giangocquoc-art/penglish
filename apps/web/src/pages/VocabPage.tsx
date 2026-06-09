@@ -231,8 +231,8 @@ function StatCard({ label, value, tone = 'blue' }: { label: string; value: strin
   const bg = tone === 'green' ? '#DCFCE7' : tone === 'orange' ? '#FEF3C7' : tone === 'red' ? '#FEE2E2' : '#DBEAFE';
   return (
     <Box bg={bg} border="1px solid" borderColor="whiteAlpha.700" borderRadius="2xl" p="4">
-      <Text fontSize="3xl" fontWeight="950" color={color} lineHeight="1">{value}</Text>
-      <Text mt="1" fontSize="sm" fontWeight="800" color={COLORS.muted}>{label}</Text>
+      <Text fontSize="3xl" fontWeight="700" color={color} lineHeight="1">{value}</Text>
+      <Text mt="1" fontSize="sm" fontWeight="700" color={COLORS.muted}>{label}</Text>
     </Box>
   );
 }
@@ -275,8 +275,8 @@ function WordCard({ item, onChanged }: { item: VocabularyReviewItem; onChanged: 
     <Box data-testid="vocab-mobile-card" className="penglish-glass-card" bg="rgba(255,255,255,0.78)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '4', md: '5' }} boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" minW="0" overflow="hidden">
       <Flex justify="space-between" gap="3" align="start">
         <Box minW="0">
-          <Text fontSize="2xl" fontWeight="950" color={COLORS.text}>{item.term}</Text>
-          <Text mt="1" color={COLORS.primary} fontWeight="800">{item.meaningVi}</Text>
+          <Text fontSize="2xl" fontWeight="700" color={COLORS.text}>{item.term}</Text>
+          <Text mt="1" color={COLORS.primary} fontWeight="700">{item.meaningVi}</Text>
           <Text mt="1" color={COLORS.muted} fontStyle="italic">{item.pronunciation || 'Chưa có phát âm'}</Text>
         </Box>
         <Badge colorScheme={STATUS_COLORS[item.status]} borderRadius="full" px="3" py="1" flexShrink={0}>{STATUS_LABELS[item.status]}</Badge>
@@ -297,8 +297,8 @@ function WordCard({ item, onChanged }: { item: VocabularyReviewItem; onChanged: 
       </Box>
 
       <Box mt="4" bg="#F8FAFC" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="4">
-        <Text fontSize="xs" fontWeight="950" color={COLORS.primary} textTransform="uppercase" letterSpacing="0.08em">Ví dụ tiếng Anh</Text>
-        <Text mt="1" fontWeight="900" color={COLORS.text}>{item.example}</Text>
+        <Text fontSize="xs" fontWeight="700" color={COLORS.primary} textTransform="uppercase" letterSpacing="0.08em">Ví dụ tiếng Anh</Text>
+        <Text mt="1" fontWeight="700" color={COLORS.text}>{item.example}</Text>
         <Text mt="1" color={COLORS.muted}>{item.exampleMeaningVi}</Text>
       </Box>
       <HStack mt="4" wrap="wrap" gap="2">
@@ -307,8 +307,8 @@ function WordCard({ item, onChanged }: { item: VocabularyReviewItem; onChanged: 
         {item.nextReviewAt ? <Tag borderRadius="full" bg="#FEF3C7" color={COLORS.amber}><TagLabel>Ôn: {formatDateTime(item.nextReviewAt)}</TagLabel></Tag> : null}
       </HStack>
       <Box as="details" mt="4" bg="#F0F9FF" border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" p="4" data-testid={`vocab-learning-hint-${item.wordId}`}>
-        <Box as="summary" cursor="pointer" fontSize="xs" fontWeight="950" color={COLORS.primary} textTransform="uppercase" letterSpacing="0.08em">Mẹo học nhóm {item.learningGroup.cefrLevel}</Box>
-        <Text mt="2" color={COLORS.text} fontSize="sm" fontWeight="850">{item.learningGroup.memoryHookVi}</Text>
+        <Box as="summary" cursor="pointer" fontSize="xs" fontWeight="700" color={COLORS.primary} textTransform="uppercase" letterSpacing="0.08em">Mẹo học nhóm {item.learningGroup.cefrLevel}</Box>
+        <Text mt="2" color={COLORS.text} fontSize="sm" fontWeight="700">{item.learningGroup.memoryHookVi}</Text>
         <Text mt="1" color={COLORS.muted} fontSize="sm" fontWeight="700">{item.learningGroup.reviewCueVi}</Text>
       </Box>
       <Text mt="4" color={COLORS.muted} fontSize="sm" fontWeight="700">
@@ -326,8 +326,8 @@ function LearnedWordCard({ word, onChanged }: { word: LearningLoopWordRecord; on
     <Box bg="rgba(255,255,255,0.88)" border="1px solid" borderColor={word.weakCount > 0 || word.mastery <= 1 ? '#FED7AA' : '#BAE6FD'} borderRadius="2xl" p="3" minW="0">
       <HStack justify="space-between" align="start" gap="3">
         <Box minW="0">
-          <Text color={COLORS.text} fontWeight="950" noOfLines={1}>{word.term}</Text>
-          <Text mt="1" color={COLORS.primary} fontSize="sm" fontWeight="850" noOfLines={2}>{word.meaningVi}</Text>
+          <Text color={COLORS.text} fontWeight="700" noOfLines={1}>{word.term}</Text>
+          <Text mt="1" color={COLORS.primary} fontSize="sm" fontWeight="700" noOfLines={2}>{word.meaningVi}</Text>
         </Box>
         <IconButton
           aria-label={word.favorite ? `Bỏ yêu thích ${word.term}` : `Yêu thích ${word.term}`}
@@ -349,7 +349,7 @@ function LearnedWordCard({ word, onChanged }: { word: LearningLoopWordRecord; on
         {word.topic ? <Badge borderRadius="full" bg="#F0F9FF" color={COLORS.cyan} textTransform="none">{word.topic}</Badge> : null}
       </HStack>
       <HStack mt="3" justify="space-between" gap="2">
-        <Text color={COLORS.muted} fontSize="xs" fontWeight="800">{getLearningLoopSourceLabel(word)}</Text>
+        <Text color={COLORS.muted} fontSize="xs" fontWeight="700">{getLearningLoopSourceLabel(word)}</Text>
         <HStack gap="1.5">
           <IconButton aria-label={`Nghe ${word.term}`} icon={<Icon as={Volume2} />} size="xs" borderRadius="full" variant="outline" onClick={() => speakEnglish(word.term)} />
           <Button as={Link} to={getLearningLoopWordReviewPath(word)} size="xs" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }}>
@@ -467,9 +467,9 @@ export function VocabPage() {
       <OceanPageShell data-testid="vocab-mobile-root" variant="vocab" overlayStrength="strong" minH="calc(100vh - 72px)" px={{ base: '3', md: '6' }} py={{ base: '2', md: '5' }} pb={{ base: 'var(--penglish-mobile-safe-bottom)', lg: '12' }} overflowX="hidden">
         <Box maxW="760px" mx="auto" className="penglish-glass-card" bg="rgba(255,255,255,0.88)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '5', md: '8' }} boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" role="alert">
           <Tag borderRadius="full" bg="#FEF3C7" color="#9A3412" mb="4"><TagLabel>Vocabulary recovery</TagLabel></Tag>
-          <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" color={COLORS.text}>Poo chưa mở được dữ liệu từ vựng</Text>
+          <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color={COLORS.text}>Poo chưa mở được dữ liệu từ vựng</Text>
           <Text mt="3" color={COLORS.muted} fontWeight="700">Không phải trạng thái loading. Hãy thử tải lại dữ liệu local; nếu lỗi còn lại, QA sẽ ghi nhận nguyên nhân.</Text>
-          <Text mt="3" color="#9A3412" fontSize="sm" fontWeight="800">{vocabularyState.error}</Text>
+          <Text mt="3" color="#9A3412" fontSize="sm" fontWeight="700">{vocabularyState.error}</Text>
           <Button mt="6" borderRadius="full" bg={COLORS.primary} color="white" onClick={refresh}>Thử lại</Button>
         </Box>
       </OceanPageShell>
@@ -488,7 +488,7 @@ export function VocabPage() {
                 <Tag borderRadius="full" bg="#FEF3C7" color={COLORS.text}><TagLabel>⭐ Sổ tay từ vựng</TagLabel></Tag>
                 <Tag borderRadius="full" bg="#DCFCE7" color="#166534"><TagLabel>Bộ từ A1/A2/B1 mẫu</TagLabel></Tag>
               </HStack>
-              <Text as="h2" fontSize={{ base: 'xl', md: '5xl' }} lineHeight="1.05" fontWeight="950" color={COLORS.text}>Từ vựng của bạn</Text>
+              <Text as="h2" fontSize={{ base: 'xl', md: '5xl' }} lineHeight="1.05" fontWeight="800" color={COLORS.text}>Từ vựng của bạn</Text>
               <Text mt={{ base: '2', md: '3' }} maxW="760px" color={COLORS.muted} fontWeight="700" lineHeight="1.55" fontSize={{ base: 'sm', md: 'md' }} noOfLines={{ base: 2, md: undefined }}>
                 Chọn một nhóm từ, bắt đầu flashcard hoặc ghép cặp để học ngay. Poo lưu từ đã học, từ yếu, nguồn bài/ngày, mức thuộc và nhóm yêu thích trên thiết bị này.
               </Text>
@@ -513,9 +513,9 @@ export function VocabPage() {
                 <OceanMascot mascot="mucMo" pose="teacher" size="md" decorative motion="float" />
               </HStack>
               <Box w="100%">
-                <Text fontWeight="900" color={COLORS.text} mb="2">Tiến độ thuộc từ</Text>
+                <Text fontWeight="700" color={COLORS.text} mb="2">Tiến độ thuộc từ</Text>
                 <Progress value={stats.progressPercent} colorScheme="green" bg="white" borderRadius="full" h="12px" />
-                <Text mt="2" color={COLORS.muted} fontWeight="800">
+                <Text mt="2" color={COLORS.muted} fontWeight="700">
                   {stats.progressPercent}% · {stats.known}/{stats.total} từ đã nhớ
                 </Text>
               </Box>
@@ -529,9 +529,9 @@ export function VocabPage() {
               <Box key={group.cefrLevel} bg="#F8FAFC" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="3">
                 <HStack mb="1" justify="space-between">
                   <Badge colorScheme="blue" borderRadius="full">{group.cefrLevel}</Badge>
-                  <Text fontSize="xs" fontWeight="900" color={COLORS.cyan}>Nhịp ôn</Text>
+                  <Text fontSize="xs" fontWeight="700" color={COLORS.cyan}>Nhịp ôn</Text>
                 </HStack>
-                <Text fontSize="sm" fontWeight="900" color={COLORS.text}>{group.focusVi}</Text>
+                <Text fontSize="sm" fontWeight="700" color={COLORS.text}>{group.focusVi}</Text>
                 <Text mt="1" fontSize="xs" fontWeight="700" color={COLORS.muted}>{group.dailyRoutineVi}</Text>
                 <Button mt="3" size="xs" borderRadius="full" colorScheme="blue" variant="outline" onClick={() => { setLessonFilter(group.lessonId); setStatusFilter('all'); setQuery(''); }}>
                   Học nhóm này
@@ -576,7 +576,7 @@ export function VocabPage() {
           <Flex gap="3" align={{ base: 'start', md: 'center' }} justify="space-between" direction={{ base: 'column', md: 'row' }}>
             <Box minW="0">
               <Tag borderRadius="full" bg="#FFF7ED" color="#9A3412"><TagLabel>Ôn hôm nay</TagLabel></Tag>
-              <Text mt="2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950" color={COLORS.text}>{stats.today} từ cần ôn</Text>
+              <Text mt="2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700" color={COLORS.text}>{stats.today} từ cần ôn</Text>
               <Text mt="1" color={COLORS.muted} fontWeight="700" noOfLines={{ base: 2, md: undefined }}>
                 {nextReviewItem ? `${nextReviewItem.term} · ${nextReviewItem.meaningVi}` : 'Hôm nay chưa có từ cần ôn. Bạn có thể học thêm từ mới hoặc xem lại nhóm A1.'}
               </Text>
@@ -608,7 +608,7 @@ export function VocabPage() {
                   <Icon as={Layers} boxSize="5" />
                 </Flex>
                 <Box>
-                  <Text fontWeight="950" color={COLORS.text}>Sổ tay từ đã học thật</Text>
+                  <Text fontWeight="700" color={COLORS.text}>Sổ tay từ đã học thật</Text>
                   <Text mt="1" color={COLORS.muted} fontWeight="700" fontSize="sm">Poo gom từ từ Foundation48 và bài học tương tác, kèm nguồn bài/ngày, CEFR, mức thuộc và nút Ôn ngay.</Text>
                 </Box>
               </HStack>
@@ -633,7 +633,7 @@ export function VocabPage() {
           <Box className="penglish-glass-card" bg="rgba(255,255,255,0.78)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3', md: '5' }} mb={{ base: '3', md: '5' }} boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)">
             <HStack justify="space-between" align="start" gap="3" wrap="wrap" mb="3">
               <Box>
-                <Text fontWeight="950" color={COLORS.text}>Bộ từ mẫu cho người mới</Text>
+                <Text fontWeight="700" color={COLORS.text}>Bộ từ mẫu cho người mới</Text>
                 <Text mt="1" color={COLORS.muted} fontWeight="700" fontSize="sm">Chọn A1/A2/B1 để xem từ theo chủ đề. Bắt đầu từ A1 nếu bạn chưa học bài nào.</Text>
               </Box>
               <Button as={Link} to="/practice?lessonId=unit-1-greetings-introduction&mode=flashcard" size="sm" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }}>
@@ -644,7 +644,7 @@ export function VocabPage() {
               {starterPackOptions.map((group) => (
                 <Box key={`starter-${group.cefrLevel}`} bg="#F8FAFC" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="3">
                   <Badge colorScheme="blue" borderRadius="full">{group.cefrLevel}</Badge>
-                  <Text mt="2" fontWeight="900" color={COLORS.text}>{group.focusVi}</Text>
+                  <Text mt="2" fontWeight="700" color={COLORS.text}>{group.focusVi}</Text>
                   <Text mt="1" color={COLORS.muted} fontSize="sm" fontWeight="700">{group.dailyRoutineVi}</Text>
                   <Button mt="3" size="xs" borderRadius="full" variant="outline" colorScheme="blue" onClick={() => { setLessonFilter(group.lessonId); setStatusFilter('all'); setQuery(''); }}>
                     Xem nhóm này
@@ -658,20 +658,20 @@ export function VocabPage() {
         {items.length === 0 ? (
           <Box className="penglish-glass-card" bg="rgba(255,255,255,0.78)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p="8" textAlign="center" boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)">
             <Icon as={Waves} boxSize="10" color={COLORS.primary} />
-            <Text mt="4" fontSize="2xl" fontWeight="950" color={COLORS.text}>Poo chưa thấy bộ từ trong sổ tay</Text>
+            <Text mt="4" fontSize="2xl" fontWeight="700" color={COLORS.text}>Poo chưa thấy bộ từ trong sổ tay</Text>
             <Text mt="2" color={COLORS.muted}>Không phải bị kẹt loading. Bạn có thể bắt đầu bằng bài A1 đầu tiên để Poo mở sổ tay và lưu từ sai sau bài học.</Text>
             <Button as={Link} to="/learning-path/lesson/unit-1-greetings/unit-1-greetings-vocabulary-0" mt="5" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }}>Học bài A1 đầu tiên</Button>
           </Box>
         ) : filtered.length === 0 ? (
           <Box className="penglish-glass-card" bg="rgba(255,255,255,0.78)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p="8" textAlign="center" boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)">
             <Icon as={Search} boxSize="10" color={COLORS.primary} />
-            <Text mt="4" fontSize="2xl" fontWeight="950" color={COLORS.text}>{commonA1SearchBridge ? 'Có gợi ý A1 cho từ bạn tìm' : 'Không có từ khớp bộ lọc'}</Text>
+            <Text mt="4" fontSize="2xl" fontWeight="700" color={COLORS.text}>{commonA1SearchBridge ? 'Có gợi ý A1 cho từ bạn tìm' : 'Không có từ khớp bộ lọc'}</Text>
             <Text mt="2" color={COLORS.muted} fontWeight="700">
               {commonA1SearchBridge ? commonA1SearchBridge.title : 'Thử đổi từ khóa, trạng thái hoặc nhóm CEFR khác.'}
             </Text>
             {commonA1SearchBridge ? (
               <Box mt="4" bg="#F0F9FF" border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" p="4" maxW="620px" mx="auto">
-                <Text color={COLORS.text} fontWeight="800">{commonA1SearchBridge.description}</Text>
+                <Text color={COLORS.text} fontWeight="700">{commonA1SearchBridge.description}</Text>
                 <HStack mt="4" justify="center" wrap="wrap">
                   <Button as={Link} to={commonA1SearchBridge.route} borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }}>
                     {commonA1SearchBridge.routeLabel}
@@ -703,19 +703,19 @@ export function VocabPage() {
                   {filtered.map((item) => (
                     <Tr key={item.wordId} _hover={{ bg: '#F8FAFC' }}>
                       <Td verticalAlign="top" maxW="260px">
-                        <Text fontWeight="950" color={COLORS.text}>{item.term}</Text>
+                        <Text fontWeight="700" color={COLORS.text}>{item.term}</Text>
                         <Text mt="1" color={COLORS.muted} fontStyle="italic">{item.pronunciation || 'Chưa có phát âm'}</Text>
                         <Badge mt="2" colorScheme="purple" borderRadius="full">{item.partOfSpeechOrType}</Badge>
                       </Td>
                       <Td verticalAlign="top" maxW="420px">
-                        <Text fontWeight="900" color={COLORS.primary}>{item.meaningVi}</Text>
-                        <Text mt="2" fontWeight="800" color={COLORS.text}>{item.example}</Text>
+                        <Text fontWeight="700" color={COLORS.primary}>{item.meaningVi}</Text>
+                        <Text mt="2" fontWeight="700" color={COLORS.text}>{item.example}</Text>
                         <Text mt="1" color={COLORS.muted}>{item.exampleMeaningVi}</Text>
                       </Td>
                       <Td verticalAlign="top" maxW="240px">
-                        <Text fontWeight="900" color={COLORS.text}>{item.lessonTitle}</Text>
+                        <Text fontWeight="700" color={COLORS.text}>{item.lessonTitle}</Text>
                         <Text mt="1" color={COLORS.muted}>{item.unitTitle}</Text>
-                        <Text mt="3" color={COLORS.cyan} fontSize="sm" fontWeight="800">{item.learningGroup.strategyVi}</Text>
+                        <Text mt="3" color={COLORS.cyan} fontSize="sm" fontWeight="700">{item.learningGroup.strategyVi}</Text>
                         <Text mt="1" color={COLORS.muted} fontSize="sm">{item.learningGroup.memoryHookVi}</Text>
                       </Td>
                       <Td verticalAlign="top">
@@ -741,7 +741,7 @@ export function VocabPage() {
           <HStack align="start" gap="3">
             <OceanMascot mascot="mucMo" pose="hint" size="xs" decorative motion="pulse" />
             <Box>
-              <Text fontWeight="950" color={COLORS.text}>Cách Poo lưu sổ tay</Text>
+              <Text fontWeight="700" color={COLORS.text}>Cách Poo lưu sổ tay</Text>
               <Text mt="1" color={COLORS.muted} fontWeight="700">
                 Sau mỗi bài, từ bạn nhớ sẽ vào “Đã nhớ”, từ đến hạn vào “Cần ôn”, từ sai vào “Hay sai”. Người mới có thể dùng bộ A1/A2/B1 mẫu trước khi có lịch sử học riêng.
               </Text>
@@ -752,3 +752,4 @@ export function VocabPage() {
     </OceanPageShell>
   );
 }
+

@@ -44,10 +44,10 @@ export function LearningHeartsBadge({ compact = false }: { compact?: boolean }) 
       <Box position="absolute" right="-18px" top="-18px" w="54px" h="54px" borderRadius="full" bg={locked ? 'rgba(148, 163, 184, 0.14)' : 'rgba(174, 231, 255, 0.46)'} pointerEvents="none" />
       <Flex align="center" justify="space-between" gap="2" position="relative">
         <VStack align="start" gap="0" minW="0">
-          <Text fontSize={compact ? '10px' : 'xs'} fontFamily="monospace" fontWeight="950" color={locked ? '#64758A' : '#1F6FD6'} textTransform="uppercase" letterSpacing="0.04em">
+          <Text fontSize={compact ? '10px' : 'xs'} fontWeight="700" color={locked ? '#64758A' : '#1F6FD6'} textTransform="uppercase" letterSpacing="0.04em">
             {locked ? 'Đang hồi bọt biển' : 'Bọt biển'}
           </Text>
-          <Text fontSize={compact ? 'xs' : 'sm'} fontFamily="monospace" fontWeight="950" color="#102A43">
+          <Text fontSize={compact ? 'xs' : 'sm'} fontWeight="700" color="#102A43">
             {state.heartsLeft}/{state.maxHearts}
           </Text>
         </VStack>
@@ -60,11 +60,12 @@ export function LearningHeartsBadge({ compact = false }: { compact?: boolean }) 
       </Flex>
 
       {locked ? (
-        <Text mt="2" fontSize="11px" fontWeight="800" color="#52667A" lineHeight="1.25" position="relative">
+        <Text mt="2" fontSize="11px" fontWeight="700" color="#52667A" lineHeight="1.25" position="relative">
           Bọt biển sẽ phục hồi sau {getLockRemainingText(state)}
         </Text>
       ) : null}
     </Box>
   );
 }
+
 

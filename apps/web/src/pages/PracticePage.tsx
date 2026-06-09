@@ -153,7 +153,7 @@ function LearningLockedScreen({ lessonId, state }: { lessonId: string | null; st
     <OceanPageShell variant="vocab" overlayStrength="medium" minH="calc(100vh - 72px)" px="6" py="8" pb={{ base: '28', lg: '8' }}>
       <Box maxW="760px" mx="auto" bg="rgba(255,255,255,0.88)" backdropFilter="blur(16px)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p="8" boxShadow="0 18px 45px rgba(31, 111, 214, 0.10)">
         <LearningHeartsBadge />
-        <Text mt="6" fontSize="3xl" fontWeight="950" color="#1F6FD6">Đang hồi bọt biển</Text>
+        <Text mt="6" fontSize="3xl" fontWeight="700" color="#1F6FD6">Đang hồi bọt biển</Text>
         <Text mt="3" color="#334155" fontWeight="700">
           Hết bọt biển rồi, nghỉ một chút để hồi lại nhé. Các tính năng học sẽ mở lại sau {getLockRemainingText(state)}.
         </Text>
@@ -251,7 +251,7 @@ function GameTile({ game, idx, readyCount, selectedCount, onPick }: { game: Game
           px="2.5"
           py="1"
           fontSize="xs"
-          fontWeight="800"
+          fontWeight="700"
           textTransform="none"
         >
           +{game.reward} xu
@@ -259,7 +259,7 @@ function GameTile({ game, idx, readyCount, selectedCount, onPick }: { game: Game
       </HStack>
 
       <VStack align="start" gap="1" flex="1">
-        <Text fontWeight="900" fontSize={{ base: 'lg', md: 'xl' }} color={PRACTICE_COLORS.text}>{game.name}</Text>
+        <Text fontWeight="700" fontSize={{ base: 'lg', md: 'xl' }} color={PRACTICE_COLORS.text}>{game.name}</Text>
         <Text fontSize="sm" color={PRACTICE_COLORS.secondaryText} lineHeight="1.55">{game.desc}</Text>
       </VStack>
 
@@ -282,7 +282,7 @@ function GameTile({ game, idx, readyCount, selectedCount, onPick }: { game: Game
           px="3"
           py="1"
           textTransform="none"
-          fontWeight="800"
+          fontWeight="700"
         >
           {isReady ? 'Sẵn sàng' : 'Cần thêm từ'}
         </Badge>
@@ -296,7 +296,7 @@ function GameTile({ game, idx, readyCount, selectedCount, onPick }: { game: Game
           border="1px solid"
           borderColor={isReady ? PRACTICE_COLORS.oceanBlue : PRACTICE_COLORS.border}
           fontSize="sm"
-          fontWeight="900"
+          fontWeight="700"
           whiteSpace="nowrap"
         >
           Bắt đầu
@@ -428,16 +428,16 @@ export function PracticePage() {
       <OceanPageShell variant="vocab" overlayStrength="medium" minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="8" pb={{ base: '28', lg: '8' }}>
         <Box data-testid="practice-fallback-card" maxW="760px" mx="auto" bg="rgba(255,255,255,0.9)" backdropFilter="blur(16px)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '6', md: '8' }} boxShadow="0 18px 45px rgba(31, 111, 214, 0.10)">
           <Badge borderRadius="full" bg="#EFF6FF" color="#2563EB" mb="3" textTransform="none">Practice fallback</Badge>
-          <Text fontSize="2xl" fontWeight="900" color="#0F172A">Chế độ này chưa có dữ liệu cho bài học này.</Text>
+          <Text fontSize="2xl" fontWeight="700" color="#0F172A">Chế độ này chưa có dữ liệu cho bài học này.</Text>
           <Text mt="2" color="#64748B" lineHeight="1.7">
             {suggestedMode ? 'Poo đã chọn một mode phù hợp hơn dựa trên nội dung hiện có. Không mất tiến độ — bạn chỉ cần chuyển sang surface đang có dữ liệu.' : 'Bài này hiện chỉ có phần đọc/xem nội dung, chưa có mode luyện tập riêng.'}
           </Text>
-          <Text mt="3" color="#2563EB" fontSize="sm" fontWeight="800">Gợi ý phím: Enter để bắt đầu mode được đề xuất, hoặc quay lại bài học để xem kế hoạch.</Text>
+          <Text mt="3" color="#2563EB" fontSize="sm" fontWeight="700">Gợi ý phím: Enter để bắt đầu mode được đề xuất, hoặc quay lại bài học để xem kế hoạch.</Text>
           {practiceContentDepth ? (
             <Box mt="5" border="1px solid" borderColor="#DBEAFE" borderRadius="2xl" bg="rgba(239,246,255,0.74)" p="4">
               <HStack justify="space-between" align="start" gap="3" wrap="wrap">
                 <Box minW="0">
-                  <Text color="#0F172A" fontWeight="900">Data readiness của practice</Text>
+                  <Text color="#0F172A" fontWeight="700">Data readiness của practice</Text>
                   <Text mt="1" color="#64748B" fontSize="sm" fontWeight="700">{practiceContentDepth.readinessSummaryVi} · luồng gợi ý: {practiceContentDepth.recommendedFlowVi}</Text>
                 </Box>
                 {selectedModeDepth ? (
@@ -449,8 +449,8 @@ export function PracticePage() {
               <SimpleGrid columns={{ base: 2, md: 4 }} gap="2" mt="3">
                 {practiceContentDepth.modeDepths.filter((item) => item.isReady).slice(0, 4).map((item) => (
                   <Box key={item.mode} bg="white" border="1px solid" borderColor="#BAE6FD" borderRadius="xl" p="3">
-                    <Text color="#2563EB" fontWeight="900">{item.itemCount}</Text>
-                    <Text color="#64748B" fontSize="xs" fontWeight="800">{item.labelVi}</Text>
+                    <Text color="#2563EB" fontWeight="700">{item.itemCount}</Text>
+                    <Text color="#64748B" fontSize="xs" fontWeight="700">{item.labelVi}</Text>
                   </Box>
                 ))}
               </SimpleGrid>
@@ -479,7 +479,7 @@ export function PracticePage() {
       return (
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
-            <Text fontSize="2xl" fontWeight="900" color="#0F172A">Không tìm thấy bài học để luyện flashcard</Text>
+            <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện flashcard</Text>
             <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
@@ -501,7 +501,7 @@ export function PracticePage() {
       return (
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
-            <Text fontSize="2xl" fontWeight="900" color="#0F172A">Không tìm thấy bài học để luyện tập</Text>
+            <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện tập</Text>
             <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
@@ -523,7 +523,7 @@ export function PracticePage() {
       return (
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
-            <Text fontSize="2xl" fontWeight="900" color="#0F172A">Không tìm thấy bài học để luyện nghe</Text>
+            <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện nghe</Text>
             <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
@@ -545,7 +545,7 @@ export function PracticePage() {
       return (
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
-            <Text fontSize="2xl" fontWeight="900" color="#0F172A">Không tìm thấy bài học để luyện phản xạ</Text>
+            <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện phản xạ</Text>
             <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
@@ -567,7 +567,7 @@ export function PracticePage() {
       return (
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
-            <Text fontSize="2xl" fontWeight="900" color="#0F172A">Không tìm thấy bài học để luyện gõ câu</Text>
+            <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện gõ câu</Text>
             <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
@@ -589,7 +589,7 @@ export function PracticePage() {
       return (
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
-            <Text fontSize="2xl" fontWeight="900" color="#0F172A">Không tìm thấy bài học để ghép cặp</Text>
+            <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để ghép cặp</Text>
             <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
@@ -611,7 +611,7 @@ export function PracticePage() {
       return (
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
-            <Text fontSize="2xl" fontWeight="900" color="#0F172A">Không tìm thấy bài học để luyện tốc độ</Text>
+            <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện tốc độ</Text>
             <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
@@ -633,9 +633,9 @@ export function PracticePage() {
       <OceanPageShell variant="vocab" overlayStrength="medium" minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="8" pb={{ base: '28', lg: '8' }}>
         <Box data-testid="practice-fallback-card" maxW="760px" mx="auto" bg="rgba(255,255,255,0.9)" backdropFilter="blur(16px)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '6', md: '8' }} boxShadow="0 18px 45px rgba(31, 111, 214, 0.10)">
           <Badge borderRadius="full" bg="#EFF6FF" color="#2563EB" mb="3" textTransform="none">Practice fallback</Badge>
-          <Text fontSize="2xl" fontWeight="900" color="#0F172A">Chế độ này chưa nằm trong bộ luyện tập hiện tại.</Text>
+          <Text fontSize="2xl" fontWeight="700" color="#0F172A">Chế độ này chưa nằm trong bộ luyện tập hiện tại.</Text>
           <Text mt="2" color="#64748B" lineHeight="1.7">Bạn có thể quay lại bài học hoặc chọn một mode luyện tập đang có dữ liệu. Route vẫn an toàn và không làm mất trạng thái học.</Text>
-          <Text mt="3" color="#2563EB" fontSize="sm" fontWeight="800">Gợi ý phím: dùng Tab để chọn hành động, Enter để xác nhận.</Text>
+          <Text mt="3" color="#2563EB" fontSize="sm" fontWeight="700">Gợi ý phím: dùng Tab để chọn hành động, Enter để xác nhận.</Text>
           <HStack mt="6" wrap="wrap">
             <Button as={Link} to={`/lessons/${lessonId}`} borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
               Quay lại bài học
@@ -708,16 +708,16 @@ export function PracticePage() {
                 <Icon as={game.icon} boxSize="8" />
               </Flex>
             )}
-            <Text fontSize="2xl" fontWeight="800" color={PRACTICE_COLORS.deepBlue}>Đang khởi động {game?.name ?? ''}...</Text>
+            <Text fontSize="2xl" fontWeight="700" color={PRACTICE_COLORS.deepBlue}>Đang khởi động {game?.name ?? ''}...</Text>
             <Text color="#52667A" fontSize="sm">
               {displayReadyCount} từ sẵn sàng • {filters.count} câu • {LEVEL_OPTS.find((l) => l.value === filters.level)?.label}
             </Text>
-            <HStack gap="1.5" color="#2F9EEB" fontSize="xs" fontWeight="800" opacity="0.9" wrap="wrap" justify="center">
+            <HStack gap="1.5" color="#2F9EEB" fontSize="xs" fontWeight="700" opacity="0.9" wrap="wrap" justify="center">
               <Box w="7px" h="7px" borderRadius="full" bg="#5BBCEB" />
               <Text>Đang gom bong bóng câu hỏi</Text>
               <Box w="7px" h="7px" borderRadius="full" bg="#AEE7FF" />
             </HStack>
-            <Text color="#2F9EEB" fontSize="xs" fontWeight="800" opacity="0.82">
+            <Text color="#2F9EEB" fontSize="xs" fontWeight="700" opacity="0.82">
               {picked === 'quiz' || picked === 'match' ? 'Cua Quiz đang gom đáp án theo nhịp học của bạn' : 'Poo đang bơi theo nhịp học của bạn'}
             </Text>
           </VStack>
@@ -727,7 +727,7 @@ export function PracticePage() {
   }
 
   return (
-    <OceanPageShell variant="vocab" overlayStrength="medium" minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="6" pb={{ base: '28', lg: '10' }} overflowX="hidden">
+    <OceanPageShell data-testid="practice-mobile-root" variant="vocab" overlayStrength="medium" minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="6" pb={{ base: '28', lg: '10' }} overflowX="hidden">
       <Box maxW="1180px" mx="auto">
       <Flex justify="space-between" align={{ base: 'start', lg: 'center' }} mb="5" wrap="wrap" gap="4" bg="rgba(255,255,255,0.86)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '5', md: '6' }} boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" backdropFilter="blur(16px)">
         <HStack align="center" gap="4">
@@ -736,7 +736,7 @@ export function PracticePage() {
           </Box>
           <Box>
             <Badge borderRadius="full" bg="#EFF6FF" color="#2563EB" mb="2" textTransform="none">Khu luyện tập</Badge>
-            <Box as="h2" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="900" color={PRACTICE_COLORS.text}>Luyện tập</Box>
+            <Box as="h2" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color={PRACTICE_COLORS.text}>Luyện tập</Box>
             <Text color={PRACTICE_COLORS.secondaryText} fontWeight="700">Cua Quiz ưu tiên lỗi sai thật, từ yếu và câu cần ôn. Bạn chưa có lỗi sai nào. Poo sẽ cho bạn luyện bộ A1 cơ bản trước.</Text>
           </Box>
         </HStack>
@@ -790,7 +790,7 @@ export function PracticePage() {
                 <Icon as={AlertTriangle} boxSize="5" />
               </Flex>
               <Box minW="0">
-                <Text color={PRACTICE_COLORS.text} fontWeight="950">Poo tìm thấy {unresolvedMistakes.length} lỗi sai và {weakWords.length} từ yếu cần ôn trước.</Text>
+                <Text color={PRACTICE_COLORS.text} fontWeight="700">Poo tìm thấy {unresolvedMistakes.length} lỗi sai và {weakWords.length} từ yếu cần ôn trước.</Text>
                 <Text color={PRACTICE_COLORS.secondaryText} fontSize="sm" mt="1" fontWeight="700">
                   Trung tâm luyện tập đang lấy dữ liệu thật từ bài học, Foundation48, nghe/nói và sổ từ để bạn không ôn lan man.
                 </Text>
@@ -807,8 +807,8 @@ export function PracticePage() {
                   <HStack justify="space-between" align="start" gap="3">
                     <Box minW="0">
                       <Badge bg="#FFF7ED" color="#C2410C" borderRadius="full" textTransform="none" mb="2">{getMistakeSourceLabel(mistake)}</Badge>
-                      <Text color={PRACTICE_COLORS.text} fontWeight="900" noOfLines={2}>{mistake.prompt}</Text>
-                      {mistake.correctAnswer ? <Text mt="1" color="#047857" fontSize="sm" fontWeight="800">Đáp án đúng: {mistake.correctAnswer}</Text> : null}
+                      <Text color={PRACTICE_COLORS.text} fontWeight="700" noOfLines={2}>{mistake.prompt}</Text>
+                      {mistake.correctAnswer ? <Text mt="1" color="#047857" fontSize="sm" fontWeight="700">Đáp án đúng: {mistake.correctAnswer}</Text> : null}
                       {mistake.userAnswer ? <Text mt="1" color="#B45309" fontSize="sm" fontWeight="700">Bạn đã trả lời: {mistake.userAnswer}</Text> : null}
                     </Box>
                     <Button as={Link} to={getMistakeActionPath(mistake)} size="xs" borderRadius="full" variant="outline" flexShrink={0}>
@@ -832,7 +832,7 @@ export function PracticePage() {
           px={{ base: '4', md: '5' }}
           py="4"
         >
-          <Text color={PRACTICE_COLORS.text} fontWeight="900">Bạn chưa có lỗi sai nào. Poo sẽ cho bạn luyện bộ A1 cơ bản trước.</Text>
+          <Text color={PRACTICE_COLORS.text} fontWeight="700">Bạn chưa có lỗi sai nào. Poo sẽ cho bạn luyện bộ A1 cơ bản trước.</Text>
           <Text color={PRACTICE_COLORS.secondaryText} fontSize="sm" mt="1" fontWeight="700">
             Dùng nhóm chào hỏi, người thân, lớp học, hành động hằng ngày và tính từ cơ bản để luyện ngay. Khi bạn học sai, Poo sẽ ưu tiên những từ đó trước.
           </Text>
@@ -859,3 +859,4 @@ export function PracticePage() {
     </OceanPageShell>
   );
 }
+

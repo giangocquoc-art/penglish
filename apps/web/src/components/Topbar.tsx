@@ -66,7 +66,7 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
           aria-label={`Bọt biển ${rewardState.bubbles}/${rewardState.maxBubbles}`}
         >
           <Icon as={Waves} boxSize="4" color={OCEAN_TOKENS.oceanBlue} />
-          <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="900" noOfLines={1}>Bọt biển {rewardState.bubbles}/{rewardState.maxBubbles}</Text>
+          <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="700" noOfLines={1}>Bọt biển {rewardState.bubbles}/{rewardState.maxBubbles}</Text>
         </HStack>
 
         <Button
@@ -76,7 +76,7 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
           borderRadius="full"
           px="4"
           h="38px"
-          fontWeight="800"
+          fontWeight="700"
           border="1px solid"
           borderColor={OCEAN_TOKENS.borderStrong}
           boxShadow="0 12px 28px rgba(31, 111, 214, 0.08)"
@@ -118,3 +118,4 @@ export function Shell({ children, sidebar }: { children: React.ReactNode; sideba
     </OceanBackdrop>
   );
 }
+
