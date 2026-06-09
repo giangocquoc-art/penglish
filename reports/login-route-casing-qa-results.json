@@ -1,0 +1,209 @@
+{
+  "baseUrl": "http://127.0.0.1:5180",
+  "generatedAt": "2026-06-09T00:25:22.041Z",
+  "routes": {
+    "rootRedirect": {
+      "path": "/",
+      "expectedPathname": "/login",
+      "result": {
+        "finalPathname": "/login",
+        "finalHref": "http://127.0.0.1:5180/login",
+        "hasGoogleButton": true,
+        "hasLocalGuestButton": true,
+        "localGuestText": "Học thử ngay",
+        "visibleInfoMessageCount": 1,
+        "visibleAlertCount": 0,
+        "infoText": [
+          "Bạn có thể học thử ngay. Đăng nhập Google chỉ dùng để đồng bộ tiến độ."
+        ],
+        "hasExactFriendlyMessage": true,
+        "scrollY": 0,
+        "cardTop": 35,
+        "cardBottom": 514,
+        "cardAboveFold": true,
+        "layoutWidth": 358,
+        "horizontalOverflow": false,
+        "consoleErrors": [],
+        "pageErrors": [],
+        "badNetworkResponses": []
+      }
+    },
+    "canonicalLogin": {
+      "path": "/login",
+      "expectedPathname": "/login",
+      "result": {
+        "finalPathname": "/login",
+        "finalHref": "http://127.0.0.1:5180/login",
+        "hasGoogleButton": true,
+        "hasLocalGuestButton": true,
+        "localGuestText": "Học thử ngay",
+        "visibleInfoMessageCount": 1,
+        "visibleAlertCount": 0,
+        "infoText": [
+          "Bạn có thể học thử ngay. Đăng nhập Google chỉ dùng để đồng bộ tiến độ."
+        ],
+        "hasExactFriendlyMessage": true,
+        "scrollY": 0,
+        "cardTop": 256,
+        "cardBottom": 704,
+        "cardAboveFold": true,
+        "layoutWidth": 1080,
+        "horizontalOverflow": false,
+        "consoleErrors": [],
+        "pageErrors": [],
+        "badNetworkResponses": []
+      }
+    },
+    "canonicalLoginMobile": {
+      "path": "/login",
+      "expectedPathname": "/login",
+      "result": {
+        "finalPathname": "/login",
+        "finalHref": "http://127.0.0.1:5180/login",
+        "hasGoogleButton": true,
+        "hasLocalGuestButton": true,
+        "localGuestText": "Học thử ngay",
+        "visibleInfoMessageCount": 1,
+        "visibleAlertCount": 0,
+        "infoText": [
+          "Bạn có thể học thử ngay. Đăng nhập Google chỉ dùng để đồng bộ tiến độ."
+        ],
+        "hasExactFriendlyMessage": true,
+        "scrollY": 0,
+        "cardTop": 35,
+        "cardBottom": 514,
+        "cardAboveFold": true,
+        "layoutWidth": 358,
+        "horizontalOverflow": false,
+        "consoleErrors": [],
+        "pageErrors": [],
+        "badNetworkResponses": []
+      }
+    },
+    "upperLogin": {
+      "path": "/LOGIN",
+      "expectedPathname": "/login",
+      "result": {
+        "finalPathname": "/login",
+        "finalHref": "http://127.0.0.1:5180/login",
+        "hasGoogleButton": true,
+        "hasLocalGuestButton": true,
+        "localGuestText": "Học thử ngay",
+        "visibleInfoMessageCount": 1,
+        "visibleAlertCount": 0,
+        "infoText": [
+          "Bạn có thể học thử ngay. Đăng nhập Google chỉ dùng để đồng bộ tiến độ."
+        ],
+        "hasExactFriendlyMessage": true,
+        "scrollY": 0,
+        "cardTop": 35,
+        "cardBottom": 514,
+        "cardAboveFold": true,
+        "layoutWidth": 358,
+        "horizontalOverflow": false,
+        "consoleErrors": [],
+        "pageErrors": [],
+        "badNetworkResponses": []
+      }
+    },
+    "titleLogin": {
+      "path": "/Login",
+      "expectedPathname": "/login",
+      "result": {
+        "finalPathname": "/login",
+        "finalHref": "http://127.0.0.1:5180/login",
+        "hasGoogleButton": true,
+        "hasLocalGuestButton": true,
+        "localGuestText": "Học thử ngay",
+        "visibleInfoMessageCount": 1,
+        "visibleAlertCount": 0,
+        "infoText": [
+          "Bạn có thể học thử ngay. Đăng nhập Google chỉ dùng để đồng bộ tiến độ."
+        ],
+        "hasExactFriendlyMessage": true,
+        "scrollY": 0,
+        "cardTop": 35,
+        "cardBottom": 514,
+        "cardAboveFold": true,
+        "layoutWidth": 358,
+        "horizontalOverflow": false,
+        "consoleErrors": [],
+        "pageErrors": [],
+        "badNetworkResponses": []
+      }
+    },
+    "trailingSlashLogin": {
+      "path": "/login/",
+      "expectedPathname": "/login",
+      "result": {
+        "finalPathname": "/login",
+        "finalHref": "http://127.0.0.1:5180/login",
+        "hasGoogleButton": true,
+        "hasLocalGuestButton": true,
+        "localGuestText": "Học thử ngay",
+        "visibleInfoMessageCount": 1,
+        "visibleAlertCount": 0,
+        "infoText": [
+          "Bạn có thể học thử ngay. Đăng nhập Google chỉ dùng để đồng bộ tiến độ."
+        ],
+        "hasExactFriendlyMessage": true,
+        "scrollY": 0,
+        "cardTop": 35,
+        "cardBottom": 514,
+        "cardAboveFold": true,
+        "layoutWidth": 358,
+        "horizontalOverflow": false,
+        "consoleErrors": [],
+        "pageErrors": [],
+        "badNetworkResponses": []
+      }
+    }
+  },
+  "interactions": {
+    "guestCta": {
+      "finalPathname": "/luyen-tieng-anh/48-ngay-lay-goc",
+      "hasFoundation48Page": true,
+      "hasTopbar": true,
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "badNetworkResponses": []
+    },
+    "googleButton": {
+      "finalPathname": "/v3/signin/identifier",
+      "hasLoginPage": false,
+      "hasGoogleButton": false,
+      "visibleInfoMessageCount": 0,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "badNetworkResponses": []
+    }
+  },
+  "regressions": {
+    "learningPath": {
+      "finalPathname": "/learning-path",
+      "hasLearningPath": true,
+      "topbarPosition": "static",
+      "topbarRect": {
+        "top": 0,
+        "bottom": 68
+      },
+      "firstCardRect": {
+        "top": 76,
+        "bottom": 443.3125
+      },
+      "topbarOverlapsFirstCard": false,
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "badNetworkResponses": []
+    }
+  },
+  "screenshots": [
+    "reports/screenshots/login-canonical-desktop.png",
+    "reports/screenshots/login-canonical-mobile.png",
+    "reports/screenshots/login-uppercase-redirect.png"
+  ],
+  "failures": [],
+  "passed": true
+}

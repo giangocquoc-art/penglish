@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://127.0.0.1:5180",
-  "generatedAt": "2026-06-08T20:30:16.849Z",
+  "generatedAt": "2026-06-09T00:26:00.978Z",
   "routes": {
     "learningPath": {
       "path": "/learning-path",

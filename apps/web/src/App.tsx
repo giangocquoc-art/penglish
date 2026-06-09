@@ -166,7 +166,12 @@ function AppRoutes() {
   const auth = useAuth();
   const user = useUserFromAuth();
   const initialLoader = useInitialOceanRiseLoaderReady(auth.loading);
-  const isPublicRoute = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/login/callback' || location.pathname === '/auth/google' || location.pathname === '/auth/callback';
+  const isLoginCasingVariant = /^\/login\/?$/i.test(location.pathname) && location.pathname !== '/login';
+  const isPublicRoute = location.pathname === '/' || location.pathname === '/login' || isLoginCasingVariant || location.pathname === '/login/callback' || location.pathname === '/auth/google' || location.pathname === '/auth/callback';
+
+  if (isLoginCasingVariant) {
+    return <Navigate to="/login" replace />;
+  }
 
   if (!isPublicRoute && auth.loading) {
     return (
@@ -184,7 +189,7 @@ function AppRoutes() {
       <RouteMetadataUpdater />
       <Suspense fallback={<RouteLoadingFallback />}>
         <Routes>
-        <Route path="/" element={<NewLandingPage />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/landing" element={<NewLandingPage />} />
         <Route path="/login" element={auth.loading || !auth.user ? <NewLoginPage /> : <Navigate to="/home" replace />} />
         <Route path="/login/callback" element={<NewLoginCallbackPage />} />
