@@ -67,11 +67,12 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
       px="3"
       py="3"
       gap="3"
-      bg="rgba(255, 255, 255, 0.46)"
+      data-testid="penglish-sidebar"
+      bg="linear-gradient(180deg, rgba(255,255,255,0.36), rgba(221,245,255,0.20))"
       borderRight="1px solid"
-      borderColor="rgba(148, 202, 232, 0.34)"
-      backdropFilter="blur(22px)"
-      boxShadow="12px 0 46px rgba(31, 111, 214, 0.06)"
+      borderColor="rgba(255, 255, 255, 0.26)"
+      backdropFilter="blur(26px) saturate(1.14)"
+      boxShadow="8px 0 28px rgba(31, 111, 214, 0.024)"
     >
       <VStack align="stretch" px="1" pb="1" gap="2">
         <BrandLogo variant="full" size="md" showSubtitle />
@@ -136,7 +137,7 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
         })}
       </VStack>
 
-      <Box mt="auto" pt="3" borderTop="1px solid" borderColor="rgba(148, 202, 232, 0.34)">
+      <Box mt="auto" pt="3" borderTop="1px solid" borderColor="rgba(148, 202, 232, 0.24)">
         <Link to="/profile">
           <HStack
             p="2"

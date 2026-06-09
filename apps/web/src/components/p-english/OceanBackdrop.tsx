@@ -61,7 +61,13 @@ export function OceanBackdrop({ children }: { children: ReactNode }) {
   const variant = getBackgroundVariant(location.pathname);
 
   return (
-    <Box className="penglish-ocean-shell" position="relative" minH="100vh" bg={OCEAN_TOKENS.bg} overflowX="clip">
+    <Box
+      className="penglish-ocean-shell"
+      position="relative"
+      minH="100vh"
+      bg="linear-gradient(180deg, #F4FBFF 0%, #DDF5FF 44%, #D8F0FF 72%, #F4FBFF 100%)"
+      overflowX="clip"
+    >
       <Box
         className="penglish-ocean-background"
         aria-hidden="true"
@@ -69,7 +75,7 @@ export function OceanBackdrop({ children }: { children: ReactNode }) {
         inset="0"
         pointerEvents="none"
         zIndex="0"
-        bgImage={`linear-gradient(180deg, rgba(255,255,255,0.66), rgba(232,248,255,0.76)), url(${oceanBackgrounds[variant]})`}
+        bgImage={`linear-gradient(180deg, rgba(255,255,255,0.50) 0%, rgba(221,245,255,0.50) 38%, rgba(183,230,250,0.44) 68%, rgba(238,249,255,0.58) 100%), radial-gradient(circle at 78% 18%, rgba(91,188,235,0.20), transparent 30%), radial-gradient(circle at 24% 78%, rgba(31,111,214,0.12), transparent 36%), linear-gradient(145deg, #F4FBFF 0%, #DDF5FF 36%, #BFEAFF 72%, #F4FBFF 100%), url(${oceanBackgrounds[variant]})`}
         bgSize="cover"
         bgPosition="center"
         bgRepeat="no-repeat"
@@ -80,8 +86,8 @@ export function OceanBackdrop({ children }: { children: ReactNode }) {
         inset="0"
         pointerEvents="none"
         zIndex="0"
-        opacity="0.82"
-        bg="radial-gradient(circle at 82% 8%, rgba(91, 188, 235, 0.22), transparent 26%), radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.78), transparent 24%), radial-gradient(circle at 58% 92%, rgba(31, 111, 214, 0.11), transparent 30%)"
+        opacity="0.92"
+        bg="radial-gradient(circle at 82% 8%, rgba(91, 188, 235, 0.24), transparent 28%), radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.62), transparent 25%), radial-gradient(circle at 54% 88%, rgba(31, 111, 214, 0.16), transparent 34%), linear-gradient(180deg, transparent 0%, rgba(91,188,235,0.08) 58%, rgba(31,111,214,0.10) 100%)"
       />
       <Box
         aria-hidden="true"
@@ -89,7 +95,7 @@ export function OceanBackdrop({ children }: { children: ReactNode }) {
         inset="0"
         pointerEvents="none"
         zIndex="0"
-        opacity="0.28"
+        opacity="0.16"
         sx={{
           backgroundImage:
             'linear-gradient(120deg, transparent 0 44%, rgba(255,255,255,.52) 45%, transparent 47% 100%), linear-gradient(150deg, transparent 0 52%, rgba(91,188,235,.22) 53%, transparent 55% 100%)',

@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { Box, type BoxProps } from '@chakra-ui/react';
 import { AmbientPooWhale, type AmbientPooWhalePresetName } from '../ocean/AmbientPooWhale';
-import { oceanBackgrounds, type OceanBackgroundVariant } from '../../lib/p-english/oceanAssets';
+import { type OceanBackgroundVariant } from '../../lib/p-english/oceanAssets';
 import { PooOceanCompanion, type PooOceanCompanionVariant } from './PooOceanCompanion';
 
 export type OceanPageShellProps = BoxProps & {
@@ -16,9 +16,9 @@ export type OceanPageShellProps = BoxProps & {
 };
 
 const overlayByStrength = {
-  soft: 'linear-gradient(180deg, rgba(255,255,255,0.38), rgba(236,248,255,0.5))',
-  medium: 'linear-gradient(180deg, rgba(255,255,255,0.52), rgba(232,246,255,0.64))',
-  strong: 'linear-gradient(180deg, rgba(255,255,255,0.68), rgba(232,246,255,0.78))',
+  soft: 'radial-gradient(circle at 18% 12%, rgba(255,255,255,0.18), transparent 30%), radial-gradient(circle at 88% 8%, rgba(91,188,235,0.08), transparent 32%)',
+  medium: 'radial-gradient(circle at 18% 12%, rgba(255,255,255,0.24), transparent 30%), radial-gradient(circle at 88% 8%, rgba(91,188,235,0.10), transparent 32%)',
+  strong: 'radial-gradient(circle at 18% 12%, rgba(255,255,255,0.30), transparent 30%), radial-gradient(circle at 88% 8%, rgba(91,188,235,0.12), transparent 32%)',
 } as const;
 
 const ambientPresetByVariant: Record<OceanBackgroundVariant, AmbientPooWhalePresetName> = {
@@ -38,10 +38,7 @@ export const OceanPageShell = forwardRef<HTMLDivElement, OceanPageShellProps>(fu
       minH="100%"
       position="relative"
       overflowX="clip"
-      bgImage={`${overlayByStrength[overlayStrength]}, url(${oceanBackgrounds[variant]})`}
-      bgSize="cover"
-      bgPosition="center"
-      bgRepeat="no-repeat"
+      bg="transparent"
       sx={{
         isolation: 'isolate',
         '& .penglish-glass-card': {
@@ -79,7 +76,7 @@ export const OceanPageShell = forwardRef<HTMLDivElement, OceanPageShellProps>(fu
         inset="0"
         pointerEvents="none"
         zIndex={0}
-        bg="radial-gradient(circle at 18% 12%, rgba(255,255,255,0.42), transparent 26%), radial-gradient(circle at 88% 8%, rgba(91,188,235,0.13), transparent 28%), linear-gradient(90deg, rgba(255,255,255,0.08), rgba(221,245,255,0.10))"
+        bg={overlayByStrength[overlayStrength]}
       />
       {showAmbientPooWhale ? <AmbientPooWhale preset={ambientWhalePreset ?? ambientPresetByVariant[variant]} /> : null}
       {showPooCompanion ? <PooOceanCompanion variant={pooCompanionVariant} /> : null}

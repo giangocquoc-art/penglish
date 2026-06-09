@@ -106,11 +106,11 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
 export function Shell({ children, sidebar }: { children: React.ReactNode; sidebar: React.ReactNode }) {
   return (
     <OceanBackdrop>
-      <Flex minH="100vh" position="relative" zIndex="1">
-        <Box display={{ base: 'none', lg: 'flex' }} flexShrink={0} position="relative" zIndex="2">
+      <Flex data-testid="penglish-app-shell" minH="100vh" position="relative" zIndex="1" maxW="100vw" overflowX="clip">
+        <Box data-testid="penglish-shell-sidebar" display={{ base: 'none', lg: 'flex' }} flexShrink={0} position="relative" zIndex="2">
           {sidebar}
         </Box>
-        <Box flex="1" minW="0" pb={{ base: 'var(--penglish-mobile-safe-bottom)', lg: '0' }} position="relative" zIndex="1">
+        <Box data-testid="penglish-shell-main" flex="1" minW="0" pb={{ base: 'var(--penglish-mobile-safe-bottom)', lg: '0' }} position="relative" zIndex="1" bg="transparent">
           {children}
         </Box>
         <BottomNav />

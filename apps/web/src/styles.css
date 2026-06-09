@@ -32,7 +32,8 @@
   --feedback-mistake: #9A3412;
   --feedback-warning: #B7791F;
   --premium-purple: #6D28D9;
-  --bg: #f6f7fb;
+  --bg: #F6FCFF;
+  --penglish-shell-fallback-bg: linear-gradient(180deg, #F4FBFF 0%, #DDF5FF 44%, #D8F0FF 72%, #F4FBFF 100%);
   --panel: #ffffff;
   --border: #e6dfcf;
   --text: #1f2430;
@@ -47,9 +48,10 @@
 
 * { box-sizing: border-box; }
 html, body, #root { min-height: 100%; margin: 0; }
-html { overflow-x: clip; scroll-padding-bottom: var(--penglish-mobile-safe-bottom); }
+#root { min-height: 100vh; background: var(--penglish-shell-fallback-bg); }
+html { overflow-x: clip; scroll-padding-bottom: var(--penglish-mobile-safe-bottom); background: var(--penglish-shell-fallback-bg); }
 body {
-  background: var(--bg);
+  background: var(--penglish-shell-fallback-bg);
   color: var(--text);
   overflow-x: clip;
   font-family: var(--penglish-font-sans);
@@ -144,8 +146,8 @@ button, input, select, textarea { font: inherit; }
   }
 
   .penglish-ocean-page-shell {
-    scroll-padding-bottom: var(--penglish-mobile-safe-bottom);
-    padding-bottom: max(var(--penglish-mobile-safe-bottom), calc(var(--penglish-mobile-nav-height) + 32px + env(safe-area-inset-bottom)));
+    scroll-padding-bottom: calc(var(--penglish-mobile-safe-bottom) + 28px);
+    padding-bottom: max(calc(var(--penglish-mobile-safe-bottom) + 44px), calc(var(--penglish-mobile-nav-height) + 72px + env(safe-area-inset-bottom)));
   }
 
   .penglish-ocean-page-shell .ocean-glass-card,

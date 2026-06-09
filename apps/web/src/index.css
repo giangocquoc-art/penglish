@@ -32,7 +32,7 @@ html {
 
 body {
   margin: 0;
-  background: #f9fafb;
+  background: linear-gradient(180deg, #F4FBFF 0%, #DDF5FF 44%, #D8F0FF 72%, #F4FBFF 100%);
   color: #1e1b4b;
   font-family: var(--penglish-font-sans);
   font-weight: 400;
@@ -53,6 +53,7 @@ h6 {
 
 #root {
   min-height: 100vh;
+  background: linear-gradient(180deg, #F4FBFF 0%, #DDF5FF 44%, #D8F0FF 72%, #F4FBFF 100%);
 }
 
 .app-loading-screen {
