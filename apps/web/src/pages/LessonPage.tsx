@@ -175,8 +175,8 @@ export function LessonPage() {
   };
 
   return (
-    <OceanPageShell data-testid="lesson-mobile-root" ref={pageRef} variant="dashboard" ambientWhalePreset="lesson" overlayStrength="medium" glassIntensity="clear" minH="calc(100vh - 72px)" px={{ base: '3', md: '6' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 92px)', lg: '12' }} overflowX="hidden" sx={{ scrollPaddingBottom: 'calc(var(--penglish-mobile-safe-bottom) + 96px)' }}>
-      <Box maxW="920px" mx="auto" minW="0" pb={{ base: '112px', md: '0' }}>
+    <OceanPageShell data-testid="lesson-mobile-root" ref={pageRef} variant="dashboard" ambientWhalePreset="lesson" overlayStrength="medium" glassIntensity="clear" minH="calc(100vh - 72px)" px={{ base: '3', md: '6' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 168px)', lg: '12' }} overflowX="hidden" sx={{ scrollPaddingBottom: 'calc(var(--penglish-mobile-safe-bottom) + 168px)' }}>
+      <Box maxW="920px" mx="auto" minW="0" pb={{ base: '176px', md: '0' }}>
         <HStack py={{ base: '2', md: '5' }} gap="2" color={COLORS.muted} fontSize="sm" wrap="wrap" display={{ base: 'none', sm: 'flex' }}>
           <Link to="/home">Trang chủ</Link>
           <Text>/</Text>
@@ -221,7 +221,7 @@ export function LessonPage() {
           </HStack>
         </Box>
 
-        <VStack data-testid="lesson-active-step" align="stretch" gap={{ base: '3', md: '4' }} scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 112px)">
+        <VStack data-testid="lesson-active-step" align="stretch" gap={{ base: '3', md: '4' }} scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 168px)">
           <Box className="lesson-whale-coach penglish-glass-card" bg="rgba(248,252,255,0.78)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3', md: '4' }} boxShadow="0 12px 30px rgba(31,111,214,0.06)" willChange="transform, opacity">
             <HStack align="center" gap="3">
               <OceanMascot mascot="poo" pose={activeLessonSection >= 5 ? 'happy' : 'coach'} size="xs" decorative motion="float" />

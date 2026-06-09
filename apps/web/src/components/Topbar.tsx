@@ -30,6 +30,7 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
   return (
     <Flex
       as="header"
+      data-testid="app-topbar"
       h={{ base: '68px', lg: '68px', xl: '72px' }}
       align="center"
       justify="space-between"
@@ -39,8 +40,8 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
       borderBottom="1px solid"
       borderColor="rgba(148, 202, 232, 0.30)"
       backdropFilter="blur(18px)"
-      position="sticky"
-      top="0"
+      position={{ base: 'static', lg: 'sticky' }}
+      top={{ base: 'auto', lg: '0' }}
       zIndex="20"
     >
       <MobileDrawerToggle user={user} />

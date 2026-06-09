@@ -77,8 +77,8 @@ export function LearningPathPage() {
   }, []);
 
   return (
-    <OceanPageShell data-testid="roadmap-mobile-root" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 96px)', lg: '8' }}>
-      <Box maxW="980px" mx="auto" minW="0">
+    <OceanPageShell data-testid="roadmap-mobile-root" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 168px)', lg: '8' }}>
+      <Box maxW="980px" mx="auto" minW="0" pb={{ base: '40px', md: '0' }}>
         <JourneyHero
           currentUnit={currentUnit}
           currentLevel={cefrProgress.currentLevel}

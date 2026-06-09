@@ -34,8 +34,8 @@ export function Foundation48Page() {
   }, []);
 
   return (
-    <OceanPageShell data-testid="foundation48-roadmap-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 132px)', lg: '8' }}>
-      <Box maxW="940px" mx="auto" minW="0">
+    <OceanPageShell data-testid="foundation48-roadmap-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 168px)', lg: '8' }}>
+      <Box maxW="940px" mx="auto" minW="0" pb={{ base: '40px', md: '0' }}>
         <Box className="penglish-glass-card" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '3.5', md: '4' }} bg="rgba(255,255,255,0.80)" mb="3" overflow="hidden" position="relative">
           <Box position="absolute" inset="0" bg="radial-gradient(circle at 92% 12%, rgba(91,188,235,0.14), transparent 24%)" pointerEvents="none" />
           <Flex position="relative" justify="space-between" align="center" gap="3">

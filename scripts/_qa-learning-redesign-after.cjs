@@ -9,7 +9,7 @@ const scenarios = [
     name: 'learning-path-desktop',
     path: '/learning-path',
     viewport: { width: 1440, height: 950 },
-    screenshot: 'reports/screenshots/learning-path-after-desktop.png',
+    screenshot: 'reports/screenshots/learning-path-polish-desktop.png',
     waitFor: '[data-testid="learning-path-current-card"]',
     requiredSelectors: [
       '[data-testid="roadmap-mobile-root"]',
@@ -22,7 +22,7 @@ const scenarios = [
     name: 'learning-path-mobile',
     path: '/learning-path',
     viewport: { width: 390, height: 844 },
-    screenshot: 'reports/screenshots/learning-path-after-mobile.png',
+    screenshot: 'reports/screenshots/learning-path-polish-mobile.png',
     waitFor: '[data-testid="learning-path-current-card"]',
     requiredSelectors: [
       '[data-testid="roadmap-mobile-root"]',
@@ -35,7 +35,7 @@ const scenarios = [
     name: 'lesson-unit1-desktop',
     path: '/lessons/unit-1-greetings-introduction',
     viewport: { width: 1440, height: 950 },
-    screenshot: 'reports/screenshots/lesson-unit1-after-desktop.png',
+    screenshot: 'reports/screenshots/lesson-unit1-polish-desktop.png',
     waitFor: '[data-testid="lesson-step-card"]',
     requiredSelectors: [
       '[data-testid="lesson-mobile-root"]',
@@ -49,7 +49,7 @@ const scenarios = [
     name: 'lesson-unit1-mobile',
     path: '/lessons/unit-1-greetings-introduction',
     viewport: { width: 390, height: 844 },
-    screenshot: 'reports/screenshots/lesson-unit1-after-mobile.png',
+    screenshot: 'reports/screenshots/lesson-unit1-polish-mobile.png',
     waitFor: '[data-testid="lesson-step-card"]',
     requiredSelectors: [
       '[data-testid="lesson-mobile-root"]',
@@ -99,10 +99,14 @@ async function runScenario(browser, scenario) {
         const style = window.getComputedStyle(element);
         return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none';
       });
+      const flashcardPreviewCount = document.querySelectorAll('[data-testid="lesson-flashcard-preview"], [data-testid="lesson-guided-mode-content"][data-lesson-mode="flashcard"]').length;
+      const guidedModeContentCount = document.querySelectorAll('[data-testid="lesson-guided-mode-content"]').length;
       return {
         visibleStepCardCount: visibleStepCards.length,
         hasStepProgressText: document.body.textContent.includes('Bước 1/6'),
         hasPooGuide: document.body.textContent.includes('Poo nói') || document.body.textContent.includes('Nghe trước nhé'),
+        flashcardPreviewCount,
+        guidedModeContentCount,
       };
     });
   }
@@ -121,6 +125,8 @@ async function runScenario(browser, scenario) {
     if (lessonState.visibleStepCardCount !== 1) failures.push(`Expected exactly 1 visible lesson step card, found ${lessonState.visibleStepCardCount}`);
     if (!lessonState.hasStepProgressText) failures.push('Missing lesson progress text Bước 1/6');
     if (!lessonState.hasPooGuide) failures.push('Missing Poo guide text');
+    if (lessonState.flashcardPreviewCount !== 0) failures.push(`Flashcard/practice block visible on initial listen step: ${lessonState.flashcardPreviewCount}`);
+    if (lessonState.guidedModeContentCount !== 0) failures.push(`Guided practice block visible on initial listen step: ${lessonState.guidedModeContentCount}`);
   }
 
   return {
@@ -157,7 +163,7 @@ async function runScenario(browser, scenario) {
   };
 
   fs.mkdirSync('reports', { recursive: true });
-  fs.writeFileSync('reports/learning-path-lesson-after-qa-results.json', JSON.stringify(report, null, 2));
+  fs.writeFileSync('reports/learning-path-lesson-polish-qa-results.json', JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
 
   if (!report.ok) process.exit(1);
