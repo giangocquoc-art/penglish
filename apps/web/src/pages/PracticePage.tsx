@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { Box, SimpleGrid, HStack, VStack, Flex, Text, Button, Icon, Badge, Menu, MenuButton, MenuList, MenuItem, IconButton } from '@chakra-ui/react';
-import { AlertTriangle, BookOpen, HelpCircle, Headphones, PenTool, Target, Zap, Volume2, VolumeX, Settings, ChevronDown, ArrowLeft } from 'lucide-react';
+import { AlertTriangle, BookOpen, HelpCircle, Headphones, PenTool, Target, Zap, Volume2, VolumeX, Settings, ChevronDown, ArrowLeft, CheckCircle2, Home, RotateCcw, Sparkles, Waves } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
 import { get } from '../api';
@@ -21,7 +21,7 @@ import { getLessonById } from '../lib/p-english/lesson-content-data';
 import { getAvailableLessonProgressModes, type LessonProgressMode } from '../lib/p-english/lesson-progress';
 import { getUnifiedPracticeContentDepth } from '../lib/p-english/unifiedLessonEngine';
 import { getCurrentStreak, LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
-import { getLearningLoopSnapshot, LEARNING_LOOP_UPDATED_EVENT, type LearningLoopMistakeRecord } from '../lib/p-english/learning-loop';
+import { getLearningLoopSnapshot, LEARNING_LOOP_UPDATED_EVENT, resolveLearningLoopMistake, type LearningLoopMistakeRecord } from '../lib/p-english/learning-loop';
 
 const MotionBox = motion.create(Box);
 
@@ -60,6 +60,16 @@ const GAMES: GameDef[] = [
 
 type Category = { id: string; name: string };
 type Stats = { total?: number; ready?: number };
+type PooReviewStage = 'idle' | 'quiz' | 'repeat' | 'complete';
+type PooReviewItem = {
+  id: string;
+  prompt: string;
+  wrongAnswer: string;
+  correctAnswer: string;
+  explanation: string;
+  sourceLabel: string;
+  isFallback?: boolean;
+};
 
 type FilterState = {
   categoryId: string;
@@ -83,6 +93,36 @@ const ORDER_OPTS: Array<{ value: FilterState['order']; label: string }> = [
 
 const COUNT_OPTS: Array<FilterState['count']> = [10, 20, 50, 100];
 const LESSON_PRACTICE_MODES = ['flashcard', 'quiz', 'listen', 'reflex', 'type', 'typing', 'match', 'speed'];
+
+const FALLBACK_POO_REVIEW_ITEMS: PooReviewItem[] = [
+  {
+    id: 'fallback-a1-student',
+    prompt: 'I am student.',
+    wrongAnswer: 'I am student.',
+    correctAnswer: 'I am a student.',
+    explanation: 'student là danh từ đếm được số ít, nên cần a trước student.',
+    sourceLabel: 'Ôn nhẹ hôm nay',
+    isFallback: true,
+  },
+  {
+    id: 'fallback-a1-happy',
+    prompt: 'She are happy.',
+    wrongAnswer: 'She are happy.',
+    correctAnswer: 'She is happy.',
+    explanation: 'She đi với is trong hiện tại đơn.',
+    sourceLabel: 'Ôn nhẹ hôm nay',
+    isFallback: true,
+  },
+  {
+    id: 'fallback-a1-like',
+    prompt: 'I very like English.',
+    wrongAnswer: 'I very like English.',
+    correctAnswer: 'I really like English.',
+    explanation: 'very không đứng trước like; dùng really để nhấn mạnh động từ like.',
+    sourceLabel: 'Ôn nhẹ hôm nay',
+    isFallback: true,
+  },
+];
 
 function normalizeLessonPracticeMode(mode: string | null): LessonProgressMode | null {
   if (!mode) return null;
@@ -324,6 +364,10 @@ export function PracticePage() {
   const [currentStreak, setCurrentStreak] = useState(() => getCurrentStreak());
   const { whaleMood, triggerWhaleMood } = useWhaleMoodController('idle');
   const [learningLoopSnapshot, setLearningLoopSnapshot] = useState(() => getLearningLoopSnapshot());
+  const [pooReviewStage, setPooReviewStage] = useState<PooReviewStage>('idle');
+  const [pooReviewIndex, setPooReviewIndex] = useState(0);
+  const [selectedReviewAnswer, setSelectedReviewAnswer] = useState<string | null>(null);
+  const [understoodCount, setUnderstoodCount] = useState(0);
  
   const [filters, setFilters] = useState<FilterState>({
     categoryId: 'all',
@@ -418,6 +462,23 @@ export function PracticePage() {
   const weakWords = learningLoopSnapshot.weakWords;
   const reviewCenterCount = unresolvedMistakes.length + weakWords.length;
   const displayReadyCount = reviewCenterCount > 0 ? reviewCenterCount : readyCount > 0 ? readyCount : starterA1Count;
+  const pooReviewItems = useMemo<PooReviewItem[]>(() => {
+    if (unresolvedMistakes.length === 0) return FALLBACK_POO_REVIEW_ITEMS;
+    return unresolvedMistakes.slice(0, 6).map((mistake) => ({
+      id: mistake.id,
+      prompt: mistake.prompt,
+      wrongAnswer: mistake.userAnswer || mistake.prompt,
+      correctAnswer: mistake.correctAnswer || mistake.prompt,
+      explanation: mistake.explanation || 'Poo nhắc bạn nhìn lại mẫu câu đúng rồi luyện lại thật chậm.',
+      sourceLabel: getMistakeSourceLabel(mistake),
+    }));
+  }, [unresolvedMistakes]);
+  const activeReviewItem = pooReviewItems[Math.min(pooReviewIndex, Math.max(0, pooReviewItems.length - 1))];
+  const reviewAnswerOptions = useMemo(() => {
+    if (!activeReviewItem) return [];
+    return Array.from(new Set([activeReviewItem.wrongAnswer, activeReviewItem.correctAnswer, 'I like English very.'].filter(Boolean))).slice(0, 3);
+  }, [activeReviewItem]);
+  const hasRealMistakes = unresolvedMistakes.length > 0;
 
   if (lessonId && normalizedMode && !isUnavailableLessonMode && isLearningLocked(heartsState)) {
     return <LearningLockedScreen lessonId={lessonId} state={heartsState} />;
@@ -726,135 +787,172 @@ export function PracticePage() {
     );
   }
 
+  const startPooReview = () => {
+    setPooReviewStage('quiz');
+    setPooReviewIndex(0);
+    setSelectedReviewAnswer(null);
+    setUnderstoodCount(0);
+  };
+
+  const markActiveUnderstood = () => {
+    if (activeReviewItem && !activeReviewItem.isFallback) {
+      resolveLearningLoopMistake(activeReviewItem.id);
+      setLearningLoopSnapshot(getLearningLoopSnapshot());
+    }
+    const nextCount = understoodCount + 1;
+    setUnderstoodCount(nextCount);
+    if (pooReviewIndex >= pooReviewItems.length - 1) {
+      setPooReviewStage('complete');
+      return;
+    }
+    setPooReviewIndex((value) => value + 1);
+    setSelectedReviewAnswer(null);
+    setPooReviewStage('quiz');
+  };
+
   return (
-    <OceanPageShell data-testid="practice-mobile-root" variant="vocab" overlayStrength="medium" minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="6" pb={{ base: '28', lg: '10' }} overflowX="hidden">
-      <Box maxW="1180px" mx="auto">
-      <Flex justify="space-between" align={{ base: 'start', lg: 'center' }} mb="5" wrap="wrap" gap="4" bg="rgba(255,255,255,0.86)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '5', md: '6' }} boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" backdropFilter="blur(16px)">
-        <HStack align="center" gap="4">
-          <Box display={{ base: 'none', sm: 'block' }} pointerEvents="none">
-            <OceanMascot mascot="cuaQuiz" pose="quiz" size="md" decorative motion="float" />
-          </Box>
-          <Box>
-            <Badge borderRadius="full" bg="#EFF6FF" color="#2563EB" mb="2" textTransform="none">Khu luyện tập</Badge>
-            <Box as="h2" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color={PRACTICE_COLORS.text}>Luyện tập</Box>
-            <Text color={PRACTICE_COLORS.secondaryText} fontWeight="700">Cua Quiz ưu tiên lỗi sai thật, từ yếu và câu cần ôn. Bạn chưa có lỗi sai nào. Poo sẽ cho bạn luyện bộ A1 cơ bản trước.</Text>
-          </Box>
-        </HStack>
-        <HStack gap="3" wrap="wrap">
-          <FilterDropdown
-            label="Bộ từ"
-            value={filters.categoryId}
-            options={categoryOpts}
-            onChange={(v) => setFilters((f) => ({ ...f, categoryId: v }))}
-          />
-          <FilterDropdown
-            label="Bộ lọc"
-            value={filters.level}
-            options={LEVEL_OPTS as any}
-            onChange={(v) => setFilters((f) => ({ ...f, level: v as FilterState['level'] }))}
-          />
-          <FilterDropdown
-            label="Thứ tự"
-            value={filters.order}
-            options={ORDER_OPTS as any}
-            onChange={(v) => setFilters((f) => ({ ...f, order: v as FilterState['order'] }))}
-          />
-          <FilterDropdown
-            label="Số lượng"
-            value={String(filters.count)}
-            options={COUNT_OPTS.map((c) => ({ value: String(c), label: `${c} từ` }))}
-            onChange={(v) => setFilters((f) => ({ ...f, count: Number(v) as FilterState['count'] }))}
-          />
-        </HStack>
-      </Flex>
-
-      <HStack mb="4" gap="3" wrap="wrap" bg="rgba(255,255,255,0.72)" border="1px solid" borderColor="#D7E8F5" borderRadius="2xl" p="3">
-        <AudioPill muted={muted} volume={volume} onToggle={toggleMute} />
-        <IconButton
-          aria-label="Cài đặt game"
-          icon={<Icon as={Settings} />}
-          variant="ghost"
-          borderRadius="full"
-          size="md"
-        />
-        <Badge bg="#E4FBEA" color="#276749" border="1px solid" borderColor={PRACTICE_COLORS.successGreen} borderRadius="full" px="3" py="1.5" fontSize="sm" textTransform="none">
-          {displayReadyCount} mục sẵn sàng
-        </Badge>
-      </HStack>
-
-      {reviewCenterCount > 0 ? (
-        <Box mb="5" bg="rgba(255,247,237,0.88)" border="1px solid" borderColor="#FED7AA" borderRadius="2xl" px={{ base: '4', md: '5' }} py="4" data-testid="practice-real-review-center">
-          <HStack align="start" gap="3" justify="space-between" wrap="wrap">
-            <HStack align="start" gap="3" minW="0">
-              <Flex w="42px" h="42px" borderRadius="2xl" bg="#FFF7ED" color="#C2410C" align="center" justify="center" border="1px solid #FED7AA" flexShrink={0}>
-                <Icon as={AlertTriangle} boxSize="5" />
-              </Flex>
-              <Box minW="0">
-                <Text color={PRACTICE_COLORS.text} fontWeight="700">Poo tìm thấy {unresolvedMistakes.length} lỗi sai và {weakWords.length} từ yếu cần ôn trước.</Text>
-                <Text color={PRACTICE_COLORS.secondaryText} fontSize="sm" mt="1" fontWeight="700">
-                  Trung tâm luyện tập đang lấy dữ liệu thật từ bài học, Foundation48, nghe/nói và sổ từ để bạn không ôn lan man.
-                </Text>
-              </Box>
-            </HStack>
-            <Button as={Link} to="/words" size="sm" borderRadius="full" bg={PRACTICE_COLORS.deepBlue} color="white" _hover={{ bg: '#185BB2' }}>
-              Ôn ngay
-            </Button>
-          </HStack>
-          {unresolvedMistakes.length > 0 ? (
-            <SimpleGrid columns={{ base: 1, md: 2 }} gap="3" mt="4">
-              {unresolvedMistakes.slice(0, 4).map((mistake) => (
-                <Box key={mistake.id} bg="white" border="1px solid" borderColor="#FED7AA" borderRadius="2xl" p="3">
-                  <HStack justify="space-between" align="start" gap="3">
-                    <Box minW="0">
-                      <Badge bg="#FFF7ED" color="#C2410C" borderRadius="full" textTransform="none" mb="2">{getMistakeSourceLabel(mistake)}</Badge>
-                      <Text color={PRACTICE_COLORS.text} fontWeight="700" noOfLines={2}>{mistake.prompt}</Text>
-                      {mistake.correctAnswer ? <Text mt="1" color="#047857" fontSize="sm" fontWeight="700">Đáp án đúng: {mistake.correctAnswer}</Text> : null}
-                      {mistake.userAnswer ? <Text mt="1" color="#B45309" fontSize="sm" fontWeight="700">Bạn đã trả lời: {mistake.userAnswer}</Text> : null}
-                    </Box>
-                    <Button as={Link} to={getMistakeActionPath(mistake)} size="xs" borderRadius="full" variant="outline" flexShrink={0}>
-                      Luyện lại
+    <OceanPageShell data-testid="practice-mobile-root" variant="vocab" overlayStrength="medium" minH="calc(100vh - 72px)" px={{ base: '3', md: '6' }} py={{ base: '2.5', md: '6' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 176px)', lg: '10' }} overflowX="hidden">
+      <Box maxW="1180px" mx="auto" minW="0">
+        <SimpleGrid columns={{ base: 1, lg: 3 }} gap={{ base: '3', md: '5' }} alignItems="start">
+          <VStack align="stretch" gap={{ base: '3', md: '5' }} gridColumn={{ base: 'auto', lg: 'span 2' }} minW="0">
+            <Box className="penglish-glass-card" bg="rgba(255,255,255,0.72)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '4', md: '7' }} boxShadow="0 16px 38px rgba(31,111,214,0.08)" position="relative" overflow="hidden" data-testid="practice-poo-hero">
+              <Box position="absolute" inset="0" bg="radial-gradient(circle at 92% 10%, rgba(91,188,235,0.20), transparent 30%), radial-gradient(circle at 8% 100%, rgba(255,243,196,0.42), transparent 28%)" pointerEvents="none" />
+              <Flex position="relative" gap="4" justify="space-between" align={{ base: 'start', md: 'center' }} direction={{ base: 'column', md: 'row' }}>
+                <Box minW="0" flex="1">
+                  <Badge borderRadius="full" bg="#E0F2FE" color={PRACTICE_COLORS.deepBlue} textTransform="none" mb="2">Ôn tập / Lỗi sai</Badge>
+                  <Text as="h2" fontSize={{ base: '2xl', md: '4xl' }} lineHeight="1.06" fontWeight="950" color={PRACTICE_COLORS.text}>Ôn lỗi sai cùng Poo</Text>
+                  <Text mt="2" color={PRACTICE_COLORS.secondaryText} fontWeight="800" fontSize={{ base: 'sm', md: 'md' }} maxW="620px">
+                    {hasRealMistakes ? 'Poo gom vài chỗ bạn hay quên để ôn nhẹ hôm nay.' : 'Hôm nay chưa có lỗi lớn. Bạn có thể ôn nhẹ vài câu nền tảng.'}
+                  </Text>
+                  <HStack mt="4" gap="2" wrap="wrap">
+                    <Button data-testid="practice-poo-start" leftIcon={<Icon as={Sparkles} />} borderRadius="full" bg={PRACTICE_COLORS.deepBlue} color="white" _hover={{ bg: '#185BB2' }} onClick={startPooReview}>
+                      {hasRealMistakes ? 'Bắt đầu ôn' : 'Ôn nhẹ 3 câu'}
                     </Button>
+                    <Badge borderRadius="full" bg="#ECFDF5" color="#15803D" px="3" py="1.5" textTransform="none">{pooReviewItems.length} câu sẵn sàng</Badge>
                   </HStack>
                 </Box>
-              ))}
-            </SimpleGrid>
-          ) : null}
-        </Box>
-      ) : null}
+                <Box alignSelf={{ base: 'center', md: 'auto' }} pointerEvents="none">
+                  <OceanMascot mascot="poo" pose="idle" size="hero" decorative motion="float" />
+                </Box>
+              </Flex>
+            </Box>
 
-      {reviewCenterCount === 0 && readyCount === 0 ? (
-        <Box
-          mb="5"
-          bg={`linear-gradient(135deg, ${PRACTICE_COLORS.softAqua}, #F7FBFF)`}
-          border="1px solid"
-          borderColor={PRACTICE_COLORS.border}
-          borderRadius="2xl"
-          px={{ base: '4', md: '5' }}
-          py="4"
-        >
-          <Text color={PRACTICE_COLORS.text} fontWeight="700">Bạn chưa có lỗi sai nào. Poo sẽ cho bạn luyện bộ A1 cơ bản trước.</Text>
-          <Text color={PRACTICE_COLORS.secondaryText} fontSize="sm" mt="1" fontWeight="700">
-            Dùng nhóm chào hỏi, người thân, lớp học, hành động hằng ngày và tính từ cơ bản để luyện ngay. Khi bạn học sai, Poo sẽ ưu tiên những từ đó trước.
-          </Text>
-          <HStack mt="4" wrap="wrap" gap="2">
-            <Button as={Link} to={`/practice?lessonId=${STARTER_A1_LESSON_ID}&mode=flashcard`} size="sm" borderRadius="full" bg={PRACTICE_COLORS.deepBlue} color="white" _hover={{ bg: '#185BB2' }}>
-              Dùng bộ A1 mẫu
-            </Button>
-            <Button as={Link} to="/learning-path/lesson/unit-1-greetings/unit-1-greetings-vocabulary-0" size="sm" borderRadius="full" variant="outline">
-              Học bài đầu để mở
-            </Button>
-            <Button as={Link} to="/words" size="sm" borderRadius="full" variant="outline">
-              Xem 50 từ cơ bản
-            </Button>
-          </HStack>
-        </Box>
-      ) : null}
+            {pooReviewStage === 'complete' ? (
+              <Box className="penglish-glass-card" bg="linear-gradient(135deg, rgba(240,253,244,0.92), rgba(232,244,255,0.86))" border="1px solid" borderColor="#BBF7D0" borderRadius="3xl" p={{ base: '4', md: '6' }} data-testid="practice-poo-complete">
+                <VStack align="stretch" gap="4">
+                  <HStack align="center" gap="3">
+                    <Flex w="52px" h="52px" borderRadius="2xl" bg="#ECFDF5" color="#15803D" align="center" justify="center" border="1px solid #BBF7D0"><Icon as={CheckCircle2} boxSize="7" /></Flex>
+                    <Box minW="0">
+                      <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950" color={PRACTICE_COLORS.text}>Poo đã dọn xong lỗi hôm nay!</Text>
+                      <Text color={PRACTICE_COLORS.secondaryText} fontWeight="800">Nhẹ thôi nhưng chắc hơn rồi đó.</Text>
+                    </Box>
+                  </HStack>
+                  <SimpleGrid columns={{ base: 3, md: 3 }} gap="2.5">
+                    <Box bg="whiteAlpha.800" border="1px solid" borderColor="#BBF7D0" borderRadius="2xl" p="3"><Text fontWeight="950" color={PRACTICE_COLORS.text}>{Math.max(3, understoodCount)} câu</Text><Text fontSize="xs" fontWeight="800" color={PRACTICE_COLORS.secondaryText}>đã ôn</Text></Box>
+                    <Box bg="whiteAlpha.800" border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" p="3"><Text fontWeight="950" color={PRACTICE_COLORS.text}>2 từ</Text><Text fontSize="xs" fontWeight="800" color={PRACTICE_COLORS.secondaryText}>đã nhớ</Text></Box>
+                    <Box bg="whiteAlpha.800" border="1px solid" borderColor="#FED7AA" borderRadius="2xl" p="3"><Text fontWeight="950" color={PRACTICE_COLORS.text}>1 mẫu</Text><Text fontSize="xs" fontWeight="800" color={PRACTICE_COLORS.secondaryText}>chắc hơn</Text></Box>
+                  </SimpleGrid>
+                  <HStack gap="2.5" wrap="wrap">
+                    <Button as={Link} to="/home" data-testid="practice-poo-back-home" leftIcon={<Icon as={Home} />} borderRadius="full" bg={PRACTICE_COLORS.deepBlue} color="white" _hover={{ bg: '#185BB2' }}>Quay về Trang chủ</Button>
+                    <Button data-testid="practice-poo-review-more" leftIcon={<Icon as={RotateCcw} />} borderRadius="full" variant="outline" onClick={startPooReview}>Ôn thêm</Button>
+                  </HStack>
+                </VStack>
+              </Box>
+            ) : pooReviewStage === 'quiz' || pooReviewStage === 'repeat' ? (
+              <Box className="penglish-glass-card" bg="rgba(255,255,255,0.82)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '4', md: '6' }} data-testid="practice-poo-flow">
+                <VStack align="stretch" gap="4">
+                  <HStack justify="space-between" gap="3" wrap="wrap">
+                    <Badge borderRadius="full" bg="#EFF6FF" color={PRACTICE_COLORS.deepBlue} textTransform="none">Bước {pooReviewStage === 'quiz' ? '2' : '3'} / 4</Badge>
+                    <Text color={PRACTICE_COLORS.secondaryText} fontSize="sm" fontWeight="850">Câu {pooReviewIndex + 1}/{pooReviewItems.length}</Text>
+                  </HStack>
+                  <Box bg="#F8FAFC" border="1px solid" borderColor="#D7E8F5" borderRadius="2xl" p={{ base: '3.5', md: '4' }} data-testid="practice-poo-active-mistake">
+                    <Badge bg="#FFF7ED" color="#B45309" borderRadius="full" textTransform="none" mb="2">{activeReviewItem.sourceLabel}</Badge>
+                    <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="950" color={PRACTICE_COLORS.text}>{activeReviewItem.prompt}</Text>
+                    <SimpleGrid columns={{ base: 1, md: 2 }} gap="2.5" mt="3">
+                      <Box bg="#FFF7ED" border="1px solid" borderColor="#FED7AA" borderRadius="2xl" p="3"><Text fontSize="xs" fontWeight="950" color="#B45309">Sai / yếu</Text><Text fontWeight="900" color={PRACTICE_COLORS.text}>{activeReviewItem.wrongAnswer}</Text></Box>
+                      <Box bg="#ECFDF5" border="1px solid" borderColor="#BBF7D0" borderRadius="2xl" p="3"><Text fontSize="xs" fontWeight="950" color="#15803D">Đúng</Text><Text fontWeight="900" color={PRACTICE_COLORS.text}>{activeReviewItem.correctAnswer}</Text></Box>
+                    </SimpleGrid>
+                    <Text mt="3" color={PRACTICE_COLORS.secondaryText} fontWeight="800">Gợi ý: {activeReviewItem.explanation}</Text>
+                  </Box>
+                  {pooReviewStage === 'quiz' ? (
+                    <VStack align="stretch" gap="2.5" data-testid="practice-poo-answer-options">
+                      <Text color={PRACTICE_COLORS.text} fontWeight="950">Chọn câu đúng:</Text>
+                      {reviewAnswerOptions.map((option) => {
+                        const isSelected = selectedReviewAnswer === option;
+                        const isCorrect = option === activeReviewItem.correctAnswer;
+                        return (
+                          <Button key={option} justifyContent="flex-start" whiteSpace="normal" h="auto" minH="48px" borderRadius="2xl" variant="outline" borderColor={isSelected ? (isCorrect ? '#86EFAC' : '#FED7AA') : '#BAE6FD'} bg={isSelected ? (isCorrect ? '#ECFDF5' : '#FFF7ED') : 'white'} onClick={() => setSelectedReviewAnswer(option)} data-testid={isCorrect ? 'practice-poo-correct-answer' : 'practice-poo-answer'}>
+                            {option}
+                          </Button>
+                        );
+                      })}
+                      <Button alignSelf="flex-start" data-testid="practice-poo-next-repeat" borderRadius="full" bg={PRACTICE_COLORS.deepBlue} color="white" _hover={{ bg: '#185BB2' }} isDisabled={selectedReviewAnswer !== activeReviewItem.correctAnswer} onClick={() => setPooReviewStage('repeat')}>Tiếp tục</Button>
+                    </VStack>
+                  ) : (
+                    <Box bg="#F0F9FF" border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" p="3.5" data-testid="practice-poo-repeat-step">
+                      <Text color={PRACTICE_COLORS.text} fontWeight="950">Đọc chậm lại một lần:</Text>
+                      <Text mt="1" color={PRACTICE_COLORS.deepBlue} fontWeight="950">{activeReviewItem.correctAnswer}</Text>
+                      <HStack mt="3" gap="2" wrap="wrap">
+                        <Button data-testid="practice-poo-understood" borderRadius="full" bg="#16A34A" color="white" _hover={{ bg: '#15803D' }} onClick={markActiveUnderstood}>Tôi hiểu rồi</Button>
+                        <Button borderRadius="full" variant="outline" onClick={() => setPooReviewStage('quiz')}>Luyện lại</Button>
+                      </HStack>
+                    </Box>
+                  )}
+                </VStack>
+              </Box>
+            ) : (
+              <VStack align="stretch" gap="3" data-testid="practice-poo-review-cards">
+                <SimpleGrid columns={{ base: 1, sm: 3 }} gap="3">
+                  {[
+                    { icon: AlertTriangle, title: 'Câu hay nhầm', subtitle: hasRealMistakes ? 'Poo giữ lại câu cần sửa.' : 'Ôn nhẹ câu A1 nền tảng.', count: `${pooReviewItems.length}`, cta: 'Sửa câu' },
+                    { icon: BookOpen, title: 'Từ cần nhớ', subtitle: weakWords.length > 0 ? 'Có từ nên gặp lại hôm nay.' : 'Gắn từ với câu ngắn.', count: `${Math.max(2, weakWords.length)}`, cta: 'Ôn từ' },
+                    { icon: Headphones, title: 'Nghe lại câu cũ', subtitle: 'Nghe trong đầu rồi đọc chậm.', count: '1', cta: 'Nghe lại' },
+                  ].map((card) => (
+                    <Box key={card.title} bg="rgba(255,255,255,0.82)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3.5', md: '4' }} minW="0" data-testid="practice-poo-daily-card">
+                      <HStack justify="space-between" align="start" gap="3">
+                        <Flex w="42px" h="42px" borderRadius="2xl" bg="#E0F2FE" color={PRACTICE_COLORS.deepBlue} align="center" justify="center" flexShrink={0}><Icon as={card.icon} boxSize="5" /></Flex>
+                        <Badge borderRadius="full" bg="#FFF3C4" color="#B7791F" textTransform="none">{card.count}</Badge>
+                      </HStack>
+                      <Text mt="3" color={PRACTICE_COLORS.text} fontWeight="950">{card.title}</Text>
+                      <Text mt="1" color={PRACTICE_COLORS.secondaryText} fontSize="sm" fontWeight="800" noOfLines={2}>{card.subtitle}</Text>
+                      <Button mt="3" size="sm" borderRadius="full" variant="outline" onClick={startPooReview}>{card.cta}</Button>
+                    </Box>
+                  ))}
+                </SimpleGrid>
+                <SimpleGrid columns={{ base: 1, md: 2 }} gap="3">
+                  {pooReviewItems.slice(0, 3).map((item) => (
+                    <Box key={item.id} bg="rgba(255,255,255,0.86)" border="1px solid" borderColor={item.isFallback ? '#BAE6FD' : '#FED7AA'} borderRadius="2xl" p="3.5" data-testid="practice-poo-mistake-item">
+                      <Badge bg={item.isFallback ? '#E0F2FE' : '#FFF7ED'} color={item.isFallback ? PRACTICE_COLORS.deepBlue : '#B45309'} borderRadius="full" textTransform="none" mb="2">{item.sourceLabel}</Badge>
+                      <Text color={PRACTICE_COLORS.text} fontWeight="950">Sai: {item.wrongAnswer}</Text>
+                      <Text mt="1" color="#15803D" fontWeight="950">Đúng: {item.correctAnswer}</Text>
+                      <Text mt="1" color={PRACTICE_COLORS.secondaryText} fontSize="sm" fontWeight="800">Gợi ý: {item.explanation}</Text>
+                      <HStack mt="3" gap="2" wrap="wrap"><Button size="xs" borderRadius="full" onClick={startPooReview}>Tôi hiểu rồi</Button><Button size="xs" borderRadius="full" variant="outline" onClick={startPooReview}>Luyện lại</Button></HStack>
+                    </Box>
+                  ))}
+                </SimpleGrid>
+              </VStack>
+            )}
+          </VStack>
 
-      <SimpleGrid columns={{ base: 1, sm: 2, lg: 3 }} gap={{ base: '3', md: '4' }}>
-        {GAMES.map((g, i) => (
-          <GameTile key={g.id} game={g} idx={i} readyCount={displayReadyCount} selectedCount={filters.count} onPick={setPicked} />
-        ))}
-      </SimpleGrid>
+          <VStack align="stretch" gap="3" minW="0">
+            <Box className="penglish-glass-card" bg="rgba(255,255,255,0.70)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3.5', md: '5' }} data-testid="practice-poo-summary">
+              <HStack align="start" gap="3"><Flex w="42px" h="42px" borderRadius="2xl" bg="#E0F2FE" color={PRACTICE_COLORS.deepBlue} align="center" justify="center"><Icon as={Waves} boxSize="5" /></Flex><Box><Text fontWeight="950" color={PRACTICE_COLORS.text}>Poo nhắc bạn</Text><Text mt="1" color={PRACTICE_COLORS.secondaryText} fontSize="sm" fontWeight="800">Chỉ sửa vài câu mỗi ngày. Không cần sợ lỗi — lỗi là bản đồ để Poo dẫn đường.</Text></Box></HStack>
+              <SimpleGrid columns={3} gap="2" mt="4">
+                <Box bg="#F8FAFC" border="1px solid" borderColor="#D7E8F5" borderRadius="2xl" p="2.5"><Text fontWeight="950" color={PRACTICE_COLORS.text}>{unresolvedMistakes.length}</Text><Text fontSize="2xs" fontWeight="850" color={PRACTICE_COLORS.secondaryText}>lỗi thật</Text></Box>
+                <Box bg="#F8FAFC" border="1px solid" borderColor="#D7E8F5" borderRadius="2xl" p="2.5"><Text fontWeight="950" color={PRACTICE_COLORS.text}>{weakWords.length}</Text><Text fontSize="2xs" fontWeight="850" color={PRACTICE_COLORS.secondaryText}>từ yếu</Text></Box>
+                <Box bg="#F8FAFC" border="1px solid" borderColor="#D7E8F5" borderRadius="2xl" p="2.5"><Text fontWeight="950" color={PRACTICE_COLORS.text}>4</Text><Text fontSize="2xs" fontWeight="850" color={PRACTICE_COLORS.secondaryText}>bước</Text></Box>
+              </SimpleGrid>
+            </Box>
+
+            <Box className="penglish-glass-card" bg="rgba(255,255,255,0.66)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3.5', md: '5' }} display={{ base: 'none', lg: 'block' }}>
+              <Text fontWeight="950" color={PRACTICE_COLORS.text}>Game luyện thêm</Text>
+              <Text mt="1" color={PRACTICE_COLORS.secondaryText} fontSize="sm" fontWeight="800">Sau khi dọn lỗi, bạn vẫn có thể vào các mode cũ.</Text>
+              <SimpleGrid columns={2} gap="2" mt="3">
+                {GAMES.slice(0, 4).map((g) => <Button key={g.id} size="sm" borderRadius="full" variant="outline" onClick={() => setPicked(g.id)}>{g.name}</Button>)}
+              </SimpleGrid>
+            </Box>
+          </VStack>
+        </SimpleGrid>
       </Box>
     </OceanPageShell>
   );

@@ -15,7 +15,7 @@ import { FOUNDATION48_BASE_PATH, foundation48Days, getFoundation48DayPath } from
 import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48Progress } from '../features/foundation48/foundation48Progress';
 
 const FLASHCARD_PATH = '/words';
-const WEAK_REVIEW_PATH = '/words';
+const WEAK_REVIEW_PATH = '/practice';
 const SHADOWING_PATH = '/shadowing';
 const DAILY_GOAL_COUNT = 3;
 const LinkedGlassPanel = GlassPanel as any;
