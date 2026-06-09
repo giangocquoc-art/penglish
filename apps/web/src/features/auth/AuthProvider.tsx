@@ -1,13 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
-import { Box, Button, HStack, Text } from '@chakra-ui/react';
 import { isSupabaseConfigured, supabase } from '../../lib/supabaseClient';
-import { mergeCloudAndLocalFoundation48Progress, syncLocalFoundation48ProgressToCloud } from '../foundation48/foundation48CloudProgress';
-import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48Progress } from '../foundation48/foundation48Progress';
+import { mergeCloudAndLocalFoundation48Progress } from '../foundation48/foundation48CloudProgress';
 
 export const PENGUISH_AUTH_UPDATED_EVENT = 'penglish-auth-updated';
-
-const SYNC_PROMPT_DISMISSED_KEY = 'penglish-foundation48-google-sync-dismissed-v1';
 
 type AuthContextValue = {
   user: User | null;
@@ -22,36 +18,9 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-function hasLocalFoundation48Progress() {
-  try {
-    return Object.keys(getFoundation48Progress().days || {}).length > 0;
-  } catch {
-    return false;
-  }
-}
-
-function hasDismissedSyncPrompt(userId: string) {
-  if (typeof window === 'undefined') return true;
-  try {
-    return window.localStorage.getItem(`${SYNC_PROMPT_DISMISSED_KEY}:${userId}`) === '1';
-  } catch {
-    return true;
-  }
-}
-
-function dismissSyncPrompt(userId: string) {
-  try {
-    window.localStorage.setItem(`${SYNC_PROMPT_DISMISSED_KEY}:${userId}`, '1');
-  } catch {
-    // Non-critical; the banner can reappear if localStorage is locked.
-  }
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [syncPromptVisible, setSyncPromptVisible] = useState(false);
-  const [syncBusy, setSyncBusy] = useState(false);
   const authUnavailable = !isSupabaseConfigured || !supabase;
 
   const refreshSession = useCallback(async () => {
@@ -104,13 +73,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const userId = session?.user?.id;
-    if (!userId) {
-      setSyncPromptVisible(false);
-      return;
-    }
+    if (!userId) return;
 
     void mergeCloudAndLocalFoundation48Progress(userId).catch(() => undefined);
-    setSyncPromptVisible(hasLocalFoundation48Progress() && !hasDismissedSyncPrompt(userId));
   }, [session?.user?.id]);
 
   const signInWithGoogle = useCallback(async () => {
@@ -156,66 +121,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     refreshSession,
   }), [authUnavailable, loading, refreshSession, session, signInWithGoogle, signOut]);
 
-  const userId = session?.user?.id;
-
   return (
     <AuthContext.Provider value={value}>
       {children}
-      {userId && syncPromptVisible ? (
-        <Box
-          position="fixed"
-          left={{ base: '4', md: '50%' }}
-          right={{ base: '4', md: 'auto' }}
-          bottom={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 16px)', md: '24px' }}
-          transform={{ base: 'none', md: 'translateX(-50%)' }}
-          zIndex="toast"
-          maxW="560px"
-          bg="rgba(255,255,255,0.96)"
-          border="1px solid"
-          borderColor="#BAE6FD"
-          borderRadius="2xl"
-          boxShadow="0 18px 48px rgba(31,111,214,0.18)"
-          px="4"
-          py="3"
-        >
-          <HStack gap="3" align="center" justify="space-between" flexWrap="wrap">
-            <Text color="#102A43" fontWeight="850" fontSize="sm">
-              Đồng bộ tiến độ trên thiết bị này lên tài khoản Google?
-            </Text>
-            <HStack gap="2">
-              <Button
-                size="sm"
-                borderRadius="full"
-                bg="#1F6FD6"
-                color="white"
-                isLoading={syncBusy}
-                onClick={async () => {
-                  setSyncBusy(true);
-                  await syncLocalFoundation48ProgressToCloud(userId).catch(() => undefined);
-                  dismissSyncPrompt(userId);
-                  setSyncPromptVisible(false);
-                  setSyncBusy(false);
-                  window.dispatchEvent(new Event(FOUNDATION48_PROGRESS_UPDATED_EVENT));
-                }}
-                _hover={{ bg: '#185BB2' }}
-              >
-                Đồng bộ
-              </Button>
-              <Button
-                size="sm"
-                borderRadius="full"
-                variant="ghost"
-                onClick={() => {
-                  dismissSyncPrompt(userId);
-                  setSyncPromptVisible(false);
-                }}
-              >
-                Để sau
-              </Button>
-            </HStack>
-          </HStack>
-        </Box>
-      ) : null}
     </AuthContext.Provider>
   );
 }

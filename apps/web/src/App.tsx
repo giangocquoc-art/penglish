@@ -186,7 +186,7 @@ function AppRoutes() {
   const location = useLocation();
   const auth = useAuth();
   const user = useUserFromAuth();
-  const showInitialLoader = auth.loading || Boolean(auth.user);
+  const showInitialLoader = auth.loading;
   const initialLoader = useInitialOceanRiseLoaderReady(showInitialLoader);
   const isLoginCasingVariant = /^\/login\/?$/i.test(location.pathname) && location.pathname !== '/login';
   const pathname = location.pathname;
