@@ -114,7 +114,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [session?.user?.id]);
 
   const signInWithGoogle = useCallback(async () => {
-    if (!supabase) return { ok: false, message: 'Đăng nhập Google chưa bật. Bạn vẫn có thể học thử trên thiết bị này.' };
+    if (!supabase) return { ok: false, message: 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' };
 
     const intendedPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
     if (intendedPath && !/^\/(login|auth\/callback)/.test(window.location.pathname)) {
@@ -132,7 +132,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       },
     });
 
-    if (error) return { ok: false, message: 'Chưa mở được đăng nhập Google. Tiến độ trên thiết bị này vẫn an toàn.' };
+    if (error) return { ok: false, message: 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' };
     return { ok: true };
   }, []);
 

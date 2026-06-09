@@ -1,5 +1,5 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { lazy, Suspense, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { Navigate, matchPath, useLocation } from 'react-router-dom';
 import { Sidebar as ChakraSidebar } from './components/Sidebar';
 import { Topbar as ChakraTopbar, Shell as ChakraShell } from './components/Topbar';
 import { Button, Text, VStack } from '@chakra-ui/react';
@@ -9,7 +9,6 @@ import { avatarFromUser, displayNameFromUser } from './lib/p-english/userSession
 import { PooOceanRiseLoader } from './features/shell/PooOceanRiseLoader';
 
 const NewVocabPage = lazy(() => import('./pages/VocabPage').then((module) => ({ default: module.VocabPage })));
-const NewLandingPage = lazy(() => import('./pages/LandingPage').then((module) => ({ default: module.LandingPage })));
 const NewLoginPage = lazy(() => import('./pages/LoginPage').then((module) => ({ default: module.LoginPage })));
 const NewLoginCallbackPage = lazy(() => import('./pages/LoginPage').then((module) => ({ default: module.LoginCallbackPage })));
 const NewHomePage = lazy(() => import('./pages/HomePage').then((module) => ({ default: module.HomePage })));
@@ -143,7 +142,7 @@ function AuthGoogleSafePage() {
       <Text fontSize="sm" fontWeight="700" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">P-English Supabase Auth</Text>
       <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color="#0F172A" lineHeight="1.12">Đăng nhập Google</Text>
       <Text color="#475569" fontWeight="650" lineHeight="1.7">
-        {auth.authUnavailable ? 'Đăng nhập Google chưa bật. Bạn vẫn có thể học thử trên thiết bị này.' : 'Bạn có thể đăng nhập bằng Google để đồng bộ tiến độ theo tài khoản.'}
+        {auth.authUnavailable ? 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' : 'Đăng nhập bằng Google để lưu tiến độ và vào lớp học P-English.'}
       </Text>
       <Button onClick={() => void auth.signInWithGoogle()} bg="#1F6FD6" color="white" borderRadius="full" px="6" _hover={{ bg: '#185BB2' }}>
         Đăng nhập bằng Google
@@ -152,7 +151,29 @@ function AuthGoogleSafePage() {
   );
 }
 
-function NewShell({ children, user }: { children: React.ReactNode; user: User | null }) {
+function RequireAuth({ children }: { children: ReactNode }) {
+  const auth = useAuth();
+  const location = useLocation();
+  const initialLoader = useInitialOceanRiseLoaderReady(auth.loading);
+
+  if (auth.loading) {
+    return initialLoader.visible ? <PooOceanRiseLoader progress={initialLoader.progress} exiting={initialLoader.exiting} /> : null;
+  }
+
+  if (!auth.isAuthenticated) {
+    const requestedPath = `${location.pathname}${location.search}${location.hash}`;
+    const redirectTo = requestedPath && requestedPath !== '/' ? `?redirectTo=${encodeURIComponent(requestedPath)}` : '';
+    return <Navigate to={`/login${redirectTo}`} replace />;
+  }
+
+  return <>{children}</>;
+}
+
+function ProtectedShell({ children, user }: { children: ReactNode; user: User | null }) {
+  return <RequireAuth><NewShell user={user}>{children}</NewShell></RequireAuth>;
+}
+
+function NewShell({ children, user }: { children: ReactNode; user: User | null }) {
   return (
     <ChakraShell sidebar={<ChakraSidebar user={user} />}>
       <ChakraTopbar user={user} />
@@ -165,67 +186,51 @@ function AppRoutes() {
   const location = useLocation();
   const auth = useAuth();
   const user = useUserFromAuth();
-  const initialLoader = useInitialOceanRiseLoaderReady(auth.loading);
+  const showInitialLoader = auth.loading || Boolean(auth.user);
+  const initialLoader = useInitialOceanRiseLoaderReady(showInitialLoader);
   const isLoginCasingVariant = /^\/login\/?$/i.test(location.pathname) && location.pathname !== '/login';
-  const isPublicRoute = location.pathname === '/' || location.pathname === '/login' || isLoginCasingVariant || location.pathname === '/login/callback' || location.pathname === '/auth/google' || location.pathname === '/auth/callback';
+  const pathname = location.pathname;
 
-  if (isLoginCasingVariant) {
-    return <Navigate to="/login" replace />;
-  }
-
-  if (!isPublicRoute && auth.loading) {
-    return (
-      <>
-        <RouteMetadataUpdater />
-        {initialLoader.visible ? (
-          <PooOceanRiseLoader progress={initialLoader.progress} exiting={initialLoader.exiting} />
-        ) : null}
-      </>
-    );
-  }
+  let routeElement: ReactNode;
+  if (pathname === '/') routeElement = <Navigate to="/login" replace />;
+  else if (isLoginCasingVariant || pathname === '/login/') routeElement = <Navigate to="/login" replace />;
+  else if (pathname === '/login') routeElement = auth.loading || !auth.user ? <NewLoginPage /> : <Navigate to="/home" replace />;
+  else if (pathname === '/login/callback' || pathname === '/auth/callback') routeElement = <NewLoginCallbackPage />;
+  else if (pathname === '/auth/google') routeElement = <RequireAuth><NewShell user={user}><AuthGoogleSafePage /></NewShell></RequireAuth>;
+  else if (pathname === '/landing') routeElement = <Navigate to="/login" replace />;
+  else if (pathname === '/home') routeElement = <ProtectedShell user={user}><NewHomePage /></ProtectedShell>;
+  else if (matchPath('/paths/:id', pathname)) routeElement = <ProtectedShell user={user}><NewStudyPage /></ProtectedShell>;
+  else if (pathname === '/learning-path') routeElement = <ProtectedShell user={user}><NewLearningPathPage /></ProtectedShell>;
+  else if (matchPath('/learning-path/lesson/:unitId/:nodeId', pathname)) routeElement = <ProtectedShell user={user}><NewInteractiveLessonPage /></ProtectedShell>;
+  else if (matchPath('/learn/:lessonId', pathname)) routeElement = <ProtectedShell user={user}><NewInteractiveLessonPage /></ProtectedShell>;
+  else if (pathname === '/luyen-tieng-anh/48-ngay-lay-goc') routeElement = <ProtectedShell user={user}><Foundation48Page /></ProtectedShell>;
+  else if (matchPath('/luyen-tieng-anh/48-ngay-lay-goc/ngay/:dayNumber', pathname)) routeElement = <ProtectedShell user={user}><Foundation48DayPage /></ProtectedShell>;
+  else if (pathname === '/shadowing') routeElement = <ProtectedShell user={user}><NewShadowingPage /></ProtectedShell>;
+  else if (matchPath('/lessons/:lessonId', pathname)) routeElement = <ProtectedShell user={user}><NewLessonPage /></ProtectedShell>;
+  else if (pathname === '/categories' || pathname === '/category-list') routeElement = <ProtectedShell user={user}><NewCategoriesPage /></ProtectedShell>;
+  else if (pathname === '/vocabularies' || pathname === '/words') routeElement = <ProtectedShell user={user}><NewVocabPage /></ProtectedShell>;
+  else if (pathname === '/games') routeElement = <ProtectedShell user={user}><NewGamesPage /></ProtectedShell>;
+  else if (pathname === '/practice') routeElement = <ProtectedShell user={user}><NewPracticePage /></ProtectedShell>;
+  else if (pathname === '/english-speed') routeElement = <ProtectedShell user={user}><NewEnglishSpeedPage /></ProtectedShell>;
+  else if (pathname === '/resources') routeElement = <ProtectedShell user={user}><NewResourceHubPage /></ProtectedShell>;
+  else if (pathname === '/folders') routeElement = <ProtectedShell user={user}><NewFoldersPage /></ProtectedShell>;
+  else if (pathname === '/chat') routeElement = <ProtectedShell user={user}><NewChatPage /></ProtectedShell>;
+  else if (pathname === '/ai') routeElement = <ProtectedShell user={user}><NewAiPage /></ProtectedShell>;
+  else if (pathname === '/leaderboard') routeElement = <ProtectedShell user={user}><NewLeaderboardPage /></ProtectedShell>;
+  else if (pathname === '/shop') routeElement = <ProtectedShell user={user}><NewShopPage /></ProtectedShell>;
+  else if (pathname === '/store') routeElement = <RequireAuth><Navigate to="/shop" replace /></RequireAuth>;
+  else if (pathname === '/pricing' || pathname === '/subscriptions') routeElement = <ProtectedShell user={user}><NewPricingPage /></ProtectedShell>;
+  else if (pathname === '/shared-streak') routeElement = <ProtectedShell user={user}><NewSharedStreakPage /></ProtectedShell>;
+  else if (pathname === '/profile') routeElement = <ProtectedShell user={user}><NewProfilePage /></ProtectedShell>;
+  else routeElement = <ProtectedShell user={user}><NotFoundPage /></ProtectedShell>;
 
   return (
     <>
       <RouteMetadataUpdater />
       <Suspense fallback={<RouteLoadingFallback />}>
-        <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/landing" element={<NewLandingPage />} />
-        <Route path="/login" element={auth.loading || !auth.user ? <NewLoginPage /> : <Navigate to="/home" replace />} />
-        <Route path="/login/callback" element={<NewLoginCallbackPage />} />
-        <Route path="/auth/google" element={<NewShell user={user}><AuthGoogleSafePage /></NewShell>} />
-        <Route path="/auth/callback" element={<NewLoginCallbackPage />} />
-        <Route path="/home" element={<NewShell user={user}><NewHomePage /></NewShell>} />
-        <Route path="/paths/:id" element={<NewShell user={user}><NewStudyPage /></NewShell>} />
-        <Route path="/learning-path" element={<NewShell user={user}><NewLearningPathPage /></NewShell>} />
-        <Route path="/learning-path/lesson/:unitId/:nodeId" element={<NewShell user={user}><NewInteractiveLessonPage /></NewShell>} />
-        <Route path="/learn/:lessonId" element={<NewShell user={user}><NewInteractiveLessonPage /></NewShell>} />
-        <Route path="/luyen-tieng-anh/48-ngay-lay-goc" element={<NewShell user={user}><Foundation48Page /></NewShell>} />
-        <Route path="/luyen-tieng-anh/48-ngay-lay-goc/ngay/:dayNumber" element={<NewShell user={user}><Foundation48DayPage /></NewShell>} />
-        <Route path="/shadowing" element={<NewShell user={user}><NewShadowingPage /></NewShell>} />
-        <Route path="/lessons/:lessonId" element={<NewShell user={user}><NewLessonPage /></NewShell>} />
-        <Route path="/categories" element={<NewShell user={user}><NewCategoriesPage /></NewShell>} />
-        <Route path="/category-list" element={<NewShell user={user}><NewCategoriesPage /></NewShell>} />
-        <Route path="/vocabularies" element={<NewShell user={user}><NewVocabPage /></NewShell>} />
-        <Route path="/words" element={<NewShell user={user}><NewVocabPage /></NewShell>} />
-        <Route path="/games" element={<NewShell user={user}><NewGamesPage /></NewShell>} />
-        <Route path="/practice" element={<NewShell user={user}><NewPracticePage /></NewShell>} />
-        <Route path="/english-speed" element={<NewShell user={user}><NewEnglishSpeedPage /></NewShell>} />
-        <Route path="/resources" element={<NewShell user={user}><NewResourceHubPage /></NewShell>} />
-        <Route path="/folders" element={<NewShell user={user}><NewFoldersPage /></NewShell>} />
-        <Route path="/chat" element={<NewShell user={user}><NewChatPage /></NewShell>} />
-        <Route path="/ai" element={<NewShell user={user}><NewAiPage /></NewShell>} />
-        <Route path="/leaderboard" element={<NewShell user={user}><NewLeaderboardPage /></NewShell>} />
-        <Route path="/shop" element={<NewShell user={user}><NewShopPage /></NewShell>} />
-        <Route path="/store" element={<Navigate to="/shop" replace />} />
-        <Route path="/pricing" element={<NewShell user={user}><NewPricingPage /></NewShell>} />
-        <Route path="/subscriptions" element={<NewShell user={user}><NewPricingPage /></NewShell>} />
-        <Route path="/shared-streak" element={<NewShell user={user}><NewSharedStreakPage /></NewShell>} />
-        <Route path="/profile" element={<NewShell user={user}><NewProfilePage /></NewShell>} />
-        <Route path="*" element={<NewShell user={user}><NotFoundPage /></NewShell>} />
-        </Routes>
+        {routeElement}
       </Suspense>
-      {initialLoader.visible ? (
+      {showInitialLoader && initialLoader.visible ? (
         <PooOceanRiseLoader progress={initialLoader.progress} exiting={initialLoader.exiting} />
       ) : null}
     </>

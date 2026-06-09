@@ -62,7 +62,7 @@ export async function getCurrentSupabaseUser() {
 
 export async function signInWithGoogle() {
   if (!supabase) {
-    return { ok: false, message: 'Đăng nhập Google chưa bật. Bạn vẫn có thể học thử trên thiết bị này.' };
+    return { ok: false, message: 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' };
   }
 
   const redirectTo = `${window.location.origin}/auth/callback`;
@@ -73,7 +73,7 @@ export async function signInWithGoogle() {
 
   if (error) {
     console.error('Supabase Google OAuth failed', error);
-    return { ok: false, message: 'Chưa mở được đăng nhập Google. Tiến độ trên thiết bị này vẫn an toàn.' };
+    return { ok: false, message: 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' };
   }
 
   return { ok: true, message: null };

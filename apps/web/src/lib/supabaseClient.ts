@@ -21,7 +21,7 @@ export function getSupabaseAuthUnavailableState() {
   return {
     authUnavailable: !isSupabaseConfigured,
     reason: authUnavailableReason,
-    message: isSupabaseConfigured ? null : 'Đăng nhập Google chưa bật. Bạn vẫn có thể học thử trên thiết bị này.',
+    message: isSupabaseConfigured ? null : 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.',
   };
 }
 
