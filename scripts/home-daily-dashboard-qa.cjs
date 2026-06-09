@@ -12,15 +12,6 @@ const screenshots = {
   mobile: 'home-daily-dashboard-mobile.png',
 };
 
-function makeJwt(userId) {
-  const expiresAt = Math.floor(Date.now() / 1000) + 60 * 60;
-  const encode = (value) => Buffer.from(JSON.stringify(value)).toString('base64url');
-  return {
-    token: `${encode({ alg: 'none', typ: 'JWT' })}.${encode({ sub: userId, aud: 'authenticated', exp: expiresAt, role: 'authenticated', email: 'qa-home@example.com' })}.`,
-    expiresAt,
-  };
-}
-
 async function setupContext(browser) {
   const context = await browser.newContext();
   await context.route('**/*supabase.co/**', async (route) => {
@@ -98,21 +89,64 @@ async function assertHomeContent(page, label) {
   await page.getByText('Làm bài hôm nay trước. Ôn tập và shadowing là phần phụ.', { exact: true }).waitFor({ timeout: 8000 });
 
   const expectedTasks = [
-    ['home-task-today-lesson', 'Học bài hôm nay'],
-    ['home-task-mistakes', 'Ôn lỗi sai'],
-    ['home-task-shadowing', 'Shadowing 5 phút'],
-    ['home-task-words', 'Từ vựng cần nhớ'],
+    ['home-task-today-lesson', 'Học bài hôm nay', 'Bắt đầu'],
+    ['home-task-mistakes', 'Ôn lỗi sai', 'Ôn nhẹ'],
+    ['home-task-shadowing', 'Shadowing 5 phút', 'Luyện nói'],
+    ['home-task-words', 'Từ vựng cần nhớ', 'Ôn từ'],
   ];
-  for (const [testId, text] of expectedTasks) {
-    await page.getByTestId(testId).waitFor({ timeout: 8000 });
-    await page.getByText(text, { exact: true }).waitFor({ timeout: 8000 });
+  for (const [testId, text, action] of expectedTasks) {
+    const card = page.getByTestId(testId);
+    await card.waitFor({ timeout: 8000 });
+    await card.getByText(text, { exact: true }).waitFor({ timeout: 8000 });
+    await card.getByText(action, { exact: true }).waitFor({ timeout: 8000 });
   }
+  await page.getByTestId('home-task-mistakes').getByText('Ôn nhẹ vài câu để chắc hơn.', { exact: true }).waitFor({ timeout: 8000 });
+  await page.getByTestId('home-task-shadowing').getByText('Nghe một câu, nói lại chậm.', { exact: true }).waitFor({ timeout: 8000 });
+  await page.getByTestId('home-task-words').getByText('Ôn vài từ để giữ trí nhớ.', { exact: true }).waitFor({ timeout: 8000 });
 
   const primaryCount = await page.getByRole('link', { name: /Bắt đầu bài hôm nay/i }).count();
   if (primaryCount !== 1) throw new Error(`${label}: expected one main today CTA, got ${primaryCount}`);
 
   const duplicateStart = await page.getByText('Học tiếp', { exact: true }).count();
   if (duplicateStart) throw new Error(`${label}: duplicate Học tiếp CTA should not be visible on /home`);
+}
+
+async function assertMobileStatusRow(page, label) {
+  const statusRow = page.getByTestId('home-compact-mobile-status');
+  await statusRow.waitFor({ timeout: 8000 });
+  await statusRow.getByText('Ngày 2', { exact: true }).waitFor({ timeout: 8000 });
+  await statusRow.getByText('Bọt biển 5/5', { exact: true }).waitFor({ timeout: 8000 });
+  await statusRow.getByText('Chưa bắt đầu', { exact: true }).waitFor({ timeout: 8000 });
+  const metrics = await page.evaluate(() => {
+    const row = document.querySelector('[data-testid="home-compact-mobile-status"]')?.getBoundingClientRect();
+    const desktopPills = document.querySelector('[data-testid="home-simple-progress"]')?.getBoundingClientRect();
+    return {
+      rowHeight: row?.height ?? null,
+      desktopPillsVisible: Boolean(desktopPills && desktopPills.width > 0 && desktopPills.height > 0),
+    };
+  });
+  if (metrics.rowHeight === null || metrics.rowHeight > 48) throw new Error(`${label}: mobile status row should stay compact: ${JSON.stringify(metrics)}`);
+  if (metrics.desktopPillsVisible) throw new Error(`${label}: desktop 3-pill status should be hidden on mobile: ${JSON.stringify(metrics)}`);
+}
+
+async function assertMobileBottomSafe(page, label) {
+  await page.getByTestId('home-today-summary').scrollIntoViewIfNeeded();
+  await page.waitForTimeout(150);
+  const metrics = await page.evaluate(() => {
+    const summary = document.querySelector('[data-testid="home-today-summary"]')?.getBoundingClientRect();
+    const lastTask = document.querySelector('[data-testid="home-task-words"]')?.getBoundingClientRect();
+    return {
+      viewportHeight: window.innerHeight,
+      reservedBottomNavSpace: 96,
+      summaryBottom: summary?.bottom ?? null,
+      lastTaskBottom: lastTask?.bottom ?? null,
+      bodyScrollWidth: document.body.scrollWidth,
+      htmlClientWidth: document.documentElement.clientWidth,
+    };
+  });
+  if (metrics.summaryBottom === null || metrics.summaryBottom > metrics.viewportHeight - metrics.reservedBottomNavSpace) {
+    throw new Error(`${label}: bottom nav could cover summary card/action: ${JSON.stringify(metrics)}`);
+  }
 }
 
 async function assertMobileFirstScreen(page, label) {
@@ -196,6 +230,8 @@ async function assertVietnamese(page, label) {
     await gotoHome(page, 390, 844, 'mobile');
     await assertHomeContent(page, 'mobile');
     await assertMobileFirstScreen(page, 'mobile');
+    await assertMobileStatusRow(page, 'mobile');
+    await assertMobileBottomSafe(page, 'mobile');
     await assertVietnamese(page, 'mobile');
     await checkOverflow(page, 'mobile');
     await page.screenshot({ path: path.join(outDir, screenshots.mobile), fullPage: true });

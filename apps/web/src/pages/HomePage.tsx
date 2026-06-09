@@ -56,9 +56,9 @@ function MiniProgressPill({ label, value, tone = 'blue' }: { label: string; valu
   const color = tone === 'green' ? '#15803D' : tone === 'orange' ? '#B45309' : OCEAN_TOKENS.deepBlue;
   const bg = tone === 'green' ? 'rgba(220,252,231,0.72)' : tone === 'orange' ? 'rgba(255,243,196,0.78)' : 'rgba(232,244,255,0.76)';
   return (
-    <Box border="1px solid" borderColor="rgba(255,255,255,0.74)" bg={bg} borderRadius="2xl" px={{ base: '3', md: '3.5' }} py="3" minW="0" data-testid={`home-progress-${label}`}>
-      <Text color={color} fontWeight="950" fontSize={{ base: 'md', md: 'lg' }} lineHeight="1" noOfLines={1}>{value}</Text>
-      <Text mt="1" color={OCEAN_TOKENS.muted} fontWeight="850" fontSize="xs" noOfLines={1}>{label}</Text>
+    <Box border="1px solid" borderColor="rgba(255,255,255,0.74)" bg={bg} borderRadius="2xl" px={{ base: '2.5', md: '3.5' }} py={{ base: '2.5', md: '3' }} minW="0" data-testid={`home-progress-${label}`}>
+      <Text color={color} fontWeight="950" fontSize={{ base: 'sm', md: 'lg' }} lineHeight="1" noOfLines={1}>{value}</Text>
+      <Text mt="1" color={OCEAN_TOKENS.muted} fontWeight="850" fontSize={{ base: '2xs', md: 'xs' }} noOfLines={1}>{label}</Text>
     </Box>
   );
 }
@@ -75,13 +75,13 @@ function DailyTaskCard({ task }: { task: DailyTask }) {
       data-testid={task.testId}
       data-home-task={task.title}
       aria-label={`${task.cta}: ${task.title}`}
-      p={{ base: '3', md: '4' }}
-      minH={{ base: '118px', md: '156px' }}
+      p={{ base: '2.75', md: '4' }}
+      minH={{ base: '108px', md: '156px' }}
       bg="rgba(255,255,255,0.70)"
       borderColor={OCEAN_TOKENS.border}
       display="flex"
       flexDirection="column"
-      gap="2.5"
+      gap={{ base: '2', md: '2.5' }}
       minW="0"
       overflow="hidden"
       _hover={{ transform: 'translateY(-2px)', boxShadow: OCEAN_TOKENS.shadow }}
@@ -89,10 +89,10 @@ function DailyTaskCard({ task }: { task: DailyTask }) {
       _focusVisible={{ outline: '3px solid', outlineColor: OCEAN_TOKENS.oceanBlue, outlineOffset: '3px' }}
     >
       <HStack align="start" justify="space-between" gap="2">
-        <Circle size={{ base: '38px', md: '44px' }} bg={accentBg} color={accentColor} border="1px solid" borderColor="rgba(255,255,255,0.78)" flexShrink={0}>
-          <Icon as={task.icon} boxSize={{ base: '5', md: '6' }} />
+        <Circle size={{ base: '34px', md: '44px' }} bg={accentBg} color={accentColor} border="1px solid" borderColor="rgba(255,255,255,0.78)" flexShrink={0}>
+          <Icon as={task.icon} boxSize={{ base: '4.5', md: '6' }} />
         </Circle>
-        <Text fontSize="xs" color={accentColor} fontWeight="950" bg={accentBg} borderRadius="full" px="2.5" py="1" noOfLines={1}>{task.cta}</Text>
+        <Text fontSize={{ base: '2xs', md: 'xs' }} color={accentColor} fontWeight="950" bg={accentBg} borderRadius="full" px={{ base: '2', md: '2.5' }} py="1" noOfLines={1}>{task.cta}</Text>
       </HStack>
       <Box minW="0" flex="1">
         <Text color={OCEAN_TOKENS.text} fontWeight="950" fontSize={{ base: 'md', md: 'lg' }} lineHeight="1.18" noOfLines={1}>{task.title}</Text>
@@ -144,7 +144,7 @@ export function HomePage() {
     },
     {
       title: 'Ôn lỗi sai',
-      subtitle: learningSummary.difficultWordCount > 0 ? `${learningSummary.difficultWordCount} mục Poo đang giữ lại.` : 'Chưa có lỗi sai lớn hôm nay.',
+      subtitle: learningSummary.difficultWordCount > 0 ? `${learningSummary.difficultWordCount} mục Poo đang giữ lại.` : 'Ôn nhẹ vài câu để chắc hơn.',
       cta: 'Ôn nhẹ',
       to: WEAK_REVIEW_PATH,
       icon: Sparkles,
@@ -205,7 +205,7 @@ export function HomePage() {
   }, [reducedMotion, progressVersion]);
 
   return (
-    <OceanPageShell data-testid="home-page" variant="dashboard" overlayStrength="medium" ref={dashboardRef} px={{ base: '3', md: '5', xl: '6' }} py={{ base: '2', lg: '5' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 112px)', lg: '8' }} maxW="1180px" mx="auto" overflowX="hidden">
+    <OceanPageShell data-testid="home-page" variant="dashboard" overlayStrength="medium" ref={dashboardRef} px={{ base: '3', md: '5', xl: '6' }} py={{ base: '2', lg: '5' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 188px)', md: '10', lg: '8' }} maxW="1180px" mx="auto" overflowX="hidden">
       <Box as="h1" position="absolute" left="-9999px" w="1px" h="1px" overflow="hidden">Trang chủ</Box>
 
       <GlassPanel className="home-dashboard-card" data-testid="home-daily-hero" p={{ base: '3.5', md: '6' }} mb={{ base: '3', md: '4' }} bg="rgba(255,255,255,0.60)" borderColor={OCEAN_TOKENS.borderStrong} position="relative" overflow="hidden">
@@ -234,7 +234,17 @@ export function HomePage() {
         </Flex>
       </GlassPanel>
 
-      <SimpleGrid columns={{ base: 3, md: 3 }} gap={{ base: '2', md: '3' }} mb={{ base: '3', md: '4' }} data-testid="home-simple-progress">
+      <Box display={{ base: 'block', md: 'none' }} mb="3" data-testid="home-compact-mobile-status">
+        <HStack ref={pulseRef} justify="center" gap="1.5" border="1px solid" borderColor="rgba(255,255,255,0.74)" bg="rgba(255,255,255,0.58)" borderRadius="full" px="3" py="2" color={OCEAN_TOKENS.deepBlue} fontSize="xs" fontWeight="950" whiteSpace="nowrap" overflow="hidden">
+          <Text noOfLines={1}>Ngày {dailyTarget.dayNumber}</Text>
+          <Text color={OCEAN_TOKENS.muted}>·</Text>
+          <Text noOfLines={1}>Bọt biển {bubblesLabel}</Text>
+          <Text color={OCEAN_TOKENS.muted}>·</Text>
+          <Text color={todayProgress >= 100 || dailyTarget.completedToday ? '#15803D' : OCEAN_TOKENS.deepBlue} noOfLines={1}>{todayStatus}</Text>
+        </HStack>
+      </Box>
+
+      <SimpleGrid columns={{ base: 3, md: 3 }} gap={{ base: '2', md: '3' }} mb={{ base: '3', md: '4' }} data-testid="home-simple-progress" display={{ base: 'none', md: 'grid' }}>
         <Box ref={pulseRef}><MiniProgressPill label="Hôm nay" value={todayStatus} tone={todayProgress >= 100 || dailyTarget.completedToday ? 'green' : 'blue'} /></Box>
         <MiniProgressPill label="Bọt biển" value={bubblesLabel} tone="orange" />
         <MiniProgressPill label="Lộ trình" value={`Ngày ${dailyTarget.dayNumber}`} tone={dailyTarget.completedDays > 0 ? 'green' : 'blue'} />
@@ -249,11 +259,11 @@ export function HomePage() {
         </VStack>
 
         <VStack align="stretch" gap={{ base: '3', md: '4' }}>
-          <GlassPanel className="home-dashboard-card" data-testid="home-today-summary" p={{ base: '3', md: '4' }} bg="rgba(255,255,255,0.68)" borderColor={OCEAN_TOKENS.borderStrong}>
+          <GlassPanel className="home-dashboard-card" data-testid="home-today-summary" p={{ base: '2.75', md: '4' }} bg="rgba(255,255,255,0.68)" borderColor={OCEAN_TOKENS.borderStrong}>
             <Text color={OCEAN_TOKENS.deepBlue} fontWeight="950" fontSize="xs" letterSpacing="1.8px" textTransform="uppercase">Tiến độ đơn giản</Text>
-            <Text mt="2" color={OCEAN_TOKENS.text} fontWeight="950" fontSize={{ base: 'lg', md: 'xl' }}>Bài nên học ngay</Text>
+            <Text mt={{ base: '1.5', md: '2' }} color={OCEAN_TOKENS.text} fontWeight="950" fontSize={{ base: 'md', md: 'xl' }}>Bài nên học ngay</Text>
             <Text mt="1" color={OCEAN_TOKENS.muted} fontWeight="800" lineHeight="1.45" fontSize="sm">{dailyTarget.label}</Text>
-            <SimpleGrid columns={2} gap="2.5" mt="3">
+            <SimpleGrid columns={2} gap="2.5" mt="3" display={{ base: 'none', sm: 'grid' }}>
               <MiniProgressPill label="Streak" value={streakLabel} tone="orange" />
               <MiniProgressPill label="Ngày xong" value={`${dailyTarget.completedDays}/48`} tone={dailyTarget.completedDays > 0 ? 'green' : 'blue'} />
               <MiniProgressPill label="Từ cần ôn" value={learningSummary.vocabularyDueCount > 0 ? `${learningSummary.vocabularyDueCount}` : '0'} tone={learningSummary.vocabularyDueCount > 0 ? 'orange' : 'blue'} />
