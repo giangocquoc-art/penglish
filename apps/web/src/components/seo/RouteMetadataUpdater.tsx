@@ -8,81 +8,73 @@ export type RouteMetadata = {
 };
 
 const DEFAULT_METADATA: RouteMetadata = {
-  title: 'P-English — Học tiếng Anh mỗi ngày cùng Poo',
-  description: 'P-English là app học tiếng Anh local-first với lộ trình học rõ ràng, 48 ngày lấy gốc, shadowing, English Speed và ôn từ vựng mỗi ngày.',
+  title: 'PooEnglish — học tiếng Anh mỗi ngày cùng Poo',
+  description: 'Ứng dụng học tiếng Anh nhẹ nhàng với lộ trình 48 ngày, nói đuổi, luyện phản xạ, từ vựng và sổ lỗi sai cá nhân.',
   canonicalPath: '/',
 };
 
 const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: RouteMetadata }> = [
   {
-    test: (pathname) => pathname === '/' || pathname === '/landing',
+    test: (pathname) => pathname === '/' || pathname === '/home' || pathname === '/landing',
     metadata: {
-      title: 'P-English — Học tiếng Anh mỗi ngày cùng Poo',
-      description: 'Bắt đầu học tiếng Anh cùng Poo bằng bài học ngắn, lộ trình 48 ngày lấy gốc, shadowing và ôn từ vựng thông minh.',
+      title: 'PooEnglish — học tiếng Anh mỗi ngày cùng Poo',
+      description: 'Ứng dụng học tiếng Anh nhẹ nhàng với lộ trình 48 ngày, nói đuổi, luyện phản xạ, từ vựng và sổ lỗi sai cá nhân.',
       canonicalPath: '/',
-    },
-  },
-  {
-    test: (pathname) => pathname === '/home',
-    metadata: {
-      title: 'Hôm nay học gì? — P-English',
-      description: 'Màn hình hôm nay của P-English: bắt đầu bài học gợi ý, xem lộ trình 48 ngày, luyện shadowing và ôn từ cần nhớ.',
-      canonicalPath: '/home',
     },
   },
   {
     test: (pathname) => pathname === '/learning-path',
     metadata: {
-      title: 'Lộ trình học tiếng Anh — P-English',
-      description: 'Learning path dạng từng nút bài học: từ vựng, nghe, nói, ngữ pháp, quiz và checkpoint theo hành trình A1–B2.',
+      title: 'Lộ trình học tiếng Anh — PooEnglish',
+      description: 'Học tiếng Anh theo bản đồ kỹ năng từ mất gốc đến giao tiếp tự tin.',
       canonicalPath: '/learning-path',
     },
   },
   {
     test: (pathname) => pathname.startsWith('/luyen-tieng-anh/48-ngay-lay-goc'),
     metadata: {
-      title: '48 ngày lấy gốc tiếng Anh — P-English',
-      description: 'Khóa học nền tảng 48 ngày với bài học nhỏ, nghe bằng TTS, bài tập tương tác, speaking và ôn lỗi sai local-first.',
+      title: '48 ngày lấy gốc tiếng Anh — PooEnglish',
+      description: 'Khóa học nền tảng giúp người mất gốc xây lại từ vựng, mẫu câu, nghe, nói và phản xạ mỗi ngày.',
       canonicalPath: '/luyen-tieng-anh/48-ngay-lay-goc',
-    },
-  },
-  {
-    test: (pathname) => pathname === '/english-speed',
-    metadata: {
-      title: 'English Speed — Luyện phản xạ phát âm',
-      description: 'Luyện phản xạ tiếng Anh bằng câu ngắn, nghe mẫu, nói lại và tăng tốc từng lượt cùng Poo.',
-      canonicalPath: '/english-speed',
-    },
-  },
-  {
-    test: (pathname) => pathname === '/shadowing',
-    metadata: {
-      title: 'Shadowing tiếng Anh — Nghe, nói, sửa nhịp',
-      description: 'Luyện shadowing theo vòng nghe mẫu, nói lại, xem phản hồi và lưu câu khó để ôn lại.',
-      canonicalPath: '/shadowing',
     },
   },
   {
     test: (pathname) => pathname === '/practice',
     metadata: {
-      title: 'Ôn tập tiếng Anh — P-English',
-      description: 'Trung tâm ôn tập lỗi sai, từ đến hạn, câu shadowing khó và bài luyện ngắn theo tiến độ local.',
+      title: 'Luyện tập tiếng Anh — PooEnglish',
+      description: 'Luyện nghe, nói, đọc, từ vựng và phản xạ qua các bài tập nhỏ mỗi ngày.',
       canonicalPath: '/practice',
     },
   },
   {
     test: (pathname) => pathname === '/words' || pathname === '/vocabularies' || pathname.startsWith('/words?') || pathname.startsWith('/vocabularies?'),
     metadata: {
-      title: 'Sổ tay từ vựng tiếng Anh — P-English',
-      description: 'Sổ tay từ vựng cá nhân để lưu từ, ôn flashcard, xem từ khó và học theo CEFR A1–B2.',
+      title: 'Sổ học của tôi — PooEnglish',
+      description: 'Lưu từ vựng, lỗi sai, câu khó, mẫu câu và nội dung cần ôn lại.',
       canonicalPath: '/words',
+    },
+  },
+  {
+    test: (pathname) => pathname === '/shadowing',
+    metadata: {
+      title: 'Nói đuổi cùng Poo — PooEnglish',
+      description: 'Nghe mẫu, nói lại và nhận góp ý để luyện phát âm, nhịp nói và phản xạ tiếng Anh.',
+      canonicalPath: '/shadowing',
+    },
+  },
+  {
+    test: (pathname) => pathname === '/english-speed',
+    metadata: {
+      title: 'Luyện tốc độ tiếng Anh — PooEnglish',
+      description: 'Luyện phản xạ tiếng Anh nhanh qua các thử thách nghe, hiểu, chọn nghĩa và nói lại.',
+      canonicalPath: '/english-speed',
     },
   },
   {
     test: (pathname) => pathname === '/profile',
     metadata: {
-      title: 'Hồ sơ học tập — P-English',
-      description: 'Xem hồ sơ học tập, streak, dữ liệu local và trạng thái đồng bộ của bạn trên P-English.',
+      title: 'Hồ sơ học tập — PooEnglish',
+      description: 'Xem hồ sơ học tập, chuỗi ngày học, tiến độ trên thiết bị này và trạng thái đồng bộ của bạn trên PooEnglish.',
       canonicalPath: '/profile',
     },
   },
@@ -106,6 +98,7 @@ export function RouteMetadataUpdater() {
 
   useEffect(() => {
     const metadata = getMetadata(location.pathname);
+    const canonicalUrl = new URL(metadata.canonicalPath, window.location.origin).toString();
     document.title = metadata.title;
     upsertMeta('meta[name="description"]', () => {
       const meta = document.createElement('meta');
@@ -126,7 +119,7 @@ export function RouteMetadataUpdater() {
       const meta = document.createElement('meta');
       meta.setAttribute('property', 'og:url');
       return meta;
-    }, metadata.canonicalPath);
+    }, canonicalUrl);
     upsertMeta('meta[name="twitter:title"]', () => {
       const meta = document.createElement('meta');
       meta.name = 'twitter:title';
@@ -141,7 +134,7 @@ export function RouteMetadataUpdater() {
       const link = document.createElement('link');
       link.rel = 'canonical';
       return link;
-    }, metadata.canonicalPath, 'href');
+    }, canonicalUrl, 'href');
   }, [location.pathname]);
 
   return null;

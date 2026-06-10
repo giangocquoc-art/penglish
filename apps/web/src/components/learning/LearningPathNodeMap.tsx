@@ -52,8 +52,8 @@ const NODE_META: Record<LearningPathNodeType, { label: string; icon: any; bg: st
   listening: { label: 'Nghe', icon: Headphones, bg: '#ECFEFF', color: '#0891B2' },
   speaking: { label: 'Nói', icon: Mic2, bg: '#FFF7ED', color: COLORS.coral },
   quiz: { label: 'Kiểm tra', icon: ShieldCheck, bg: '#F0FDF4', color: COLORS.green },
-  review: { label: 'Ôn tập', icon: Dumbbell, bg: '#FFFBEB', color: '#B45309' },
-  checkpoint: { label: 'Checkpoint', icon: ShieldCheck, bg: '#E0F2FE', color: COLORS.blue },
+  review: { label: 'Ôn lại', icon: Dumbbell, bg: '#FFFBEB', color: '#B45309' },
+  checkpoint: { label: 'Bài kiểm tra nhỏ', icon: ShieldCheck, bg: '#E0F2FE', color: COLORS.blue },
 };
 
 const MODE_TO_NODE: Record<UnifiedPracticeMode, LearningPathNodeType> = {
@@ -113,7 +113,7 @@ export function buildLearningPathNodeUnits(
 
     nodes.push({
       id: `${unit.id}-checkpoint`,
-      title: unitIndex % 3 === 2 ? 'Checkpoint' : 'Chốt bài',
+      title: unitIndex % 3 === 2 ? 'Bài kiểm tra nhỏ' : 'Chốt bài',
       subtitle: unit.confidenceGoal,
       type: unitIndex % 3 === 2 ? 'checkpoint' : 'quiz',
       state: locked ? 'locked' : unitCompleted ? 'completed' : unitCurrent ? 'checkpoint' : 'review',
@@ -140,14 +140,14 @@ export function LearningPathNodeMap({ units, compact = false }: { units: Learnin
           <HStack justify="space-between" align="start" mb="4" gap="3">
             <Box minW="0">
               <HStack gap="2" wrap="wrap" mb="1">
-                <Tag borderRadius="full" bg="#E8F4FF" color={COLORS.blue} fontWeight="950">Unit {unitIndex + 1}</Tag>
+                <Tag borderRadius="full" bg="#E8F4FF" color={COLORS.blue} fontWeight="950">Bài {unitIndex + 1}</Tag>
                 <Tag borderRadius="full" bg="#ECFDF5" color={COLORS.green} fontWeight="900">{unit.level}</Tag>
               </HStack>
               <Text as="h2" color={COLORS.text} fontWeight="950" fontSize={{ base: 'lg', md: '2xl' }} lineHeight="1.15">{unit.title}</Text>
               <Text mt="1" color={COLORS.muted} fontWeight="750" fontSize="sm" lineHeight="1.55" noOfLines={{ base: 2, md: 3 }}>{unit.subtitle}</Text>
             </Box>
             <Text flexShrink={0} fontSize="xs" fontWeight="950" color={COLORS.blue} bg="#F8FCFF" border="1px solid" borderColor={COLORS.border} borderRadius="full" px="3" py="1">
-              {unit.nodes.length} chấm
+              {unit.nodes.length} điểm học
             </Text>
           </HStack>
           <Flex direction="column" align="center" gap="0" position="relative" pb="1">

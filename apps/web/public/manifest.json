@@ -1,4 +1,4 @@
-{
+﻿{
     "id": "/",
     "name": "Pshare - Hoc Tu Vung Tieng Anh",
     "short_name": "Pshare",
@@ -11,7 +11,7 @@
     "orientation": "portrait-primary",
     "icons": [
         {
-            "src": "/brand/p-english-whale-icon.png",
+            "src": "/brand/PooEnglish-whale-icon.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"

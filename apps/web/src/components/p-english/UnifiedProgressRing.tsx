@@ -65,7 +65,7 @@ export function UnifiedProgressRing({
             </HStack>
           </Box>
           <Box textAlign="right" flexShrink={0}>
-            <Text fontSize="sm" color={COLORS.muted} fontWeight="800">Unit</Text>
+            <Text fontSize="sm" color={COLORS.muted} fontWeight="800">Bài</Text>
             <Text fontSize="xl" fontWeight="950" color={COLORS.green}>{completedUnits}/{totalUnits}</Text>
           </Box>
         </HStack>

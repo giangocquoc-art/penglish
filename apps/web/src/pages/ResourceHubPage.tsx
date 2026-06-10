@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+﻿import { useMemo, useState } from 'react';
 import { Box, Button, Flex, HStack, Input, SimpleGrid, Tag, TagLabel, Text, VStack } from '@chakra-ui/react';
 import { ExternalLink, Search, Waves } from 'lucide-react';
 import { generatedEnglishResourceHub } from '../data/resources/generatedEnglishResourceHub';
@@ -18,6 +18,10 @@ const COLORS = {
 
 const SKILL_FILTERS: Array<'Tất cả' | EnglishResourceSkillTag> = ['Tất cả', 'Từ vựng', 'Ngữ pháp', 'Đọc', 'Nghe', 'Shadowing', 'Phát âm', 'Tự học miễn phí'];
 const CEFR_FILTERS: Array<'Tất cả' | EnglishResourceCefrLevel> = ['Tất cả', 'A1', 'A2', 'B1', 'B2', 'All'];
+
+function skillLabel(skill: string) {
+  return skill === 'Shadowing' ? 'Nói đuổi' : skill;
+}
 
 export function ResourceHubPage() {
   const [selectedSkill, setSelectedSkill] = useState<(typeof SKILL_FILTERS)[number]>('Tất cả');
@@ -42,7 +46,7 @@ export function ResourceHubPage() {
         <Box position="relative" minW="0">
           <HStack mb="2" gap="2" wrap="wrap">
             <Tag borderRadius="full" bg={COLORS.yellow} color={COLORS.text}><TagLabel>🐋 Kho tài nguyên</TagLabel></Tag>
-            <Tag borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD"><TagLabel>Học trong P-English trước, dùng link sau</TagLabel></Tag>
+            <Tag borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD"><TagLabel>Học trong PooEnglish trước, dùng link sau</TagLabel></Tag>
           </HStack>
           <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={COLORS.text} lineHeight="1.1">Kho tài nguyên học thêm</Text>
           <Text mt="3" color={COLORS.muted} maxW="760px" fontWeight="600">Tài nguyên miễn phí được chọn lọc theo CEFR và kỹ năng. Mỗi gợi ý có cách dùng rõ ràng để bạn không bị lạc trong quá nhiều link.</Text>
@@ -56,7 +60,7 @@ export function ResourceHubPage() {
             <Text mb="2" fontSize="sm" fontWeight="900" color={COLORS.text}>Tìm nhanh</Text>
             <Box position="relative">
               <Box position="absolute" left="3" top="50%" transform="translateY(-50%)" color={COLORS.muted} pointerEvents="none"><Search size={16} /></Box>
-              <Input data-testid="resource-search-input" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder="Tìm nghe, phát âm, A1, shadowing..." pl="9" borderRadius="full" bg="white" borderColor="#BAE6FD" _focusVisible={{ borderColor: COLORS.oceanBlue, boxShadow: `0 0 0 3px ${COLORS.softAqua}` }} />
+              <Input data-testid="resource-search-input" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder="Tìm nghe, phát âm, A1, nói đuổi..." pl="9" borderRadius="full" bg="white" borderColor="#BAE6FD" _focusVisible={{ borderColor: COLORS.oceanBlue, boxShadow: `0 0 0 3px ${COLORS.softAqua}` }} />
             </Box>
           </Box>
           <Box flex="2" minW="0">
@@ -64,7 +68,7 @@ export function ResourceHubPage() {
             <HStack gap="2" wrap="wrap">
               {SKILL_FILTERS.map((skill) => {
                 const active = selectedSkill === skill;
-                return <Button key={skill} data-testid={`resource-skill-filter-${skill === 'Tất cả' ? 'all' : skill.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/\s+/g, '-')}`} size="sm" borderRadius="full" variant="outline" bg={active ? COLORS.oceanBlue : 'white'} color={active ? 'white' : COLORS.deepBlue} borderColor={active ? COLORS.oceanBlue : '#BAE6FD'} onClick={() => setSelectedSkill(skill)}>{skill}</Button>;
+                return <Button key={skill} data-testid={`resource-skill-filter-${skill === 'Tất cả' ? 'all' : skill.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/\s+/g, '-')}`} size="sm" borderRadius="full" variant="outline" bg={active ? COLORS.oceanBlue : 'white'} color={active ? 'white' : COLORS.deepBlue} borderColor={active ? COLORS.oceanBlue : '#BAE6FD'} onClick={() => setSelectedSkill(skill)}>{skillLabel(skill)}</Button>;
               })}
             </HStack>
           </Box>
@@ -97,7 +101,7 @@ export function ResourceHubPage() {
                 </Box>
                 <HStack gap="2" wrap="wrap">
                   {resource.cefrLevels.map((level) => <Tag key={level} size="sm" borderRadius="full" bg="#F0F9FF" color={COLORS.deepBlue}><TagLabel>{level === 'All' ? 'Mọi mức' : level}</TagLabel></Tag>)}
-                  {resource.skillTags.slice(0, 3).map((skill) => <Tag key={skill} size="sm" borderRadius="full" bg="#F8FAFC" color={COLORS.text}><TagLabel>{skill}</TagLabel></Tag>)}
+                  {resource.skillTags.slice(0, 3).map((skill) => <Tag key={skill} size="sm" borderRadius="full" bg="#F8FAFC" color={COLORS.text}><TagLabel>{skillLabel(skill)}</TagLabel></Tag>)}
                 </HStack>
                 <Text color={COLORS.muted} fontSize="sm" lineHeight="1.65">{resource.summaryVi}</Text>
                 <Box p="3" borderRadius="2xl" bg="#F8FCFF" border="1px solid" borderColor="#E0F2FE">

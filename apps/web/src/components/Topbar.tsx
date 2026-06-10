@@ -40,14 +40,14 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
       borderBottom="1px solid"
       borderColor="rgba(148, 202, 232, 0.30)"
       backdropFilter="blur(18px)"
-      position={{ base: 'static', lg: 'sticky' }}
-      top={{ base: 'auto', lg: '0' }}
-      zIndex="20"
+      position="relative"
+      top="auto"
+      zIndex="5"
     >
       <MobileDrawerToggle user={user} />
 
       <Box display={{ base: 'none', md: 'block' }} color={OCEAN_TOKENS.muted} fontWeight="700" fontSize="sm">
-        P-English · vùng học yên tĩnh
+        PooEnglish · vùng học yên tĩnh
       </Box>
 
       <HStack gap={{ base: '2', md: '3' }} ml="auto">
@@ -87,7 +87,7 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
         </Button>
 
         <IconButton
-          aria-label="P-English học miễn phí"
+          aria-label="PooEnglish học miễn phí"
           icon={<Icon as={Star} />}
           bg="rgba(255, 255, 255, 0.72)"
           color={OCEAN_TOKENS.deepBlue}

@@ -24,8 +24,8 @@ export const DEFAULT_PRACTICE_MODE_LABEL = 'Luyện tập';
 export const DEFAULT_PRACTICE_MODE_ICON = Target;
 
 export const PRACTICE_MODE_LABELS: Record<VisiblePracticeMode, string> = {
-  flashcard: 'Flashcard',
-  quiz: 'Quiz',
+  flashcard: 'Thẻ từ',
+  quiz: 'Kiểm tra nhanh',
   listen: 'Luyện nghe',
   listening: 'Luyện nghe',
   reflex: 'Phản xạ',
@@ -33,7 +33,7 @@ export const PRACTICE_MODE_LABELS: Record<VisiblePracticeMode, string> = {
   typing: 'Gõ câu',
   match: 'Ghép cặp',
   speed: 'Tốc độ / phát âm',
-  review: 'Ôn tập',
+  review: 'Ôn lại',
   overview: 'Tổng quan',
 };
 
@@ -104,11 +104,11 @@ export function DynamicGuidedLessonFlow({
   if (!step) {
     return (
       <Box mb="6" bg="white" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '5', md: '6' }} boxShadow="0 18px 44px rgba(31, 111, 214, 0.08)">
-        <Text fontSize="2xl" fontWeight="950" color={COLORS.text}>Bài này đang ở chế độ đọc nội dung.</Text>
-        <Text mt="2" color={COLORS.muted} fontWeight="700">Chưa có mode luyện tập riêng cho bài này. Bạn có thể đọc nội dung bên dưới hoặc quay lại lộ trình để chọn bài khác.</Text>
+        <Text fontSize="2xl" fontWeight="950" color={COLORS.text}>Bài này đang ở phần đọc nội dung.</Text>
+        <Text mt="2" color={COLORS.muted} fontWeight="700">Chưa có phần luyện riêng cho bài này. Bạn có thể đọc nội dung bên dưới hoặc quay lại lộ trình để chọn bài khác.</Text>
         <HStack mt="5" wrap="wrap">
           <Button as={Link} to="/learning-path" borderRadius="full" bg={COLORS.primary} color="white">Xem lộ trình</Button>
-          <Button as={Link} to="/home" borderRadius="full" variant="outline">Về dashboard</Button>
+          <Button as={Link} to="/home" borderRadius="full" variant="outline">Về Hôm nay học gì?</Button>
         </HStack>
       </Box>
     );
@@ -128,14 +128,14 @@ export function DynamicGuidedLessonFlow({
               </Tag>
               {activeModeDepth ? (
                 <Tag borderRadius="full" bg={activeModeDepth.isReady ? '#ECFDF5' : '#FFF7ED'} color={activeModeDepth.isReady ? '#047857' : '#C2410C'} fontWeight="900">
-                  <TagLabel>{activeModeDepth.readinessScore}/100 · {activeModeDepth.itemCount} item</TagLabel>
+                  <TagLabel>{activeModeDepth.readinessScore}/100 · {activeModeDepth.itemCount} câu/thẻ</TagLabel>
                 </Tag>
               ) : null}
             </HStack>
             <Text fontSize={{ base: 'xl', md: '3xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.1">
               {step.label}
             </Text>
-            <Text mt="2" color={COLORS.muted} fontWeight="700" fontSize={{ base: 'sm', md: 'md' }}>{activeModeDepth?.guidanceVi ?? 'Tập trung một hoạt động trước, các mode khác nằm gọn bên dưới.'}</Text>
+            <Text mt="2" color={COLORS.muted} fontWeight="700" fontSize={{ base: 'sm', md: 'md' }}>{activeModeDepth?.guidanceVi ?? 'Tập trung một hoạt động trước, các phần luyện khác nằm gọn bên dưới.'}</Text>
           </Box>
           <HStack gap="2" wrap="wrap" maxH={{ base: '42px', md: 'none' }} overflowX={{ base: 'auto', md: 'visible' }} overflowY="hidden" w={{ base: '100%', md: 'auto' }} pb={{ base: '1', md: '0' }}>
             {steps.map((item, index) => {
@@ -150,10 +150,10 @@ export function DynamicGuidedLessonFlow({
         </Flex>
         {practiceContentDepth ? (
           <SimpleGrid columns={{ base: 2, md: 4 }} gap="2" mb="3" display={{ base: 'none', md: 'grid' }}>
-            <MiniMetric value={practiceContentDepth.readyModeCount} label="mode có data" />
-            <MiniMetric value={practiceContentDepth.totalPracticeItems} label="practice items" />
+            <MiniMetric value={practiceContentDepth.readyModeCount} label="phần sẵn sàng" />
+            <MiniMetric value={practiceContentDepth.totalPracticeItems} label="câu/thẻ luyện" />
             <MiniMetric value={activeModeDepth?.readinessLabelVi ?? 'Đang đọc'} label="độ sẵn sàng" />
-            <MiniMetric value={practiceContentDepth.recommendedModeDepth?.labelVi ?? 'Bài học'} label="mode mạnh nhất" />
+            <MiniMetric value={practiceContentDepth.recommendedModeDepth?.labelVi ?? 'Bài học'} label="phần nên luyện" />
           </SimpleGrid>
         ) : null}
         <Box ref={contentRef} data-testid="lesson-guided-mode-content" data-lesson-mode={step.mode} bg={{ base: 'rgba(255,255,255,0.78)', md: 'rgba(255,255,255,0.86)' }} border="1px solid" borderColor="rgba(186,230,253,0.88)" borderRadius="3xl" p={{ base: '3', md: '5' }} minH={{ base: 'auto', md: '220px' }} opacity={1} visibility="visible" willChange="transform" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 112px)">
@@ -176,24 +176,24 @@ function ModeLearningBlock({ lesson, mode, speakEnglish }: { lesson: EnglishLess
     return <FlashcardPreview lesson={lesson} speakEnglish={speakEnglish} />;
   }
   if (mode === 'quiz') {
-    const items = lesson.quizQuestions.slice(0, 3).map((q) => ({ title: q.question ?? q.prompt ?? q.vietnamese ?? 'Quiz', text: q.options?.join(' • ') ?? q.words?.join(' / ') ?? 'Tự trả lời nhanh.', hint: q.explanationVi ?? 'Mở mode Quiz để kiểm tra.' }));
-    return <PreviewList items={items} empty="Chưa có câu quiz để xem trước." />;
+    const items = lesson.quizQuestions.slice(0, 3).map((q) => ({ title: q.question ?? q.prompt ?? q.vietnamese ?? 'Kiểm tra nhanh', text: q.options?.join(' • ') ?? q.words?.join(' / ') ?? 'Tự trả lời nhanh.', hint: q.explanationVi ?? 'Mở phần Kiểm tra nhanh để kiểm tra.' }));
+    return <PreviewList items={items} empty="Chưa có câu kiểm tra nhanh để xem trước." />;
   }
   if (mode === 'listen') {
     return <PreviewList items={lesson.listeningPractice.slice(0, 3).map((item) => ({ title: item.question, text: item.text, hint: item.answer }))} empty="Chưa có bài nghe." speakEnglish={speakEnglish} />;
   }
   if (mode === 'reflex') {
-    return <PreviewList items={lesson.speakingReflexPrompts.slice(0, 3).map((item) => ({ title: item.promptVi, text: item.hint, hint: item.expectedEnglish }))} empty="Chưa có prompt phản xạ." />;
+    return <PreviewList items={lesson.speakingReflexPrompts.slice(0, 3).map((item) => ({ title: item.promptVi, text: item.hint, hint: item.expectedEnglish }))} empty="Chưa có câu luyện phản xạ." />;
   }
   if (mode === 'type') {
-    const blanks = lesson.fillBlankTasks.slice(0, 2).map((item) => ({ title: item.prompt, text: item.hint || 'Nhìn gợi ý rồi gõ phần còn thiếu trong mode luyện tập.', hint: 'Gõ phần còn thiếu trong mode luyện tập.' }));
+    const blanks = lesson.fillBlankTasks.slice(0, 2).map((item) => ({ title: item.prompt, text: item.hint || 'Nhìn gợi ý rồi gõ phần còn thiếu trong phần luyện tập.', hint: 'Gõ phần còn thiếu trong phần luyện tập.' }));
     const orders = lesson.sentenceOrderingTasks.slice(0, 2).map((item) => ({ title: item.vietnamese, text: item.words.join(' / '), hint: 'Sắp xếp thành câu đúng.' }));
-    return <PreviewList items={[...blanks, ...orders]} empty="Chưa có dữ liệu gõ câu." />;
+    return <PreviewList items={[...blanks, ...orders]} empty="Chưa có câu gõ để luyện." />;
   }
   if (mode === 'match') {
     const pairs = (lesson.matchPairs ?? []).slice(0, 4).map((item) => ({ title: item.left, text: item.right, hint: 'Ghép hai vế tương ứng.' }));
     const vocabPairs = lesson.vocabulary.slice(0, 4).map((item) => ({ title: item.term, text: item.meaningVi, hint: 'Ghép từ với nghĩa.' }));
-    return <PreviewList items={pairs.length > 0 ? pairs : vocabPairs} empty="Chưa có dữ liệu ghép cặp." />;
+    return <PreviewList items={pairs.length > 0 ? pairs : vocabPairs} empty="Chưa có cặp từ để luyện ghép." />;
   }
   return (
     <Flex direction={{ base: 'column', md: 'row' }} gap="4" align="stretch">
@@ -202,7 +202,7 @@ function ModeLearningBlock({ lesson, mode, speakEnglish }: { lesson: EnglishLess
         <Text mt="2" color={COLORS.muted}>Nhận diện từ/cụm nhanh, luyện miệng đọc chắc hơn trước khi chuyển bài.</Text>
         <SimpleGrid columns={{ base: 1, sm: 3 }} gap="3" mt="4">
           <MiniMetric value={lesson.vocabulary.length} label="từ" />
-          <MiniMetric value={lesson.quizQuestions.length} label="quiz" />
+          <MiniMetric value={lesson.quizQuestions.length} label="câu kiểm tra" />
           <MiniMetric value="60s" label="mỗi lượt" />
         </SimpleGrid>
       </Box>
@@ -221,7 +221,7 @@ function FlashcardPreview({ lesson, speakEnglish }: { lesson: EnglishLesson; spe
   const goPrevious = () => setActiveIndex((current) => (current === 0 ? cards.length - 1 : current - 1));
   const goNext = () => setActiveIndex((current) => (current + 1) % cards.length);
 
-  if (!active) return <Text color={COLORS.muted} fontWeight="800">Chưa có flashcard để xem trước.</Text>;
+  if (!active) return <Text color={COLORS.muted} fontWeight="800">Chưa có thẻ từ để xem trước.</Text>;
 
   return (
     <Box data-testid="lesson-flashcard-preview" minH={{ base: 'auto', md: '180px' }} opacity={1} visibility="visible">

@@ -70,7 +70,7 @@ function makeInitialAnswers(items: ListeningPracticeItem[]) {
 function summaryMessage(percentage: number) {
   if (percentage >= 80) return 'Bạn nghe khá ổn, hãy chuyển sang phản xạ.';
   if (percentage >= 50) return 'Ổn rồi, hãy nghe lại các câu sai ở tốc độ chậm.';
-  return 'Nên nghe lại transcript và shadowing từng câu.';
+  return 'Nên nghe lại lời thoại và nói đuổi từng câu.';
 }
 
 export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {
@@ -268,14 +268,14 @@ export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson:
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px="6" py="8">
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Bài học này chưa có dữ liệu luyện nghe.</Text>
-          <Text mt="2" color={COLORS.muted}>Hãy quay lại bài học hoặc chọn chế độ khác.</Text>
+          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Bài học này chưa có nội dung luyện nghe.</Text>
+          <Text mt="2" color={COLORS.muted}>Hãy quay lại bài học hoặc chọn phần luyện khác.</Text>
           <HStack mt="6" wrap="wrap">
             <Button as={Link} to={`/lessons/${lesson.id}`} borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }}>
               Quay về bài học
             </Button>
             <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=flashcard`} borderRadius="full" variant="outline">
-              Luyện flashcard
+              Luyện thẻ từ
             </Button>
           </HStack>
         </Box>
@@ -289,7 +289,7 @@ export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson:
         <Box maxW="980px" mx="auto">
           <Box bg={COLORS.card} border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '6', md: '8' }}>
             <HStack wrap="wrap" gap="2" mb="4">
-              <Badge borderRadius="full" colorScheme="blue" px="3" py="1">Listening</Badge>
+              <Badge borderRadius="full" colorScheme="blue" px="3" py="1">Luyện nghe</Badge>
               <Badge borderRadius="full" bg="#DCFCE7" color="#166534" px="3" py="1">{lesson.level}</Badge>
             </HStack>
             <Text fontSize={{ base: '3xl', md: '4xl' }} fontWeight="950" color={COLORS.text}>Luyện nghe</Text>
@@ -297,14 +297,14 @@ export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson:
             <Text mt="1" color={COLORS.muted}>{lesson.titleEn}</Text>
 
             <SimpleGrid columns={{ base: 1, md: 3 }} gap="4" mt="7">
-              <Metric label="Listening items" value={allItems.length} />
+              <Metric label="Câu nghe" value={allItems.length} />
               <Metric label="Hội thoại" value={lesson.miniDialogues.length} />
-              <Metric label="Audio" value="speechSynthesis" />
+              <Metric label="Giọng đọc mẫu" value="Có sẵn" />
             </SimpleGrid>
 
             <Box mt="7" border="1px solid" borderColor="#BFDBFE" bg="#EFF6FF" borderRadius="2xl" p="5">
-              <Text color={COLORS.text} fontWeight="800">Bạn sẽ nghe câu tiếng Anh, chọn đáp án, rồi xem transcript sau khi trả lời.</Text>
-              <Text mt="2" color={COLORS.muted}>Nghe ý chính trước, sau đó nghe lại từng cụm. Đừng nhìn transcript quá sớm.</Text>
+              <Text color={COLORS.text} fontWeight="800">Bạn sẽ nghe câu tiếng Anh, chọn đáp án, rồi xem lời thoại sau khi trả lời.</Text>
+              <Text mt="2" color={COLORS.muted}>Nghe ý chính trước, sau đó nghe lại từng cụm. Đừng nhìn lời thoại quá sớm.</Text>
             {!speechSupported ? (
               <Text mt="3" color={COLORS.amber} fontSize="sm" fontWeight="700">Trình duyệt này chưa hỗ trợ nghe mẫu.</Text>
             ) : null}
@@ -358,7 +358,7 @@ export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson:
               </VStack>
             </Flex>
             <Progress mt="5" value={progressValue} colorScheme="blue" borderRadius="full" bg="#E2E8F0" />
-            <Text mt="4" color={COLORS.muted}>Nghe ý chính trước, sau đó nghe lại từng cụm. Đừng nhìn transcript quá sớm.</Text>
+            <Text mt="4" color={COLORS.muted}>Nghe ý chính trước, sau đó nghe lại từng cụm. Đừng nhìn lời thoại quá sớm.</Text>
             {!speechSupported ? (
               <Text mt="3" color={COLORS.amber} fontSize="sm" fontWeight="700">Trình duyệt này chưa hỗ trợ nghe mẫu.</Text>
             ) : null}
@@ -431,7 +431,7 @@ export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson:
                 )}
                 {(currentAnswer.listenCount > 0 || currentAnswer.checked) ? (
                   <Button borderRadius="full" variant="ghost" aria-expanded={currentAnswer.transcriptVisible} onClick={() => updateAnswer(currentItem.id, { transcriptVisible: !currentAnswer.transcriptVisible })}>
-                    {currentAnswer.transcriptVisible ? 'Ẩn transcript' : 'Hiện transcript'}
+                    {currentAnswer.transcriptVisible ? 'Ẩn lời thoại' : 'Hiện lời thoại'}
                   </Button>
                 ) : null}
               </Flex>
@@ -447,7 +447,7 @@ export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson:
                       {currentItem.explanationVi ? (
                         <Text mt="2" color={COLORS.text} fontSize="sm" fontWeight="800">{currentItem.explanationVi}</Text>
                       ) : null}
-                      <Text mt="2" color={COLORS.muted} fontSize="sm">Đọc transcript một lần, sau đó bấm Nghe lại và nhắc theo.</Text>
+                      <Text mt="2" color={COLORS.muted} fontSize="sm">Đọc lời thoại một lần, sau đó bấm Nghe lại và nhắc theo.</Text>
                     </Box>
                   </HStack>
                 </Box>
@@ -455,7 +455,7 @@ export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson:
 
               <Collapse in={currentAnswer.transcriptVisible} animateOpacity>
                 <Box mt="5" border="1px solid" borderColor={COLORS.border} bg="#F8FAFC" borderRadius="2xl" p="5">
-                  <Text fontSize="sm" fontWeight="800" color={COLORS.muted} textTransform="uppercase" letterSpacing="wide">Transcript</Text>
+                  <Text fontSize="sm" fontWeight="800" color={COLORS.muted} textTransform="uppercase" letterSpacing="wide">Lời thoại</Text>
                   <Text mt="2" fontSize="lg" fontWeight="800" color={COLORS.text}>{currentItem.text}</Text>
                 </Box>
               </Collapse>
@@ -489,7 +489,7 @@ function DialogueSection({
   return (
     <Box bg={COLORS.card} border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '5', md: '8' }}>
       <Text fontSize="2xl" fontWeight="950" color={COLORS.text}>Hội thoại luyện nghe</Text>
-      <Text mt="2" color={COLORS.muted}>Nghe toàn bộ hội thoại, rồi shadowing từng câu theo vai A/B.</Text>
+      <Text mt="2" color={COLORS.muted}>Nghe toàn bộ hội thoại, rồi nói đuổi từng câu theo vai A/B.</Text>
       <VStack align="stretch" gap="4" mt="5">
         {dialogues.map((dialogue) => (
           <Box key={dialogue.id} border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="5" bg="#FFFFFF">
@@ -574,7 +574,7 @@ function ListeningSummary({
       <Box maxW="980px" mx="auto">
         <Box bg={COLORS.card} border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '6', md: '8' }}>
           <Badge borderRadius="full" colorScheme="green" px="3" py="1">Hoàn thành luyện nghe</Badge>
-          <Text mt="4" fontSize={{ base: '3xl', md: '4xl' }} fontWeight="950" color={COLORS.text}>Tổng kết Listening</Text>
+          <Text mt="4" fontSize={{ base: '3xl', md: '4xl' }} fontWeight="950" color={COLORS.text}>Tổng kết luyện nghe</Text>
           <Text mt="2" color={COLORS.muted}>{summaryMessage(percentage)}</Text>
 
           <SimpleGrid columns={{ base: 1, md: 5 }} gap="4" mt="6">
@@ -600,7 +600,7 @@ function ListeningSummary({
                     <Text fontWeight="900" color={COLORS.text}>{item.question}</Text>
                     <Text mt="2" color={COLORS.muted}>Đáp án đúng: <Text as="span" fontWeight="900" color={COLORS.text}>{item.answer}</Text></Text>
                     {item.explanationVi ? <Text mt="1" color={COLORS.text} fontWeight="800">{item.explanationVi}</Text> : null}
-                    <Text mt="1" color={COLORS.muted}>Transcript: <Text as="span" fontWeight="800" color={COLORS.text}>{item.text}</Text></Text>
+                    <Text mt="1" color={COLORS.muted}>Lời thoại: <Text as="span" fontWeight="800" color={COLORS.text}>{item.text}</Text></Text>
                   </Box>
                 ))}
               </VStack>

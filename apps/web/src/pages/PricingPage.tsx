@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Box, SimpleGrid, HStack, VStack, Flex, Text, Button, Icon, Tag, TagLabel, List, ListItem, ListIcon, Badge } from '@chakra-ui/react';
 import { Check, Star, Zap, Trophy } from 'lucide-react';
 import { get, post } from '../api';
@@ -18,20 +18,20 @@ type Tier = {
 const TIERS: Tier[] = [
   {
     id: 'free',
-    name: 'Free',
+    name: 'Miễn phí',
     price: 0,
     period: 'mãi mãi',
-    benefits: ['Học 100 từ/ngày', 'Flashcard cơ bản', 'Truy cập 5 lộ trình'],
+    benefits: ['Học từ vựng mỗi ngày', 'Thẻ từ cơ bản', 'Truy cập 5 lộ trình'],
     tint: 'gray.600',
     bg: 'gray.50',
   },
   {
     id: 'support-monthly',
-    name: 'Ủng hộ P-English',
+    name: 'Ủng hộ PooEnglish',
     price: 49000,
     period: '/tháng',
     popular: true,
-    benefits: ['Học tập vẫn miễn phí', 'Ủng hộ vận hành nội dung', 'Không khoá bài học cốt lõi', 'Góp phần phát triển Poo companion'],
+    benefits: ['Học tập vẫn miễn phí', 'Ủng hộ vận hành nội dung', 'Không khoá bài học cốt lõi', 'Góp phần phát triển bạn học Poo'],
     tint: 'green.600',
     bg: 'green.50',
   },
@@ -76,11 +76,11 @@ export function PricingPage() {
 
   return (
     <Box px="6" pb="10" maxW="1200px" mx="auto">
-      <Box as="h2" position="absolute" left="-9999px">Pricing</Box>
+      <Box as="h2" position="absolute" left="-9999px">Gói ủng hộ</Box>
       <VStack gap="2" mb="8" textAlign="center">
         <Tag colorScheme="green" borderRadius="full" px="3"><TagLabel>Miễn phí trước</TagLabel></Tag>
         <Text fontSize="3xl" fontWeight="800">Học tập là miễn phí</Text>
-        <Text color="gray.500">P-English không bắt bất kỳ ai trả phí cho việc học. Các gói ủng hộ chỉ là tuỳ chọn.</Text>
+        <Text color="gray.500">PooEnglish không bắt bất kỳ ai trả phí cho việc học. Các gói ủng hộ chỉ là tuỳ chọn.</Text>
       </VStack>
 
       <SimpleGrid columns={{ base: 1, md: 3 }} gap="4">

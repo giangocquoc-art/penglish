@@ -103,7 +103,7 @@ function stepFromFlashcard(item: FlashcardItem, index: number): InteractiveLesso
   return {
     id: item.id,
     type: 'flashcard',
-    title: index === 0 ? 'Học cụm quan trọng' : 'Ôn nhanh bằng flashcard',
+    title: index === 0 ? 'Học cụm quan trọng' : 'Ôn nhanh bằng thẻ từ',
     instruction: 'Đọc mặt trước, đoán nghĩa, nghe câu mẫu rồi tiếp tục.',
     prompt: item.front,
     answer: item.back,
@@ -122,7 +122,7 @@ function stepFromQuiz(item: QuizQuestion, index: number, fallbackOptions: string
   return {
     id: item.id,
     type,
-    title: index === 0 ? 'Chọn đáp án đúng' : type === 'fill_blank' ? 'Điền từ còn thiếu' : type === 'sentence_order' ? 'Sắp xếp câu' : 'Mini test',
+    title: index === 0 ? 'Chọn đáp án đúng' : type === 'fill_blank' ? 'Điền từ còn thiếu' : type === 'sentence_order' ? 'Sắp xếp câu' : 'Kiểm tra nhanh',
     instruction: type === 'fill_blank' ? 'Gõ phần còn thiếu trong câu.' : type === 'sentence_order' ? 'Chạm các từ theo đúng thứ tự.' : 'Chọn một đáp án. Poo sẽ góp ý ngay.',
     prompt,
     answer,

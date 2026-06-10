@@ -48,3 +48,13 @@ build/
 .parcel-cache/
 apps/web/dist/
 apps/web/.vite/
+.env.local
+.env*.local
+.env.local
+.env*.local
+node_modules
+dist
+build
+.vite
+.vercel
+.DS_Store

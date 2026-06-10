@@ -95,7 +95,7 @@ function isTypingTarget(target: EventTarget | null) {
 }
 
 function progressKey(lessonId: string) {
-  return `p-english:lesson-progress:${lessonId}`;
+  return `PooEnglish:lesson-progress:${lessonId}`;
 }
 
 function safeReadProgress(lessonId: string): LessonProgress {
@@ -142,7 +142,20 @@ function answerToText(answer: string | string[]) {
 }
 
 function questionLabel(question: CombinedQuizQuestion) {
-  return question.question ?? question.prompt ?? question.vietnamese ?? 'Quiz question';
+  return question.question ?? question.prompt ?? question.vietnamese ?? 'Câu kiểm tra nhanh';
+}
+
+function questionSourceLabel(source: CombinedQuizQuestion['source']) {
+  if (source === 'quizQuestions') return 'Câu kiểm tra';
+  if (source === 'sentenceOrderingTasks') return 'Sắp xếp câu';
+  return 'Điền chỗ trống';
+}
+
+function questionTypeLabel(type: CombinedQuizQuestion['type']) {
+  if (type === 'multiple-choice') return 'Chọn đáp án';
+  if (type === 'fill-blank') return 'Điền từ';
+  if (type === 'sentence-order') return 'Sắp xếp câu';
+  return 'Ghép nghĩa';
 }
 
 function userAnswerToText(question: CombinedQuizQuestion, state: AnswerState) {
@@ -237,7 +250,7 @@ function makeInitialAnswers(questions: CombinedQuizQuestion[]) {
 function getSummaryMessage(percentage: number) {
   if (percentage >= 80) return 'Tốt lắm! Bạn đã nắm khá chắc bài này.';
   if (percentage >= 50) return 'Ổn rồi, hãy ôn lại các câu sai một lượt.';
-  return 'Nên quay lại phần từ vựng và mẫu câu trước khi làm lại quiz.';
+  return 'Nên quay lại phần từ vựng và mẫu câu trước khi làm lại kiểm tra nhanh.';
 }
 
 export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {
@@ -435,11 +448,11 @@ export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: Engl
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px="6" py="8">
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có dữ liệu quiz cho bài học này</Text>
-          <Text mt="2" color={COLORS.muted}>Hãy quay lại bài học hoặc luyện bằng flashcard trước.</Text>
+          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có câu kiểm tra nhanh cho bài học này</Text>
+          <Text mt="2" color={COLORS.muted}>Hãy quay lại bài học hoặc luyện bằng thẻ từ trước.</Text>
           <HStack mt="6" wrap="wrap">
             <Button as={Link} to={`/lessons/${lesson.id}`} borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }} leftIcon={<Icon as={ArrowLeft} />}>Quay về bài học</Button>
-            <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=flashcard`} borderRadius="full" variant="outline">Ôn bằng flashcard</Button>
+            <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=flashcard`} borderRadius="full" variant="outline">Ôn bằng thẻ từ</Button>
           </HStack>
         </Box>
       </Box>
@@ -469,12 +482,12 @@ export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: Engl
             <Flex justify="space-between" align={{ base: 'start', md: 'center' }} direction={{ base: 'column', md: 'row' }} gap="4">
               <Box>
                 <HStack wrap="wrap" gap="2" mb="2">
-                  <Tag bg="#EFF6FF" color={COLORS.primary} borderRadius="full" fontWeight="800">Quiz</Tag>
-                  <Tag bg="#F0FDF4" color="#15803D" borderRadius="full" fontWeight="800">Unit 1</Tag>
+                  <Tag bg="#EFF6FF" color={COLORS.primary} borderRadius="full" fontWeight="800">Kiểm tra nhanh</Tag>
+                  <Tag bg="#F0FDF4" color="#15803D" borderRadius="full" fontWeight="800">Bài 1</Tag>
                 </HStack>
                 <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="950" color={COLORS.text}>{lesson.titleVi}</Text>
                 <Text mt="1" color={COLORS.muted} fontWeight="700">{lesson.titleEn}</Text>
-                <Text mt="3" color={COLORS.muted}>Quiz này kiểm tra cụm câu, không chỉ kiểm tra từ đơn.</Text>
+                <Text mt="3" color={COLORS.muted}>Bài kiểm tra nhanh này giúp bạn ôn cụm câu, không chỉ ôn từ đơn.</Text>
                 <Text color={COLORS.muted}>Trả lời xong hãy đọc phần giải thích để hiểu vì sao đúng.</Text>
               </Box>
               <HStack align="center" gap="3">
@@ -492,8 +505,8 @@ export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: Engl
 
           <Box bg="rgba(255,255,255,0.94)" backdropFilter="blur(16px)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '5', md: '8' }} overflow="hidden" boxShadow="0 16px 38px rgba(31, 111, 214, 0.08)">
             <HStack wrap="wrap" gap="2" mb="4">
-              <Tag borderRadius="full" bg="#F8FAFC" color={COLORS.muted}>{current.source}</Tag>
-              <Tag borderRadius="full" bg="#EFF6FF" color={COLORS.primary}>{current.type}</Tag>
+              <Tag borderRadius="full" bg="#F8FAFC" color={COLORS.muted}>{questionSourceLabel(current.source)}</Tag>
+              <Tag borderRadius="full" bg="#EFF6FF" color={COLORS.primary}>{questionTypeLabel(current.type)}</Tag>
             </HStack>
 
             <QuestionBody question={current} answer={currentAnswer ?? emptyAnswerState(current)} onChange={updateCurrentAnswer} fillBlankInputRef={fillBlankInputRef} />
@@ -515,7 +528,7 @@ export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: Engl
                     <Text fontWeight="950" color={currentAnswer.isCorrect ? '#15803D' : '#9A3412'}>{currentAnswer.isCorrect ? 'Chính xác!' : 'Chưa đúng, thử ghi nhớ lại cụm này.'}</Text>
                     <Text mt="2" color={COLORS.text}><Text as="span" fontWeight="900">Đáp án đúng:</Text> {answerToText(current.answer)}</Text>
                     {current.explanationVi ? <Text mt="2" color={COLORS.muted}>{current.explanationVi}</Text> : null}
-                    {!currentAnswer.isCorrect ? <Text mt="2" color="#9A3412" fontWeight="800">{currentAnswer.heartLossText ?? 'Bạn mất 1 bọt biển.'} Cua Quiz vẫn kẹp nhẹ đáp án cùng bạn — thử lại nhịp tiếp theo nhé.</Text> : null}
+                    {!currentAnswer.isCorrect ? <Text mt="2" color="#9A3412" fontWeight="800">{currentAnswer.heartLossText ?? 'Bạn mất 1 bọt biển.'} Cua kiểm tra vẫn kẹp nhẹ đáp án cùng bạn — thử lại nhịp tiếp theo nhé.</Text> : null}
                     {!currentAnswer.isCorrect ? <Text mt="2" color={COLORS.muted}>Hãy đọc lại câu ví dụ rồi thử nói to một lần.</Text> : null}
                     <HStack mt="4" wrap="wrap">
                       <Button data-testid="practice-quiz-next" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }} onClick={nextQuestion}>Câu tiếp theo</Button>
@@ -530,7 +543,7 @@ export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: Engl
           <Flex justify="space-between" align="center" gap="3" wrap="wrap">
             <HStack wrap="wrap">
               <Button as={Link} to={`/lessons/${lesson.id}`} borderRadius="full" variant="outline" leftIcon={<Icon as={ArrowLeft} />}>Quay về bài học</Button>
-              <Button borderRadius="full" variant="outline" leftIcon={<Icon as={RotateCcw} />} onClick={restartAll}>Làm lại quiz</Button>
+              <Button borderRadius="full" variant="outline" leftIcon={<Icon as={RotateCcw} />} onClick={restartAll}>Làm lại kiểm tra nhanh</Button>
             </HStack>
             <HStack wrap="wrap">
               <Button borderRadius="full" variant="outline" onClick={previousQuestion} isDisabled={currentIndex === 0}>Câu trước</Button>
@@ -826,9 +839,9 @@ function QuizSummary({
     <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="8">
       <Box maxW="980px" mx="auto">
         <Box bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '6', md: '8' }}>
-          <Tag bg="#F0FDF4" color="#15803D" borderRadius="full" fontWeight="900">Hoàn thành quiz</Tag>
+          <Tag bg="#F0FDF4" color="#15803D" borderRadius="full" fontWeight="900">Hoàn thành kiểm tra nhanh</Tag>
           <Text mt="4" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="950" color={COLORS.text}>{getSummaryMessage(percentage)}</Text>
-          <Text mt="2" color={COLORS.muted}>Nếu còn câu sai, hãy ôn lại câu sai hoặc dùng flashcard để củng cố cụm câu.</Text>
+          <Text mt="2" color={COLORS.muted}>Nếu còn câu sai, hãy ôn lại câu sai hoặc dùng thẻ từ để củng cố cụm câu.</Text>
 
           <SimpleGrid columns={{ base: 1, md: 4 }} gap="4" mt="6">
             <SummaryMetric label="Tổng câu" value={total} />
@@ -863,7 +876,7 @@ function QuizSummary({
             <Button borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }} onClick={onRestartWrong}>Ôn lại câu sai</Button>
             <Button borderRadius="full" variant="outline" onClick={onRestartAll}>Làm lại toàn bộ</Button>
             <Button as={Link} to={`/lessons/${lesson.id}`} borderRadius="full" variant="outline">Quay về bài học</Button>
-            <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=flashcard`} borderRadius="full" variant="outline">Ôn bằng flashcard</Button>
+            <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=flashcard`} borderRadius="full" variant="outline">Ôn bằng thẻ từ</Button>
             <Button as={Link} to="/learning-path" borderRadius="full" variant="outline">Xem lộ trình</Button>
           </Flex>
         </Box>

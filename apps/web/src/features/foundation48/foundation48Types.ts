@@ -9,20 +9,27 @@ export type Foundation48AudioItem = {
 };
 
 export type Foundation48MarkdownFile = {
-  id: string;
+  id?: string;
   kind: Foundation48MaterialKind;
-  title: string;
-  sourcePath: string;
-  markdownPath: string;
+  title?: string;
+  sourcePath?: string;
+  markdownPath?: string;
+  markdown?: string;
+  wordCount?: number;
   needsReview?: boolean;
 };
 
 export type Foundation48SourceDay = {
   dayNumber: number;
+  dayFolder?: string;
   title: string;
   pdfCount: number;
+  mp3Count?: number;
+  mp4Count?: number;
   hasPdf: boolean;
+  hasAudio?: boolean;
   hasVideo: boolean;
+  videoCount?: number;
   audio: Foundation48AudioItem[];
   markdownFiles: Foundation48MarkdownFile[];
   lessonMarkdown?: string;

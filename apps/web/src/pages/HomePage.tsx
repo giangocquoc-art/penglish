@@ -40,15 +40,23 @@ function getDailyFoundation48Target() {
   const lastDayOpened = Number(progress.lastDayOpened);
   const firstIncomplete = foundation48Days.find((day) => !days[day.dayNumber]?.completed)?.dayNumber || 1;
   const safeDay = Number.isFinite(lastDayOpened) && lastDayOpened > 0 ? Math.min(Math.max(lastDayOpened, 1), foundation48Days.length) : firstIncomplete;
-  const currentProgress = days[safeDay];
-  const currentDay = currentProgress?.completed && safeDay < foundation48Days.length ? safeDay + 1 : safeDay;
+  const safeDayProgress = days[safeDay];
+  const currentDay = safeDayProgress?.completed && safeDay < foundation48Days.length ? safeDay + 1 : safeDay;
+  const currentProgress = days[currentDay];
+  const completedDayEntries = Object.values(days).filter((day) => day?.completed);
+  const completedToday = Boolean(progress.lastStudiedDate === getTodayKey() && completedDayEntries.length > 0);
+  const completedDays = completedDayEntries.length;
+  const status = completedToday || currentProgress?.completed ? 'Hoàn thành' : currentProgress?.started || (currentProgress?.completedSteps?.length || 0) > 0 ? 'Đang học' : 'Chưa bắt đầu';
   return {
     dayNumber: currentDay,
     path: getFoundation48DayPath(currentDay),
     label: `Foundation48 · Ngày ${currentDay}`,
-    completedToday: Boolean(progress.lastStudiedDate === getTodayKey() && currentProgress?.completed),
+    duration: '12 phút',
+    steps: ['Từ mới', 'Mẫu câu', 'Nghe', 'Nói lại', 'Kiểm tra nhanh'],
+    completedToday,
+    status,
     streak: progress.streak || 0,
-    completedDays: Object.values(days).filter((day) => day?.completed).length,
+    completedDays,
   };
 }
 
@@ -110,7 +118,7 @@ function PooReminderCard() {
         <Box minW="0">
           <Text color={OCEAN_TOKENS.deepBlue} fontWeight="950">Poo nhắc bạn</Text>
           <Text mt="1" color={OCEAN_TOKENS.text} fontWeight="850" fontSize={{ base: 'sm', md: 'md' }} lineHeight="1.45">
-            Làm bài hôm nay trước. Ôn tập và shadowing là phần phụ.
+            Bấm “Bắt đầu bài hôm nay” trước. Nếu có lỗi sai, ôn lại sau khi học xong.
           </Text>
         </Box>
       </HStack>
@@ -128,15 +136,15 @@ export function HomePage() {
 
   const dailyTarget = useMemo(() => getDailyFoundation48Target(), [progressVersion]);
   const todayProgress = useMemo(() => Math.min(100, Math.round((rewardState.completedToday.length / DAILY_GOAL_COUNT) * 100)), [rewardState.completedToday.length]);
-  const todayStatus = dailyTarget.completedToday || rewardState.completedToday.length > 0 ? 'Đã học hôm nay' : 'Chưa bắt đầu';
+  const todayStatus = dailyTarget.status === 'Hoàn thành' || dailyTarget.completedToday || rewardState.completedToday.length > 0 ? 'Hoàn thành' : dailyTarget.status;
   const streakLabel = dailyTarget.streak > 0 ? `${dailyTarget.streak} ngày` : rewardState.streakDays > 0 ? `${rewardState.streakDays} ngày` : 'Bắt đầu';
   const bubblesLabel = `${rewardState.bubbles}/${rewardState.maxBubbles}`;
 
   const dailyTasks: DailyTask[] = useMemo(() => [
     {
-      title: 'Học bài hôm nay',
-      subtitle: dailyTarget.label,
-      cta: 'Bắt đầu',
+      title: 'Hôm nay học gì',
+      subtitle: `${dailyTarget.label} · ${dailyTarget.duration} · 5 bước cần làm`,
+      cta: 'Bắt đầu bài hôm nay',
       to: dailyTarget.path || FOUNDATION48_BASE_PATH,
       icon: Compass,
       accent: 'blue',
@@ -144,15 +152,15 @@ export function HomePage() {
     },
     {
       title: 'Ôn lỗi sai',
-      subtitle: learningSummary.difficultWordCount > 0 ? `${learningSummary.difficultWordCount} mục Poo đang giữ lại.` : 'Ôn nhẹ vài câu để chắc hơn.',
-      cta: 'Ôn nhẹ',
+      subtitle: learningSummary.difficultWordCount > 0 ? `${learningSummary.difficultWordCount} lỗi cần ôn lại hôm nay.` : 'Chưa có lỗi lớn, có thể ôn nhẹ vài câu.',
+      cta: 'Ôn lỗi sai',
       to: WEAK_REVIEW_PATH,
       icon: Sparkles,
       accent: 'orange',
       testId: 'home-task-mistakes',
     },
     {
-      title: 'Shadowing 5 phút',
+      title: 'Nói đuổi 5 phút',
       subtitle: learningSummary.shadowingDifficultCount > 0 ? 'Luyện lại câu nói còn khó.' : 'Nghe một câu, nói lại chậm.',
       cta: 'Luyện nói',
       to: SHADOWING_PATH,
@@ -169,7 +177,7 @@ export function HomePage() {
       accent: 'green',
       testId: 'home-task-words',
     },
-  ], [dailyTarget.label, dailyTarget.path, learningSummary.difficultWordCount, learningSummary.shadowingDifficultCount, learningSummary.vocabularyDueCount]);
+  ], [dailyTarget.duration, dailyTarget.label, dailyTarget.path, learningSummary.difficultWordCount, learningSummary.shadowingDifficultCount, learningSummary.vocabularyDueCount]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
@@ -216,20 +224,29 @@ export function HomePage() {
         <Flex position="relative" direction={{ base: 'column', md: 'row' }} gap={{ base: '2.5', md: '5' }} align={{ base: 'stretch', md: 'center' }} justify="space-between">
           <VStack align="start" gap={{ base: '2', md: '4' }} maxW="720px">
             <HStack wrap="wrap" gap="2" display={{ base: 'none', sm: 'flex' }}>
-              <Tag borderRadius="full" bg={OCEAN_TOKENS.warm} color={OCEAN_TOKENS.text}><TagLabel>Dashboard hôm nay</TagLabel></Tag>
+              <Tag borderRadius="full" bg={OCEAN_TOKENS.warm} color={OCEAN_TOKENS.text}><TagLabel>PooEnglish hôm nay</TagLabel></Tag>
               <Tag borderRadius="full" bg={OCEAN_TOKENS.softAqua} color={OCEAN_TOKENS.deepBlue}><TagLabel>{dailyTarget.label}</TagLabel></Tag>
+              <Tag borderRadius="full" bg="rgba(255,255,255,0.78)" color={OCEAN_TOKENS.deepBlue}><TagLabel>{dailyTarget.duration}</TagLabel></Tag>
             </HStack>
             <Box minW="0">
               <Text as="h2" fontSize={{ base: 'xl', sm: '2xl', md: '4xl', xl: '5xl' }} fontWeight="950" color={OCEAN_TOKENS.text} lineHeight="1.04" data-testid="home-daily-title">
                 Hôm nay học gì cùng Poo?
               </Text>
               <Text mt={{ base: '1.5', md: '3' }} fontSize={{ base: 'sm', md: 'lg' }} color={OCEAN_TOKENS.muted} fontWeight="800" lineHeight={{ base: '1.38', md: '1.5' }} maxW="620px" data-testid="home-daily-subtitle">
-                Chỉ cần một bài nhỏ. Poo sẽ dẫn bạn từng bước.
+                Bài nên học ngay: {dailyTarget.label}. Học {dailyTarget.duration}: {dailyTarget.steps.join(' → ')}. Poo sẽ lưu tiến độ và lỗi cần ôn.
               </Text>
             </Box>
-            <Button as={Link} to={dailyTarget.path} size={{ base: 'md', md: 'lg' }} borderRadius="full" bg={OCEAN_TOKENS.oceanBlue} color="white" leftIcon={<Icon as={Compass} />} _hover={{ bg: OCEAN_TOKENS.deepBlue }} data-testid="home-primary-today-cta" data-home-cta="primary-today">
-              Bắt đầu bài hôm nay
-            </Button>
+            <HStack gap="2.5" wrap="wrap" w="100%">
+              <Button as={Link} to={dailyTarget.path} size={{ base: 'md', md: 'lg' }} borderRadius="full" bg={OCEAN_TOKENS.oceanBlue} color="white" leftIcon={<Icon as={Compass} />} _hover={{ bg: OCEAN_TOKENS.deepBlue }} data-testid="home-primary-today-cta" data-home-cta="primary-today">
+                Bắt đầu bài hôm nay
+              </Button>
+              <Button as={Link} to="/practice" size={{ base: 'md', md: 'lg' }} borderRadius="full" bg="rgba(255,255,255,0.72)" color={OCEAN_TOKENS.deepBlue} border="1px solid" borderColor={OCEAN_TOKENS.border} leftIcon={<Icon as={Sparkles} />} _hover={{ bg: 'rgba(232,244,255,0.88)' }} data-testid="home-secondary-mistakes-cta">
+                Ôn lỗi sai
+              </Button>
+              <Button as={Link} to="/learning-path" size={{ base: 'md', md: 'lg' }} borderRadius="full" bg="rgba(255,255,255,0.72)" color={OCEAN_TOKENS.deepBlue} border="1px solid" borderColor={OCEAN_TOKENS.border} leftIcon={<Icon as={Waves} />} _hover={{ bg: 'rgba(232,244,255,0.88)' }} data-testid="home-secondary-path-cta">
+                Xem lộ trình
+              </Button>
+            </HStack>
           </VStack>
           <Box display={{ base: 'none', md: 'block' }} pointerEvents="none" flexShrink={0}>
             <OceanMascot mascot="poo" pose="idle" size="lg" decorative motion="float" />
@@ -240,7 +257,7 @@ export function HomePage() {
       <SimpleGrid columns={{ base: 2, md: 3 }} gap={{ base: '2', md: '3' }} mb={{ base: '3', md: '4' }} data-testid="home-simple-progress">
         <Box ref={pulseRef} gridColumn={{ base: 'span 2', md: 'auto' }}><MiniProgressPill label="Hôm nay" value={todayStatus} tone={todayProgress >= 100 || dailyTarget.completedToday ? 'green' : 'blue'} /></Box>
         <MiniProgressPill label="Bọt biển" value={bubblesLabel} tone="orange" />
-        <MiniProgressPill label="Lộ trình" value={`Ngày ${dailyTarget.dayNumber}`} tone={dailyTarget.completedDays > 0 ? 'green' : 'blue'} />
+        <MiniProgressPill label="Thời lượng" value={dailyTarget.duration} tone="blue" />
       </SimpleGrid>
 
       <SimpleGrid columns={{ base: 1, lg: 3 }} gap={{ base: '2.5', md: '4' }} alignItems="start">
@@ -253,14 +270,19 @@ export function HomePage() {
 
         <VStack align="stretch" gap={{ base: '2.5', md: '4' }}>
           <GlassPanel className="home-dashboard-card" data-testid="home-today-summary" p={{ base: '2.5', md: '4' }} bg="rgba(255,255,255,0.68)" borderColor={OCEAN_TOKENS.borderStrong}>
-            <Text color={OCEAN_TOKENS.deepBlue} fontWeight="950" fontSize="xs" letterSpacing="1.8px" textTransform="uppercase">Tiến độ đơn giản</Text>
-            <Text mt={{ base: '1.5', md: '2' }} color={OCEAN_TOKENS.text} fontWeight="950" fontSize={{ base: 'md', md: 'xl' }}>Bài nên học ngay</Text>
-            <Text mt="1" color={OCEAN_TOKENS.muted} fontWeight="800" lineHeight="1.45" fontSize="sm">{dailyTarget.label}</Text>
+            <Text color={OCEAN_TOKENS.deepBlue} fontWeight="950" fontSize="xs" letterSpacing="1.8px" textTransform="uppercase">Tiến độ hiện tại</Text>
+            <Text mt={{ base: '1.5', md: '2' }} color={OCEAN_TOKENS.text} fontWeight="950" fontSize={{ base: 'md', md: 'xl' }}>Bài đang chờ bạn</Text>
+            <Text mt="1" color={OCEAN_TOKENS.muted} fontWeight="800" lineHeight="1.45" fontSize="sm">{dailyTarget.label} · {dailyTarget.duration}</Text>
+            <HStack mt="2" gap="1.5" wrap="wrap" data-testid="home-today-step-loop">
+              {dailyTarget.steps.map((step) => (
+                <Text key={step} px="2" py="1" borderRadius="full" bg="rgba(232,244,255,0.72)" color={OCEAN_TOKENS.deepBlue} fontSize="2xs" fontWeight="950">{step}</Text>
+              ))}
+            </HStack>
             <SimpleGrid columns={2} gap={{ base: '2', sm: '2.5' }} mt={{ base: '2.5', sm: '3' }} display="grid" data-testid="home-summary-progress-grid">
-              <MiniProgressPill label="Streak" value={streakLabel} tone="orange" />
+              <MiniProgressPill label="Chuỗi ngày" value={streakLabel} tone="orange" />
               <MiniProgressPill label="Ngày xong" value={`${dailyTarget.completedDays}/48`} tone={dailyTarget.completedDays > 0 ? 'green' : 'blue'} />
               <MiniProgressPill label="Từ cần ôn" value={learningSummary.vocabularyDueCount > 0 ? `${learningSummary.vocabularyDueCount}` : '0'} tone={learningSummary.vocabularyDueCount > 0 ? 'orange' : 'blue'} />
-              <MiniProgressPill label="Trạng thái" value={todayStatus} tone={todayStatus === 'Đã học hôm nay' ? 'green' : 'blue'} />
+              <MiniProgressPill label="Trạng thái" value={todayStatus} tone={todayStatus === 'Hoàn thành' ? 'green' : 'blue'} />
             </SimpleGrid>
             <Box mt="3" display={{ base: 'none', md: 'block' }}>
               <Text mb="2" color={OCEAN_TOKENS.muted} fontWeight="850" fontSize="sm">Nhịp 7 ngày</Text>
@@ -277,13 +299,13 @@ export function HomePage() {
               <Icon as={Compass} boxSize={{ base: '4.5', md: '5' }} />
             </Circle>
             <Box minW="0">
-              <Text color={OCEAN_TOKENS.deepBlue} fontWeight="950" fontSize="xs" letterSpacing="1.4px" textTransform="uppercase">Tiếp tục lộ trình</Text>
+              <Text color={OCEAN_TOKENS.deepBlue} fontWeight="950" fontSize="xs" letterSpacing="1.4px" textTransform="uppercase">Bấm vào đâu để học tiếp</Text>
               <Text mt="1" color={OCEAN_TOKENS.text} fontWeight="950" fontSize={{ base: 'sm', md: 'md' }} noOfLines={1}>{dailyTarget.label}</Text>
-              <Text mt="0.5" color={OCEAN_TOKENS.muted} fontWeight="800" fontSize={{ base: 'xs', md: 'sm' }} noOfLines={1}>Bài gần đây · ôn nhẹ rồi quay lại mục tiêu chính.</Text>
+              <Text mt="0.5" color={OCEAN_TOKENS.muted} fontWeight="800" fontSize={{ base: 'xs', md: 'sm' }} noOfLines={1}>Mở đúng bài cần học tiếp trong hôm nay.</Text>
             </Box>
           </HStack>
           <Button as={Link} to={dailyTarget.path} size={{ base: 'sm', md: 'md' }} alignSelf={{ base: 'flex-start', md: 'center' }} borderRadius="full" bg="rgba(255,255,255,0.72)" color={OCEAN_TOKENS.deepBlue} border="1px solid" borderColor={OCEAN_TOKENS.border} leftIcon={<Icon as={Sparkles} />} _hover={{ bg: 'rgba(232,244,255,0.86)' }} data-testid="home-continue-cta">
-            Mở bài gần đây
+            Bắt đầu bài hôm nay
           </Button>
         </Flex>
       </GlassPanel>

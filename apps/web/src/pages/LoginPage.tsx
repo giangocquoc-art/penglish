@@ -1,10 +1,11 @@
 import { Box, Center, VStack, HStack, Text, Button, Icon, SimpleGrid } from '@chakra-ui/react';
-import { Globe, ShieldCheck, Sparkles } from 'lucide-react';
+import { Copy, ExternalLink, Globe, ShieldCheck, Sparkles } from 'lucide-react';
 import Wave from 'react-wavify';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BrandLogo } from '../components/BrandLogo';
 import { useAuth } from '../features/auth/AuthProvider';
+import { AuthLoadingScreen } from '../features/auth/AuthLoadingScreen';
 import { OceanMascot } from '../components/p-english/OceanMascot';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
@@ -14,19 +15,47 @@ const softEmphasisWeight = '600';
 export function LoginPage() {
   const [authMessage, setAuthMessage] = useState<string | null>(null);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [copiedLoginLink, setCopiedLoginLink] = useState(false);
   const auth = useAuth();
-  const visibleInfoMessage = authMessage || 'P-English cần đăng nhập để lưu tiến độ học tập của bạn.';
+  const [loginParams] = useSearchParams();
+  const isInAppBrowser = isInAppLoginBrowser();
+  const loginUrl = getLoginUrl();
+  const visibleInfoMessage = authMessage || 'PooEnglish cần đăng nhập để lưu tiến độ học tập của bạn.';
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, []);
 
   const connectGoogle = async () => {
+    if (isInAppBrowser) return;
     setGoogleLoading(true);
     setAuthMessage(null);
+    const intended = sanitizeAuthRedirect(loginParams.get('redirectTo') || loginParams.get('next'));
+    if (intended !== '/home') {
+      try {
+        window.sessionStorage.setItem('penglish-auth-redirect', intended);
+      } catch {
+        // Redirect preservation is helpful but not required for auth to work.
+      }
+    }
     const result = await auth.signInWithGoogle();
     if (!result.ok) setAuthMessage(result.message ?? 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.');
     setGoogleLoading(false);
+  };
+
+  const copyLoginLink = async () => {
+    try {
+      await navigator.clipboard.writeText(loginUrl);
+      setCopiedLoginLink(true);
+      window.setTimeout(() => setCopiedLoginLink(false), 1800);
+    } catch {
+      setAuthMessage('Poo chưa sao chép được link. Bạn hãy mở pooenglish.com/login trong Chrome hoặc Safari.');
+    }
+  };
+
+  const openExternalBrowser = () => {
+    const opened = window.open(loginUrl, '_blank', 'noopener,noreferrer');
+    if (!opened) window.location.href = loginUrl;
   };
 
   return (
@@ -54,10 +83,10 @@ export function LoginPage() {
             </Box>
             <VStack align={{ base: 'center', lg: 'start' }} gap="2" maxW="520px">
               <Text fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" letterSpacing="0.16em" textTransform="uppercase" color="rgba(224, 242, 254, 0.92)">
-                P-English ocean start
+                Vào lớp học cùng Poo
               </Text>
               <Text as="h1" fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }} fontWeight="800" lineHeight="1.05" letterSpacing="-0.03em" textShadow="0 18px 46px rgba(8, 47, 73, 0.28)">
-                Vào lớp học P-English
+                Vào lớp học PooEnglish
               </Text>
               <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="600" color="rgba(240, 249, 255, 0.88)" lineHeight="1.65">
                 Đăng nhập để lưu tiến độ và tiếp tục hành trình học cùng Poo.
@@ -90,7 +119,7 @@ export function LoginPage() {
                     <BrandLogo variant="compact" size="lg" />
                   </Box>
                   <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight={cardHeadingWeight} color="#082F49" letterSpacing="-0.02em">
-                    Vào lớp học P-English
+                    Vào lớp học PooEnglish
                   </Text>
                   <Text color="#475569" fontSize="sm" fontWeight={softEmphasisWeight} lineHeight="1.7" maxW="340px">
                     Bạn cần đăng nhập để lưu tiến độ và vào lớp học.
@@ -98,25 +127,45 @@ export function LoginPage() {
                 </VStack>
 
                 <VStack gap="3" align="stretch">
-                  <Button
-                    data-testid="login-google-supabase"
-                    isLoading={googleLoading || auth.loading}
-                    onClick={connectGoogle}
-                    w="100%"
-                    h={{ base: '54px', md: '58px' }}
-                    bg="linear-gradient(135deg, #0EA5E9, #1F6FD6)"
-                    color="white"
-                    border="1px solid rgba(255,255,255,0.46)"
-                    leftIcon={<Icon as={Globe} color="white" />}
-                    fontWeight="700"
-                    fontSize={{ base: 'md', md: 'lg' }}
-                    borderRadius="2xl"
-                    boxShadow="0 18px 42px rgba(14, 165, 233, 0.30)"
-                    _hover={{ transform: 'translateY(-1px)', boxShadow: '0 22px 50px rgba(14, 165, 233, 0.36)' }}
-                    _active={{ transform: 'translateY(0)' }}
-                  >
-                    Đăng nhập bằng Google
-                  </Button>
+                  {isInAppBrowser ? (
+                    <Box bg="rgba(255,247,237,0.88)" border="1px solid #FED7AA" borderRadius="2xl" p="4" data-testid="login-in-app-browser-warning">
+                      <VStack align="stretch" gap="3">
+                        <Text color="#9A3412" fontWeight="800" lineHeight="1.65">
+                          Bạn đang mở PooEnglish bên trong trình duyệt của ứng dụng khác.<br />
+                          Google không cho đăng nhập trong màn hình này.<br />
+                          Hãy bấm dấu ba chấm ở góc trên bên phải rồi chọn Mở bằng Chrome/Safari.
+                        </Text>
+                        <VStack align="stretch" gap="2.5">
+                          <Button leftIcon={<Icon as={Copy} />} onClick={copyLoginLink} borderRadius="2xl" minH="50px" bg="white" color="#075985" border="1px solid rgba(186,230,253,0.92)" fontWeight="800" data-testid="login-copy-link">
+                            {copiedLoginLink ? 'Đã sao chép link' : 'Sao chép link đăng nhập'}
+                          </Button>
+                          <Button leftIcon={<Icon as={ExternalLink} />} onClick={openExternalBrowser} borderRadius="2xl" minH="50px" bg="linear-gradient(135deg, #0EA5E9, #1F6FD6)" color="white" fontWeight="800" data-testid="login-open-browser">
+                            Thử mở bằng trình duyệt
+                          </Button>
+                        </VStack>
+                      </VStack>
+                    </Box>
+                  ) : (
+                    <Button
+                      data-testid="login-google-supabase"
+                      isLoading={googleLoading || auth.loading}
+                      onClick={connectGoogle}
+                      w="100%"
+                      h={{ base: '54px', md: '58px' }}
+                      bg="linear-gradient(135deg, #0EA5E9, #1F6FD6)"
+                      color="white"
+                      border="1px solid rgba(255,255,255,0.46)"
+                      leftIcon={<Icon as={Globe} color="white" />}
+                      fontWeight="700"
+                      fontSize={{ base: 'md', md: 'lg' }}
+                      borderRadius="2xl"
+                      boxShadow="0 18px 42px rgba(14, 165, 233, 0.30)"
+                      _hover={{ transform: 'translateY(-1px)', boxShadow: '0 22px 50px rgba(14, 165, 233, 0.36)' }}
+                      _active={{ transform: 'translateY(0)' }}
+                    >
+                      Đăng nhập bằng Google
+                    </Button>
+                  )}
                 </VStack>
 
                 <HStack data-testid="login-single-info-message" gap="2.5" align="start" bg="rgba(232,244,255,0.72)" border="1px solid rgba(186,230,253,0.86)" borderRadius="2xl" p="3.5">
@@ -140,6 +189,17 @@ export function LoginPage() {
       </Center>
     </LoginOceanBackground>
   );
+}
+
+function isInAppLoginBrowser() {
+  if (typeof navigator === 'undefined') return false;
+  const userAgent = navigator.userAgent || '';
+  return /(Threads|Instagram|FBAN|FBAV|Messenger|Line|Zalo|TikTok|\bwv\b)/i.test(userAgent);
+}
+
+function getLoginUrl() {
+  if (typeof window === 'undefined') return 'https://pooenglish.com/login';
+  return window.location.href || 'https://pooenglish.com/login';
 }
 
 function LoginOceanBackground({ children }: { children: React.ReactNode }) {
@@ -262,17 +322,17 @@ function AuthCallbackContent({ params }: { params: URLSearchParams }) {
     let active = true;
     const run = async () => {
       const session = await auth.refreshSession();
-      const fallback = params.get('next') || params.get('redirectTo') || '/home';
+      const fallback = sanitizeAuthRedirect(params.get('next') || params.get('redirectTo'));
       let intended = fallback;
       try {
-        intended = window.sessionStorage.getItem('penglish-auth-redirect') || fallback;
+        intended = sanitizeAuthRedirect(window.sessionStorage.getItem('penglish-auth-redirect')) || fallback;
         window.sessionStorage.removeItem('penglish-auth-redirect');
       } catch {
         intended = fallback;
       }
       window.setTimeout(() => {
         if (active) navigate(session?.user ? intended : '/login', { replace: true });
-      }, 450);
+      }, 250);
     };
     void run();
     return () => {
@@ -280,16 +340,12 @@ function AuthCallbackContent({ params }: { params: URLSearchParams }) {
     };
   }, [auth, navigate, params]);
 
-  return (
-    <LoginOceanBackground>
-      <Center minH="100vh" px="4" position="relative" zIndex={1}>
-        <VStack bg="rgba(255,255,255,0.90)" border="1px solid #BAE6FD" borderRadius="3xl" boxShadow="0 24px 64px rgba(31,111,214,0.16)" p="8" maxW="520px" textAlign="center" gap="4">
-          <OceanMascot mascot="poo" pose="happy" size="lg" decorative motion="float" />
-          <Text fontSize="sm" fontWeight="700" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">P-English Google Auth</Text>
-          <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color="#102A43">Poo đang xác nhận phiên đăng nhập...</Text>
-          <Text color="#52667A" fontWeight="700" lineHeight="1.7">Nếu kết nối Google thành công, bạn sẽ được đưa về vùng học và tiến độ Foundation48 sẽ được tách theo tài khoản.</Text>
-        </VStack>
-      </Center>
-    </LoginOceanBackground>
-  );
+  return <AuthLoadingScreen />;
+}
+
+function sanitizeAuthRedirect(value: string | null) {
+  if (!value) return '/home';
+  if (!value.startsWith('/') || value.startsWith('//')) return '/home';
+  if (/^\/(login|login\/callback|auth\/callback)(\/|\?|#|$)/i.test(value)) return '/home';
+  return value;
 }

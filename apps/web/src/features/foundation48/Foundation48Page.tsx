@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, Flex, HStack, Icon, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, Icon, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import { CheckCircle2, Play, Sparkles } from 'lucide-react';
 import { OceanPageShell } from '../../components/p-english/OceanPageShell';
 import { OceanMascot } from '../../components/p-english/OceanMascot';
@@ -19,7 +19,7 @@ export function Foundation48Page() {
   const nextState = progress.days[nextDay];
   const todayTitle = getFriendlyDayTitle(nextDayData.title);
   const exampleSentence = nextDayData.summary.examples[0] || nextDayData.polished?.examples[0] || 'I am ready to learn.';
-  const primaryCta = nextState?.started ? 'Học tiếp hôm nay' : 'Bắt đầu học';
+  const primaryCta = nextState?.started ? 'Học tiếp' : 'Bắt đầu ngày đang học';
 
   useEffect(() => {
     const refresh = () => setVersion((value) => value + 1);
@@ -40,11 +40,11 @@ export function Foundation48Page() {
           <Box position="absolute" inset="0" bg="radial-gradient(circle at 92% 12%, rgba(91,188,235,0.14), transparent 24%)" pointerEvents="none" />
           <Flex position="relative" justify="space-between" align="center" gap="3">
             <Box minW="0" maxW="640px">
-              <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="700" color={COLORS.text} lineHeight="1.08">
+              <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.08">
                 48 ngày lấy gốc
               </Text>
-              <Text mt="1" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" lineHeight="1.35">
-                Mỗi ngày 5 phút. Học từng bước.
+              <Text mt="1" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="800" lineHeight="1.45">
+                Khóa nền tảng cho người mới: mỗi ngày khoảng 12 phút, đi theo vòng Từ mới → Mẫu câu → Lời thoại → Câu luyện → Bài kiểm tra nhỏ.
               </Text>
             </Box>
             <Box display={{ base: 'none', md: 'block' }} pr="1" w="92px" flexShrink={0}>
@@ -65,14 +65,16 @@ export function Foundation48Page() {
                   Hôm nay học
                 </Text>
                 <HStack gap="2" wrap="wrap">
-                  <Text px="3" py="1" borderRadius="full" bg="#DBEAFE" color={COLORS.blue} fontWeight="700" fontSize="sm">Ngày {nextDay}</Text>
-                  {nextState?.completed ? <Text px="3" py="1" borderRadius="full" bg="#ECFDF5" color={COLORS.green} fontWeight="700" fontSize="sm">Đã xong</Text> : null}
+                  <Text px="3" py="1" borderRadius="full" bg="#DBEAFE" color={COLORS.blue} fontWeight="950" fontSize="sm">Ngày {nextDay}</Text>
+                  <Text px="3" py="1" borderRadius="full" bg="#FFF7ED" color="#B45309" fontWeight="950" fontSize="sm">12 phút</Text>
+                  <Text px="3" py="1" borderRadius="full" bg="rgba(221,245,255,0.82)" color={COLORS.blue} fontWeight="950" fontSize="sm">5 bước</Text>
+                  {nextState?.completed ? <Text px="3" py="1" borderRadius="full" bg="#ECFDF5" color={COLORS.green} fontWeight="950" fontSize="sm">Đã hoàn thành</Text> : null}
                 </HStack>
                 <Text color={COLORS.text} fontWeight="700" fontSize={{ base: '2xl', md: '3xl' }} lineHeight="1.08" noOfLines={2}>
                   {todayTitle}
                 </Text>
-                <Text display={{ base: 'none', md: 'block' }} color={COLORS.muted} fontWeight="700" fontSize="md" lineHeight="1.5" noOfLines={1}>
-                  Ví dụ: {exampleSentence}
+                <Text display={{ base: 'none', md: 'block' }} color={COLORS.muted} fontWeight="800" fontSize="md" lineHeight="1.5" noOfLines={2}>
+                  Poo đề xuất học bài này hôm nay. Ví dụ: {exampleSentence}
                 </Text>
               </VStack>
             </HStack>
@@ -93,6 +95,15 @@ export function Foundation48Page() {
             </HStack>
           </Box>
         ) : null}
+
+        <SimpleGrid columns={{ base: 1, md: 5 }} gap="2.5" mb="4" data-testid="foundation48-five-step-overview">
+          {['Từ mới', 'Mẫu câu', 'Lời thoại', 'Câu luyện', 'Bài kiểm tra nhỏ'].map((step, index) => (
+            <Box key={step} border="1px solid" borderColor={index === 0 ? '#7DD3FC' : COLORS.border} borderRadius="2xl" bg="rgba(255,255,255,0.74)" p="3" minW="0">
+              <Text color={COLORS.blue} fontWeight="950" fontSize="xs">Bước {index + 1}</Text>
+              <Text color={COLORS.text} fontWeight="950" fontSize="sm">{step}</Text>
+            </Box>
+          ))}
+        </SimpleGrid>
 
         <Foundation48Roadmap days={foundation48Days} progress={progress} currentDay={nextDay} />
 

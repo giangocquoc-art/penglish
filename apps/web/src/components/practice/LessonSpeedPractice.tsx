@@ -37,7 +37,7 @@ const GAME_SECONDS = 60;
 const MAX_QUESTIONS = 30;
 const AUTO_NEXT_MS = 780;
 
-type SpeedSourceLabel = 'Từ vựng' | 'Quiz' | 'Phản xạ';
+type SpeedSourceLabel = 'Từ vựng' | 'Kiểm tra nhanh' | 'Phản xạ';
 
 type SpeedQuestion = {
   id: string;
@@ -133,7 +133,7 @@ function safeReadProgress(lessonId: string): LessonProgress {
   if (typeof window === 'undefined') return {};
 
   try {
-    const raw = window.localStorage.getItem(`p-english:lesson-progress:${lessonId}`);
+    const raw = window.localStorage.getItem(`PooEnglish:lesson-progress:${lessonId}`);
     return raw ? (JSON.parse(raw) as LessonProgress) : {};
   } catch {
     return {};
@@ -145,7 +145,7 @@ function safeWriteProgress(lessonId: string, updater: (current: LessonProgress) 
 
   try {
     const current = safeReadProgress(lessonId);
-    window.localStorage.setItem(`p-english:lesson-progress:${lessonId}`, JSON.stringify(updater(current)));
+    window.localStorage.setItem(`PooEnglish:lesson-progress:${lessonId}`, JSON.stringify(updater(current)));
   } catch {
     // Speed practice still works in memory if localStorage is unavailable.
   }
@@ -185,7 +185,7 @@ function quizQuestionToSpeed(question: QuizQuestion): SpeedQuestion | null {
     options: makeOptions(question.answer, question.options),
     answer: question.answer,
     explanationVi: question.explanationVi,
-    sourceLabel: 'Quiz',
+    sourceLabel: 'Kiểm tra nhanh',
   };
 }
 
@@ -211,9 +211,9 @@ function buildSpeedQuestions(lesson: EnglishLesson): SpeedQuestion[] {
 }
 
 function getResultMessage(accuracy: number) {
-  if (accuracy >= 80) return 'Rất tốt! Phản xạ Unit 1 của bạn đang ổn.';
+  if (accuracy >= 80) return 'Rất tốt! Phản xạ Bài 1 của bạn đang ổn.';
   if (accuracy >= 50) return 'Ổn rồi, nên luyện lại các câu sai một lượt.';
-  return 'Nên quay lại flashcard hoặc ghép cặp trước khi chơi lại.';
+  return 'Nên quay lại thẻ từ hoặc ghép cặp trước khi chơi lại.';
 }
 
 export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {
@@ -408,8 +408,8 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px="6" py="8">
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có dữ liệu luyện tốc độ</Text>
-          <Text mt="2" color={COLORS.muted}>Bài học này chưa có đủ từ vựng, quiz hoặc phản xạ để tạo game tốc độ.</Text>
+          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có nội dung luyện tốc độ</Text>
+          <Text mt="2" color={COLORS.muted}>Bài học này chưa có đủ từ vựng, kiểm tra nhanh hoặc phản xạ để tạo trò luyện tốc độ.</Text>
           <Button as={Link} to={`/lessons/${lesson.id}`} mt="6" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: COLORS.primaryHover }}>
             Quay về bài học
           </Button>
@@ -430,7 +430,7 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
           <Text mt="3" fontSize="xl" fontWeight="800" color={COLORS.text}>{lesson.titleVi}</Text>
           <Text color={COLORS.muted}>{lesson.titleEn}</Text>
           <Text mt="5" color={COLORS.muted} fontSize="lg">
-            Trả lời nhanh các cụm câu Unit 1 trong 60 giây. Ưu tiên phản xạ đúng, không cần suy nghĩ quá lâu.
+            Trả lời nhanh các cụm câu Bài 1 trong 60 giây. Ưu tiên phản xạ đúng, không cần suy nghĩ quá lâu.
           </Text>
           <SimpleGrid columns={{ base: 1, md: 3 }} gap="4" mt="7">
             <Metric label="Kho câu hỏi" value={baseQuestions.length} />
@@ -466,12 +466,12 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="8">
         <Box maxW="980px" mx="auto">
           <Box bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '6', md: '8' }}>
-            <Badge bg="#F0FDF4" color="#166534" borderRadius="full" px="3" py="1">Hoàn thành speed</Badge>
+            <Badge bg="#F0FDF4" color="#166534" borderRadius="full" px="3" py="1">Hoàn thành luyện tốc độ</Badge>
             <Text mt="4" fontSize={{ base: '3xl', md: '4xl' }} fontWeight="950" color={COLORS.text}>Tổng kết Tốc độ</Text>
             <Text mt="2" color={COLORS.muted}>{getResultMessage(accuracy)}</Text>
             <SimpleGrid columns={{ base: 1, md: 4 }} gap="4" mt="6">
               <Metric label="Điểm" value={score} tone="green" />
-              <Metric label="Best score" value={finalBestScore} tone="amber" />
+              <Metric label="Kỷ lục" value={finalBestScore} tone="amber" />
               <Metric label="Đúng / Sai" value={`${correctCount} / ${wrongCount}`} />
               <Metric label="Độ chính xác" value={`${accuracy}%`} />
               <Metric label="Chuỗi nhanh nhất" value={maxStreak} tone="amber" />
@@ -507,7 +507,7 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
                 Chơi lại
               </Button>
               <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=flashcard`} borderRadius="full" variant="outline">
-                Ôn flashcard
+                Ôn thẻ từ
               </Button>
               <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=reflex`} borderRadius="full" variant="outline">
                 Luyện phản xạ
@@ -534,7 +534,7 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
                   <Badge bg="#EFF6FF" color={COLORS.primary} borderRadius="full" px="3" py="1">{currentQuestion?.sourceLabel}</Badge>
                 </HStack>
                 <Text fontSize="2xl" fontWeight="950" color={COLORS.text}>{lesson.titleVi}</Text>
-                <Text color={COLORS.muted}>Phím 1–4 để chọn, Enter để qua câu khi đang xem feedback.</Text>
+                <Text color={COLORS.muted}>Phím 1–4 để chọn, Enter để qua câu khi đang xem góp ý.</Text>
               </Box>
               <HStack wrap="wrap" gap="3">
                 <ScorePill label="⏱ Thời gian" value={`${timeLeft}s`} tone="amber" />

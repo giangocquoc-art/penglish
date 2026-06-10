@@ -18,6 +18,10 @@ const SKILL_META = {
   'Ôn tập': { icon: Repeat, tone: '#F8FAFC' },
 } as const;
 
+const SKILL_LABELS: Record<string, string> = {
+  Shadowing: 'Nói đuổi',
+};
+
 export function SkillCoverageGrid({ coverage }: { coverage: UnifiedSkillCoverage }) {
   return (
     <SimpleGrid data-testid="skill-coverage-grid" columns={{ base: 1, md: 2, xl: 3 }} gap={{ base: '3', md: '4' }} minChildWidth={{ base: '100%', md: '240px' }}>
@@ -44,9 +48,9 @@ export function SkillCoverageGrid({ coverage }: { coverage: UnifiedSkillCoverage
                   <Icon as={meta.icon} color={COLORS.blue} boxSize="5" />
                 </HStack>
                 <Box minW="0">
-                  <Text fontWeight="950" color={COLORS.text} noOfLines={1} lineHeight="1.2">{skill}</Text>
+                  <Text fontWeight="950" color={COLORS.text} noOfLines={1} lineHeight="1.2">{SKILL_LABELS[skill] ?? skill}</Text>
                   <Text mt="1" color={COLORS.muted} fontSize="sm" fontWeight="750" noOfLines={2} lineHeight="1.35">
-                    {empty ? 'Sắp mở thêm' : `Đang phủ ${count} unit`}
+                    {empty ? 'Sắp mở thêm' : `Đang phủ ${count} bài`}
                   </Text>
                 </Box>
               </HStack>

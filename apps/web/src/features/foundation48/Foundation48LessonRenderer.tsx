@@ -33,7 +33,7 @@ export function Foundation48LessonRenderer({ day }: { day: Foundation48Day }) {
         <ListSection title="Công thức / mẫu câu" items={lesson.formulas} mascot="mucMo" />
         <ListSection title="Ví dụ dễ nhớ" items={lesson.examples} mascot="poo" />
         <ListSection title="Luyện tập" items={lesson.practiceQuestions} mascot="cuaQuiz" />
-        <ListSection title="Mini test" items={lesson.dailyTest} mascot="cuaQuiz" />
+        <ListSection title="Bài kiểm tra nhỏ" items={lesson.dailyTest} mascot="cuaQuiz" />
         <Section title="Nhiệm vụ cuối ngày" body={lesson.finalTask} mascot="saoNhi" pose="sparkle" />
       </VStack>
     );
@@ -74,7 +74,7 @@ export function Foundation48LessonRenderer({ day }: { day: Foundation48Day }) {
       />
       <Section
         title="Nhiệm vụ cuối ngày"
-        body={day.dayNumber === 48 ? 'Chuẩn bị một đoạn tự giới thiệu ngắn và nói thành tiếng như đang đứng trước lớp.' : 'Hoàn thành lesson flow, ghi nhớ lỗi sai, rồi chuyển sang ngày tiếp theo khi bạn thấy đủ chắc.'}
+        body={day.dayNumber === 48 ? 'Chuẩn bị một đoạn tự giới thiệu ngắn và nói thành tiếng như đang đứng trước lớp.' : 'Hoàn thành bài học, ghi nhớ lỗi sai, rồi chuyển sang ngày tiếp theo khi bạn thấy đủ chắc.'}
         mascot={day.dayNumber === 48 ? 'saoNhi' : 'ruaRi'}
         pose={day.dayNumber === 48 ? 'sparkle' : 'guide'}
       />

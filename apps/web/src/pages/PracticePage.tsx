@@ -21,7 +21,8 @@ import { getLessonById } from '../lib/p-english/lesson-content-data';
 import { getAvailableLessonProgressModes, type LessonProgressMode } from '../lib/p-english/lesson-progress';
 import { getUnifiedPracticeContentDepth } from '../lib/p-english/unifiedLessonEngine';
 import { getCurrentStreak, LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
-import { getLearningLoopSnapshot, LEARNING_LOOP_UPDATED_EVENT, resolveLearningLoopMistake, type LearningLoopMistakeRecord } from '../lib/p-english/learning-loop';
+import { getLearningLoopSnapshot, LEARNING_LOOP_UPDATED_EVENT, resolveLearningLoopMistake, type LearningLoopMistakeRecord, type LearningLoopWordRecord } from '../lib/p-english/learning-loop';
+import { getFoundation48DayPath, FOUNDATION48_BASE_PATH } from '../features/foundation48/foundation48Data';
 
 const MotionBox = motion.create(Box);
 
@@ -50,12 +51,12 @@ const PRACTICE_COLORS = {
 const STARTER_A1_LESSON_ID = 'unit-1-greetings-introduction';
 
 const GAMES: GameDef[] = [
-  { id: 'flashcard', name: 'Flashcard', desc: 'Lật thẻ nhanh để ghi nhớ nghĩa và cách dùng.', icon: BookOpen, time: '3–5 phút', reward: 5 },
-  { id: 'quiz', name: 'Trắc nghiệm', desc: 'Chọn đáp án đúng để kiểm tra độ nhớ từ.', icon: HelpCircle, time: '4–6 phút', reward: 5 },
-  { id: 'listen', name: 'Nghe', desc: 'Nghe phát âm và nhận diện từ trong ngữ cảnh.', icon: Headphones, time: '5–7 phút', reward: 10 },
-  { id: 'type', name: 'Gõ từ', desc: 'Luyện chính tả bằng cách nhập lại đáp án.', icon: PenTool, time: '5–8 phút', reward: 10 },
+  { id: 'flashcard', name: 'Thẻ từ', desc: 'Lật thẻ nhanh để ghi nhớ nghĩa và cách dùng.', icon: BookOpen, time: '3–5 phút', reward: 5 },
+  { id: 'quiz', name: 'Kiểm tra nhanh', desc: 'Chọn đáp án đúng để kiểm tra độ nhớ từ.', icon: HelpCircle, time: '4–6 phút', reward: 5 },
+  { id: 'listen', name: 'Luyện nghe', desc: 'Nghe phát âm và nhận diện từ trong ngữ cảnh.', icon: Headphones, time: '5–7 phút', reward: 10 },
+  { id: 'type', name: 'Gõ câu', desc: 'Luyện chính tả bằng cách nhập lại đáp án.', icon: PenTool, time: '5–8 phút', reward: 10 },
   { id: 'match', name: 'Ghép cặp', desc: 'Ghép từ với nghĩa để củng cố phản xạ.', icon: Target, time: '3–5 phút', reward: 5 },
-  { id: 'speed', name: 'Tốc độ', desc: 'Trả lời nhanh để tăng tốc độ nhận diện từ.', icon: Zap, time: '2–4 phút', reward: 10 },
+  { id: 'speed', name: 'Luyện tốc độ', desc: 'Trả lời nhanh để tăng tốc độ nhận diện từ.', icon: Zap, time: '2–4 phút', reward: 10 },
 ];
 
 type Category = { id: string; name: string };
@@ -68,6 +69,8 @@ type PooReviewItem = {
   correctAnswer: string;
   explanation: string;
   sourceLabel: string;
+  actionPath: string;
+  kind: 'mistake' | 'weak-word' | 'starter';
   isFallback?: boolean;
 };
 
@@ -102,6 +105,8 @@ const FALLBACK_POO_REVIEW_ITEMS: PooReviewItem[] = [
     correctAnswer: 'I am a student.',
     explanation: 'student là danh từ đếm được số ít, nên cần a trước student.',
     sourceLabel: 'Ôn nhẹ hôm nay',
+    actionPath: '/practice',
+    kind: 'starter',
     isFallback: true,
   },
   {
@@ -111,6 +116,8 @@ const FALLBACK_POO_REVIEW_ITEMS: PooReviewItem[] = [
     correctAnswer: 'She is happy.',
     explanation: 'She đi với is trong hiện tại đơn.',
     sourceLabel: 'Ôn nhẹ hôm nay',
+    actionPath: '/practice',
+    kind: 'starter',
     isFallback: true,
   },
   {
@@ -120,6 +127,8 @@ const FALLBACK_POO_REVIEW_ITEMS: PooReviewItem[] = [
     correctAnswer: 'I really like English.',
     explanation: 'very không đứng trước like; dùng really để nhấn mạnh động từ like.',
     sourceLabel: 'Ôn nhẹ hôm nay',
+    actionPath: '/practice',
+    kind: 'starter',
     isFallback: true,
   },
 ];
@@ -136,8 +145,8 @@ function normalizeLessonPracticeMode(mode: string | null): LessonProgressMode | 
 function getMistakeSourceLabel(mistake: LearningLoopMistakeRecord) {
   if (mistake.source === 'foundation48') return `48 ngày lấy gốc · ${mistake.sourceId.replace('day-', 'Ngày ')}`;
   if (mistake.source === 'interactive-lesson') return 'Bài học tương tác';
-  if (mistake.source === 'shadowing') return 'Luyện nói nhại';
-  if (mistake.source === 'english-speed') return 'Tốc độ tiếng Anh';
+  if (mistake.source === 'shadowing') return 'Nói đuổi';
+  if (mistake.source === 'english-speed') return 'Luyện tốc độ tiếng Anh';
   if (mistake.source === 'words') return 'Sổ từ vựng';
   return 'Luyện tập';
 }
@@ -145,13 +154,34 @@ function getMistakeSourceLabel(mistake: LearningLoopMistakeRecord) {
 function getMistakeActionPath(mistake: LearningLoopMistakeRecord) {
   if (mistake.source === 'foundation48') {
     const day = Number(mistake.sourceId.replace('day-', ''));
-    return Number.isFinite(day) && day > 0 ? `/luyen-tieng-anh/48-ngay-lay-goc/${day}` : '/luyen-tieng-anh/48-ngay-lay-goc';
+    return Number.isFinite(day) && day > 0 ? getFoundation48DayPath(day) : FOUNDATION48_BASE_PATH;
   }
   if (mistake.source === 'interactive-lesson') return `/practice?lessonId=${mistake.sourceId}&mode=quiz`;
   if (mistake.source === 'shadowing') return '/shadowing';
   if (mistake.source === 'english-speed') return '/english-speed';
   if (mistake.source === 'words') return '/words';
   return '/practice';
+}
+
+function getWeakWordActionPath(word: LearningLoopWordRecord) {
+  if (word.source === 'foundation48') {
+    const day = Number(word.sourceId.replace('day-', ''));
+    return Number.isFinite(day) && day > 0 ? getFoundation48DayPath(day) : FOUNDATION48_BASE_PATH;
+  }
+  if (word.source === 'interactive-lesson') return `/practice?lessonId=${word.sourceId}&mode=flashcard`;
+  if (word.source === 'shadowing') return '/shadowing';
+  if (word.source === 'english-speed') return '/english-speed';
+  return '/words';
+}
+
+function buildReviewOptions(activeReviewItem: PooReviewItem) {
+  const normalizedWrong = activeReviewItem.wrongAnswer.trim();
+  const normalizedCorrect = activeReviewItem.correctAnswer.trim();
+  const promptAsDistractor = activeReviewItem.prompt.trim() && activeReviewItem.prompt.trim() !== normalizedCorrect ? activeReviewItem.prompt.trim() : '';
+  const generatedDistractor = normalizedCorrect.includes('?')
+    ? normalizedCorrect.replace(/^Do\s+/i, 'Does ').replace(/^Does\s+/i, 'Do ')
+    : normalizedCorrect.replace(/\b(is|are|am|do|does|don’t|doesn’t)\b/i, '___');
+  return Array.from(new Set([normalizedWrong, normalizedCorrect, promptAsDistractor, generatedDistractor].filter(Boolean))).slice(0, 4);
 }
 
 function FilterDropdown({ label, value, options, onChange }: {
@@ -463,20 +493,35 @@ export function PracticePage() {
   const reviewCenterCount = unresolvedMistakes.length + weakWords.length;
   const displayReadyCount = reviewCenterCount > 0 ? reviewCenterCount : readyCount > 0 ? readyCount : starterA1Count;
   const pooReviewItems = useMemo<PooReviewItem[]>(() => {
-    if (unresolvedMistakes.length === 0) return FALLBACK_POO_REVIEW_ITEMS;
-    return unresolvedMistakes.slice(0, 6).map((mistake) => ({
+    const mistakeItems: PooReviewItem[] = unresolvedMistakes.slice(0, 6).map((mistake) => ({
       id: mistake.id,
       prompt: mistake.prompt,
       wrongAnswer: mistake.userAnswer || mistake.prompt,
       correctAnswer: mistake.correctAnswer || mistake.prompt,
       explanation: mistake.explanation || 'Poo nhắc bạn nhìn lại mẫu câu đúng rồi luyện lại thật chậm.',
       sourceLabel: getMistakeSourceLabel(mistake),
+      actionPath: getMistakeActionPath(mistake),
+      kind: 'mistake',
     }));
-  }, [unresolvedMistakes]);
+
+    const weakWordItems: PooReviewItem[] = weakWords.slice(0, Math.max(0, 6 - mistakeItems.length)).map((word) => ({
+      id: `weak-word-${word.id}`,
+      prompt: word.example || word.term,
+      wrongAnswer: word.term,
+      correctAnswer: `${word.term} = ${word.meaningVi}`,
+      explanation: word.example ? `Gặp lại từ này trong câu: ${word.example}` : 'Từ này còn yếu, hãy đọc nghĩa rồi nói lại một câu ngắn.',
+      sourceLabel: `${word.source === 'foundation48' ? '48 ngày lấy gốc' : 'Kho từ vựng'} · từ yếu`,
+      actionPath: getWeakWordActionPath(word),
+      kind: 'weak-word',
+    }));
+
+    const realItems = [...mistakeItems, ...weakWordItems];
+    return realItems.length > 0 ? realItems : FALLBACK_POO_REVIEW_ITEMS;
+  }, [unresolvedMistakes, weakWords]);
   const activeReviewItem = pooReviewItems[Math.min(pooReviewIndex, Math.max(0, pooReviewItems.length - 1))];
   const reviewAnswerOptions = useMemo(() => {
     if (!activeReviewItem) return [];
-    return Array.from(new Set([activeReviewItem.wrongAnswer, activeReviewItem.correctAnswer, 'I like English very.'].filter(Boolean))).slice(0, 3);
+    return buildReviewOptions(activeReviewItem);
   }, [activeReviewItem]);
   const hasRealMistakes = unresolvedMistakes.length > 0;
 
@@ -488,18 +533,18 @@ export function PracticePage() {
     return (
       <OceanPageShell variant="vocab" overlayStrength="medium" minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="8" pb={{ base: '28', lg: '8' }}>
         <Box data-testid="practice-fallback-card" maxW="760px" mx="auto" bg="rgba(255,255,255,0.9)" backdropFilter="blur(16px)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '6', md: '8' }} boxShadow="0 18px 45px rgba(31, 111, 214, 0.10)">
-          <Badge borderRadius="full" bg="#EFF6FF" color="#2563EB" mb="3" textTransform="none">Practice fallback</Badge>
-          <Text fontSize="2xl" fontWeight="700" color="#0F172A">Chế độ này chưa có dữ liệu cho bài học này.</Text>
+          <Badge borderRadius="full" bg="#EFF6FF" color="#2563EB" mb="3" textTransform="none">Gợi ý luyện tập</Badge>
+          <Text fontSize="2xl" fontWeight="700" color="#0F172A">Phần này chưa có đủ nội dung luyện cho bài học này.</Text>
           <Text mt="2" color="#64748B" lineHeight="1.7">
-            {suggestedMode ? 'Poo đã chọn một mode phù hợp hơn dựa trên nội dung hiện có. Không mất tiến độ — bạn chỉ cần chuyển sang surface đang có dữ liệu.' : 'Bài này hiện chỉ có phần đọc/xem nội dung, chưa có mode luyện tập riêng.'}
+            {suggestedMode ? 'Poo đã chọn phần luyện phù hợp hơn. Bạn không mất tiến độ — chỉ cần chuyển sang phần đang sẵn sàng.' : 'Bài này hiện chỉ có phần đọc/xem nội dung, chưa có phần luyện riêng.'}
           </Text>
-          <Text mt="3" color="#2563EB" fontSize="sm" fontWeight="700">Gợi ý phím: Enter để bắt đầu mode được đề xuất, hoặc quay lại bài học để xem kế hoạch.</Text>
+          <Text mt="3" color="#2563EB" fontSize="sm" fontWeight="700">Gợi ý phím: Enter để bắt đầu phần luyện Poo đề xuất, hoặc quay lại bài học.</Text>
           {practiceContentDepth ? (
             <Box mt="5" border="1px solid" borderColor="#DBEAFE" borderRadius="2xl" bg="rgba(239,246,255,0.74)" p="4">
               <HStack justify="space-between" align="start" gap="3" wrap="wrap">
                 <Box minW="0">
-                  <Text color="#0F172A" fontWeight="700">Data readiness của practice</Text>
-                  <Text mt="1" color="#64748B" fontSize="sm" fontWeight="700">{practiceContentDepth.readinessSummaryVi} · luồng gợi ý: {practiceContentDepth.recommendedFlowVi}</Text>
+                  <Text color="#0F172A" fontWeight="700">Nội dung luyện hiện có</Text>
+                  <Text mt="1" color="#64748B" fontSize="sm" fontWeight="700">{practiceContentDepth.readinessSummaryVi} · Gợi ý thứ tự luyện: {practiceContentDepth.recommendedFlowVi}</Text>
                 </Box>
                 {selectedModeDepth ? (
                   <Badge borderRadius="full" bg={selectedModeDepth.isReady ? '#ECFDF5' : '#FFF7ED'} color={selectedModeDepth.isReady ? '#047857' : '#C2410C'} textTransform="none" px="3" py="1.5">
@@ -520,7 +565,7 @@ export function PracticePage() {
           <HStack mt="6" wrap="wrap">
             {suggestedMode ? (
               <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=${suggestedMode}`} borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
-                Luyện mode phù hợp
+                Luyện phần phù hợp
               </Button>
             ) : null}
             <Button as={Link} to={`/lessons/${lesson.id}`} borderRadius="full" bg={suggestedMode ? 'white' : '#2563EB'} color={suggestedMode ? '#2563EB' : 'white'} variant={suggestedMode ? 'outline' : 'solid'}>
@@ -540,8 +585,8 @@ export function PracticePage() {
       return (
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
-            <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện flashcard</Text>
-            <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
+            <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để ôn thẻ từ</Text>
+            <Text mt="2" color="#64748B">Poo chưa tìm thấy bài học này trên thiết bị.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
                 Về trang chủ
@@ -563,7 +608,7 @@ export function PracticePage() {
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
             <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện tập</Text>
-            <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
+            <Text mt="2" color="#64748B">Poo chưa tìm thấy bài học này trên thiết bị.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
                 Về trang chủ
@@ -585,7 +630,7 @@ export function PracticePage() {
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
             <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện nghe</Text>
-            <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
+            <Text mt="2" color="#64748B">Poo chưa tìm thấy bài học này trên thiết bị.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
                 Về trang chủ
@@ -607,7 +652,7 @@ export function PracticePage() {
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
             <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện phản xạ</Text>
-            <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
+            <Text mt="2" color="#64748B">Poo chưa tìm thấy bài học này trên thiết bị.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
                 Về trang chủ
@@ -629,7 +674,7 @@ export function PracticePage() {
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
             <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện gõ câu</Text>
-            <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
+            <Text mt="2" color="#64748B">Poo chưa tìm thấy bài học này trên thiết bị.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
                 Về trang chủ
@@ -651,7 +696,7 @@ export function PracticePage() {
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
             <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để ghép cặp</Text>
-            <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
+            <Text mt="2" color="#64748B">Poo chưa tìm thấy bài học này trên thiết bị.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
                 Về trang chủ
@@ -673,7 +718,7 @@ export function PracticePage() {
         <Box bg="#F8FAFC" minH="calc(100vh - 72px)" px="6" py="8">
           <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor="#E2E8F0" borderRadius="3xl" p="8">
             <Text fontSize="2xl" fontWeight="700" color="#0F172A">Không tìm thấy bài học để luyện tốc độ</Text>
-            <Text mt="2" color="#64748B">Lesson ID hiện tại chưa có trong dữ liệu local của P-English.</Text>
+            <Text mt="2" color="#64748B">Poo chưa tìm thấy bài học này trên thiết bị.</Text>
             <HStack mt="6" wrap="wrap">
               <Button as={Link} to="/home" borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
                 Về trang chủ
@@ -693,9 +738,9 @@ export function PracticePage() {
     return (
       <OceanPageShell variant="vocab" overlayStrength="medium" minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="8" pb={{ base: '28', lg: '8' }}>
         <Box data-testid="practice-fallback-card" maxW="760px" mx="auto" bg="rgba(255,255,255,0.9)" backdropFilter="blur(16px)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '6', md: '8' }} boxShadow="0 18px 45px rgba(31, 111, 214, 0.10)">
-          <Badge borderRadius="full" bg="#EFF6FF" color="#2563EB" mb="3" textTransform="none">Practice fallback</Badge>
-          <Text fontSize="2xl" fontWeight="700" color="#0F172A">Chế độ này chưa nằm trong bộ luyện tập hiện tại.</Text>
-          <Text mt="2" color="#64748B" lineHeight="1.7">Bạn có thể quay lại bài học hoặc chọn một mode luyện tập đang có dữ liệu. Route vẫn an toàn và không làm mất trạng thái học.</Text>
+          <Badge borderRadius="full" bg="#EFF6FF" color="#2563EB" mb="3" textTransform="none">Gợi ý luyện tập</Badge>
+          <Text fontSize="2xl" fontWeight="700" color="#0F172A">Phần này chưa có trong bộ luyện tập hiện tại.</Text>
+          <Text mt="2" color="#64748B" lineHeight="1.7">Bạn có thể quay lại bài học hoặc chọn một phần luyện đang sẵn sàng. Poo vẫn giữ tiến độ của bạn.</Text>
           <Text mt="3" color="#2563EB" fontSize="sm" fontWeight="700">Gợi ý phím: dùng Tab để chọn hành động, Enter để xác nhận.</Text>
           <HStack mt="6" wrap="wrap">
             <Button as={Link} to={`/lessons/${lessonId}`} borderRadius="full" bg="#2563EB" color="white" _hover={{ bg: '#1D4ED8' }}>
@@ -779,7 +824,7 @@ export function PracticePage() {
               <Box w="7px" h="7px" borderRadius="full" bg="#AEE7FF" />
             </HStack>
             <Text color="#2F9EEB" fontSize="xs" fontWeight="700" opacity="0.82">
-              {picked === 'quiz' || picked === 'match' ? 'Cua Quiz đang gom đáp án theo nhịp học của bạn' : 'Poo đang bơi theo nhịp học của bạn'}
+              {picked === 'quiz' || picked === 'match' ? 'Cua nhỏ đang gom đáp án theo nhịp học của bạn' : 'Poo đang bơi theo nhịp học của bạn'}
             </Text>
           </VStack>
         </VStack>
@@ -795,7 +840,7 @@ export function PracticePage() {
   };
 
   const markActiveUnderstood = () => {
-    if (activeReviewItem && !activeReviewItem.isFallback) {
+    if (activeReviewItem && activeReviewItem.kind === 'mistake' && !activeReviewItem.isFallback) {
       resolveLearningLoopMistake(activeReviewItem.id);
       setLearningLoopSnapshot(getLearningLoopSnapshot());
     }
@@ -926,7 +971,7 @@ export function PracticePage() {
                       <Text color={PRACTICE_COLORS.text} fontWeight="950">Sai: {item.wrongAnswer}</Text>
                       <Text mt="1" color="#15803D" fontWeight="950">Đúng: {item.correctAnswer}</Text>
                       <Text mt="1" color={PRACTICE_COLORS.secondaryText} fontSize="sm" fontWeight="800">Gợi ý: {item.explanation}</Text>
-                      <HStack mt="3" gap="2" wrap="wrap"><Button size="xs" borderRadius="full" onClick={startPooReview}>Tôi hiểu rồi</Button><Button size="xs" borderRadius="full" variant="outline" onClick={startPooReview}>Luyện lại</Button></HStack>
+                      <HStack mt="3" gap="2" wrap="wrap"><Button size="xs" borderRadius="full" onClick={startPooReview}>Tôi hiểu rồi</Button><Button as={Link} to={item.actionPath} size="xs" borderRadius="full" variant="outline">Mở nguồn</Button></HStack>
                     </Box>
                   ))}
                 </SimpleGrid>
@@ -945,8 +990,8 @@ export function PracticePage() {
             </Box>
 
             <Box className="penglish-glass-card" bg="rgba(255,255,255,0.66)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3.5', md: '5' }} display={{ base: 'none', lg: 'block' }}>
-              <Text fontWeight="950" color={PRACTICE_COLORS.text}>Game luyện thêm</Text>
-              <Text mt="1" color={PRACTICE_COLORS.secondaryText} fontSize="sm" fontWeight="800">Sau khi dọn lỗi, bạn vẫn có thể vào các mode cũ.</Text>
+              <Text fontWeight="950" color={PRACTICE_COLORS.text}>Trò luyện thêm</Text>
+              <Text mt="1" color={PRACTICE_COLORS.secondaryText} fontSize="sm" fontWeight="800">Sau khi ôn lỗi, bạn vẫn có thể vào các phần luyện cũ.</Text>
               <SimpleGrid columns={2} gap="2" mt="3">
                 {GAMES.slice(0, 4).map((g) => <Button key={g.id} size="sm" borderRadius="full" variant="outline" onClick={() => setPicked(g.id)}>{g.name}</Button>)}
               </SimpleGrid>

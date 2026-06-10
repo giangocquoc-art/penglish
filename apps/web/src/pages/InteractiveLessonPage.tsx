@@ -98,7 +98,7 @@ function StepRenderer({ step, pickedWords, inputValue, onInputChange, onAnswer, 
     return (
       <VStack align="stretch" gap="4">
         <Box p={{ base: '5', md: '7' }} borderRadius="3xl" bg="linear-gradient(135deg, #EFF6FF, #FFFFFF)" border="1px solid #BFDBFE" textAlign="center">
-          <Text fontSize="sm" fontWeight="900" color={COLORS.blue} textTransform="uppercase" letterSpacing="0.12em">Flashcard</Text>
+          <Text fontSize="sm" fontWeight="900" color={COLORS.blue} textTransform="uppercase" letterSpacing="0.12em">Thẻ từ</Text>
           <Text mt="3" fontSize={{ base: '3xl', md: '5xl' }} fontWeight="950" color={COLORS.text}>{step.prompt}</Text>
           {step.hint ? <Text mt="2" color={COLORS.muted} fontWeight="800">{step.hint}</Text> : null}
           <Text mt="4" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="900" color={COLORS.green}>{step.vietnamese || step.answer}</Text>
@@ -228,7 +228,7 @@ export function InteractiveLessonPage() {
       <OceanPageShell variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px="4" py="8">
         <Box maxW="760px" mx="auto" className="penglish-glass-card" bg="rgba(255,255,255,0.86)" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
           <Text fontSize="2xl" fontWeight="950" color={COLORS.text}>Poo chưa mở được bài này</Text>
-          <Text mt="2" color={COLORS.muted} fontWeight="700">Node này đang được chuẩn bị nội dung. Hãy quay lại lộ trình để chọn bài đang mở.</Text>
+          <Text mt="2" color={COLORS.muted} fontWeight="700">Bài này đang được chuẩn bị nội dung. Hãy quay lại lộ trình để chọn bài đang mở.</Text>
           <Button as={Link} to="/learning-path" mt="6" borderRadius="full" bg={COLORS.blue} color="white">Quay lại lộ trình</Button>
         </Box>
       </OceanPageShell>
@@ -279,7 +279,7 @@ export function InteractiveLessonPage() {
       <OceanPageShell data-testid="interactive-lesson-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} py={{ base: '3', md: '6' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 96px)', lg: '8' }}>
         <Box maxW="860px" mx="auto">
           <Box className="penglish-glass-card" bg="rgba(255,255,255,0.88)" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '5', md: '8' }} textAlign="center">
-            <Flex justify="center" mb="4"><OceanMascot mascot="poo" pose="celebrate" size="lg" decorative motion="celebrate" /></Flex>
+            <Flex justify="center" mb="4"><OceanMascot mascot="poo" pose="reward" size="lg" decorative motion="celebrate" /></Flex>
             <Tag borderRadius="full" bg="#FEF3C7" color="#B45309" px="4" py="2" fontWeight="950"><Icon as={Zap} boxSize="4" /> +{safeResult.xp} XP</Tag>
             <Text mt="4" fontSize={{ base: '3xl', md: '5xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.05">Hoàn thành bài học!</Text>
             <Text mt="3" color={COLORS.muted} fontWeight="750" lineHeight="1.7">Poo đã lưu tiến độ, cộng nhịp học và đưa phần sai vào Khu luyện tập/Sổ tay từ vựng.</Text>
@@ -313,7 +313,7 @@ export function InteractiveLessonPage() {
               <Text fontSize={{ base: 'xl', md: '3xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.12">{lesson.title}</Text>
               <Text mt="1" color={COLORS.muted} fontWeight="700">{lesson.duration} · +{lesson.xp} XP</Text>
             </Box>
-            <OceanMascot mascot="poo" pose={feedback?.correct === false ? 'thinking' : 'idle'} size="md" decorative motion="float" />
+            <OceanMascot mascot="poo" pose={feedback?.correct === false ? 'coach' : 'idle'} size="md" decorative motion="float" />
           </HStack>
           <Progress value={progress} size="sm" borderRadius="full" colorScheme="blue" bg="#E0F2FE" mb="5" />
           <Box data-testid="interactive-lesson-card" p={{ base: '3', md: '5' }} borderRadius="3xl" bg="linear-gradient(135deg, rgba(248,252,255,0.86), rgba(255,255,255,0.92))" border="1px solid #BAE6FD">

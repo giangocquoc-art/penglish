@@ -1,12 +1,13 @@
-import { lazy, Suspense, useEffect, useMemo, useState, type ReactNode } from 'react';
-import { Navigate, matchPath, useLocation } from 'react-router-dom';
+import { lazy, Suspense, type ReactNode } from 'react';
+import { Link as RouterLink, Navigate, matchPath, useLocation } from 'react-router-dom';
 import { Sidebar as ChakraSidebar } from './components/Sidebar';
 import { Topbar as ChakraTopbar, Shell as ChakraShell } from './components/Topbar';
-import { Button, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Center, HStack, Text, VStack } from '@chakra-ui/react';
 import { RouteMetadataUpdater } from './components/seo/RouteMetadataUpdater';
+import { GlobalEasterEggs } from './components/easter-eggs/GlobalEasterEggs';
 import { AuthProvider, useAuth } from './features/auth/AuthProvider';
 import { avatarFromUser, displayNameFromUser } from './lib/p-english/userSession';
-import { PooOceanRiseLoader } from './features/shell/PooOceanRiseLoader';
+import { AuthLoadingScreen } from './features/auth/AuthLoadingScreen';
 
 const NewVocabPage = lazy(() => import('./pages/VocabPage').then((module) => ({ default: module.VocabPage })));
 const NewLoginPage = lazy(() => import('./pages/LoginPage').then((module) => ({ default: module.LoginPage })));
@@ -32,6 +33,7 @@ const NewInteractiveLessonPage = lazy(() => import('./pages/InteractiveLessonPag
 const NewResourceHubPage = lazy(() => import('./pages/ResourceHubPage').then((module) => ({ default: module.ResourceHubPage })));
 const Foundation48Page = lazy(() => import('./features/foundation48/Foundation48Page').then((module) => ({ default: module.Foundation48Page })));
 const Foundation48DayPage = lazy(() => import('./features/foundation48/Foundation48DayPage').then((module) => ({ default: module.Foundation48DayPage })));
+const AdminPage = lazy(() => import('./pages/AdminPage').then((module) => ({ default: module.AdminPage })));
 
 type User = {
   id: string;
@@ -60,78 +62,46 @@ function useUserFromAuth(): User | null {
 }
 
 function RouteLoadingFallback() {
-  const [visible, setVisible] = useState(false);
-  const [progress, setProgress] = useState(18);
-
-  useEffect(() => {
-    const showTimer = window.setTimeout(() => setVisible(true), 260);
-    const progressTimer = window.setInterval(() => {
-      setProgress((current) => Math.min(88, current + (current < 56 ? 8 : 3)));
-    }, 180);
-    return () => {
-      window.clearTimeout(showTimer);
-      window.clearInterval(progressTimer);
-    };
-  }, []);
-
-  if (!visible) return null;
-  return <PooOceanRiseLoader progress={progress} delayed label="Đang mở trang P-English" />;
-}
-
-function useInitialOceanRiseLoaderReady(authLoading: boolean) {
-  const [progress, setProgress] = useState(0);
-  const [visible, setVisible] = useState(true);
-  const [exiting, setExiting] = useState(false);
-  const [qaHoldComplete, setQaHoldComplete] = useState(false);
-
-  const qaEnabled = useMemo(() => {
-    if (typeof window === 'undefined') return false;
-    return new URLSearchParams(window.location.search).get('oceanLoaderQa') === '1';
-  }, []);
-
-  useEffect(() => {
-    if (!qaEnabled) {
-      setQaHoldComplete(true);
-      return undefined;
-    }
-    const timer = window.setTimeout(() => setQaHoldComplete(true), 2400);
-    return () => window.clearTimeout(timer);
-  }, [qaEnabled]);
-
-  useEffect(() => {
-    if (!visible || exiting) return undefined;
-    const timer = window.setInterval(() => {
-      setProgress((current) => {
-        if (!authLoading && qaHoldComplete) return current;
-        const ceiling = qaEnabled ? 82 : 80;
-        const increment = current < 34 ? 5 : current < 62 ? 3 : 1;
-        return Math.min(ceiling, current + increment);
-      });
-    }, qaEnabled ? 110 : 160);
-    return () => window.clearInterval(timer);
-  }, [authLoading, exiting, qaEnabled, qaHoldComplete, visible]);
-
-  useEffect(() => {
-    if (authLoading || !qaHoldComplete || !visible) return undefined;
-    const completeTimer = window.setTimeout(() => setProgress(100), qaEnabled ? 120 : 80);
-    const exitTimer = window.setTimeout(() => setExiting(true), qaEnabled ? 980 : 760);
-    const hideTimer = window.setTimeout(() => setVisible(false), qaEnabled ? 1400 : 1120);
-    return () => {
-      window.clearTimeout(completeTimer);
-      window.clearTimeout(exitTimer);
-      window.clearTimeout(hideTimer);
-    };
-  }, [authLoading, qaEnabled, qaHoldComplete, visible]);
-
-  return { progress, visible, exiting };
+  return <AuthLoadingScreen />;
 }
 
 function NotFoundPage() {
   return (
-    <div className="section page-card">
-      <h2>Không tìm thấy</h2>
-      <p className="muted">Route chưa có.</p>
-    </div>
+    <Center minH="calc(100vh - 180px)" px={{ base: '3', md: '6' }} pb={{ base: '8', md: '12' }} data-testid="penglish-404-page">
+      <Box
+        w="min(720px, 100%)"
+        className="penglish-glass-card"
+        bg="linear-gradient(145deg, rgba(255,255,255,0.86), rgba(221,245,255,0.72))"
+        border="1px solid rgba(186,230,253,0.86)"
+        borderRadius={{ base: '30px', md: '38px' }}
+        p={{ base: '6', md: '9' }}
+        textAlign="center"
+        boxShadow="0 28px 80px rgba(31,111,214,0.14)"
+        overflow="hidden"
+        position="relative"
+      >
+        <Box aria-hidden="true" position="absolute" inset="0" bg="radial-gradient(circle at 16% 18%, rgba(255,255,255,0.86), transparent 28%), radial-gradient(circle at 86% 14%, rgba(91,188,235,0.22), transparent 24%), radial-gradient(circle at 50% 100%, rgba(31,111,214,0.14), transparent 34%)" />
+        <VStack position="relative" gap={{ base: '4', md: '5' }}>
+          <Text fontSize={{ base: '5xl', md: '6xl' }} lineHeight="1" aria-hidden="true">🐳</Text>
+          <VStack gap="2">
+            <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="950" color="#102A43" lineHeight="1.08">
+              404 — Bài học này bơi lạc rồi 🐳
+            </Text>
+            <Text color="#52667A" fontSize={{ base: 'md', md: 'lg' }} fontWeight="700" lineHeight="1.75" maxW="560px">
+              Có thể Poo vừa bơi nhầm dòng hải lưu, hoặc trang này đang được refactor để học mượt hơn.
+            </Text>
+          </VStack>
+          <HStack gap="3" wrap="wrap" justify="center" w="100%">
+            <Button as={RouterLink} to="/home" borderRadius="full" bg="white" color="#1F6FD6" border="1px solid #BAE6FD" _hover={{ bg: '#F8FCFF' }}>
+              Về trang chủ
+            </Button>
+            <Button as={RouterLink} to="/learning-path" borderRadius="full" bg="#1F6FD6" color="white" _hover={{ bg: '#185BB2' }}>
+              Quay lại lộ trình học
+            </Button>
+          </HStack>
+        </VStack>
+      </Box>
+    </Center>
   );
 }
 
@@ -139,10 +109,10 @@ function AuthGoogleSafePage() {
   const auth = useAuth();
   return (
     <VStack align="start" gap="4" p={{ base: '5', md: '7' }} m={{ base: '4', md: '8' }} borderRadius="3xl" bg="rgba(255,255,255,0.88)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 18px 46px rgba(31, 111, 214, 0.10)">
-      <Text fontSize="sm" fontWeight="700" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">P-English Supabase Auth</Text>
+      <Text fontSize="sm" fontWeight="700" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">PooEnglish Supabase Auth</Text>
       <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color="#0F172A" lineHeight="1.12">Đăng nhập Google</Text>
       <Text color="#475569" fontWeight="650" lineHeight="1.7">
-        {auth.authUnavailable ? 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' : 'Đăng nhập bằng Google để lưu tiến độ và vào lớp học P-English.'}
+        {auth.authUnavailable ? 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' : 'Đăng nhập bằng Google để lưu tiến độ và vào lớp học PooEnglish.'}
       </Text>
       <Button onClick={() => void auth.signInWithGoogle()} bg="#1F6FD6" color="white" borderRadius="full" px="6" _hover={{ bg: '#185BB2' }}>
         Đăng nhập bằng Google
@@ -154,10 +124,8 @@ function AuthGoogleSafePage() {
 function RequireAuth({ children }: { children: ReactNode }) {
   const auth = useAuth();
   const location = useLocation();
-  const initialLoader = useInitialOceanRiseLoaderReady(auth.loading);
-
   if (auth.loading) {
-    return initialLoader.visible ? <PooOceanRiseLoader progress={initialLoader.progress} exiting={initialLoader.exiting} /> : null;
+    return <AuthLoadingScreen />;
   }
 
   if (!auth.isAuthenticated) {
@@ -177,7 +145,16 @@ function NewShell({ children, user }: { children: ReactNode; user: User | null }
   return (
     <ChakraShell sidebar={<ChakraSidebar user={user} />}>
       <ChakraTopbar user={user} />
-      {children}
+      <Box
+        as="main"
+        data-testid="penglish-shell-content"
+        minW="0"
+        pt={{ base: '3', md: '3.5', lg: '4' }}
+        position="relative"
+        zIndex="1"
+      >
+        {children}
+      </Box>
     </ChakraShell>
   );
 }
@@ -186,15 +163,13 @@ function AppRoutes() {
   const location = useLocation();
   const auth = useAuth();
   const user = useUserFromAuth();
-  const showInitialLoader = auth.loading;
-  const initialLoader = useInitialOceanRiseLoaderReady(showInitialLoader);
   const isLoginCasingVariant = /^\/login\/?$/i.test(location.pathname) && location.pathname !== '/login';
   const pathname = location.pathname;
 
   let routeElement: ReactNode;
   if (pathname === '/') routeElement = <Navigate to="/login" replace />;
   else if (isLoginCasingVariant || pathname === '/login/') routeElement = <Navigate to="/login" replace />;
-  else if (pathname === '/login') routeElement = auth.loading || !auth.user ? <NewLoginPage /> : <Navigate to="/home" replace />;
+  else if (pathname === '/login') routeElement = auth.loading ? <AuthLoadingScreen /> : !auth.user ? <NewLoginPage /> : <Navigate to="/home" replace />;
   else if (pathname === '/login/callback' || pathname === '/auth/callback') routeElement = <NewLoginCallbackPage />;
   else if (pathname === '/auth/google') routeElement = <RequireAuth><NewShell user={user}><AuthGoogleSafePage /></NewShell></RequireAuth>;
   else if (pathname === '/landing') routeElement = <Navigate to="/login" replace />;
@@ -222,7 +197,8 @@ function AppRoutes() {
   else if (pathname === '/pricing' || pathname === '/subscriptions') routeElement = <ProtectedShell user={user}><NewPricingPage /></ProtectedShell>;
   else if (pathname === '/shared-streak') routeElement = <ProtectedShell user={user}><NewSharedStreakPage /></ProtectedShell>;
   else if (pathname === '/profile') routeElement = <ProtectedShell user={user}><NewProfilePage /></ProtectedShell>;
-  else routeElement = <ProtectedShell user={user}><NotFoundPage /></ProtectedShell>;
+  else if (pathname === '/admin' || pathname.startsWith('/admin/')) routeElement = <AdminPage />;
+  else routeElement = <NewShell user={user}><NotFoundPage /></NewShell>;
 
   return (
     <>
@@ -230,9 +206,6 @@ function AppRoutes() {
       <Suspense fallback={<RouteLoadingFallback />}>
         {routeElement}
       </Suspense>
-      {showInitialLoader && initialLoader.visible ? (
-        <PooOceanRiseLoader progress={initialLoader.progress} exiting={initialLoader.exiting} />
-      ) : null}
     </>
   );
 }
@@ -241,6 +214,7 @@ export default function App() {
   return (
     <AuthProvider>
       <AppRoutes />
+      <GlobalEasterEggs />
     </AuthProvider>
   );
 }

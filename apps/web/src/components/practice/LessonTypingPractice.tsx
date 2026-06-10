@@ -112,7 +112,7 @@ function safeReadProgress(lessonId: string): LessonProgress {
   if (typeof window === 'undefined') return {};
 
   try {
-    const raw = window.localStorage.getItem(`p-english:lesson-progress:${lessonId}`);
+    const raw = window.localStorage.getItem(`PooEnglish:lesson-progress:${lessonId}`);
     return raw ? (JSON.parse(raw) as LessonProgress) : {};
   } catch {
     return {};
@@ -124,7 +124,7 @@ function safeWriteProgress(lessonId: string, updater: (current: LessonProgress) 
 
   try {
     const current = safeReadProgress(lessonId);
-    window.localStorage.setItem(`p-english:lesson-progress:${lessonId}`, JSON.stringify(updater(current)));
+    window.localStorage.setItem(`PooEnglish:lesson-progress:${lessonId}`, JSON.stringify(updater(current)));
   } catch {
     // Practice still works in memory when localStorage is unavailable.
   }
@@ -178,7 +178,7 @@ function getPlaceholder(task: TypingTask) {
 function getSummaryMessage(percentage: number) {
   if (percentage >= 80) return 'Gõ câu tốt! Bạn đã nắm khá chắc mặt chữ và cấu trúc.';
   if (percentage >= 50) return 'Ổn rồi, hãy ôn lại các câu sai.';
-  return 'Nên quay lại nghe chậm và flashcard trước khi gõ lại.';
+  return 'Nên quay lại nghe chậm và thẻ từ trước khi gõ lại.';
 }
 
 export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {
@@ -392,8 +392,8 @@ export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: En
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px="6" py="8">
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có dữ liệu gõ câu</Text>
-          <Text mt="2" color={COLORS.muted}>Bài học này chưa có listening, fill blank hoặc vocabulary phù hợp để luyện gõ.</Text>
+          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có nội dung gõ câu</Text>
+          <Text mt="2" color={COLORS.muted}>Bài học này chưa có bài nghe, điền chỗ trống hoặc từ vựng phù hợp để luyện gõ.</Text>
           <HStack mt="6" wrap="wrap">
             <Button as={Link} to={`/lessons/${lesson.id}`} borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: COLORS.primaryHover }}>
               Quay về bài học
@@ -408,14 +408,14 @@ export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: En
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="8">
         <Box maxW="860px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '6', md: '8' }}>
-          <Badge colorScheme="blue" borderRadius="full" px="3" py="1">Unit 1 • Type</Badge>
+          <Badge colorScheme="blue" borderRadius="full" px="3" py="1">Bài 1 • Gõ câu</Badge>
           <Text mt="4" fontSize={{ base: '3xl', md: '4xl' }} fontWeight="900" color={COLORS.text}>Gõ câu</Text>
           <Text mt="2" fontSize="xl" fontWeight="800" color={COLORS.text}>{lesson.titleVi}</Text>
           <Text color={COLORS.muted}>{lesson.titleEn}</Text>
           <SimpleGrid columns={{ base: 1, md: 3 }} gap="3" mt="6">
             <SummaryMetric label="Tổng câu" value={allTasks.length} />
-            <SummaryMetric label="Nghe & gõ" value={allTasks.filter((task) => task.type === 'listen-type').length} />
-            <SummaryMetric label="Chunk + blank" value={allTasks.filter((task) => task.type !== 'listen-type').length} />
+            <SummaryMetric label="Nghe và gõ" value={allTasks.filter((task) => task.type === 'listen-type').length} />
+            <SummaryMetric label="Điền chỗ trống" value={allTasks.filter((task) => task.type !== 'listen-type').length} />
           </SimpleGrid>
           <Box mt="6" border="1px solid" borderColor="#FDE68A" bg="#FFFBEB" borderRadius="2xl" p="4">
             <Text color="#92400E" fontWeight="700">

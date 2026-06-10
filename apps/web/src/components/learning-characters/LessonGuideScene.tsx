@@ -67,7 +67,7 @@ const STEP_GUIDES: Record<LessonGuideStepIndex, {
   },
   4: {
     icon: Zap,
-    badge: 'Bước 5 • English Speed',
+    badge: 'Bước 5 • Luyện tốc độ',
     title: 'Cá voi nhỏ tăng năng lượng nhưng vẫn nhắc bạn giữ bình tĩnh.',
     nextAction: 'Chơi nhanh vừa đủ, ưu tiên đúng và rõ trước khi tăng tốc.',
     guideText: 'Giữ nhịp nhanh vừa phải: đúng và rõ trước, tốc độ sau.',
@@ -121,8 +121,8 @@ function LessonGuideVisual({ scene }: { scene: (typeof STEP_GUIDES)[LessonGuideS
   return (
     <Flex align="center" justify="center" minH="112px" position="relative">
       <WhaleBody energetic={scene === 'speed'} />
-      {scene === 'vocabulary' ? <Box className="lesson-guide-copy-card" ml="-1" px="3" py="2" borderRadius="xl" bg="white" border="1px solid" borderColor={GUIDE_COLORS.border} boxShadow="0 10px 20px rgba(31,111,214,0.08)" willChange="transform, opacity"><Text fontWeight="950" color={GUIDE_COLORS.text}>word</Text><Text fontSize="xs" color={GUIDE_COLORS.muted}>đoán nghĩa</Text></Box> : null}
-      {scene === 'pattern' ? <Box className="lesson-guide-bubble" ml="-1" maxW="150px" px="3" py="2" borderRadius="2xl" bg="white" border="1px solid" borderColor={GUIDE_COLORS.border} boxShadow="0 10px 20px rgba(31,111,214,0.08)" willChange="transform, opacity"><Text fontSize="sm" fontWeight="900" color={GUIDE_COLORS.deepBlue}>I can say it!</Text></Box> : null}
+      {scene === 'vocabulary' ? <Box className="lesson-guide-copy-card" ml="-1" px="3" py="2" borderRadius="xl" bg="white" border="1px solid" borderColor={GUIDE_COLORS.border} boxShadow="0 10px 20px rgba(31,111,214,0.08)" willChange="transform, opacity"><Text fontWeight="950" color={GUIDE_COLORS.text}>từ mới</Text><Text fontSize="xs" color={GUIDE_COLORS.muted}>đoán nghĩa</Text></Box> : null}
+      {scene === 'pattern' ? <Box className="lesson-guide-bubble" ml="-1" maxW="150px" px="3" py="2" borderRadius="2xl" bg="white" border="1px solid" borderColor={GUIDE_COLORS.border} boxShadow="0 10px 20px rgba(31,111,214,0.08)" willChange="transform, opacity"><Text fontSize="sm" fontWeight="900" color={GUIDE_COLORS.deepBlue}>Mình nói được!</Text></Box> : null}
       {scene === 'practice' ? <Box className="lesson-guide-bubble" ml="-1" px="3" py="2" borderRadius="full" bg="#ECFDF5" border="1px solid #BBF7D0" willChange="transform, opacity"><Text fontSize="sm" fontWeight="950" color="#15803D">Luyện ngay?</Text></Box> : null}
       {scene === 'speed' ? <HStack className="lesson-guide-copy-card" ml="-1" gap="1" willChange="transform, opacity"><Box w="8px" h="8px" borderRadius="full" bg={GUIDE_COLORS.oceanBlue} /><Box w="8px" h="8px" borderRadius="full" bg={GUIDE_COLORS.green} /><Box w="8px" h="8px" borderRadius="full" bg={GUIDE_COLORS.amber} /></HStack> : null}
     </Flex>

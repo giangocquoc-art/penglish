@@ -9,5 +9,6 @@
     "types": ["node", "vite/client"]
   },
   "include": ["src"],
+  "exclude": ["src/app/api"],
   "references": []
 }

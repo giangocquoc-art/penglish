@@ -16,12 +16,12 @@ type Game = {
 };
 
 const GAMES: Game[] = [
-  { id: 'memory', name: 'Memory Match', desc: 'Lật thẻ tìm cặp từ - nghĩa', icon: Target, tint: 'pink.500', bg: 'pink.50', difficulty: 'Dễ' },
-  { id: 'scramble', name: 'Word Scramble', desc: 'Xếp lại chữ cái thành từ đúng', icon: Shuffle, tint: 'purple.500', bg: 'purple.50', difficulty: 'Vừa' },
-  { id: 'listening', name: 'Listening Challenge', desc: 'Nghe và viết lại từ vựng', icon: Headphones, tint: 'blue.500', bg: 'blue.50', difficulty: 'Khó' },
-  { id: 'speed', name: 'Speed Quiz', desc: 'Trả lời nhanh trong thời gian', icon: Zap, tint: 'orange.500', bg: 'orange.50', difficulty: 'Vừa' },
-  { id: 'reflex', name: 'Reflex Game', desc: 'Phản xạ với từ xuất hiện ngẫu nhiên', icon: Clock, tint: 'red.500', bg: 'red.50', difficulty: 'Khó' },
-  { id: 'champion', name: 'Champion Mode', desc: 'Tổng hợp tất cả game thành 1 thử thách', icon: Trophy, tint: 'red.500', bg: 'red.50', difficulty: 'Khó' },
+  { id: 'memory', name: 'Ghép cặp trí nhớ', desc: 'Lật thẻ tìm cặp từ và nghĩa', icon: Target, tint: 'pink.500', bg: 'pink.50', difficulty: 'Dễ' },
+  { id: 'scramble', name: 'Xếp chữ thành từ', desc: 'Xếp lại chữ cái thành từ đúng', icon: Shuffle, tint: 'purple.500', bg: 'purple.50', difficulty: 'Vừa' },
+  { id: 'listening', name: 'Thử thách nghe', desc: 'Nghe và viết lại từ vựng', icon: Headphones, tint: 'blue.500', bg: 'blue.50', difficulty: 'Khó' },
+  { id: 'speed', name: 'Kiểm tra tốc độ', desc: 'Trả lời nhanh trong thời gian ngắn', icon: Zap, tint: 'orange.500', bg: 'orange.50', difficulty: 'Vừa' },
+  { id: 'reflex', name: 'Trò phản xạ', desc: 'Phản xạ với từ xuất hiện ngẫu nhiên', icon: Clock, tint: 'red.500', bg: 'red.50', difficulty: 'Khó' },
+  { id: 'champion', name: 'Thử thách tổng hợp', desc: 'Gộp nhiều trò luyện thành một thử thách', icon: Trophy, tint: 'red.500', bg: 'red.50', difficulty: 'Khó' },
 ];
 
 export function GamesPage() {
@@ -30,10 +30,10 @@ export function GamesPage() {
   if (picked) {
     return (
       <Box px="6" pb="10" maxW="900px" mx="auto">
-        <Box as="h2" position="absolute" left="-9999px">Game phản xạ</Box>
+        <Box as="h2" position="absolute" left="-9999px">Trò luyện phản xạ</Box>
         <HStack mb="4" justify="space-between">
           <VStack align="start" gap="0">
-            <Text fontSize="sm" color="gray.500">Game phản xạ</Text>
+            <Text fontSize="sm" color="gray.500">Trò luyện phản xạ</Text>
             <Text fontWeight="800" fontSize="xl">{picked.name}</Text>
           </VStack>
           <Button variant="outline" onClick={() => setPicked(null)}>← Quay lại</Button>
@@ -55,7 +55,7 @@ export function GamesPage() {
           <Text fontSize="2xl" fontWeight="800">{picked.name}</Text>
           <Text color="gray.500" textAlign="center" maxW="500px">{picked.desc}</Text>
           <Button colorScheme="green" size="lg" boxShadow="duo-button" leftIcon={<Icon as={Play} />}>Bắt đầu</Button>
-          <Text fontSize="xs" color="gray.400">Mini-game này sẽ load từ vựng bạn đã học gần nhất.</Text>
+          <Text fontSize="xs" color="gray.400">Trò luyện nhỏ này sẽ mở từ vựng bạn đã học gần nhất.</Text>
         </Flex>
       </Box>
     );
@@ -63,10 +63,10 @@ export function GamesPage() {
 
   return (
     <Box px="6" pb="10" maxW="1400px" mx="auto">
-      <Box as="h2" position="absolute" left="-9999px">Game phản xạ</Box>
+      <Box as="h2" position="absolute" left="-9999px">Trò luyện phản xạ</Box>
       <VStack align="start" gap="1" mb="6">
-        <Text fontSize="2xl" fontWeight="800">Game phản xạ</Text>
-        <Text color="gray.500" fontSize="sm">Học từ vựng qua game tương tác.</Text>
+        <Text fontSize="2xl" fontWeight="800">Trò luyện phản xạ</Text>
+        <Text color="gray.500" fontSize="sm">Học từ vựng qua trò luyện tương tác.</Text>
       </VStack>
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap="4">
         {GAMES.map((g, i) => (

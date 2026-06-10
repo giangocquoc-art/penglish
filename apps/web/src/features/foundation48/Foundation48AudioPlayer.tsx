@@ -22,10 +22,10 @@ export function Foundation48AudioPlayer({ audio, compact = false }: { audio: Fou
           <OceanMascot mascot="suaNghe" pose="listen" size="sm" decorative motion="float" />
           <Box minW="0">
             <HStack gap="2" wrap="wrap">
-              <Text as="h2" fontSize={{ base: 'lg', md: '2xl' }} fontWeight="950" color={COLORS.text}>{compact ? 'Nghe và làm quen' : 'File nghe của ngày này'}</Text>
-              <Foundation48SourceBadge label={`${audio.length} MP3`} tone="audio" />
+              <Text as="h2" fontSize={{ base: 'lg', md: '2xl' }} fontWeight="950" color={COLORS.text}>{compact ? 'Nghe và làm quen' : 'Bài nghe của ngày này'}</Text>
+              <Foundation48SourceBadge label={`${audio.length} bài nghe`} tone="audio" />
             </HStack>
-            <Text color={COLORS.muted} fontSize="sm" fontWeight="700" lineHeight="1.6">{compact ? 'Nghe file của ngày này, sau đó bấm tiếp tục.' : 'Sứa Nghe nhắc bạn: nghe một lượt để bắt ý, rồi nghe lại từng đoạn ngắn.'}</Text>
+            <Text color={COLORS.muted} fontSize="sm" fontWeight="700" lineHeight="1.6">{compact ? 'Nghe bài nghe của ngày này, sau đó bấm tiếp tục.' : 'Sứa Nghe nhắc bạn: nghe một lượt để bắt ý, rồi nghe lại từng đoạn ngắn.'}</Text>
           </Box>
         </Flex>
         <VStack align="stretch" gap="2.5">
@@ -34,13 +34,13 @@ export function Foundation48AudioPlayer({ audio, compact = false }: { audio: Fou
               <HStack justify="space-between" align="start" gap="3" mb="2" wrap="wrap">
                 <Box minW="0">
                   <Text fontWeight="900" color={COLORS.text}>{item.title}</Text>
-                  <Text fontSize="xs" color={COLORS.muted} fontWeight="700" noOfLines={1}>{item.fileName}</Text>
+                  <Text fontSize="xs" color={COLORS.muted} fontWeight="700" noOfLines={1}>Bài nghe ngày này</Text>
                 </Box>
-                <Text px="2.5" py="1" borderRadius="full" bg="#EFF6FF" color={COLORS.blue} fontSize="xs" fontWeight="900">MP3</Text>
+                <Text px="2.5" py="1" borderRadius="full" bg="#EFF6FF" color={COLORS.blue} fontSize="xs" fontWeight="900">Bài nghe</Text>
               </HStack>
               <Box
                 as="audio"
-                aria-label={`${item.title} - ${item.fileName}`}
+                aria-label={`${item.title} - bài nghe ngày này`}
                 controls
                 preload="metadata"
                 src={item.url}
@@ -48,7 +48,7 @@ export function Foundation48AudioPlayer({ audio, compact = false }: { audio: Fou
                 onError={() => setFailedAudio((current) => ({ ...current, [item.id]: true }))}
               />
               {failedAudio[item.id] ? (
-                <Text mt="2" color="#B45309" fontSize="sm" fontWeight="800">File nghe này chưa tải được. Bạn vẫn có thể học phần nội dung và thử tải lại trang sau.</Text>
+                <Text mt="2" color="#B45309" fontSize="sm" fontWeight="800">Bài nghe này chưa tải được. Bạn vẫn có thể học phần nội dung và thử tải lại trang sau.</Text>
               ) : null}
             </Box>
           ))}

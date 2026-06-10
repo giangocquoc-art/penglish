@@ -1,7 +1,7 @@
 :root {
   --penglish-font-sans: "Be Vietnam Pro", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --penglish-mobile-nav-height: 64px;
-  --penglish-mobile-safe-bottom: calc(var(--penglish-mobile-nav-height) + 32px + env(safe-area-inset-bottom));
+  --penglish-mobile-safe-bottom: calc(var(--penglish-mobile-nav-height) + 76px + env(safe-area-inset-bottom));
   --p-card-bg: rgba(255, 255, 255, 0.82);
   --p-card-bg-mobile: rgba(255, 255, 255, 0.88);
   --p-card-border: rgba(120, 190, 230, 0.35);
@@ -146,8 +146,8 @@ button, input, select, textarea { font: inherit; }
   }
 
   .penglish-ocean-page-shell {
-    scroll-padding-bottom: calc(var(--penglish-mobile-safe-bottom) + 28px);
-    padding-bottom: max(calc(var(--penglish-mobile-safe-bottom) + 44px), calc(var(--penglish-mobile-nav-height) + 72px + env(safe-area-inset-bottom)));
+    scroll-padding-bottom: calc(var(--penglish-mobile-safe-bottom) + 36px);
+    padding-bottom: max(calc(var(--penglish-mobile-safe-bottom) + 48px), calc(var(--penglish-mobile-nav-height) + 124px + env(safe-area-inset-bottom)));
   }
 
   .penglish-ocean-page-shell .ocean-glass-card,

@@ -39,7 +39,7 @@ const SKILL_CTA_LABELS: Record<UnifiedSkillFocus, string> = {
   'Ngữ pháp': 'Luyện ngữ pháp',
   Nghe: 'Luyện nghe',
   Đọc: 'Luyện đọc',
-  Shadowing: 'Vào Shadowing',
+  Shadowing: 'Vào nói đuổi',
   'Phát âm': 'Luyện phát âm',
   'Ôn tập': 'Ôn tập ngay',
 };

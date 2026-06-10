@@ -142,8 +142,8 @@ export const LESSON_PROGRESS_STORAGE_KEY = 'penglish.lesson.progress.v1';
 export const LESSON_PROGRESS_UPDATED_EVENT = 'penglish.lesson.progress.updated';
 
 const MODE_DEFS: Array<{ mode: LessonProgressMode; field: LessonProgressModeField; label: string }> = [
-  { mode: 'flashcard', field: 'flashcard', label: 'Flashcard' },
-  { mode: 'quiz', field: 'quiz', label: 'Quiz' },
+  { mode: 'flashcard', field: 'flashcard', label: 'Thẻ từ' },
+  { mode: 'quiz', field: 'quiz', label: 'Kiểm tra nhanh' },
   { mode: 'listen', field: 'listening', label: 'Luyện nghe' },
   { mode: 'reflex', field: 'reflex', label: 'Phản xạ' },
   { mode: 'type', field: 'typing', label: 'Gõ câu' },
@@ -364,7 +364,7 @@ function mapSrsItemToReviewItem(lesson: EnglishLesson, item: LessonSrsItem): Les
   if (item.type === 'quiz') {
     const question = lesson.quizQuestions.find((entry) => entry.id === item.itemId);
     if (!question) return null;
-    const prompt = question.question ?? question.prompt ?? question.vietnamese ?? 'Quiz question';
+    const prompt = question.question ?? question.prompt ?? question.vietnamese ?? 'Câu kiểm tra nhanh';
     return {
       ...item,
       label: prompt,
@@ -563,7 +563,7 @@ function scoreTextForMode(progress: LessonProgress | null, field: LessonProgress
   if (field === 'reflex') return `${progress.reflex?.lastPercentage ?? 0}% · ${progress.reflex?.attempts ?? 0} lượt`;
   if (field === 'typing') return `${progress.typing?.lastPercentage ?? 0}% · ${progress.typing?.attempts ?? 0} lượt`;
   if (field === 'match') return `${progress.match?.completedPairIds?.length ?? 0}/${Math.max(lesson.matchPairs?.length ?? 0, lesson.vocabulary.length)} cặp · ${progress.match?.attempts ?? 0} lượt`;
-  if (field === 'speed') return `${progress.speed?.lastScore ?? 0} điểm · best ${progress.speed?.bestScore ?? 0}`;
+  if (field === 'speed') return `${progress.speed?.lastScore ?? 0} điểm · kỷ lục ${progress.speed?.bestScore ?? 0}`;
 
   return 'Đã có tiến độ';
 }

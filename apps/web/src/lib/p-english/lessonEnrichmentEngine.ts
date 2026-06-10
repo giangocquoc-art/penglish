@@ -83,17 +83,17 @@ export function deriveLessonEnhancementFallback(lesson: EnglishLesson): Resolved
       ? 'Đọc ý chính trước, tìm từ khóa trong câu hỏi, rồi quay lại đoạn có bằng chứng để trả lời.'
       : hasGrammar
         ? 'Xem mẫu câu như một khung dùng được ngay: đọc ví dụ, đổi vài từ, rồi luyện gõ lại câu hoàn chỉnh.'
-        : 'Bắt đầu bằng từ/cụm quan trọng, luyện quiz ngắn, rồi chuyển sang phản xạ để nhớ bằng ngữ cảnh.',
+        : 'Bắt đầu bằng từ/cụm quan trọng, làm kiểm tra nhanh, rồi chuyển sang phản xạ để nhớ bằng ngữ cảnh.',
     whaleCoachLineVi: hasReading
       ? 'Cá voi P khuyên bạn đọc lướt một lượt, sau đó mới trả lời từng câu bằng bằng chứng trong bài.'
       : hasGrammar
         ? 'Cá voi P khuyên bạn học mẫu câu trước, đừng học thuật ngữ quá nặng.'
         : 'Cá voi P khuyên bạn học theo cụm ngắn, nghe lại và nói thành câu thật đơn giản.',
-    weakSkillTipVi: 'Nếu thấy sai lặp lại, hãy quay về ví dụ đúng, đọc chậm một lần, rồi làm lại mode còn thiếu.',
-    confidenceGoalVi: `Hoàn thành bài ${lesson.titleVi} với ít nhất một mode luyện tập và biết bước tiếp theo cần ôn.`,
+    weakSkillTipVi: 'Nếu thấy sai lặp lại, hãy quay về ví dụ đúng, đọc chậm một lần, rồi làm lại phần còn thiếu.',
+    confidenceGoalVi: `Hoàn thành bài ${lesson.titleVi} với ít nhất một phần luyện tập và biết bước tiếp theo cần ôn.`,
     recommendedFlow: ['flashcard', 'quiz', 'type', 'listen', 'reflex', 'match', 'speed'],
     keyboardHintVi: 'Enter giúp gửi câu trả lời khi đang gõ; A/B/C/D hoặc 1/2/3/4 giúp chọn đáp án trắc nghiệm.',
-    matchReasonVi: 'Fallback an toàn dựa trên dữ liệu bài học hiện có.',
+    matchReasonVi: 'Gợi ý an toàn dựa trên nội dung bài học hiện có.',
     isFallback: true,
   };
 }

@@ -17,7 +17,7 @@ export function Foundation48SourceNotice({ day }: { day: Foundation48Day }) {
         </Text>
         <HStack gap="2" wrap="wrap">
           <Text px="2.5" py="1" borderRadius="full" bg="#EFF6FF" color="#1F6FD6" fontSize="10px" fontWeight="950">Ngày {day.dayNumber}</Text>
-          <Text px="2.5" py="1" borderRadius="full" bg="#ECFDF5" color="#16A34A" fontSize="10px" fontWeight="950">Lesson flow</Text>
+          <Text px="2.5" py="1" borderRadius="full" bg="#ECFDF5" color="#16A34A" fontSize="10px" fontWeight="950">Tài liệu bài học</Text>
           <Text px="2.5" py="1" borderRadius="full" bg="#F8FAFC" color="#52667A" fontSize="10px" fontWeight="950">Tự lưu tiến độ</Text>
         </HStack>
       </VStack>

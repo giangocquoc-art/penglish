@@ -29,16 +29,16 @@ const landingColors = {
 const landingFontStack = '"Be Vietnam Pro", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
 
 const FEATURES = [
-  { icon: Zap, title: 'Spaced Repetition', desc: 'Ôn tập đúng thời điểm, ghi nhớ lâu hơn gấp 3 lần.', bg: landingColors.softAqua, color: landingColors.deepBlue },
-  { icon: BookOpen, title: 'Lộ trình TOEIC & IELTS', desc: 'Bộ từ phân theo level từ 450-990 và band 5.0-8.0+.', bg: '#EAF7FF', color: landingColors.oceanBlue },
-  { icon: Trophy, title: '6 game tương tác', desc: 'Memory Match, Word Scramble, Listening Challenge và nhiều hơn.', bg: '#E9FAFF', color: landingColors.aquaAccent },
-  { icon: Users, title: 'Cộng đồng học tập', desc: 'Học cùng bạn bè, giữ chuỗi học và xem tiến độ hằng ngày.', bg: landingColors.softYellow, color: landingColors.orange },
+  { icon: Zap, title: 'Ôn đúng lúc', desc: 'Các từ đã học sẽ quay lại đúng nhịp để bạn nhớ chắc hơn.', bg: landingColors.softAqua, color: landingColors.deepBlue },
+  { icon: BookOpen, title: 'Lộ trình TOEIC & IELTS', desc: 'Từ vựng được chia theo mục tiêu và trình độ để dễ bắt đầu.', bg: '#EAF7FF', color: landingColors.oceanBlue },
+  { icon: Trophy, title: '6 trò luyện tương tác', desc: 'Ghép cặp, xếp chữ, luyện nghe và nhiều trò luyện ngắn khác.', bg: '#E9FAFF', color: landingColors.aquaAccent },
+  { icon: Users, title: 'Học đều mỗi ngày', desc: 'Theo dõi chuỗi ngày học và tiến độ của bạn theo cách nhẹ nhàng.', bg: landingColors.softYellow, color: landingColors.orange },
 ];
 
 const TESTIMONIALS = [
-  { name: 'Minh Anh', role: 'Sinh viên ĐH Ngoại Thương', quote: 'Mình lên TOEIC 450 → 850 trong 4 tháng. Lộ trình rõ ràng, game vui không thấy chán.', avatarTone: 'aqua', avatarLabel: 'Cá Mây' },
-  { name: 'Quang Huy', role: 'IELTS 7.5', quote: 'Spaced repetition cực hiệu quả. Mình thuộc 2000 từ academic chỉ trong 3 tháng.', avatarTone: 'blue', avatarLabel: 'Cá Sao' },
-  { name: 'Hà Linh', role: 'Học sinh THPT', quote: 'Giữ chuỗi học 120 ngày rồi! App đẹp, dễ dùng, lại còn miễn phí. Quá đỉnh.', avatarTone: 'coral', avatarLabel: 'Cá Cam' },
+  { name: 'Minh Anh', role: 'Sinh viên', quote: 'Mình thích cách bài học chia nhỏ. Mỗi ngày học một chút nên đỡ bị ngợp.', avatarTone: 'aqua', avatarLabel: 'Cá Mây' },
+  { name: 'Quang Huy', role: 'Người đi làm', quote: 'Các thẻ từ quay lại đúng lúc, giúp mình nhớ lại mà không phải tự ghi chú nhiều.', avatarTone: 'blue', avatarLabel: 'Cá Sao' },
+  { name: 'Hà Linh', role: 'Học sinh THPT', quote: 'Giao diện dễ thương, bài luyện ngắn nên mình dễ giữ thói quen học mỗi ngày.', avatarTone: 'coral', avatarLabel: 'Cá Cam' },
 ];
 
 const fishAvatarPalettes = {
@@ -149,7 +149,7 @@ function ProductMockup() {
               </Circle>
               <Box minW="0">
                 <Text fontSize={{ base: 'sm', md: 'md' }} fontWeight="800" letterSpacing="-0.01em" color={landingColors.text} noOfLines={1}>Bài hôm nay</Text>
-                <Text fontSize={{ base: 'xs', md: 'sm' }} color={landingColors.secondaryText} noOfLines={1}>Unit 1 • Greetings A1</Text>
+                <Text fontSize={{ base: 'xs', md: 'sm' }} color={landingColors.secondaryText} noOfLines={1}>Bài 1 • Chào hỏi A1</Text>
               </Box>
             </HStack>
             <Badge bg={landingColors.softAqua} color={landingColors.deepBlue} borderRadius="full" px="3" py="1" fontWeight="700" flexShrink={0}>+60 XP</Badge>
@@ -158,7 +158,7 @@ function ProductMockup() {
           <Box bg={landingColors.card} border="1px solid" borderColor={landingColors.border} borderRadius="3xl" p={{ base: '4', md: '5' }} boxShadow="0 14px 32px rgba(16, 32, 51, 0.07)">
             <HStack justify="space-between" mb="4" align="start" gap="3">
               <Box>
-                <Text fontSize="xs" fontWeight="700" color={landingColors.deepBlue} letterSpacing="0.08em" textTransform="uppercase">Flashcard thông minh</Text>
+                <Text fontSize="xs" fontWeight="700" color={landingColors.deepBlue} letterSpacing="0.08em" textTransform="uppercase">Thẻ từ thông minh</Text>
                 <Heading as="h3" mt="2" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="800" lineHeight="1.18" letterSpacing="-0.02em" color={landingColors.text}>Nice to meet you</Heading>
               </Box>
               <Circle size="42px" bg={landingColors.softAqua} color={landingColors.oceanBlue} flexShrink={0}>
@@ -196,7 +196,7 @@ function ProductMockup() {
 
           <Box bg={landingColors.card} border="1px solid" borderColor={landingColors.border} borderRadius="2xl" p={{ base: '3', md: '4' }}>
             <Flex justify="space-between" mb="2" gap="3">
-              <Text fontSize="sm" fontWeight="700" letterSpacing="-0.01em" color={landingColors.text}>Mini lesson path</Text>
+              <Text fontSize="sm" fontWeight="700" letterSpacing="-0.01em" color={landingColors.text}>Lộ trình bài học ngắn</Text>
               <HStack color={landingColors.orange} gap="1">
                 <Icon as={Star} boxSize="4" fill="currentColor" />
                 <Text fontSize="sm" fontWeight="700">3/4</Text>
@@ -204,10 +204,10 @@ function ProductMockup() {
             </Flex>
             <Progress value={72} sx={{ '& > div': { background: `linear-gradient(90deg, ${landingColors.aquaAccent}, ${landingColors.oceanBlue})` } }} borderRadius="full" h="10px" bg={landingColors.softAqua} />
             <HStack justify="space-between" mt="3" color={landingColors.mutedText} fontSize="xs" fontWeight="700">
-              <Text>Flashcard</Text>
-              <Text>Quiz</Text>
-              <Text>Listening</Text>
-              <Text>Review</Text>
+              <Text>Thẻ từ</Text>
+              <Text>Kiểm tra</Text>
+              <Text>Nghe</Text>
+              <Text>Ôn lại</Text>
             </HStack>
           </Box>
         </VStack>
@@ -259,7 +259,7 @@ export function LandingPage() {
               lineHeight="1.45"
               letterSpacing="-0.01em"
             >
-              Học tập là miễn phí, P-English không bắt bất kỳ ai trả phí cho việc học
+              Học tập là miễn phí, PooEnglish không bắt bất kỳ ai trả phí cho việc học
             </Badge>
             <Heading
               as="h1"
@@ -270,11 +270,11 @@ export function LandingPage() {
               color={landingColors.text}
               maxW="640px"
             >
-              Học từ vựng tiếng Anh hiệu quả gấp 3 lần
+              Học từ vựng tiếng Anh nhẹ nhàng mỗi ngày
             </Heading>
             <Text fontSize={{ base: 'sm', md: 'lg' }} fontWeight="400" color={landingColors.secondaryText} lineHeight={{ base: '1.58', md: '1.72' }} maxW="620px" noOfLines={{ base: 3, md: undefined }}>
-              Flashcard thông minh + Spaced Repetition + lộ trình TOEIC, IELTS,
-              THPT. Học theo bài ngắn, có ôn tập local và tiến độ rõ ràng mỗi ngày.
+              Thẻ từ thông minh, ôn lại đúng lúc và lộ trình TOEIC, IELTS,
+              THPT. Học theo bài ngắn, tiến độ rõ ràng mỗi ngày.
             </Text>
             <Flex gap="3" direction={{ base: 'column', sm: 'row' }} w={{ base: '100%', sm: 'auto' }}>
               <Button
@@ -295,7 +295,7 @@ export function LandingPage() {
                 Vào học miễn phí
               </Button>
               <Button as="a" href="#landing-preview" size="lg" fontWeight="700" variant="outline" borderColor={landingColors.border} color={landingColors.text} bg="rgba(255,255,255,0.72)" w={{ base: '100%', sm: 'auto' }} _hover={{ bg: landingColors.card }}>
-                Xem demo
+                Xem thử
               </Button>
             </Flex>
             <HStack gap={{ base: '5', md: '6' }} pt="2" wrap="wrap" display={{ base: 'none', sm: 'flex' }}>
@@ -309,7 +309,7 @@ export function LandingPage() {
               </VStack>
               <VStack align="start" gap="0">
                 <Text fontWeight="800" fontSize={{ base: '27px', md: '31px' }} lineHeight="1.08" letterSpacing="-0.02em" color={landingColors.text}>6</Text>
-                <Text fontSize="sm" color={landingColors.mutedText}>game</Text>
+                <Text fontSize="sm" color={landingColors.mutedText}>trò luyện</Text>
               </VStack>
             </HStack>
           </VStack>
@@ -391,7 +391,7 @@ export function LandingPage() {
       <Box bgGradient="linear(135deg, #1F6FD6, #2F9EEB)" py="10">
         <Container maxW="6xl" px={{ base: '4', md: '6' }}>
           <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="700" lineHeight="1.45" color="white" textAlign="center">
-            A1–B2 • lộ trình theo kỹ năng • 6 game tương tác
+            A1–B2 • lộ trình theo kỹ năng • 6 trò luyện tương tác
           </Text>
         </Container>
       </Box>

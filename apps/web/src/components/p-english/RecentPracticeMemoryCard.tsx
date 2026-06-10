@@ -19,8 +19,8 @@ const COLORS = {
 };
 
 const MODE_LABELS: Record<LessonProgressMode, string> = {
-  flashcard: 'Flashcard',
-  quiz: 'Quiz',
+  flashcard: 'Thẻ từ',
+  quiz: 'Kiểm tra nhanh',
   listen: 'Luyện nghe',
   reflex: 'Phản xạ',
   type: 'Gõ câu',
@@ -35,7 +35,7 @@ const SKILL_LABELS: Record<PracticeSkillArea, string> = {
   listening: 'Nghe',
   speaking: 'Nói',
   typing: 'Gõ câu',
-  review: 'Ôn tập',
+  review: 'Ôn lại',
   speed: 'Tốc độ',
 };
 
@@ -53,7 +53,7 @@ function getTopSkill(memory: LocalSkillMemory) {
 
 function getSuggestion(weakCount: number, average?: number) {
   if (weakCount > 0) return 'Poo gợi ý: ôn lại vài mục yếu trước khi mở bài mới.';
-  if (average !== undefined && average >= 80) return 'Nhịp học đang chắc. Bạn có thể chuyển sang một mode khó hơn hoặc học bước tiếp theo.';
+  if (average !== undefined && average >= 80) return 'Nhịp học đang chắc. Bạn có thể chuyển sang phần luyện khó hơn hoặc học bước tiếp theo.';
   if (average !== undefined && average >= 55) return 'Bạn đang tiến đều. Làm thêm một lượt ngắn sẽ giúp trí nhớ bền hơn.';
   return 'Bắt đầu bằng một lượt ngắn, ưu tiên đúng và rõ trước khi tăng tốc.';
 }
@@ -112,13 +112,13 @@ export function RecentPracticeMemoryCard({ fallbackPath = '/learning-path' }: { 
       {recentSessions.length === 0 ? (
         <Box position="relative" mt="5" p="4" borderRadius="2xl" bg="rgba(255,255,255,0.72)" border="1px solid" borderColor="rgba(186,230,253,0.84)">
           <Text color={COLORS.text} fontWeight="850" lineHeight="1.65">
-            Bạn chưa có dữ liệu luyện gần đây. Bắt đầu một bài ngắn để Poo ghi nhớ nhịp học của bạn.
+            Bạn chưa có lượt luyện gần đây. Bắt đầu một bài ngắn để Poo ghi nhớ nhịp học của bạn.
           </Text>
         </Box>
       ) : (
         <VStack position="relative" align="stretch" gap="3" mt="5">
           <SimpleGrid columns={{ base: 1, sm: 3 }} gap="3">
-            <Metric label="Mode gần nhất" value={MODE_LABELS[latestSession.mode]} />
+            <Metric label="Phần luyện gần nhất" value={MODE_LABELS[latestSession.mode]} />
             <Metric label="Điểm lượt cuối" value={`${latestSession.percentage}%`} tone={latestSession.percentage >= 70 ? 'green' : 'amber'} />
             <Metric label="Mục cần ôn" value={weakCount} tone={weakCount > 0 ? 'amber' : 'green'} />
           </SimpleGrid>

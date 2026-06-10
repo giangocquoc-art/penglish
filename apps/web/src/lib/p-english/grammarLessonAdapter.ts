@@ -73,7 +73,7 @@ function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
     miniDialogues: [
       {
         id: `${source.id}-dialogue-bridge`,
-        title: 'Bridge dialogue: nghe rồi nói theo mẫu',
+        title: 'Hội thoại nối bài: nghe rồi nói theo mẫu',
         lines: [
           { speaker: 'A', text: dialogueFirst.text },
           { speaker: 'B', text: dialogueSecond.text },
@@ -86,14 +86,14 @@ function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
         ? [
             {
               id: `${source.id}-dialogue-transfer`,
-              title: 'Transfer dialogue: đổi ngữ cảnh nhưng giữ mẫu',
+              title: 'Hội thoại đổi ý: giữ mẫu, thay ngữ cảnh',
               lines: [
                 { speaker: 'A' as const, text: transferExample.text },
                 { speaker: 'B' as const, text: challengeExample.text },
               ],
               vietnameseTranslation: [transferExample.meaningVi, challengeExample.meaningVi],
               focusPhrases: [transferExample.text, challengeExample.text],
-              suggestedShadowingInstruction: 'Lượt 1 nghe hiểu, lượt 2 nhại theo chunk, lượt 3 thay thông tin bằng kế hoạch hoặc trải nghiệm của bạn.',
+              suggestedShadowingInstruction: 'Lượt 1 nghe hiểu, lượt 2 nói theo cụm, lượt 3 thay thông tin bằng kế hoạch hoặc trải nghiệm của bạn.',
             },
           ]
         : []),
@@ -101,7 +101,7 @@ function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
     pronunciationNotes: [
       {
         id: `${source.id}-pronunciation-bridge`,
-        noteVi: `Đọc theo chunk của mẫu “${patternLabel}”: dừng rất ngắn giữa chủ ngữ, cụm động từ và phần bổ sung; không đọc rời từng từ.`,
+        noteVi: `Đọc theo cụm của mẫu “${patternLabel}”: dừng rất ngắn giữa chủ ngữ, cụm động từ và phần bổ sung; không đọc rời từng từ.`,
         examples: bridgeExamples.slice(0, 3).map((example) => example.text),
       },
       ...(isCoreA2
@@ -118,7 +118,7 @@ function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
       id: `${source.id}-listening-bridge-${index + 1}`,
       text: example.text,
       question: index === 0 ? `Bạn nghe thấy câu nào dùng mẫu “${patternLabel}”?` : 'Câu vừa nghe phù hợp với nghĩa tiếng Việt nào?',
-      options: [example.text, dialogueFirst.text === example.text ? dialogueSecond.text : dialogueFirst.text, 'I will review this pattern slowly.']
+      options: [example.text, dialogueFirst.text === example.text ? dialogueSecond.text : dialogueFirst.text, 'I will review this sentence slowly.']
         .filter((option, optionIndex, options) => option && options.indexOf(option) === optionIndex)
         .slice(0, 3),
       answer: example.text,
@@ -142,13 +142,13 @@ function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
           id: `${source.id}-speed-bridge-${index + 1}`,
           promptVi: example.meaningVi,
           expectedEnglish: example.text,
-          hint: `Nói nhanh theo chunk “${patternLabel}”, không dịch từng từ.`,
+          hint: `Nói nhanh theo cụm “${patternLabel}”, không dịch từng từ.`,
         }))
       : [],
     shadowingScript: isCoreA2
       ? {
           id: `${source.id}-shadow-bridge`,
-          title: `A2 shadowing · ${source.titleEn}`,
+          title: `A2 nói đuổi · ${source.titleEn}`,
           lines: bridgeExamples.slice(0, 4).map((example, index) => ({
             id: `${source.id}-shadow-line-${index + 1}`,
             text: example.text,
@@ -176,7 +176,7 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
   return {
     id: source.id,
     unitId: source.unitId,
-    unitTitle: `Grammar · ${source.level}`,
+    unitTitle: `Ngữ pháp · ${source.level}`,
     titleVi: source.titleVi,
     titleEn: source.titleEn,
     subtitle: source.subtitleVi,
@@ -185,7 +185,7 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
     skillTags: ['Ngữ pháp', 'Ôn tập', 'Viết', 'Nghe', 'Nói'],
     learningObjectives: [
       `Hiểu mẫu: ${source.titleVi}.`,
-      'Nhận diện vị trí bị che trong bài cloze theo logic pattern.',
+      'Nhận diện vị trí bị che trong câu luyện.',
       'Chọn hoặc gõ đáp án đúng trong câu ngắn.',
       'Tự sửa lỗi bằng gợi ý tiếng Việt sau mỗi câu.',
     ],
@@ -203,7 +203,7 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
       {
         id: `${source.id}-note`,
         title: source.titleVi,
-        explanationVi: `${source.vietnameseExplanation} Bài này dùng cách tạo câu hỏi dạng cloze: tìm mẫu ngữ pháp trong câu, che phần cần luyện, rồi yêu cầu người học chọn hoặc gõ đáp án.`,
+        explanationVi: `${source.vietnameseExplanation} Bài này dùng dạng điền chỗ trống: tìm mẫu ngữ pháp trong câu, che phần cần luyện, rồi yêu cầu người học chọn hoặc gõ đáp án.`,
         examples: source.examples.map((example) => example.text),
       },
     ],
@@ -221,7 +221,7 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
         id: `${source.id}-mistake`,
         mistake: 'Dịch từng từ rồi chọn đáp án theo tiếng Việt.',
         correction: 'Nhìn loại từ và vị trí trong câu trước, sau đó chọn theo mẫu tiếng Anh.',
-        explanationVi: 'Các bài grammar được tạo theo pattern, nên người học cần nhận diện cấu trúc thay vì đoán nghĩa từng từ.',
+        explanationVi: 'Các bài ngữ pháp đi theo mẫu câu, nên bạn cần nhận diện cấu trúc thay vì đoán nghĩa từng từ.',
       },
     ],
     realLifeSituations: [
@@ -235,7 +235,7 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
     gameMissions: [
       {
         id: `${source.id}-mission`,
-        title: 'Hoàn thành cloze không dịch từng chữ',
+        title: 'Điền chỗ trống không dịch từng chữ',
         instructionVi: 'Đọc cả câu, xác định vị trí bị che, dùng phím A/B/C/D hoặc Enter để hoàn thành nhanh.',
         successCriteria: 'Trả lời đúng ít nhất 2/3 câu luyện tập của bài.',
       },
@@ -253,9 +253,9 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
     },
     reviewRules: {
       newWordReviewAfterMinutes: 10,
-      ifWrong: 'Nếu trả lời sai, đọc lại giải thích và làm lại câu cloze ngay trong phiên học.',
-      ifCorrectTwice: 'Nếu đúng 2 lần, chuyển sang câu cùng pattern nhưng ngữ cảnh khác.',
-      ifCorrectThreeTimesAcrossSessions: 'Nếu đúng qua nhiều phiên, đánh dấu mẫu grammar là đã quen.',
+      ifWrong: 'Nếu trả lời sai, đọc lại giải thích và làm lại câu điền chỗ trống ngay trong phiên học.',
+      ifCorrectTwice: 'Nếu đúng 2 lần, chuyển sang câu cùng mẫu nhưng ngữ cảnh khác.',
+      ifCorrectThreeTimesAcrossSessions: 'Nếu đúng qua nhiều phiên, đánh dấu mẫu ngữ pháp là đã quen.',
       priorityRule: 'Ưu tiên mẫu có lỗi sai gần nhất và mẫu cùng cấp CEFR.',
     },
     completionCriteria: {

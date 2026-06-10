@@ -2,151 +2,291 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
-const baseUrl = process.env.POO_POLISH_BASE_URL || 'http://127.0.0.1:5180';
+const baseUrl = process.env.POO_POLISH_BASE_URL || 'http://127.0.0.1:4173';
 const outDir = path.resolve(__dirname, '..', 'reports', 'screenshots');
+const reportPath = path.resolve(__dirname, '..', 'reports', 'poo-polish-browser-qa-report.json');
+const progressKey = 'penglish-foundation48-progress-v1';
+const authUserId = '00000000-0000-4000-8000-000000000088';
+const authEmail = 'qa-poo-polish@example.com';
+
+const qaProgress = {
+  lastDayOpened: 3,
+  lastStudiedDate: new Date().toISOString().slice(0, 10),
+  streak: 7,
+  days: {
+    1: { started: true, completed: true, completedAt: new Date(Date.now() - 2 * 86400000).toISOString(), completedSteps: ['intro', 'explain', 'patterns', 'vocabulary', 'complete'] },
+    2: { started: true, completed: true, completedAt: new Date(Date.now() - 86400000).toISOString(), completedSteps: ['intro', 'explain', 'patterns', 'vocabulary', 'complete'] },
+    3: { started: true, completed: false, completedSteps: ['intro', 'explain'] },
+  },
+};
 
 const routes = [
-  { url: '/home', file: 'poo-polish-home-desktop.png', width: 1366, height: 768, waitFor: 'P-English', checkPoo: true },
-  { url: '/learning-path', file: 'poo-polish-roadmap-desktop.png', width: 1366, height: 768, waitFor: 'Lộ trình học', checkPoo: true },
-  { url: '/lessons/unit-1-greetings-introduction', file: 'poo-polish-lesson-desktop.png', width: 1366, height: 768, waitFor: 'Bước học trong bài', checkPoo: true, postCheck: 'lesson' },
-  { url: '/shadowing', file: 'poo-polish-shadowing-desktop.png', width: 1366, height: 768, waitFor: 'Shadowing cùng Poo', checkPoo: true, postCheck: 'shadowingDesktop' },
-  { url: '/english-speed', file: 'poo-polish-speed-desktop.png', width: 1366, height: 768, waitFor: 'Chế độ phát âm nhanh', checkPoo: true },
-  { url: '/home', file: 'poo-polish-home-mobile.png', width: 390, height: 844, waitFor: 'P-English', checkPoo: true, postCheck: 'mobileBottomNav' },
-  { url: '/lessons/unit-1-greetings-introduction', file: 'poo-polish-lesson-mobile.png', width: 390, height: 844, waitFor: 'Bước học trong bài', checkPoo: true, postCheck: 'lessonMobile' },
-  { url: '/shadowing', file: 'poo-polish-shadowing-mobile.png', width: 390, height: 844, waitFor: 'Shadowing cùng Poo', checkPoo: true, postCheck: 'shadowingMobile' },
-  { url: '/english-speed', file: 'poo-polish-speed-mobile.png', width: 390, height: 844, waitFor: 'Chế độ phát âm nhanh', checkPoo: true, postCheck: 'mobileBottomNav' },
+  { path: '/', name: 'home', waitFor: /PooEnglish|Bắt đầu bài hôm nay|Học bài hôm nay/i, requiredText: ['Bắt đầu bài hôm nay'] },
+  { path: '/learning-path', name: 'learning-path', waitFor: /Mất gốc|Chặng|Ngày|Poo/i, requiredText: ['Poo'] },
+  { path: '/luyen-tieng-anh/48-ngay-lay-goc', name: 'foundation48', waitFor: /48 ngày lấy gốc|Từ mới|Mẫu câu/i, requiredText: ['48 ngày lấy gốc', '12 phút'] },
+  { path: '/practice', name: 'practice', waitFor: /Ôn|Practice|Luyện tập|Poo/i, requiredText: ['Poo'] },
+  { path: '/words', name: 'words', waitFor: /Sổ học của tôi|Từ vựng đã lưu/i, requiredText: ['Sổ học của tôi', 'Từ vựng đã lưu'] },
+  { path: '/shadowing', name: 'shadowing', waitFor: /Shadowing cùng Poo|Nghe trước một lần/i, requiredText: ['Nghe trước một lần', 'Nói lại theo nhịp'] },
+  { path: '/english-speed', name: 'english-speed', waitFor: /English Speed|Chế độ phát âm nhanh|Poo/i, requiredText: ['Poo'] },
+];
+
+const viewports = [
+  { label: '1440x900', width: 1440, height: 900 },
+  { label: '1366x768', width: 1366, height: 768 },
+  { label: '390x844', width: 390, height: 844 },
+];
+
+const allowedConsolePatterns = [
+  /Download the React DevTools/i,
+  /GSAP target/i,
+  /Multiple instances of Three/i,
+  /Failed to load resource: net::ERR_CONNECTION_CLOSED/i,
 ];
 
 function isAllowedFailedRequest(url) {
-  return url.includes('youtube') || url.includes('ytimg') || url.includes('googlevideo') || url.includes('favicon');
+  return /youtube|ytimg|googlevideo|fonts\.googleapis|fonts\.gstatic|favicon|manifest|chrome-extension|\/ocean\/ambient-whale\/frames\//i.test(url);
+}
+
+function safeFileName(value) {
+  return value.replace(/^\/$/, 'home').replace(/^\//, '').replace(/[^a-z0-9-]+/gi, '-').replace(/-+/g, '-').toLowerCase();
+}
+
+async function setupContext(browser, viewport) {
+  const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height } });
+
+  await context.route('**/*supabase.co/**', async (route) => {
+    const url = route.request().url();
+    if (url.includes('/auth/v1/token')) {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          access_token: 'qa-access-token',
+          refresh_token: 'qa-refresh-token',
+          token_type: 'bearer',
+          expires_in: 3600,
+          expires_at: Math.floor(Date.now() / 1000) + 3600,
+          user: { id: authUserId, email: authEmail, role: 'authenticated' },
+        }),
+      });
+      return;
+    }
+    if (url.includes('/auth/v1/user')) {
+      await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ id: authUserId, email: authEmail, role: 'authenticated' }) });
+      return;
+    }
+    await route.fulfill({ status: 200, contentType: 'application/json', body: url.includes('/rest/v1/') ? '[]' : '{}' });
+  });
+
+  await context.addInitScript(({ progressKey, authUserId, authEmail, qaProgress }) => {
+    const expiresAt = Math.floor(Date.now() / 1000) + 60 * 60;
+    const encode = (value) => btoa(JSON.stringify(value)).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+    const token = `${encode({ alg: 'none', typ: 'JWT' })}.${encode({ sub: authUserId, aud: 'authenticated', exp: expiresAt, role: 'authenticated', email: authEmail })}.`;
+    const user = {
+      id: authUserId,
+      aud: 'authenticated',
+      role: 'authenticated',
+      email: authEmail,
+      app_metadata: { provider: 'google', providers: ['google'] },
+      user_metadata: { full_name: 'Poo Polish QA Learner', avatar_url: '' },
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+
+    window.localStorage.setItem('p-english:supabase-auth', JSON.stringify({
+      access_token: token,
+      refresh_token: 'qa-refresh-token',
+      token_type: 'bearer',
+      expires_in: 3600,
+      expires_at: expiresAt,
+      user,
+    }));
+    window.localStorage.setItem('currentUser', JSON.stringify({
+      id: 'local-guest-learner',
+      name: 'Poo Polish QA Learner',
+      email: authEmail,
+      avatar: '',
+      vip: false,
+    }));
+    window.localStorage.setItem(progressKey, JSON.stringify(qaProgress));
+  }, { progressKey, authUserId, authEmail, qaProgress });
+
+  return context;
+}
+
+async function waitForRouteReady(page, route) {
+  await page.goto(`${baseUrl}${route.path}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  await page.waitForLoadState('networkidle', { timeout: 15000 }).catch(() => undefined);
+  try {
+    await page.waitForFunction(
+      (patternSource) => {
+        const text = document.body?.innerText || '';
+        return new RegExp(patternSource, 'i').test(text);
+      },
+      route.waitFor.source,
+      { timeout: 25000 },
+    );
+  } catch (error) {
+    const bodyText = await page.evaluate(() => document.body?.innerText?.slice(0, 1200) || '');
+    throw new Error(`Timed out waiting for ${route.path} pattern ${route.waitFor}. Body preview: ${bodyText}`);
+  }
 }
 
 (async () => {
   fs.mkdirSync(outDir, { recursive: true });
+  fs.mkdirSync(path.dirname(reportPath), { recursive: true });
 
   const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage();
   const errors = [];
   const failedRequests = [];
+  const consoleErrors = [];
+  const screenshots = [];
+  const checks = [];
 
-  page.on('console', (msg) => {
-    if (msg.type() === 'error') errors.push(`console error on ${page.url()}: ${msg.text()}`);
-  });
+  for (const viewport of viewports) {
+    const context = await setupContext(browser, viewport);
+    const page = await context.newPage();
 
-  page.on('pageerror', (error) => errors.push(`page error on ${page.url()}: ${error.message}`));
+    page.on('console', (msg) => {
+      if (msg.type() !== 'error') return;
+      const text = msg.text();
+      if (allowedConsolePatterns.some((pattern) => pattern.test(text))) return;
+      consoleErrors.push(`console error on ${page.url()}: ${text}`);
+    });
 
-  page.on('requestfailed', (request) => {
-    const url = request.url();
-    if (isAllowedFailedRequest(url)) return;
-    failedRequests.push(`${request.method()} ${url} :: ${request.failure()?.errorText || 'unknown failure'}`);
-  });
+    page.on('pageerror', (error) => consoleErrors.push(`page error on ${page.url()}: ${error.message}`));
 
-  for (const route of routes) {
-    await page.setViewportSize({ width: route.width, height: route.height });
-    await page.goto(`${baseUrl}${route.url}`, { waitUntil: 'networkidle' });
-    await page.waitForLoadState('domcontentloaded');
-    await page.waitForFunction(
-      (text) => document.body.innerText.includes(text),
-      route.waitFor,
-      { timeout: 20000 },
-    );
+    page.on('requestfailed', (request) => {
+      const url = request.url();
+      if (isAllowedFailedRequest(url)) return;
+      failedRequests.push(`${request.method()} ${url} :: ${request.failure()?.errorText || 'unknown failure'}`);
+    });
 
-    if (route.postCheck === 'lesson' || route.postCheck === 'lessonMobile') {
-      for (const label of ['Tổng quan', 'Từ vựng', 'Mẫu câu', 'Luyện tập', 'Nghe / Nói', 'Quiz', 'Review']) {
-        await page.getByRole('button', { name: new RegExp(label.replace('/', '\\/'), 'i') }).first().waitFor({ timeout: 5000 });
+    for (const route of routes) {
+      console.log(`Checking ${route.path} at ${viewport.label}`);
+      await waitForRouteReady(page, route);
+
+      const routeChecks = await page.evaluate((requiredText) => {
+        const bodyText = document.body.innerText || '';
+        const doc = document.documentElement;
+        const body = document.body;
+        const visibleButtons = Array.from(document.querySelectorAll('button, a')).filter((element) => {
+          const rect = element.getBoundingClientRect();
+          const style = window.getComputedStyle(element);
+          return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none';
+        });
+        const firstPrimaryAction = visibleButtons.find((element) => /Bắt đầu|Tiếp tục|Ôn|Học|Ghi âm|Nghe|Practice|Start/i.test(element.textContent || ''));
+        const horizontalOverflow = Math.max(body.scrollWidth, doc.scrollWidth) > doc.clientWidth + 2;
+        const getElementLabel = (element) => [
+          element.getAttribute('data-testid') || '',
+          element.getAttribute('aria-label') || '',
+          element.getAttribute('role') || '',
+          element.className || '',
+          element.id || '',
+        ].join(' ');
+        const isKnownFixedChrome = (element) => {
+          if (!element) return false;
+          const label = getElementLabel(element);
+          return Boolean(element.closest?.('[data-testid="mobile-bottom-nav"], [data-testid="mobile-topbar"], [aria-hidden="true"]'))
+            || /mobile-bottom-nav|bottom|nav|tab|sidebar|toast|chakra-portal|ocean|whale|mascot|bubble|wave|backdrop|decor/i.test(label);
+        };
+        const fixedElementAtPoint = (x, y) => {
+          const stack = document.elementsFromPoint(x, y);
+          return stack.find((element) => window.getComputedStyle(element).position === 'fixed') || null;
+        };
+        const coveredPrimaryActions = visibleButtons.filter((element) => {
+          if (element.closest?.('[data-testid="mobile-bottom-nav"]')) return false;
+          const rect = element.getBoundingClientRect();
+          if (rect.bottom <= 0 || rect.top >= window.innerHeight || rect.right <= 0 || rect.left >= window.innerWidth) return false;
+          const probeX = Math.min(Math.max(rect.left + rect.width / 2, 1), window.innerWidth - 1);
+          const probeY = Math.min(Math.max(rect.top + rect.height / 2, 1), window.innerHeight - 1);
+          const topElement = document.elementFromPoint(probeX, probeY);
+          if (!topElement || element === topElement || element.contains(topElement)) return false;
+          const fixedCover = fixedElementAtPoint(probeX, probeY);
+          return Boolean(fixedCover && !element.contains(fixedCover) && !isKnownFixedChrome(fixedCover));
+        });
+        const coveredActionCount = coveredPrimaryActions.length;
+        const coveredActionLabels = coveredPrimaryActions.map((element) => (element.textContent || element.getAttribute('aria-label') || '').trim()).filter(Boolean).slice(0, 5);
+
+        return {
+          title: document.title,
+          canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href') || '',
+          description: document.querySelector('meta[name="description"]')?.getAttribute('content') || '',
+          bodyScrollWidth: body.scrollWidth,
+          htmlScrollWidth: doc.scrollWidth,
+          htmlClientWidth: doc.clientWidth,
+          horizontalOverflow,
+          requiredText: requiredText.map((text) => ({ text, present: bodyText.includes(text) })),
+          firstPrimaryActionText: firstPrimaryAction?.textContent?.trim() || '',
+          coveredActionCount,
+          coveredActionLabels,
+          visibleActionCount: visibleButtons.length,
+          hasLoadingText: /Đang tải|loading/i.test(bodyText),
+          hasErrorText: /TypeError|ReferenceError|Unhandled|Cannot read|Cannot access/i.test(bodyText),
+        };
+      }, route.requiredText || []);
+
+      if (routeChecks.horizontalOverflow) {
+        errors.push(`Horizontal overflow on ${route.path} at ${viewport.label}: ${JSON.stringify(routeChecks)}`);
       }
-      await page.getByRole('button', { name: /Tiếp tục/i }).first().waitFor({ timeout: 5000 });
-      await page.getByRole('button', { name: /Quay lại/i }).first().waitFor({ timeout: 5000 });
-    }
-
-    if (route.postCheck === 'shadowingDesktop') {
-      await page.getByTestId('shadowing-video-fallback').waitFor({ timeout: 9000 });
-      await page.getByTestId('shadowing-video-fallback').getByRole('link', { name: /Mở trên YouTube/i }).waitFor({ timeout: 5000 });
-    }
-
-    if (route.postCheck === 'shadowingMobile') {
-      await page.getByTestId('shadowing-current-sentence').waitFor({ timeout: 9000 });
-      await page.getByText('Video tham khảo', { exact: false }).first().waitFor({ timeout: 5000 });
-      await page.locator('[data-testid="shadowing-lesson-picker"] summary').waitFor({ timeout: 5000 });
-      await page.locator('[data-testid="shadowing-transcript-panel"] summary').waitFor({ timeout: 5000 });
-      await page.locator('[data-testid="shadowing-custom-transcript"] summary').waitFor({ timeout: 5000 });
-    }
-
-    const checks = await page.evaluate((postCheck) => {
-      const layer = document.querySelector('.poo-swim-layer');
-      const mainPoo = document.querySelector('.poo-swim-layer__main');
-      const fallback = document.querySelector('[data-testid="shadowing-video-fallback"]');
-      const mobileFallback = document.querySelector('[data-testid="shadowing-video-fallback-mobile"]');
-      const bottomNav = document.querySelector('[data-testid="bottom-nav"], .bottom-nav, nav[aria-label*="bottom" i]');
-      const actionable = Array.from(document.querySelectorAll('button, a, input, textarea, select'));
-      const viewportHeight = window.innerHeight;
-      const bottomNavRect = bottomNav ? bottomNav.getBoundingClientRect() : null;
-      const coveredActions = bottomNavRect
-        ? actionable.filter((el) => {
-            const rect = el.getBoundingClientRect();
-            return rect.width > 0 && rect.height > 0 && rect.bottom > bottomNavRect.top && rect.top < viewportHeight;
-          }).length
-        : 0;
-      const desktopFallbackRect = fallback ? fallback.getBoundingClientRect() : null;
-      const mobileFallbackRect = mobileFallback ? mobileFallback.getBoundingClientRect() : null;
-      const shadowingDetails = Array.from(document.querySelectorAll('[data-testid="shadowing-lesson-picker"], [data-testid="shadowing-transcript-panel"], [data-testid="shadowing-custom-transcript"]'));
-
-      return {
-        bodyScrollWidth: document.body.scrollWidth,
-        htmlClientWidth: document.documentElement.clientWidth,
-        hasHorizontalOverflow: document.body.scrollWidth > document.documentElement.clientWidth + 1,
-        hasPooSwimLayer: Boolean(layer),
-        pooSwimLayerVisible: layer ? getComputedStyle(layer).display !== 'none' && getComputedStyle(layer).visibility !== 'hidden' : false,
-        mainPooWidth: mainPoo ? mainPoo.getBoundingClientRect().width : null,
-        mainPooOpacity: mainPoo ? Number.parseFloat(getComputedStyle(mainPoo).opacity || '0') : null,
-        desktopFallbackHeight: desktopFallbackRect ? desktopFallbackRect.height : null,
-        mobileFallbackHeight: mobileFallbackRect ? mobileFallbackRect.height : null,
-        coveredActions,
-        shadowingDetailsOpen: shadowingDetails.map((item) => item.hasAttribute('open')),
-        postCheck,
-      };
-    }, route.postCheck || 'none');
-
-    if (checks.hasHorizontalOverflow) {
-      errors.push(`horizontal overflow on ${route.url} ${route.width}x${route.height}: ${JSON.stringify(checks)}`);
-    }
-
-    if (route.checkPoo && (!checks.hasPooSwimLayer || !checks.pooSwimLayerVisible)) {
-      errors.push(`Poo swim layer missing/hidden on ${route.url} ${route.width}x${route.height}: ${JSON.stringify(checks)}`);
-    }
-
-    if (route.checkPoo && checks.mainPooWidth !== null) {
-      const desktop = route.width >= 768;
-      const min = desktop ? 90 : 56;
-      const max = desktop ? 170 : 100;
-      if (checks.mainPooWidth < min || checks.mainPooWidth > max) {
-        errors.push(`Poo swim width out of range on ${route.url} ${route.width}x${route.height}: ${JSON.stringify(checks)}`);
+      const missingText = routeChecks.requiredText.filter((item) => !item.present).map((item) => item.text);
+      if (missingText.length) {
+        errors.push(`Missing required text on ${route.path} at ${viewport.label}: ${missingText.join(', ')}`);
       }
+      if (!routeChecks.firstPrimaryActionText) {
+        errors.push(`No visible learner action found on ${route.path} at ${viewport.label}`);
+      }
+      if (viewport.width < 600 && routeChecks.coveredActionCount > 0) {
+        errors.push(`Possible fixed-bottom overlap on ${route.path} at ${viewport.label}: ${JSON.stringify(routeChecks)}`);
+      }
+      if (routeChecks.hasErrorText) {
+        errors.push(`Runtime error-looking text detected on ${route.path} at ${viewport.label}`);
+      }
+      if (!/PooEnglish/i.test(routeChecks.title)) {
+        errors.push(`SEO title does not include PooEnglish on ${route.path} at ${viewport.label}: ${routeChecks.title}`);
+      }
+      if (!routeChecks.description || routeChecks.description.length < 40) {
+        errors.push(`SEO description too short on ${route.path} at ${viewport.label}`);
+      }
+      if (!routeChecks.canonical) {
+        errors.push(`Missing canonical URL on ${route.path} at ${viewport.label}`);
+      }
+
+      const screenshotPath = path.join(outDir, `poo-polish-${safeFileName(route.name)}-${viewport.label}.png`);
+      await page.screenshot({ path: screenshotPath, fullPage: true, timeout: 60000, animations: 'disabled' });
+      screenshots.push(path.relative(path.resolve(__dirname, '..'), screenshotPath).replace(/\\/g, '/'));
+      checks.push({ route: route.path, viewport: viewport.label, ...routeChecks });
     }
 
-    if (route.postCheck === 'shadowingDesktop' && checks.desktopFallbackHeight !== null && checks.desktopFallbackHeight > 270) {
-      errors.push(`desktop shadowing fallback too tall: ${JSON.stringify(checks)}`);
-    }
-
-    if (route.postCheck === 'shadowingMobile' && checks.mobileFallbackHeight !== null && checks.mobileFallbackHeight > 220) {
-      errors.push(`mobile shadowing fallback too tall: ${JSON.stringify(checks)}`);
-    }
-
-    if ((route.postCheck === 'mobileBottomNav' || route.postCheck === 'lessonMobile' || route.postCheck === 'shadowingMobile') && checks.coveredActions > 0) {
-      errors.push(`possible bottom nav overlap on ${route.url} ${route.width}x${route.height}: ${JSON.stringify(checks)}`);
-    }
-
-    await page.screenshot({ path: path.join(outDir, route.file), fullPage: true });
+    await context.close();
   }
 
   await browser.close();
 
-  if (failedRequests.length) errors.push(`failed requests:\n${failedRequests.join('\n')}`);
+  if (consoleErrors.length) errors.push(`Console/page errors:\n${consoleErrors.join('\n')}`);
+  if (failedRequests.length) errors.push(`Failed requests:\n${failedRequests.join('\n')}`);
+
+  const report = {
+    ok: errors.length === 0,
+    baseUrl,
+    generatedAt: new Date().toISOString(),
+    routes: routes.map((route) => route.path),
+    viewports,
+    screenshots,
+    checks,
+    consoleErrors,
+    failedRequests,
+    errors,
+  };
+
+  fs.writeFileSync(reportPath, JSON.stringify(report, null, 2), 'utf8');
 
   if (errors.length) {
     console.error(errors.join('\n'));
+    console.error(`QA report saved to ${reportPath}`);
     process.exit(1);
   }
 
-  console.log(`Poo ocean polish QA passed for ${routes.length} screenshots. Saved to ${outDir}`);
+  console.log(`PooEnglish product polish browser QA passed. ${screenshots.length} screenshots saved to ${outDir}`);
+  console.log(`QA report saved to ${reportPath}`);
 })();

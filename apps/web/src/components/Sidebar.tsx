@@ -11,6 +11,7 @@ import { LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
 import { usePEnglishSession } from '../lib/p-english/userSession';
 import { useAuth } from '../features/auth/AuthProvider';
 import { syncLocalFoundation48ProgressToCloud } from '../features/foundation48/foundation48CloudProgress';
+import { FooterEasterEggButton } from './easter-eggs/FooterEasterEggButton';
 
 type NavItem = { label: string; to: string; icon: any; tint: string; description: string };
 
@@ -61,9 +62,13 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
       as="aside"
       direction="column"
       w="228px"
-      h="100vh"
+      h="100dvh"
+      maxH="100dvh"
       position="sticky"
       top="0"
+      alignSelf="flex-start"
+      overflowY="auto"
+      overscrollBehavior="contain"
       px="3"
       py="3"
       gap="3"
@@ -183,6 +188,10 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
 
         <Box mt="3">
           <LearningHeartsBadge compact />
+        </Box>
+
+        <Box mt="2" textAlign="center">
+          <FooterEasterEggButton />
         </Box>
 
         <HStack

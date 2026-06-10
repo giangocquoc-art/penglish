@@ -136,7 +136,7 @@ function flashcardPronunciationHint(card: FlashcardItem, lesson: EnglishLesson) 
 }
 
 function progressKey(lessonId: string) {
-  return `p-english:lesson-progress:${lessonId}`;
+  return `PooEnglish:lesson-progress:${lessonId}`;
 }
 
 function safeReadProgress(lessonId: string): LessonProgress {
@@ -350,10 +350,10 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px="6" py="8">
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Bài học này chưa có flashcard từ vựng</Text>
-          <Text mt="2" color={COLORS.muted}>Bạn có thể quay lại bài học hoặc mở hub từ vựng để chọn nhóm khác.</Text>
+          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Bài học này chưa có thẻ từ vựng</Text>
+          <Text mt="2" color={COLORS.muted}>Bạn có thể quay lại bài học hoặc mở sổ từ vựng để chọn nhóm khác.</Text>
           <Button as={Link} to="/vocabularies" mt="5" borderRadius="full" bg={COLORS.primary} color="white">
-            Mở hub từ vựng
+            Mở sổ từ vựng
           </Button>
         </Box>
       </Box>
@@ -366,13 +366,13 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
           <Tag borderRadius="full" bg="#DBEAFE" color={COLORS.primary}>Ôn tập thông minh</Tag>
           <Text mt="4" fontSize="2xl" fontWeight="900" color={COLORS.text}>Hiện chưa có thẻ đến hạn ôn.</Text>
-          <Text mt="2" color={COLORS.muted}>Các thẻ đã nhớ sẽ quay lại đúng lịch. Bạn vẫn có thể luyện toàn bộ flashcard bất cứ lúc nào.</Text>
+          <Text mt="2" color={COLORS.muted}>Các thẻ đã nhớ sẽ quay lại đúng lịch. Bạn vẫn có thể luyện toàn bộ thẻ từ bất cứ lúc nào.</Text>
           <HStack mt="6" wrap="wrap">
             <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=flashcard`} borderRadius="full" bg={COLORS.primary} color="white">
-              Luyện toàn bộ flashcard
+              Luyện toàn bộ thẻ từ
             </Button>
             <Button as={Link} to="/vocabularies" borderRadius="full" variant="outline">
-              Về hub từ vựng
+              Về sổ từ vựng
             </Button>
           </HStack>
         </Box>
@@ -388,7 +388,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
             <Flex justify="space-between" align={{ base: 'start', md: 'center' }} direction={{ base: 'column', md: 'row' }} gap="4">
               <Box>
                 <HStack wrap="wrap" gap="2" mb="2">
-                  <Tag borderRadius="full" bg="#DBEAFE" color={COLORS.primary}>{isDueReview ? 'Flashcard từ vựng đến hạn' : 'Flashcard từ vựng'}</Tag>
+                  <Tag borderRadius="full" bg="#DBEAFE" color={COLORS.primary}>{isDueReview ? 'Thẻ từ vựng đến hạn' : 'Thẻ từ vựng'}</Tag>
                   <Tag borderRadius="full" bg="#FEF3C7" color="#B45309">{allCards.length} thẻ</Tag>
                   <Tag borderRadius="full" bg="#DCFCE7" color="#15803D">{showSummary ? total : currentIndex + 1} / {total}</Tag>
                 </HStack>
@@ -396,12 +396,12 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
                 <Text color={COLORS.primary} fontWeight="700">{lesson.titleEn}</Text>
               </Box>
               <Button as={Link} to="/vocabularies" leftIcon={<Icon as={ArrowLeft} />} variant="outline" borderRadius="full">
-                Về hub từ vựng
+                Về sổ từ vựng
               </Button>
             </Flex>
             <Progress mt="5" value={progressValue} colorScheme="blue" borderRadius="full" bg="#E2E8F0" />
             <Text mt="3" color={COLORS.muted} fontSize="sm">
-              {isDueReview ? 'Bạn đang ôn các thẻ từ vựng đã đến hạn theo SRS local.' : 'Đây là lượt học từ vựng: đoán nghĩa tiếng Việt, nghe mẫu, rồi đọc to ví dụ.'}
+              {isDueReview ? 'Bạn đang ôn các thẻ từ vựng đã đến hạn theo lịch ôn trên thiết bị này.' : 'Đây là lượt học từ vựng: đoán nghĩa tiếng Việt, nghe mẫu, rồi đọc to ví dụ.'}
             </Text>
           </Box>
 

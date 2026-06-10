@@ -8,7 +8,7 @@ import type { Foundation48Day, Foundation48ProgressDay } from './foundation48Typ
 export function Foundation48DayCard({ day, state }: { day: Foundation48Day; state?: Foundation48ProgressDay }) {
   const completed = Boolean(state?.completed);
   const started = Boolean(state?.started);
-  const status = completed ? 'Đã xong' : started ? 'Đang học' : 'Chưa học';
+  const status = completed ? 'Đã hoàn thành' : started ? 'Đang học' : 'Chưa mở';
   const statusIcon = completed ? CheckCircle2 : started ? PlayCircle : Circle;
   const mistakes = (state?.mistakes || []).filter((item) => !item.resolved).length;
   const readiness = getFoundation48Readiness(day.dayNumber);

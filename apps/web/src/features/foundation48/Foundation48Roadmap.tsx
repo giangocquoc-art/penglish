@@ -156,7 +156,7 @@ function OceanPooProgressTrack({ completed, total, percent }: { completed: numbe
 
 function WeekDot({ day, state, isLast }: { day: Foundation48Day; state: ReturnType<typeof getDayCardState>; isLast: boolean }) {
   const statusIcon = state.completed ? CheckCircle2 : state.active || state.started ? PlayCircle : state.softLocked ? LockKeyhole : Circle;
-  const status = state.completed ? 'Đã xong' : state.active || state.started ? 'Học tiếp' : state.softLocked ? 'Khóa' : 'Sẵn sàng';
+  const status = state.completed ? 'Đã hoàn thành' : state.active || state.started ? 'Học tiếp' : state.softLocked ? 'Chưa mở' : 'Học tiếp';
 
   return (
     <HStack align="center" gap="2" flex="1" minW={{ base: '72px', md: '96px' }}>

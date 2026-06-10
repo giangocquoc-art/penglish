@@ -28,6 +28,7 @@ import {
 import { useEffect } from 'react';
 import { BrandLogo } from './BrandLogo';
 import type { SidebarUser } from './Sidebar';
+import { FooterEasterEggButton } from './easter-eggs/FooterEasterEggButton';
 
 type NavItem = { label: string; to: string; icon: any; tint: string };
 
@@ -46,7 +47,7 @@ const NAV_OCEAN = {
 
 const NAV: NavItem[] = [
   { label: 'Học', to: '/luyen-tieng-anh/48-ngay-lay-goc', icon: Waves, tint: NAV_OCEAN.whaleBlue },
-  { label: 'Ôn tập', to: '/practice', icon: Joystick, tint: NAV_OCEAN.deepBlue },
+  { label: 'Ôn lại', to: '/practice', icon: Joystick, tint: NAV_OCEAN.deepBlue },
   { label: 'Từ vựng', to: '/words', icon: BookOpen, tint: NAV_OCEAN.whaleBlue },
   { label: 'Hồ sơ', to: '/profile', icon: UserCircle, tint: NAV_OCEAN.muted },
 ];
@@ -153,6 +154,10 @@ export function MobileDrawerToggle({ user }: { user: SidebarUser | null }) {
                     </Box>
                   </HStack>
                 </Link>
+
+                <Box mt="3" textAlign="center">
+                  <FooterEasterEggButton onNavigate={onClose} />
+                </Box>
 
                 <HStack mt="3" justify="space-between">
                   <HStack

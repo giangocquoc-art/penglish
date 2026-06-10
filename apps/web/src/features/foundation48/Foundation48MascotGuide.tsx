@@ -51,7 +51,7 @@ export function getFoundation48DayGuide(day: Foundation48Day, completed = false)
     return { key: 'suaNghe', name: 'Sứa Nghe', role: 'Bạn nghe hôm nay', message: 'Sứa Nghe đã chuẩn bị file nghe cho hôm nay.', pose: 'listen' };
   }
   if (day.stageId === 7) {
-    return { key: 'cuaQuiz', name: 'Cua Quiz', role: 'Ôn tập nhẹ', message: 'Cua Quiz sẽ kiểm tra nhẹ thôi, không áp lực.', pose: 'quiz' };
+    return { key: 'cuaQuiz', name: 'Cua Quiz', role: 'Ôn lại nhẹ', message: 'Cua Quiz sẽ kiểm tra nhẹ thôi, không áp lực.', pose: 'quiz' };
   }
   if (day.stageId === 3 || day.stageId === 5) {
     return { key: 'mucMo', name: 'Mực Mo', role: 'Gia sư ngữ pháp', message: 'Mực Mo sẽ giúp bạn nhìn công thức thật dễ hiểu.', pose: 'teacher' };

@@ -91,7 +91,7 @@ function safeReadProgress(lessonId: string): LessonProgress {
   if (typeof window === 'undefined') return {};
 
   try {
-    const raw = window.localStorage.getItem(`p-english:lesson-progress:${lessonId}`);
+    const raw = window.localStorage.getItem(`PooEnglish:lesson-progress:${lessonId}`);
     return raw ? (JSON.parse(raw) as LessonProgress) : {};
   } catch {
     return {};
@@ -103,7 +103,7 @@ function safeWriteProgress(lessonId: string, updater: (current: LessonProgress) 
 
   try {
     const current = safeReadProgress(lessonId);
-    window.localStorage.setItem(`p-english:lesson-progress:${lessonId}`, JSON.stringify(updater(current)));
+    window.localStorage.setItem(`PooEnglish:lesson-progress:${lessonId}`, JSON.stringify(updater(current)));
   } catch {
     // Match practice still works in memory if localStorage is unavailable.
   }
@@ -112,7 +112,7 @@ function safeWriteProgress(lessonId: string, updater: (current: LessonProgress) 
 function getSummaryMessage(mistakes: number) {
   if (mistakes <= 2) return 'Rất tốt! Bạn nhận diện cụm khá chắc.';
   if (mistakes <= 6) return 'Ổn rồi, hãy ôn lại các cặp còn nhầm.';
-  return 'Nên quay lại flashcard trước khi ghép lại.';
+  return 'Nên quay lại thẻ từ trước khi ghép lại.';
 }
 
 export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {
@@ -207,7 +207,7 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
     setWeakPairIds((current) => (current.includes(selectedLeftId) ? current : [...current, selectedLeftId]));
     const hearts = loseHeart('match-wrong');
     onWhaleMoodChange?.('mistake');
-    setWarning(`Chưa khớp, thử lại nhé. Bạn mất 1 bọt biển. Còn ${hearts.heartsLeft}/${hearts.maxHearts} bọt biển. Cua Quiz vẫn kẹp nhẹ đáp án cùng bạn — thử lại nhịp tiếp theo nhé.`);
+    setWarning(`Chưa khớp, thử lại nhé. Bạn mất 1 bọt biển. Còn ${hearts.heartsLeft}/${hearts.maxHearts} bọt biển. Cua nhỏ vẫn kẹp nhẹ đáp án cùng bạn — thử lại nhịp tiếp theo nhé.`);
     setWrongLeftId(selectedLeftId);
     setWrongRightId(pairId);
 
@@ -269,7 +269,7 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
           <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có dữ liệu ghép nghĩa từ vựng</Text>
           <Text mt="2" color={COLORS.muted}>Bài học này chưa có danh sách từ/cụm để ghép với nghĩa tiếng Việt.</Text>
           <Button as={Link} to="/vocabularies" mt="6" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: COLORS.primaryHover }}>
-            Mở hub từ vựng
+            Mở sổ từ vựng
           </Button>
         </Box>
       </Box>
@@ -282,7 +282,7 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
         <Box maxW="860px" mx="auto" bg="rgba(255,255,255,0.92)" backdropFilter="blur(16px)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '6', md: '8' }} boxShadow="0 16px 38px rgba(31, 111, 214, 0.08)">
           <Flex justify="space-between" align={{ base: 'start', md: 'center' }} gap="4" direction={{ base: 'column', md: 'row' }}>
             <Box>
-              <Badge colorScheme="cyan" borderRadius="full" px="3" py="1">Vocabulary • Match</Badge>
+              <Badge colorScheme="cyan" borderRadius="full" px="3" py="1">Từ vựng • Ghép cặp</Badge>
               <Text mt="4" fontSize={{ base: '3xl', md: '4xl' }} fontWeight="900" color={COLORS.text}>Ghép nghĩa từ vựng</Text>
             </Box>
             <Box display={{ base: 'none', sm: 'block' }} pointerEvents="none">
@@ -309,7 +309,7 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
               Bắt đầu ghép cặp
             </Button>
             <Button as={Link} to="/vocabularies" borderRadius="full" variant="outline">
-              Về hub từ vựng
+              Về sổ từ vựng
             </Button>
           </Flex>
         </Box>

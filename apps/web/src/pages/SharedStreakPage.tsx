@@ -38,8 +38,11 @@ export function SharedStreakPage() {
     setSending(true);
     try {
       await post('/shared-streak/invite', { email });
+      setState((current) => ({ ...current, status: 'Đã nhận tín hiệu từ đại dương 🚀 Poo sẽ phản hồi bạn sớm nhất có thể.' }));
       setEmail('');
       refresh();
+    } catch {
+      setState((current) => ({ ...current, status: 'Ối, tín hiệu bị rớt giữa đường rồi. Thử gửi lại giúp Poo nha 🐳' }));
     } finally {
       setSending(false);
     }
@@ -112,10 +115,15 @@ export function SharedStreakPage() {
             onChange={(e) => setEmail(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && invite()}
           />
-          <Button colorScheme="green" boxShadow="duo-button" onClick={invite} isLoading={sending}>
+          <Button colorScheme="green" boxShadow="duo-button" onClick={invite} isLoading={sending} loadingText="Đang gửi tín hiệu">
             Gửi mời
           </Button>
         </HStack>
+        {state.status ? (
+          <Text mt="3" fontSize="sm" color={state.status.includes('Ối') ? '#9A3412' : '#166534'} fontWeight="750" role="status">
+            {state.status}
+          </Text>
+        ) : null}
       </Box>
 
       <Box bg="white" borderRadius="2xl" boxShadow="lg" p="6">

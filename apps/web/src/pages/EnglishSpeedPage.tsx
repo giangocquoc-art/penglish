@@ -32,12 +32,12 @@ type SpeechLevelFilter = SpeechCefrLevel | 'all';
 type SpeedMode = 'reading' | 'listening' | 'speaking';
 
 const SPEED_MODES: Array<{ id: SpeedMode; title: string; vi: string; icon: typeof Headphones; goal: string }> = [
-  { id: 'reading', title: 'Speed Reading', vi: 'Đọc nhanh', icon: Waves, goal: 'Đọc câu rõ và đều trong 30 giây.' },
-  { id: 'listening', title: 'Speed Listening', vi: 'Nghe nhanh', icon: Headphones, goal: 'Nghe mẫu/chậm rồi nhận nhịp câu.' },
-  { id: 'speaking', title: 'Speed Speaking', vi: 'Nói nhanh', icon: Mic2, goal: 'Ghi âm, nghe lại và phá kỷ lục cá nhân.' },
+  { id: 'reading', title: 'Đọc nhanh', vi: 'Đọc nhanh', icon: Waves, goal: 'Đọc câu rõ và đều trong 30 giây.' },
+  { id: 'listening', title: 'Nghe nhanh', vi: 'Nghe nhanh', icon: Headphones, goal: 'Nghe mẫu chậm rồi nhận nhịp câu.' },
+  { id: 'speaking', title: 'Nói nhanh', vi: 'Nói nhanh', icon: Mic2, goal: 'Ghi âm, nghe lại và phá kỷ lục cá nhân.' },
 ];
 
-const RECORDED_FEEDBACK_MESSAGE = 'P-English đã ghi âm câu đọc của bạn. Poo lưu lượt luyện, thời gian và kỷ lục local ngay trên thiết bị.';
+const RECORDED_FEEDBACK_MESSAGE = 'PooEnglish đã ghi âm câu đọc của bạn. Poo lưu lượt luyện, thời gian và kỷ lục trên thiết bị này.';
 
 const LEVEL_LABELS: Record<SpeechLevelFilter, string> = {
   all: 'Tất cả cấp độ',
@@ -69,7 +69,7 @@ type SpeechProgressSnapshot = {
 function readSpeechProgress(): SpeechProgressSnapshot {
   if (typeof window === 'undefined') return { attempts: 0, bestScore: 0, completed: 0 };
   try {
-    const parsed = JSON.parse(window.localStorage.getItem('p-english:speech-progress') ?? '{}');
+    const parsed = JSON.parse(window.localStorage.getItem('PooEnglish:speech-progress') ?? '{}');
     return {
       attempts: Number(parsed.attempts ?? 0),
       bestScore: Number(parsed.bestScore ?? 0),
@@ -98,11 +98,11 @@ function saveLocalRecordingProgress(prompt: GeneratedSpeechPrompt | undefined, s
       lastPlayedAt: new Date().toISOString(),
       lastRecordingMode: mode,
     };
-    window.localStorage.setItem('p-english:speech-progress', JSON.stringify(next));
+    window.localStorage.setItem('PooEnglish:speech-progress', JSON.stringify(next));
 
-    const missions = JSON.parse(window.localStorage.getItem('p-english:today-missions') ?? '{}');
-    window.localStorage.setItem('p-english:today-missions', JSON.stringify({ ...missions, speedGames: Math.max(Number(missions.speedGames ?? 0), 1) }));
-    window.dispatchEvent(new Event('p-english:local-progress-updated'));
+    const missions = JSON.parse(window.localStorage.getItem('PooEnglish:today-missions') ?? '{}');
+    window.localStorage.setItem('PooEnglish:today-missions', JSON.stringify({ ...missions, speedGames: Math.max(Number(missions.speedGames ?? 0), 1) }));
+    window.dispatchEvent(new Event('PooEnglish:local-progress-updated'));
   } catch {
     // Pronunciation practice stays usable even if local storage is unavailable.
   }
@@ -283,9 +283,9 @@ export function EnglishSpeedPage() {
               <Tag borderRadius="full" bg={COLORS.softAqua} color={COLORS.deepBlue}><Icon as={Waves} boxSize="4" mr="1.5" /> Chạy trực tiếp trên web</Tag>
               <Tag borderRadius="full" bg="#F0FDF4" color="#166534"><Icon as={Mic2} boxSize="4" mr="1.5" /> Âm thanh trên thiết bị</Tag>
             </HStack>
-            <Text as="h1" fontSize={{ base: 'xl', sm: '2xl', md: '4xl', xl: '5xl' }} lineHeight="1.05" fontWeight="800" color={COLORS.text}>English Speed</Text>
+            <Text as="h1" fontSize={{ base: 'xl', sm: '2xl', md: '4xl', xl: '5xl' }} lineHeight="1.05" fontWeight="800" color={COLORS.text}>Luyện tốc độ tiếng Anh</Text>
             <Text mt={{ base: '1', md: '3' }} fontSize={{ base: 'xs', sm: 'sm', md: 'md', xl: 'lg' }} color={COLORS.muted} maxW="640px" lineHeight={{ base: '1.35', md: '1.5' }} noOfLines={{ base: 2, md: undefined }}>
-              Ba chế độ rõ ràng: Speed Reading để đọc đều, Speed Listening để nghe nhịp, Speed Speaking để ghi âm và phá kỷ lục nhẹ nhàng.
+              Chọn đọc nhanh, nghe nhanh hoặc nói nhanh để luyện đều nhịp và phá kỷ lục nhẹ nhàng.
             </Text>
           </Box>
           <HStack gap={{ base: '2', md: '4' }} align="center" w={{ base: '100%', lg: 'auto' }}>
@@ -309,9 +309,9 @@ export function EnglishSpeedPage() {
                 <HStack align="start" gap="3">
                   <Circle size="38px" bg="white" color={COLORS.deepBlue} flexShrink={0}><Icon as={mode.icon} boxSize="5" /></Circle>
                   <Box>
-                    <Text fontWeight="700" color={COLORS.text}>{mode.title}</Text>
-                    <Text fontSize="sm" color={COLORS.deepBlue} fontWeight="700">{mode.vi}</Text>
-                    <Text mt="1" fontSize="xs" color={COLORS.muted} fontWeight="700">{mode.goal}</Text>
+                    <Text fontWeight="700" color={COLORS.text}>{mode.vi}</Text>
+                    <Text fontSize="sm" color={COLORS.deepBlue} fontWeight="700">{mode.goal}</Text>
+                    <Text mt="1" fontSize="xs" color={COLORS.muted} fontWeight="700">Chọn phần luyện này</Text>
                   </Box>
                 </HStack>
               </Button>
@@ -336,7 +336,7 @@ export function EnglishSpeedPage() {
             </HStack>
 
             <Box mt={{ base: '2', md: '4' }} p={{ base: 3, md: 5 }} borderRadius="3xl" bg="linear-gradient(135deg, rgba(248,252,255,0.72) 0%, rgba(255,255,255,0.82) 100%)" border="1px solid" borderColor="#BAE6FD" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 160px)">
-              <Text fontSize="sm" color={COLORS.muted} fontWeight="700">{selectedSpeedMode.title} · Câu luyện {promptIndex + 1}/{prompts.length} · Điểm nhẹ {gentleScore}</Text>
+              <Text fontSize="sm" color={COLORS.muted} fontWeight="700">{selectedSpeedMode.vi} · Câu luyện {promptIndex + 1}/{prompts.length} · Điểm nhẹ {gentleScore}</Text>
               <Text mt={{ base: '2', md: '3' }} fontSize={{ base: 'xl', md: '3xl', xl: '4xl' }} fontWeight="700" color={COLORS.text} lineHeight="1.16">{prompt?.promptText}</Text>
               <Text mt="2" color={COLORS.deepBlue} fontWeight="700" fontSize={{ base: 'sm', md: 'md' }} noOfLines={{ base: 2, md: undefined }}>{prompt?.slowHintVi}</Text>
               <Progress mt={{ base: '3', md: '4' }} value={sessionProgress} colorScheme="blue" borderRadius="full" h="8px" bg={COLORS.softBlue} />
@@ -408,7 +408,7 @@ export function EnglishSpeedPage() {
               <Box>
                 <HStack gap="2" wrap="wrap"><Icon as={Sparkles} color={COLORS.oceanBlue} /><Text fontSize="2xl" fontWeight="700" color={COLORS.text}>Bản ghi của bạn đã sẵn sàng</Text></HStack>
                 <Text mt="2" color={COLORS.muted} fontWeight="700">{RECORDED_FEEDBACK_MESSAGE}</Text>
-                <Text mt="2" color={COLORS.deepBlue} fontWeight="700">Âm thanh được giữ trong trạng thái trình duyệt của phiên này, không gửi lên máy chủ. Điểm nhẹ hiện tại: {progress.lastScore ?? gentleScore}. Nếu điểm còn thấp, Poo đã đưa câu này vào Practice để ôn lại.</Text>
+                <Text mt="2" color={COLORS.deepBlue} fontWeight="700">Âm thanh chỉ được giữ trong phiên học này, không gửi lên máy chủ. Điểm nhẹ hiện tại: {progress.lastScore ?? gentleScore}. Nếu điểm còn thấp, Poo đã đưa câu này vào phần luyện tập để ôn lại.</Text>
               </Box>
               <Circle size="92px" bg="#F0FDF4" color="#166534" fontWeight="700" fontSize="lg">{formatDuration(durationSeconds)}</Circle>
             </HStack>

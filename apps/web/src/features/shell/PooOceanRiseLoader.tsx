@@ -8,9 +8,13 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 gsap.registerPlugin(useGSAP);
 
 const LOADING_COPY = [
-  'Poo đang mở vùng biển học tập...',
-  'Đang chuẩn bị bài học của bạn...',
-  'Sắp vào lớp rồi...',
+  'Đang gọi Poo dậy đi học...',
+  'Đang gom từ vựng dưới đáy biển...',
+  'Đang pha trà sữa cho cá voi...',
+  'Đang luyện phát âm với sóng biển...',
+  'Đang mở bản đồ 48 ngày lấy gốc...',
+  'Đang nhờ Poo kiểm tra bài học...',
+  'Đang vớt mấy con chữ bị rơi...',
 ];
 
 type PooOceanRiseLoaderProps = {
@@ -25,18 +29,14 @@ function clampProgress(value: number) {
   return Math.max(0, Math.min(100, Math.round(value)));
 }
 
-export function PooOceanRiseLoader({ progress, exiting = false, delayed = false, label = 'Đang tải P-English' }: PooOceanRiseLoaderProps) {
+export function PooOceanRiseLoader({ progress, exiting = false, delayed = false, label = 'Đang tải PooEnglish' }: PooOceanRiseLoaderProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const waterRef = useRef<HTMLDivElement | null>(null);
   const shimmerRef = useRef<HTMLDivElement | null>(null);
   const mascotRef = useRef<HTMLDivElement | null>(null);
   const reducedMotion = useReducedMotion();
   const safeProgress = clampProgress(progress);
-  const copy = useMemo(() => {
-    if (safeProgress >= 88) return LOADING_COPY[2];
-    if (safeProgress >= 42) return LOADING_COPY[1];
-    return LOADING_COPY[0];
-  }, [safeProgress]);
+  const copy = useMemo(() => LOADING_COPY[Math.floor(Math.random() * LOADING_COPY.length)], []);
 
   useGSAP(() => {
     const water = waterRef.current;
@@ -161,7 +161,7 @@ export function PooOceanRiseLoader({ progress, exiting = false, delayed = false,
 
           <VStack gap="2">
             <Text fontSize="xs" fontWeight="950" color="#1F6FD6" letterSpacing="0.16em" textTransform="uppercase">
-              P-English Ocean
+              PooEnglish Ocean
             </Text>
             <Text data-testid="poo-ocean-rise-copy" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950" color="#102A43" lineHeight="1.18">
               {copy}

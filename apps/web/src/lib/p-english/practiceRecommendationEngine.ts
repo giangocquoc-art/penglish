@@ -19,8 +19,8 @@ export type PracticeRecommendation = {
 };
 
 const MODE_LABELS: Record<LessonProgressMode, string> = {
-  flashcard: 'Flashcard',
-  quiz: 'Quiz',
+  flashcard: 'Thẻ từ',
+  quiz: 'Kiểm tra nhanh',
   listen: 'Luyện nghe',
   reflex: 'Phản xạ',
   type: 'Gõ câu',
@@ -62,10 +62,10 @@ export function getPracticeRecommendation(lesson: EnglishLesson, progress: Lesso
     reasonVi = `Có ${summary.dueReviewCount} mục đến hạn ôn, nên ôn nhanh trước khi học tiếp.`;
   } else if (summary.weakReviewCount > 0) {
     primaryMode = pickPreferredAvailableMode(enhancement.recommendedFlow, availableModes);
-    reasonVi = `Có ${summary.weakReviewCount} mục còn yếu, nên luyện mode phù hợp nhất để củng cố.`;
+    reasonVi = `Có ${summary.weakReviewCount} mục còn yếu, nên luyện phần phù hợp nhất để củng cố.`;
   } else if (summary.nextRecommendedMode && availableModes.includes(summary.nextRecommendedMode as LessonProgressMode)) {
     primaryMode = summary.nextRecommendedMode as LessonProgressMode;
-    reasonVi = `Mode tiếp theo còn thiếu là ${summary.nextRecommendedLabel}.`;
+    reasonVi = `Phần tiếp theo nên học là ${summary.nextRecommendedLabel}.`;
   }
 
   const secondaryMode = orderedModes.find((mode) => mode !== primaryMode);

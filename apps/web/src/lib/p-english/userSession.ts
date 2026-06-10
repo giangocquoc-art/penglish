@@ -41,7 +41,7 @@ function getLocalUser(): LocalUser | null {
   }
 }
 
-export function displayNameFromUser(user: User | null | undefined, fallback = 'Bạn học P-English') {
+export function displayNameFromUser(user: User | null | undefined, fallback = 'Bạn học PooEnglish') {
   return user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || fallback;
 }
 

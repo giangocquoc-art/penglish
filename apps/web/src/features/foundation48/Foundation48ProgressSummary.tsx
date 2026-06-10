@@ -19,7 +19,7 @@ export function Foundation48ProgressSummary({
     <Box className="penglish-glass-card" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3', md: '4' }} bg="rgba(255,255,255,0.78)" mb="4">
       <Flex justify="space-between" align={{ base: 'start', md: 'center' }} gap="3" direction={{ base: 'column', md: 'row' }} mb="3">
         <Box>
-          <Text color="#1F6FD6" fontWeight="950" fontSize="xs" textTransform="uppercase" letterSpacing="0.08em">Tiến độ Foundation</Text>
+          <Text color="#1F6FD6" fontWeight="950" fontSize="xs" textTransform="uppercase" letterSpacing="0.08em">Tiến độ 48 ngày</Text>
           <Text color="#102A43" fontWeight="950" fontSize={{ base: 'lg', md: '2xl' }}>Đã hoàn thành {progress.completed}/48 ngày</Text>
         </Box>
         <Box minW={{ base: '100%', md: '220px' }}>
@@ -36,7 +36,7 @@ export function Foundation48ProgressSummary({
         <Metric icon={CheckCircle2} label="Hoàn thành" value={`${progress.completed}/48`} />
         <Metric icon={Compass} label="Chặng hiện tại" value={currentStageTitle} />
         <Metric icon={PlayCircle} label="Tiếp tục" value={`Ngày ${nextDay}`} />
-        <Metric icon={Flame} label="Streak local" value={`${progress.streak || 0} ngày`} />
+        <Metric icon={Flame} label="Chuỗi ngày học" value={`${progress.streak || 0} ngày`} />
         <Metric icon={RotateCcw} label="Cần ôn" value={`${progress.mistakesDue || 0} lỗi`} />
       </SimpleGrid>
     </Box>
