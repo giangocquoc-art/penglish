@@ -3,7 +3,7 @@ import { Box, HStack, VStack, Flex, Text, Button, Icon, Avatar, Tag, TagLabel, I
 import { UserPlus, Check, X } from 'lucide-react';
 import { get, post } from '../api';
 import { AdaptiveWhaleScene } from '../components/streak/AdaptiveWhaleStreak';
-import { getDailyRewardState, getUnifiedBubbleStreak } from '../lib/p-english/daily-rewards';
+import { getDailyRewardState, getWaterStreak } from '../lib/p-english/daily-rewards';
 
 type Invitation = {
   id: string;
@@ -34,7 +34,7 @@ export function SharedStreakPage() {
     refresh();
   }, []);
 
-  const bubbleStreak = getUnifiedBubbleStreak(getDailyRewardState());
+  const waterStreak = getWaterStreak(getDailyRewardState());
 
   const invite = async () => {
     if (!email.trim() || sending) return;
@@ -63,10 +63,10 @@ export function SharedStreakPage() {
 
   return (
     <Box px="6" pb="10" maxW="900px" mx="auto">
-      <Box as="h2" position="absolute" left="-9999px">Chuỗi bọt biển chung</Box>
+      <Box as="h2" position="absolute" left="-9999px">Chuỗi nước chung</Box>
       <VStack gap="2" mb="6" textAlign="center">
-        <Text fontSize="2xl" fontWeight="800" color="#102A43">Chuỗi bọt biển chung 🫧</Text>
-        <Text color="#52667A">Học cùng bạn bè, giữ chuỗi bọt biển như một đàn cá voi nhỏ.</Text>
+        <Text fontSize="2xl" fontWeight="800" color="#102A43">Chuỗi nước chung 🌊</Text>
+        <Text color="#52667A">Học cùng bạn bè, giữ chuỗi nước mỗi ngày như một đàn cá voi nhỏ.</Text>
       </VStack>
 
       <Box
@@ -86,8 +86,8 @@ export function SharedStreakPage() {
         </Box>
         <Box position="relative" pr={{ base: '78px', md: '150px' }}>
           <HStack mb="3">
-            <Text fontSize="xl">🫧</Text>
-            <Text fontWeight="800" color={state.invitee ? '#1F6FD6' : '#64758A'}>{state.invitee ? 'Chuỗi bọt biển chung hiện tại' : 'Chuỗi bọt biển'}</Text>
+            <Text fontSize="xl">🌊</Text>
+            <Text fontWeight="800" color={state.invitee ? '#1F6FD6' : '#64758A'}>{state.invitee ? 'Chuỗi nước chung hiện tại' : 'Chuỗi nước'}</Text>
           </HStack>
           {state.invitee ? (
             <HStack gap="3" wrap="wrap">
@@ -98,15 +98,15 @@ export function SharedStreakPage() {
               <Text fontWeight="700" color="#102A43">{state.invitee}</Text>
             </HStack>
           ) : (
-            <Text color="#52667A" fontSize="sm">Mời bạn bè để bắt đầu giữ chuỗi bọt biển chung.</Text>
+            <Text color="#52667A" fontSize="sm">Mời bạn bè để bắt đầu giữ chuỗi nước chung.</Text>
           )}
           <Box mt="4" maxW="340px">
-            <HStack className={`bubble-streak-badge${bubbleStreak.isFull ? ' is-full' : ''}`} borderRadius="full" px="3" py="2" justify="space-between" aria-label={bubbleStreak.label}>
-              <Text color="#102A43" fontWeight="900">{bubbleStreak.label}</Text>
-              <Text color="#2F9EEB" fontWeight="800" fontSize="sm">{bubbleStreak.progressPercent}%</Text>
+            <HStack className={`bubble-streak-badge${waterStreak.isFull ? ' is-full' : ''}`} borderRadius="full" px="3" py="2" justify="space-between" aria-label={waterStreak.displayLabel}>
+              <Text color="#102A43" fontWeight="900">{waterStreak.displayLabel}</Text>
+              <Text color="#2F9EEB" fontWeight="800" fontSize="sm">{waterStreak.progressPercent}%</Text>
             </HStack>
-            <Box mt="2" className={`bubble-streak-progress${bubbleStreak.isFull ? ' is-full' : ''}`} role="progressbar" aria-valuenow={bubbleStreak.progressPercent} aria-valuemin={0} aria-valuemax={100} aria-label={bubbleStreak.label}>
-              <Box className="bubble-streak-progress-fill" w={`${Math.max(4, bubbleStreak.progressPercent)}%`} />
+            <Box mt="2" className={`bubble-streak-progress${waterStreak.isFull ? ' is-full' : ''}`} role="progressbar" aria-valuenow={waterStreak.progressPercent} aria-valuemin={0} aria-valuemax={100} aria-label={waterStreak.displayLabel}>
+              <Box className="bubble-streak-progress-fill" w={`${Math.max(4, waterStreak.progressPercent)}%`} />
             </Box>
           </Box>
         </Box>

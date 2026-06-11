@@ -2,7 +2,7 @@ import { useMemo, useRef } from 'react';
 import { Box, Image, type BoxProps } from '@chakra-ui/react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import { getDailyRewardState, getUnifiedBubbleStreak } from '../../lib/p-english/daily-rewards';
+import { getDailyRewardState, getWaterStreak } from '../../lib/p-english/daily-rewards';
 import { getOceanMascotPose } from '../../lib/p-english/oceanAssets';
 
 if (typeof window !== 'undefined') gsap.registerPlugin(useGSAP);
@@ -16,7 +16,7 @@ export type PooSwimLayerProps = Omit<BoxProps, 'children'> & {
 function getSafeStreak(streak?: number) {
   if (typeof streak === 'number' && Number.isFinite(streak)) return Math.max(0, streak);
   try {
-    return getUnifiedBubbleStreak(getDailyRewardState()).current;
+    return getWaterStreak(getDailyRewardState()).current;
   } catch {
     return 0;
   }

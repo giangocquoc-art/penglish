@@ -16,12 +16,12 @@ import { LessonReflexPractice } from '../components/practice/LessonReflexPractic
 import { LessonSpeedPractice } from '../components/practice/LessonSpeedPractice';
 import { LessonTypingPractice } from '../components/practice/LessonTypingPractice';
 import { LearningHeartsBadge } from '../components/learning/LearningHeartsBadge';
-import { getLearningHeartsState, getLockRemainingText, isLearningLocked, LEARNING_HEARTS_UPDATED_EVENT, type LearningHeartsState } from '../lib/p-english/learning-hearts';
+import { getLearningHeartsState, getLockRemainingText, isLearningLocked, LEARNING_HEARTS_UPDATED_EVENT, OUT_OF_BUBBLES_MESSAGE, type LearningHeartsState } from '../lib/p-english/learning-hearts';
 import { getLessonById } from '../lib/p-english/lesson-content-data';
 import { getAvailableLessonProgressModes, type LessonProgressMode } from '../lib/p-english/lesson-progress';
 import { getUnifiedPracticeContentDepth } from '../lib/p-english/unifiedLessonEngine';
 import { LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
-import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbleStreak } from '../lib/p-english/daily-rewards';
+import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getWaterStreak } from '../lib/p-english/daily-rewards';
 import { getLearningLoopSnapshot, LEARNING_LOOP_UPDATED_EVENT, resolveLearningLoopMistake, type LearningLoopMistakeRecord, type LearningLoopWordRecord } from '../lib/p-english/learning-loop';
 import { getFoundation48DayPath, FOUNDATION48_BASE_PATH } from '../features/foundation48/foundation48Data';
 
@@ -224,9 +224,9 @@ function LearningLockedScreen({ lessonId, state }: { lessonId: string | null; st
     <OceanPageShell variant="vocab" overlayStrength="medium" minH="calc(100vh - 72px)" px="6" py="8" pb={{ base: '28', lg: '8' }}>
       <Box maxW="760px" mx="auto" bg="rgba(255,255,255,0.88)" backdropFilter="blur(16px)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p="8" boxShadow="0 18px 45px rgba(31, 111, 214, 0.10)">
         <LearningHeartsBadge />
-        <Text mt="6" fontSize="3xl" fontWeight="700" color="#1F6FD6">Đang hồi bọt biển</Text>
+        <Text mt="6" fontSize="3xl" fontWeight="700" color="#1F6FD6">Hết bọt biển</Text>
         <Text mt="3" color="#334155" fontWeight="700">
-          Hết bọt biển rồi, nghỉ một chút để hồi lại nhé. Các tính năng học sẽ mở lại sau {getLockRemainingText(state)}.
+          {OUT_OF_BUBBLES_MESSAGE}
         </Text>
         <Text mt="2" color="#64748B">Bọt biển sẽ phục hồi sau {getLockRemainingText(state)}.</Text>
         <HStack mt="6" wrap="wrap" position="relative">
@@ -392,7 +392,7 @@ export function PracticePage() {
   const [stats, setStats] = useState<Stats>({});
   const [picked, setPicked] = useState<string | null>(null);
   const [heartsState, setHeartsState] = useState<LearningHeartsState>(() => getLearningHeartsState());
-  const [bubbleStreakCurrent, setBubbleStreakCurrent] = useState(() => getUnifiedBubbleStreak(getDailyRewardState()).current);
+  const [waterStreakCurrent, setWaterStreakCurrent] = useState(() => getWaterStreak(getDailyRewardState()).current);
   const { whaleMood, triggerWhaleMood } = useWhaleMoodController('idle');
   const [learningLoopSnapshot, setLearningLoopSnapshot] = useState(() => getLearningLoopSnapshot());
   const [pooReviewStage, setPooReviewStage] = useState<PooReviewStage>('idle');
@@ -439,7 +439,7 @@ export function PracticePage() {
   }, []);
 
   useEffect(() => {
-    const refreshBubbleStreak = () => setBubbleStreakCurrent(getUnifiedBubbleStreak(getDailyRewardState()).current);
+    const refreshBubbleStreak = () => setWaterStreakCurrent(getWaterStreak(getDailyRewardState()).current);
     refreshBubbleStreak();
     window.addEventListener('focus', refreshBubbleStreak);
     window.addEventListener('storage', refreshBubbleStreak);
@@ -476,7 +476,7 @@ export function PracticePage() {
 
   const renderWithStudyWhale = (content: ReactNode, placement: WhaleCompanionPlacement = 'hidden-mobile') => (
     <Box position="relative" isolation="isolate">
-      <WhaleStudyCompanion mood={whaleMood} placement={placement} streak={bubbleStreakCurrent} />
+      <WhaleStudyCompanion mood={whaleMood} placement={placement} streak={waterStreakCurrent} />
       {content}
     </Box>
   );

@@ -3,7 +3,8 @@ import { Box, Button, Circle, Flex, HStack, Icon, SimpleGrid, Tag, TagLabel, Tex
 import { Link } from 'react-router-dom';
 import { BookOpen, Compass, Mic2, Sparkles, Waves } from 'lucide-react';
 import { GlassPanel, OCEAN_TOKENS } from '../components/p-english/OceanBackdrop';
-import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbleStreak, type DailyRewardState } from '../lib/p-english/daily-rewards';
+import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbles, getWaterStreak, type DailyRewardState } from '../lib/p-english/daily-rewards';
+import { LEARNING_HEARTS_UPDATED_EVENT } from '../lib/p-english/learning-hearts';
 import { LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
 import { createCardEntrance, createCorrectAnswerBurst, killTimeline } from '../lib/animations/gsap-utils';
 import { getLearningSummary, type LearningSummary } from '../lib/p-english/learning-summary';
@@ -135,7 +136,8 @@ export function HomePage() {
   const dailyTarget = useMemo(() => getDailyFoundation48Target(), [progressVersion]);
   const todayProgress = useMemo(() => Math.min(100, Math.round((rewardState.completedToday.length / DAILY_GOAL_COUNT) * 100)), [rewardState.completedToday.length]);
   const todayStatus = dailyTarget.status === 'Hoàn thành' || dailyTarget.completedToday || rewardState.completedToday.length > 0 ? 'Hoàn thành' : dailyTarget.status;
-  const bubbleStreak = useMemo(() => getUnifiedBubbleStreak(rewardState), [rewardState]);
+  const bubbles = useMemo(() => getUnifiedBubbles(rewardState), [rewardState]);
+  const waterStreak = useMemo(() => getWaterStreak(rewardState), [rewardState]);
 
   const dailyTasks: DailyTask[] = useMemo(() => [
     {
@@ -188,12 +190,14 @@ export function HomePage() {
     window.addEventListener('storage', refreshProgress);
     window.addEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshProgress);
     window.addEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshProgress);
+    window.addEventListener(LEARNING_HEARTS_UPDATED_EVENT, refreshProgress);
     window.addEventListener(FOUNDATION48_PROGRESS_UPDATED_EVENT, refreshProgress);
     return () => {
       window.removeEventListener('focus', refreshProgress);
       window.removeEventListener('storage', refreshProgress);
       window.removeEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshProgress);
       window.removeEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshProgress);
+      window.removeEventListener(LEARNING_HEARTS_UPDATED_EVENT, refreshProgress);
       window.removeEventListener(FOUNDATION48_PROGRESS_UPDATED_EVENT, refreshProgress);
     };
   }, []);
@@ -253,7 +257,7 @@ export function HomePage() {
 
       <SimpleGrid columns={{ base: 2, md: 3 }} gap={{ base: '2', md: '3' }} mb={{ base: '3', md: '4' }} data-testid="home-simple-progress">
         <Box ref={pulseRef} gridColumn={{ base: 'span 2', md: 'auto' }}><MiniProgressPill label="Hôm nay" value={todayStatus} tone={todayProgress >= 100 || dailyTarget.completedToday ? 'green' : 'blue'} /></Box>
-        <MiniProgressPill label="Bọt biển" value={`${bubbleStreak.current}/${bubbleStreak.max}`} tone="orange" />
+        <MiniProgressPill label="Bọt biển" value={`${bubbles.current}/${bubbles.max}`} tone="orange" />
         <MiniProgressPill label="Thời lượng" value={dailyTarget.duration} tone="blue" />
       </SimpleGrid>
 
@@ -276,15 +280,15 @@ export function HomePage() {
               ))}
             </HStack>
             <SimpleGrid columns={2} gap={{ base: '2', sm: '2.5' }} mt={{ base: '2.5', sm: '3' }} display="grid" data-testid="home-summary-progress-grid">
-              <MiniProgressPill label="Chuỗi bọt biển" value={bubbleStreak.label} tone="orange" />
+              <MiniProgressPill label="Chuỗi nước" value={waterStreak.label} tone="blue" />
               <MiniProgressPill label="Ngày xong" value={`${dailyTarget.completedDays}/48`} tone={dailyTarget.completedDays > 0 ? 'green' : 'blue'} />
               <MiniProgressPill label="Từ cần ôn" value={learningSummary.vocabularyDueCount > 0 ? `${learningSummary.vocabularyDueCount}` : '0'} tone={learningSummary.vocabularyDueCount > 0 ? 'orange' : 'blue'} />
               <MiniProgressPill label="Trạng thái" value={todayStatus} tone={todayStatus === 'Hoàn thành' ? 'green' : 'blue'} />
             </SimpleGrid>
             <Box mt="3" display={{ base: 'none', md: 'block' }}>
-              <Text mb="2" color={OCEAN_TOKENS.muted} fontWeight="850" fontSize="sm">Nhịp chuỗi bọt biển</Text>
-              <Box className={`bubble-streak-progress${bubbleStreak.isFull ? ' is-full' : ''}`} role="progressbar" aria-valuenow={bubbleStreak.progressPercent} aria-valuemin={0} aria-valuemax={100} aria-label={bubbleStreak.label}>
-                <Box className="bubble-streak-progress-fill" w={`${Math.max(4, bubbleStreak.progressPercent)}%`} />
+              <Text mb="2" color={OCEAN_TOKENS.muted} fontWeight="850" fontSize="sm">Nhịp chuỗi nước</Text>
+              <Box className={`bubble-streak-progress${waterStreak.isFull ? ' is-full' : ''}`} role="progressbar" aria-valuenow={waterStreak.progressPercent} aria-valuemin={0} aria-valuemax={100} aria-label={waterStreak.displayLabel}>
+                <Box className="bubble-streak-progress-fill" w={`${Math.max(4, waterStreak.progressPercent)}%`} />
               </Box>
             </Box>
           </GlassPanel>

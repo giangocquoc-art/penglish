@@ -1,6 +1,6 @@
 import { Box, Flex, HStack, Icon, SimpleGrid, Text, VStack } from '@chakra-ui/react';
 import { CheckCircle2, Compass, PlayCircle, RotateCcw, Waves } from 'lucide-react';
-import { getDailyRewardState, getUnifiedBubbleStreak } from '../../lib/p-english/daily-rewards';
+import { getDailyRewardState, getWaterStreak } from '../../lib/p-english/daily-rewards';
 import type { Foundation48ProgressState } from './foundation48Types';
 
 type Summary = Foundation48ProgressState & { started: number; completed: number; totalDays: number; percent: number; mistakesDue?: number };
@@ -16,7 +16,7 @@ export function Foundation48ProgressSummary({
   audioDays: number;
   sourceReady: boolean;
 }) {
-  const bubbleStreak = getUnifiedBubbleStreak(getDailyRewardState());
+  const waterStreak = getWaterStreak(getDailyRewardState());
 
   return (
     <Box className="penglish-glass-card" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3', md: '4' }} bg="rgba(255,255,255,0.78)" mb="4">
@@ -39,7 +39,7 @@ export function Foundation48ProgressSummary({
         <Metric icon={CheckCircle2} label="Hoàn thành" value={`${progress.completed}/48`} />
         <Metric icon={Compass} label="Chặng hiện tại" value={currentStageTitle} />
         <Metric icon={PlayCircle} label="Tiếp tục" value={`Ngày ${nextDay}`} />
-        <Metric icon={Waves} label="Chuỗi bọt biển" value={bubbleStreak.label} />
+        <Metric icon={Waves} label="Chuỗi nước" value={waterStreak.label} />
         <Metric icon={RotateCcw} label="Cần ôn" value={`${progress.mistakesDue || 0} lỗi`} />
       </SimpleGrid>
     </Box>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Box } from '@chakra-ui/react';
-import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbleStreak } from '../../lib/p-english/daily-rewards';
+import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getWaterStreak } from '../../lib/p-english/daily-rewards';
 import { AdaptiveWhaleScene, type WhaleMood } from './AdaptiveWhaleStreak';
 
 export type WhaleCompanionPlacement = 'bottom-right' | 'card-corner' | 'floating-safe' | 'hidden-mobile';
@@ -41,12 +41,12 @@ const placementStyles: Record<WhaleCompanionPlacement, Record<string, unknown>> 
 export function WhaleStudyCompanion({ mood = 'idle', placement = 'floating-safe', streak: streakProp }: WhaleStudyCompanionProps) {
   const styles = placementStyles[placement];
   const isCardCorner = placement === 'card-corner';
-  const [localStreak, setLocalStreak] = useState(() => getUnifiedBubbleStreak(getDailyRewardState()).current);
+  const [localStreak, setLocalStreak] = useState(() => getWaterStreak(getDailyRewardState()).current);
   const streak = streakProp ?? localStreak;
 
   useEffect(() => {
     if (streakProp !== undefined || typeof window === 'undefined') return undefined;
-    const refreshStreak = () => setLocalStreak(getUnifiedBubbleStreak(getDailyRewardState()).current);
+    const refreshStreak = () => setLocalStreak(getWaterStreak(getDailyRewardState()).current);
     window.addEventListener('focus', refreshStreak);
     window.addEventListener('storage', refreshStreak);
     window.addEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshStreak);

@@ -62,7 +62,7 @@ export function WhaleCoachCard({
         </HStack>
         <Text color={COLORS.text} fontSize={{ base: 'lg', md: 'xl' }} fontWeight="900" lineHeight="1.45">{line}</Text>
         <Text mt="3" color={COLORS.muted} fontWeight="750" lineHeight="1.7">
-          {streak > 0 ? `Chuỗi bọt biển đang rất ổn. ` : 'Bắt đầu nhẹ hôm nay là đủ. '}
+          {streak > 0 ? `Chuỗi nước đang rất ổn. ` : 'Bắt đầu nhẹ hôm nay là đủ. '}
           Mục tiêu tự tin: {confidenceGoal}
           {weakSkill ? ` Kỹ năng nên chạm tiếp: ${weakSkill}.` : ''}
         </Text>

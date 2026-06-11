@@ -12,6 +12,7 @@ import type { Foundation48DeepLesson } from './foundation48DeepLessons';
 import { getFoundation48CachedDeepLesson, getFoundation48DeepLesson, preloadFoundation48DeepLesson } from './foundation48DeepLessonResolver';
 import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48DayProgress, markFoundation48Completed, markFoundation48Started, markFoundation48StepCompleted, recordFoundation48ChallengeResult } from './foundation48Progress';
 import type { Foundation48Challenge, Foundation48Day, Foundation48LessonStep } from './foundation48Types';
+import { getLearningHeartsState, isLearningLocked, LEARNING_HEARTS_UPDATED_EVENT, loseHeart, OUT_OF_BUBBLES_MESSAGE, type LearningHeartsState } from '../../lib/p-english/learning-hearts';
 
 const COLORS = { text: '#102A43', muted: '#52667A', blue: '#1F6FD6', border: '#BAE6FD', green: '#16A34A', coral: '#F9735B' };
 
@@ -556,6 +557,7 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange, onContinue }: { da
   const [feedback, setFeedback] = useState<{ correct: boolean; message: string } | null>(null);
   const [listening, setListening] = useState(false);
   const [selfPracticed, setSelfPracticed] = useState(false);
+  const [heartsState, setHeartsState] = useState<LearningHeartsState>(() => getLearningHeartsState());
   const isChoiceChallenge = challenge.type === 'multiple-choice' || challenge.type === 'listen-and-choose';
   const progressLabel = getChallengeProgressLabel(challenge);
   const fillBlankInputRef = useRef<HTMLInputElement | null>(null);
@@ -574,12 +576,33 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange, onContinue }: { da
     return () => window.clearTimeout(focusTimer);
   }, [challenge.id, challenge.type, feedback]);
 
+  useEffect(() => {
+    const refreshHearts = () => setHeartsState(getLearningHeartsState());
+    refreshHearts();
+    window.addEventListener('focus', refreshHearts);
+    window.addEventListener(LEARNING_HEARTS_UPDATED_EVENT, refreshHearts);
+    return () => {
+      window.removeEventListener('focus', refreshHearts);
+      window.removeEventListener(LEARNING_HEARTS_UPDATED_EVENT, refreshHearts);
+    };
+  }, []);
+
   const currentAnswer = challenge.type === 'sentence-order' ? selectedTokens.join(' ') : answer;
 
   function submit(value = currentAnswer) {
     if (!value.trim()) return;
+    if (isLearningLocked(heartsState)) {
+      setFeedback({ correct: false, message: OUT_OF_BUBBLES_MESSAGE });
+      onReadyChange(false);
+      return;
+    }
+
     const correct = normalizeAnswer(value) === normalizeAnswer(challenge.answer);
     const wrongMessage = challenge.type === 'sentence-order' ? 'Thử đặt chủ ngữ trước nhé.' : 'Gần đúng rồi, xem lại gợi ý nhé.';
+    if (!correct) {
+      const nextHearts = loseHeart('foundation48-challenge-wrong');
+      setHeartsState(nextHearts);
+    }
     setFeedback({ correct, message: correct ? 'Đúng rồi!' : wrongMessage });
     recordFoundation48ChallengeResult(dayNumber, challenge, correct, value || '(chưa trả lời)');
     onReadyChange(correct);
@@ -645,7 +668,7 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange, onContinue }: { da
           <SimpleGrid columns={{ base: 1, md: 2 }} gap="3" data-testid="foundation48-choice-options">
             {(challenge.options || []).map((option, index) => {
               const selected = answer === option;
-              return <Button key={option} whiteSpace="normal" h="auto" minH="56px" py="3.5" px="4" justifyContent="flex-start" textAlign="left" borderRadius="2xl" border="1px solid" borderColor={selected ? '#7DD3FC' : COLORS.border} bg={selected ? COLORS.blue : 'white'} color={selected ? 'white' : COLORS.text} _hover={{ bg: selected ? '#185BB2' : '#EFF6FF' }} fontWeight="900" onClick={() => { setAnswer(option); submit(option); }} data-testid={`foundation48-answer-option-${index + 1}`}>{option}</Button>;
+              return <Button key={option} whiteSpace="normal" h="auto" minH="56px" py="3.5" px="4" justifyContent="flex-start" textAlign="left" borderRadius="2xl" border="1px solid" borderColor={selected ? '#7DD3FC' : COLORS.border} bg={selected ? COLORS.blue : 'white'} color={selected ? 'white' : COLORS.text} _hover={{ bg: selected ? '#185BB2' : '#EFF6FF' }} fontWeight="900" onClick={() => { setAnswer(option); submit(option); }} isDisabled={isLearningLocked(heartsState)} data-testid={`foundation48-answer-option-${index + 1}`}>{option}</Button>;
             })}
           </SimpleGrid>
         ) : null}
@@ -653,8 +676,8 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange, onContinue }: { da
         {challenge.type === 'fill-blank' ? (
           <VStack align="stretch" gap="2">
             <Flex gap="3" align={{ base: 'stretch', sm: 'center' }} direction={{ base: 'column', sm: 'row' }}>
-              <Input ref={fillBlankInputRef} value={answer} onChange={(event) => { setAnswer(event.target.value); if (feedback) setFeedback(null); onReadyChange(false); }} placeholder="Nhập đáp án..." bg="white" borderColor={COLORS.border} borderRadius="full" fontWeight="850" minH="48px" onKeyDown={handleFillBlankKeyDown} data-testid="foundation48-fill-answer" />
-              <Button bg={COLORS.blue} color="white" borderRadius="full" minH="48px" onClick={() => submit()} isDisabled={!answer.trim()} flexShrink={0}>Poo xem giúp</Button>
+              <Input ref={fillBlankInputRef} value={answer} onChange={(event) => { setAnswer(event.target.value); if (feedback) setFeedback(null); onReadyChange(false); }} placeholder="Nhập đáp án..." bg="white" borderColor={COLORS.border} borderRadius="full" fontWeight="850" minH="48px" onKeyDown={handleFillBlankKeyDown} isDisabled={isLearningLocked(heartsState)} data-testid="foundation48-fill-answer" />
+              <Button bg={COLORS.blue} color="white" borderRadius="full" minH="48px" onClick={() => submit()} isDisabled={!answer.trim() || isLearningLocked(heartsState)} flexShrink={0}>Poo xem giúp</Button>
             </Flex>
             <Text fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted} fontWeight="750">Mẹo: Nhấn Enter để kiểm tra, đúng rồi thì Enter lần nữa để đi tiếp.</Text>
           </VStack>
@@ -669,11 +692,11 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange, onContinue }: { da
               </Flex>
             </Box>
             <Flex gap="2" wrap="wrap">
-              {(challenge.tokens || []).map((token, index) => <Button key={`${token}-${index}`} minH="42px" borderRadius="full" variant="outline" borderColor={COLORS.border} bg="white" color={COLORS.text} fontWeight="900" onClick={() => setSelectedTokens((tokens) => [...tokens, token])} data-testid={`foundation48-token-${index + 1}`}>{token}</Button>)}
+              {(challenge.tokens || []).map((token, index) => <Button key={`${token}-${index}`} minH="42px" borderRadius="full" variant="outline" borderColor={COLORS.border} bg="white" color={COLORS.text} fontWeight="900" onClick={() => setSelectedTokens((tokens) => [...tokens, token])} isDisabled={isLearningLocked(heartsState)} data-testid={`foundation48-token-${index + 1}`}>{token}</Button>)}
             </Flex>
             <HStack gap="2" wrap="wrap">
               <Button leftIcon={<Icon as={RotateCcw} />} variant="outline" borderColor={COLORS.border} borderRadius="full" minH="44px" onClick={() => { setSelectedTokens([]); setFeedback(null); }}>Làm lại</Button>
-              <Button bg={COLORS.blue} color="white" borderRadius="full" minH="44px" onClick={() => submit()} data-testid="foundation48-sentence-check">Poo xem giúp</Button>
+              <Button bg={COLORS.blue} color="white" borderRadius="full" minH="44px" onClick={() => submit()} isDisabled={!selectedTokens.length || isLearningLocked(heartsState)} data-testid="foundation48-sentence-check">Poo xem giúp</Button>
             </HStack>
           </VStack>
         ) : null}
@@ -681,7 +704,7 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange, onContinue }: { da
         {challenge.type === 'speaking-repeat' ? (
           <VStack align="stretch" gap="3">
             <Flex gap="2.5" wrap="wrap" direction={{ base: 'column', sm: 'row' }}>
-              <Button leftIcon={<Icon as={Mic} />} bg={COLORS.blue} color="white" borderRadius="full" minH="48px" onClick={startSpeechRecognition} isLoading={listening} loadingText="Đang nghe">Nói để Poo nghe</Button>
+              <Button leftIcon={<Icon as={Mic} />} bg={COLORS.blue} color="white" borderRadius="full" minH="48px" onClick={startSpeechRecognition} isLoading={listening} loadingText="Đang nghe" isDisabled={isLearningLocked(heartsState)}>Nói để Poo nghe</Button>
               <Button leftIcon={<Icon as={selfPracticed ? CheckCircle2 : Mic} />} variant={selfPracticed ? 'solid' : 'outline'} colorScheme={selfPracticed ? 'green' : undefined} borderColor={COLORS.border} borderRadius="full" minH="48px" onClick={markSelfPracticed} data-testid="foundation48-speaking-self-practiced">{selfPracticed ? 'Đã nói xong' : 'Tự đánh dấu đã nói'}</Button>
             </Flex>
             {answer ? <Text color={COLORS.muted} fontWeight="800">Bạn nói/nhập: {answer}</Text> : null}

@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Home, BookOpen, Dumbbell, Moon, Sun, Coins, ChevronRight, Waves, LogOut, RefreshCw } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 import { LearningHeartsBadge } from './learning/LearningHeartsBadge';
-import { BubbleStreakBadge } from './streak/BubbleStreakBadge';
+import { WaterStreakBadge } from './streak/BubbleStreakBadge';
 import { OCEAN_TOKENS } from './p-english/OceanBackdrop';
 import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState } from '../lib/p-english/daily-rewards';
 import { LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
@@ -114,7 +114,7 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
           border="1px solid"
           borderColor={OCEAN_TOKENS.border}
         >
-          <BubbleStreakBadge state={rewardState} compact showLabel={false} testId="sidebar-bubbles-badge" />
+          <WaterStreakBadge state={rewardState} compact testId="sidebar-water-streak-badge" />
           <HStack gap="1.5" px="2" py="1" borderRadius="full" bg={OCEAN_TOKENS.warm} color={OCEAN_TOKENS.text}>
             <Icon as={Coins} boxSize="4" color="#F59E0B" />
             <Text fontWeight="850" fontSize="sm">{user?.coin ?? 0}</Text>

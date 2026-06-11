@@ -101,3 +101,12 @@ screenshots/
 reports/
 frames/
 *.log
+
+.env.local
+.env*.local
+node_modules
+dist
+build
+.vite
+.vercel
+.DS_Store

@@ -22,7 +22,7 @@ import { OceanPageShell } from '../components/p-english/OceanPageShell';
 import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48Progress, getFoundation48ProgressSummary } from '../features/foundation48/foundation48Progress';
 import { foundation48Days, foundation48Stages, getFoundation48DayPath } from '../features/foundation48/foundation48Data';
 import type { Foundation48Day, Foundation48ProgressDay } from '../features/foundation48/foundation48Types';
-import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbleStreak, type UnifiedBubbleStreak } from '../lib/p-english/daily-rewards';
+import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbles, getWaterStreak, type UnifiedBubbleStreak, type UnifiedWaterStreak } from '../lib/p-english/daily-rewards';
 
 const COLORS = {
   text: '#0F172A',
@@ -92,7 +92,8 @@ export function LearningPathPage() {
   const progress = useMemo(() => getFoundation48Progress(), [progressVersion]);
   const summary = useMemo(() => getFoundation48ProgressSummary(foundation48Days.length), [progressVersion]);
   const currentDayNumber = useMemo(() => getCurrentDayNumber(progress.days), [progress.days]);
-  const bubbleStreak = useMemo(() => getUnifiedBubbleStreak(getDailyRewardState()), [progressVersion]);
+  const bubbles = useMemo(() => getUnifiedBubbles(getDailyRewardState()), [progressVersion]);
+  const waterStreak = useMemo(() => getWaterStreak(getDailyRewardState()), [progressVersion]);
   const availableThroughDay = Math.max(1, currentDayNumber, progress.lastDayOpened || 1);
   const currentDay = foundation48Days.find((day) => day.dayNumber === currentDayNumber) ?? foundation48Days[0];
   const roadmapDays = useMemo<RoadmapDay[]>(() => foundation48Days.map((day) => {
@@ -133,11 +134,11 @@ export function LearningPathPage() {
   return (
     <OceanPageShell data-testid="foundation48-learning-path-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5', xl: '6' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 156px)', lg: '8' }} overflowX="hidden">
       <Box maxW="1180px" mx="auto" minW="0">
-        <RoadmapHero completed={summary.completed} total={summary.totalDays} bubbleStreak={bubbleStreak} currentDay={currentDay} percent={summary.percent} />
+        <RoadmapHero completed={summary.completed} total={summary.totalDays} bubbles={bubbles} waterStreak={waterStreak} currentDay={currentDay} percent={summary.percent} />
 
         <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: '2.5', md: '3' }} mb={{ base: '3', md: '4' }} data-testid="foundation48-path-summary">
           <SummaryCard icon={CheckCircle2} label="Ngày đã xong" value={`${summary.completed}/${summary.totalDays}`} tone="green" />
-          <SummaryCard icon={Waves} label="Chuỗi bọt biển" value={bubbleStreak.label} tone="amber" />
+          <SummaryCard icon={Waves} label="Chuỗi nước" value={waterStreak.label} tone="amber" />
           <SummaryCard icon={Sparkles} label="Ngày hiện tại" value={`Ngày ${currentDay.dayNumber}`} tone="blue" />
         </SimpleGrid>
 
@@ -217,7 +218,7 @@ export function LearningPathPage() {
   );
 }
 
-function RoadmapHero({ completed, total, bubbleStreak, currentDay, percent }: { completed: number; total: number; bubbleStreak: UnifiedBubbleStreak; currentDay: Foundation48Day; percent: number }) {
+function RoadmapHero({ completed, total, bubbles, waterStreak, currentDay, percent }: { completed: number; total: number; bubbles: UnifiedBubbleStreak; waterStreak: UnifiedWaterStreak; currentDay: Foundation48Day; percent: number }) {
   return (
     <Box className="penglish-glass-card" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#7DD3FC" borderRadius="3xl" p={{ base: '4', md: '6' }} mb={{ base: '3', md: '4' }} overflow="hidden" position="relative" boxShadow="0 24px 64px rgba(31,111,214,0.13)" backdropFilter="blur(14px) saturate(1.1)" data-testid="foundation48-roadmap-hero">
       <Box position="absolute" inset="0" bg="radial-gradient(circle at 88% 12%, rgba(91,188,235,0.18), transparent 28%), radial-gradient(circle at 8% 100%, rgba(34,197,94,0.12), transparent 28%)" pointerEvents="none" />
@@ -226,7 +227,8 @@ function RoadmapHero({ completed, total, bubbleStreak, currentDay, percent }: { 
           <HStack wrap="wrap" gap="2">
             <Tag borderRadius="full" bg="#ECFDF5" color={COLORS.green} fontWeight="950">Foundation48</Tag>
             <Tag borderRadius="full" bg="#EFF6FF" color={COLORS.blue} fontWeight="950">{completed}/{total} ngày</Tag>
-            <Tag className={`bubble-streak-badge${bubbleStreak.isFull ? ' is-full' : ''}`} borderRadius="full" bg="#FFF7ED" color="#B45309" fontWeight="950">{bubbleStreak.label}</Tag>
+            <Tag className={`bubble-streak-badge${waterStreak.isFull ? ' is-full' : ''}`} borderRadius="full" bg="#EFF6FF" color={COLORS.blue} fontWeight="950">{waterStreak.displayLabel}</Tag>
+            <Tag className={`bubble-streak-badge${bubbles.isFull ? ' is-full' : ''}`} borderRadius="full" bg="#FFF7ED" color="#B45309" fontWeight="950">{bubbles.label}</Tag>
           </HStack>
           <Box minW="0">
             <Text color={COLORS.blue} fontSize="xs" fontWeight="950" letterSpacing="0.12em" textTransform="uppercase">Lộ trình lấy gốc tiếng Anh</Text>

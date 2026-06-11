@@ -6,6 +6,7 @@ import {
   getLockRemainingText,
   isLearningLocked,
   LEARNING_HEARTS_UPDATED_EVENT,
+  OUT_OF_BUBBLES_MESSAGE,
   type LearningHeartsState,
 } from '../../lib/p-english/learning-hearts';
 
@@ -45,7 +46,7 @@ export function LearningHeartsBadge({ compact = false }: { compact?: boolean }) 
       <Flex align="center" justify="space-between" gap="2" position="relative">
         <VStack align="start" gap="0" minW="0">
           <Text fontSize={compact ? '10px' : 'xs'} fontWeight="700" color={locked ? '#64758A' : '#1F6FD6'} textTransform="uppercase" letterSpacing="0.04em">
-            {locked ? 'Đang hồi bọt biển' : 'Bọt biển'}
+            Bọt biển
           </Text>
           <Text fontSize={compact ? 'xs' : 'sm'} fontWeight="700" color="#102A43">
             {state.heartsLeft}/{state.maxHearts}
@@ -61,7 +62,7 @@ export function LearningHeartsBadge({ compact = false }: { compact?: boolean }) 
 
       {locked ? (
         <Text mt="2" fontSize="11px" fontWeight="700" color="#52667A" lineHeight="1.25" position="relative">
-          Bọt biển sẽ phục hồi sau {getLockRemainingText(state)}
+          {OUT_OF_BUBBLES_MESSAGE} ({getLockRemainingText(state)})
         </Text>
       ) : null}
     </Box>

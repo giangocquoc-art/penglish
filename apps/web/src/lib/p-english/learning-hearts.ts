@@ -3,14 +3,18 @@ export type LearningHeartsState = {
   heartsLeft: number;
   wrongCountToday: number;
   vietnamDayKey: string;
+  /** @deprecated Older midnight lock field. Bubbles now recover one-by-one every 30 minutes. */
   lockedUntilVietnamMidnight?: string;
   lastUpdatedAt: string;
+  nextRecoveryAt?: string;
 };
 
 export const MAX_DAILY_HEARTS = 5;
 export const VIETNAM_TIME_ZONE = 'Asia/Ho_Chi_Minh';
 export const LEARNING_HEARTS_STORAGE_KEY = 'p-english:daily-hearts';
 export const LEARNING_HEARTS_UPDATED_EVENT = 'p-english:hearts-updated';
+export const BUBBLE_RECOVERY_MS = 30 * 60 * 1000;
+export const OUT_OF_BUBBLES_MESSAGE = 'Bạn đã hết bọt biển rồi. Nghỉ một chút nhé, Poo sẽ hồi 1 bọt biển sau 30 phút.';
 
 function canUseLocalStorage() {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
@@ -51,9 +55,6 @@ export function getVietnamDayKey(date = new Date()): string {
 
 export function getNextVietnamMidnight(date = new Date()): string {
   const parts = toVietnamParts(date);
-  // Vietnam currently uses UTC+7 without daylight saving time. We intentionally compute
-  // the next Vietnam calendar midnight as UTC date parts minus seven hours, avoiding
-  // local machine timezone and avoiding external date libraries.
   const nextVietnamMidnightAsUtcMs = Date.UTC(parts.year, parts.month - 1, parts.day + 1, 0, 0, 0) - 7 * 60 * 60 * 1000;
   return new Date(nextVietnamMidnightAsUtcMs).toISOString();
 }
@@ -68,23 +69,58 @@ function defaultState(now = new Date()): LearningHeartsState {
   };
 }
 
+function normalizeBubbleCount(value: unknown, fallback = MAX_DAILY_HEARTS) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return fallback;
+  return Math.max(0, Math.min(MAX_DAILY_HEARTS, Math.floor(numeric)));
+}
+
 function normalizeState(input: Partial<LearningHeartsState> | null | undefined, now: Date): LearningHeartsState {
   const fallback = defaultState(now);
   if (!input || typeof input !== 'object') return fallback;
 
-  return {
+  const lastUpdatedAt = typeof input.lastUpdatedAt === 'string' && !Number.isNaN(new Date(input.lastUpdatedAt).getTime()) ? input.lastUpdatedAt : fallback.lastUpdatedAt;
+  const base: LearningHeartsState = {
     maxHearts: MAX_DAILY_HEARTS,
-    heartsLeft: Math.max(0, Math.min(MAX_DAILY_HEARTS, Number(input.heartsLeft ?? MAX_DAILY_HEARTS))),
+    heartsLeft: normalizeBubbleCount(input.heartsLeft, MAX_DAILY_HEARTS),
     wrongCountToday: Math.max(0, Number(input.wrongCountToday ?? 0)),
     vietnamDayKey: typeof input.vietnamDayKey === 'string' ? input.vietnamDayKey : fallback.vietnamDayKey,
-    lockedUntilVietnamMidnight: typeof input.lockedUntilVietnamMidnight === 'string' ? input.lockedUntilVietnamMidnight : undefined,
-    lastUpdatedAt: typeof input.lastUpdatedAt === 'string' ? input.lastUpdatedAt : fallback.lastUpdatedAt,
+    lockedUntilVietnamMidnight: undefined,
+    lastUpdatedAt,
+  };
+
+  return normalizeBubbles(base, now);
+}
+
+export function normalizeBubbles(state: LearningHeartsState, now = new Date()): LearningHeartsState {
+  if (state.heartsLeft >= MAX_DAILY_HEARTS) {
+    return {
+      ...state,
+      maxHearts: MAX_DAILY_HEARTS,
+      heartsLeft: MAX_DAILY_HEARTS,
+      lockedUntilVietnamMidnight: undefined,
+      nextRecoveryAt: undefined,
+    };
+  }
+
+  const lastUpdatedAt = typeof state.lastUpdatedAt === 'string' && !Number.isNaN(new Date(state.lastUpdatedAt).getTime()) ? state.lastUpdatedAt : now.toISOString();
+  const elapsed = Math.max(0, now.getTime() - new Date(lastUpdatedAt).getTime());
+  const recovered = Math.floor(elapsed / BUBBLE_RECOVERY_MS);
+  const heartsLeft = Math.min(MAX_DAILY_HEARTS, state.heartsLeft + recovered);
+  const recoveryBase = recovered > 0 ? new Date(new Date(lastUpdatedAt).getTime() + recovered * BUBBLE_RECOVERY_MS).toISOString() : lastUpdatedAt;
+
+  return {
+    ...state,
+    maxHearts: MAX_DAILY_HEARTS,
+    heartsLeft,
+    lockedUntilVietnamMidnight: undefined,
+    lastUpdatedAt: recoveryBase,
+    nextRecoveryAt: heartsLeft < MAX_DAILY_HEARTS ? new Date(new Date(recoveryBase).getTime() + BUBBLE_RECOVERY_MS).toISOString() : undefined,
   };
 }
 
 export function getLearningHeartsState(): LearningHeartsState {
   const now = new Date();
-  const currentVietnamDayKey = getVietnamDayKey(now);
 
   if (!canUseLocalStorage()) return defaultState(now);
 
@@ -92,22 +128,8 @@ export function getLearningHeartsState(): LearningHeartsState {
     const raw = window.localStorage.getItem(LEARNING_HEARTS_STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : null;
     const state = raw ? normalizeState(parsed, now) : defaultState(now);
-
-    if (state.vietnamDayKey !== currentVietnamDayKey) {
-      const reset = defaultState(now);
-      saveLearningHeartsState(reset);
-      return reset;
-    }
-
-    if (state.lockedUntilVietnamMidnight && now.getTime() >= new Date(state.lockedUntilVietnamMidnight).getTime()) {
-      const reset = defaultState(now);
-      saveLearningHeartsState(reset);
-      return reset;
-    }
-
-    const next = { ...state, lastUpdatedAt: now.toISOString() };
-    saveLearningHeartsState(next);
-    return next;
+    saveLearningHeartsState(state);
+    return state;
   } catch {
     return defaultState(now);
   }
@@ -125,14 +147,15 @@ export function saveLearningHeartsState(state: LearningHeartsState): boolean {
 }
 
 export function isLearningLocked(state: LearningHeartsState): boolean {
-  if (!state.lockedUntilVietnamMidnight) return false;
-  return Date.now() < new Date(state.lockedUntilVietnamMidnight).getTime();
+  return normalizeBubbles(state).heartsLeft <= 0;
 }
 
 export function getLockRemainingText(state: LearningHeartsState): string {
-  if (!state.lockedUntilVietnamMidnight) return 'sắp mở lại';
-  const remainingMs = new Date(state.lockedUntilVietnamMidnight).getTime() - Date.now();
-  if (!Number.isFinite(remainingMs) || remainingMs <= 60_000) return 'sắp mở lại';
+  const normalized = normalizeBubbles(state);
+  if (normalized.heartsLeft >= MAX_DAILY_HEARTS) return 'đã đầy bọt biển';
+  const nextRecoveryAt = normalized.nextRecoveryAt ?? new Date(new Date(normalized.lastUpdatedAt).getTime() + BUBBLE_RECOVERY_MS).toISOString();
+  const remainingMs = new Date(nextRecoveryAt).getTime() - Date.now();
+  if (!Number.isFinite(remainingMs) || remainingMs <= 60_000) return 'sắp hồi 1 bọt biển';
 
   const totalMinutes = Math.ceil(remainingMs / 60_000);
   const hours = Math.floor(totalMinutes / 60);
@@ -149,18 +172,17 @@ export function loseHeart(reason?: string): LearningHeartsState {
 
   const now = new Date();
   const heartsLeft = Math.max(0, current.heartsLeft - 1);
-  const next: LearningHeartsState = {
+  const next: LearningHeartsState = normalizeBubbles({
     ...current,
     heartsLeft,
     wrongCountToday: current.wrongCountToday + 1,
-    lastUpdatedAt: now.toISOString(),
-    lockedUntilVietnamMidnight: heartsLeft === 0 ? getNextVietnamMidnight(now) : current.lockedUntilVietnamMidnight,
-  };
+    lastUpdatedAt: heartsLeft < MAX_DAILY_HEARTS ? now.toISOString() : current.lastUpdatedAt,
+    lockedUntilVietnamMidnight: undefined,
+  }, now);
 
   saveLearningHeartsState(next);
   if (reason) {
-    // Kept for lightweight debugging without exposing a user-facing dev control.
-    console.debug?.('[P-English hearts] lost heart:', reason, next);
+    console.debug?.('[P-English bubbles] lost bubble:', reason, next);
   }
   dispatchHeartsUpdated();
   return next;

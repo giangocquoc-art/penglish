@@ -7,6 +7,7 @@ import { BubbleStreakBadge } from './streak/BubbleStreakBadge';
 import { MobileDrawerToggle } from './MobileDrawer';
 import { BottomNav } from './BottomNav';
 import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState } from '../lib/p-english/daily-rewards';
+import { LEARNING_HEARTS_UPDATED_EVENT } from '../lib/p-english/learning-hearts';
 import { LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
 import { OceanBackdrop, OCEAN_TOKENS } from './p-english/OceanBackdrop';
 
@@ -20,11 +21,13 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
     window.addEventListener('storage', refreshRewards);
     window.addEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshRewards);
     window.addEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshRewards);
+    window.addEventListener(LEARNING_HEARTS_UPDATED_EVENT, refreshRewards);
     return () => {
       window.removeEventListener('focus', refreshRewards);
       window.removeEventListener('storage', refreshRewards);
       window.removeEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshRewards);
       window.removeEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshRewards);
+      window.removeEventListener(LEARNING_HEARTS_UPDATED_EVENT, refreshRewards);
     };
   }, []);
 

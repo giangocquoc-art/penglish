@@ -6,7 +6,7 @@ import { ArrowLeft, BookOpen, CheckCircle2, Headphones, MessageCircle, Mic2, Pla
 import { Link, useParams } from 'react-router-dom';
 import { RevealAnswer } from '../components/lesson/RevealAnswer';
 import { LearningHeartsBadge } from '../components/learning/LearningHeartsBadge';
-import { getLearningHeartsState, getLockRemainingText, isLearningLocked, LEARNING_HEARTS_UPDATED_EVENT, type LearningHeartsState } from '../lib/p-english/learning-hearts';
+import { getLearningHeartsState, getLockRemainingText, isLearningLocked, LEARNING_HEARTS_UPDATED_EVENT, OUT_OF_BUBBLES_MESSAGE, type LearningHeartsState } from '../lib/p-english/learning-hearts';
 import { getLessonById, type QuizQuestion } from '../lib/p-english/lesson-content-data';
 import { calculateLessonProgressSummary, getAvailableLessonProgressModes, markLessonCompleted, markLessonStarted, markLessonStepCompleted, readLessonProgress, type LessonProgress } from '../lib/p-english/lesson-progress';
 import { getPracticeRecommendation } from '../lib/p-english/practiceRecommendationEngine';
@@ -380,8 +380,8 @@ function LearningLockedLessonNotice({ state }: { state: LearningHeartsState }) {
     <Box bg="#E8F4FF" border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" p="4" w="100%" maxW="560px">
       <HStack align="start" gap="3">
         <Box flex="1">
-          <Text color="#1F6FD6" fontWeight="700">Đang hồi bọt biển — mở lại sau {getLockRemainingText(state)}</Text>
-          <Text mt="1" color="#52667A" fontSize="sm">Hết bọt biển rồi, nghỉ một chút để hồi lại nhé. Bạn vẫn có thể đọc nội dung bài học.</Text>
+          <Text color="#1F6FD6" fontWeight="700">{OUT_OF_BUBBLES_MESSAGE}</Text>
+          <Text mt="1" color="#52667A" fontSize="sm">Bọt biển sẽ phục hồi sau {getLockRemainingText(state)}. Bạn vẫn có thể đọc nội dung bài học.</Text>
         </Box>
         <Box w="190px" display={{ base: 'none', sm: 'block' }}>
           <LearningHeartsBadge compact />

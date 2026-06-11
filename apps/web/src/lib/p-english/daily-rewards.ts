@@ -1,11 +1,29 @@
 export type LearningActivityType = 'lesson' | 'vocabulary' | 'shadowing' | 'english-speed';
 
-export type DailyRewardState = {
-  /** @deprecated Kept only for old local data migration. UI must use bubbleStreak via getUnifiedBubbleStreak(). */
+export type WaterStreakState = {
+  current: number;
+  lastVisitDate: string | null;
+};
+
+export type BubblesState = {
+  current: number;
+  max: 5;
+  lastUpdatedAt: string | null;
+};
+
+export type UserProgressState = {
+  waterStreak: WaterStreakState;
+  bubbles: BubblesState;
+};
+
+export type DailyRewardState = UserProgressState & {
+  /** @deprecated Legacy daily streak value. Use waterStreak.current. */
   streakDays: number;
+  /** @deprecated Legacy bubble/lives value. Use bubbles.current. Never use this for daily streak. */
   bubbleStreak: number;
+  /** @deprecated Legacy daily visit date. Use waterStreak.lastVisitDate. */
   lastActiveDate?: string;
-  bubbles: number;
+  /** @deprecated Numeric mirror for old UI. Use bubbles.current. */
   maxBubbles: number;
   completedToday: string[];
   updatedAt: string;
@@ -21,14 +39,36 @@ export type UnifiedBubbleStreak = {
   isFull: boolean;
 };
 
+export type UnifiedWaterStreak = {
+  current: number;
+  lastVisitDate: string | null;
+  label: string;
+  displayLabel: string;
+  progressPercent: number;
+  isFull: boolean;
+};
+
 export const DAILY_REWARDS_STORAGE_KEY = 'penglish.daily.rewards.v1';
 export const DAILY_REWARDS_UPDATED_EVENT = 'penglish.daily.rewards.updated';
 export const DAILY_REWARDS_MAX_BUBBLES = 5;
+export const BUBBLE_RECOVERY_MS = 30 * 60 * 1000;
+
+const LEARNING_HEARTS_STORAGE_KEY = 'p-english:daily-hearts';
+const LOCAL_PROGRESS_STORAGE_KEY = 'p-english:local-progress';
 
 const EMPTY_DAILY_REWARD_STATE: DailyRewardState = {
+  waterStreak: {
+    current: 0,
+    lastVisitDate: null,
+  },
+  bubbles: {
+    current: DAILY_REWARDS_MAX_BUBBLES,
+    max: DAILY_REWARDS_MAX_BUBBLES,
+    lastUpdatedAt: null,
+  },
   streakDays: 0,
-  bubbleStreak: 0,
-  bubbles: 0,
+  bubbleStreak: DAILY_REWARDS_MAX_BUBBLES,
+  lastActiveDate: undefined,
   maxBubbles: DAILY_REWARDS_MAX_BUBBLES,
   completedToday: [],
   updatedAt: new Date(0).toISOString(),
@@ -38,6 +78,17 @@ function getStorage() {
   if (typeof window === 'undefined') return null;
   try {
     return window.localStorage ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function readJsonStorage(key: string): any | null {
+  const storage = getStorage();
+  if (!storage) return null;
+  try {
+    const raw = storage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
   } catch {
     return null;
   }
@@ -58,7 +109,7 @@ function parseDateKey(value: string | null | undefined) {
   return date;
 }
 
-function dayDiff(fromKey: string | undefined, toKey: string) {
+function dayDiff(fromKey: string | null | undefined, toKey: string) {
   const from = parseDateKey(fromKey);
   const to = parseDateKey(toKey);
   if (!from || !to) return null;
@@ -77,35 +128,114 @@ function normalizeCompletedToday(value: unknown) {
   return Array.from(new Set(value.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)));
 }
 
-function normalizeBubbleValue(value: unknown, max: number) {
+function normalizePositiveInteger(value: unknown, fallback = 0) {
   const numeric = Number(value);
-  return Number.isFinite(numeric) && numeric > 0 ? Math.max(0, Math.min(max, Math.floor(numeric))) : 0;
+  return Number.isFinite(numeric) && numeric > 0 ? Math.floor(numeric) : fallback;
+}
+
+function normalizeBubbleValue(value: unknown, fallback = DAILY_REWARDS_MAX_BUBBLES) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return fallback;
+  return Math.max(0, Math.min(DAILY_REWARDS_MAX_BUBBLES, Math.floor(numeric)));
+}
+
+function legacyWaterStreakFallback(raw: any) {
+  const localProgress = readJsonStorage(LOCAL_PROGRESS_STORAGE_KEY);
+  return Math.max(
+    normalizePositiveInteger(raw?.waterStreak?.current),
+    normalizePositiveInteger(raw?.streakDays),
+    normalizePositiveInteger(raw?.currentStreak),
+    normalizePositiveInteger(raw?.consecutiveDays),
+    normalizePositiveInteger(localProgress?.currentStreak),
+  );
+}
+
+function legacyLastVisitDateFallback(raw: any) {
+  const localProgress = readJsonStorage(LOCAL_PROGRESS_STORAGE_KEY);
+  const candidates = [
+    raw?.waterStreak?.lastVisitDate,
+    raw?.lastVisitDate,
+    raw?.lastActiveDate,
+    localProgress?.lastStudyDate,
+  ];
+  return candidates.find((item) => typeof item === 'string' && parseDateKey(item)) ?? null;
+}
+
+function legacyBubblesFallback(raw: any) {
+  const hearts = readJsonStorage(LEARNING_HEARTS_STORAGE_KEY);
+  const candidates = [
+    hearts?.heartsLeft,
+    raw?.bubbles?.current,
+    raw?.bubbleLives,
+    raw?.bubbles,
+    raw?.bubbleStreak,
+  ];
+
+  for (const candidate of candidates) {
+    const numeric = Number(candidate);
+    if (Number.isFinite(numeric)) return normalizeBubbleValue(numeric);
+  }
+
+  return DAILY_REWARDS_MAX_BUBBLES;
+}
+
+function legacyBubbleUpdatedAtFallback(raw: any, now: Date) {
+  const hearts = readJsonStorage(LEARNING_HEARTS_STORAGE_KEY);
+  const candidates = [
+    hearts?.lastUpdatedAt,
+    raw?.bubbles?.lastUpdatedAt,
+    raw?.lastBubbleUpdatedAt,
+    raw?.updatedAt,
+  ];
+  const value = candidates.find((item) => typeof item === 'string' && !Number.isNaN(new Date(item).getTime()));
+  return value ?? now.toISOString();
+}
+
+export function normalizeBubbles(bubbles: Partial<BubblesState> | null | undefined, now = new Date()): BubblesState {
+  const lastUpdatedAt = typeof bubbles?.lastUpdatedAt === 'string' && !Number.isNaN(new Date(bubbles.lastUpdatedAt).getTime()) ? bubbles.lastUpdatedAt : now.toISOString();
+  const current = normalizeBubbleValue(bubbles?.current, DAILY_REWARDS_MAX_BUBBLES);
+
+  if (current >= DAILY_REWARDS_MAX_BUBBLES) {
+    return {
+      current: DAILY_REWARDS_MAX_BUBBLES,
+      max: DAILY_REWARDS_MAX_BUBBLES,
+      lastUpdatedAt,
+    };
+  }
+
+  const elapsed = Math.max(0, now.getTime() - new Date(lastUpdatedAt).getTime());
+  const recovered = Math.floor(elapsed / BUBBLE_RECOVERY_MS);
+  const nextCurrent = Math.min(DAILY_REWARDS_MAX_BUBBLES, current + recovered);
+
+  return {
+    current: nextCurrent,
+    max: DAILY_REWARDS_MAX_BUBBLES,
+    lastUpdatedAt: recovered > 0 ? new Date(new Date(lastUpdatedAt).getTime() + recovered * BUBBLE_RECOVERY_MS).toISOString() : lastUpdatedAt,
+  };
 }
 
 function normalizeState(value: unknown, now = new Date()): DailyRewardState {
-  const raw = value && typeof value === 'object' ? value as Partial<DailyRewardState> : {};
-  const streakDays = Number(raw.streakDays);
-  const maxBubbles = Number(raw.maxBubbles);
-  const bubbles = Number(raw.bubbles);
-  const bubbleStreak = Number(raw.bubbleStreak);
-  const lastActiveDate = typeof raw.lastActiveDate === 'string' && parseDateKey(raw.lastActiveDate) ? raw.lastActiveDate : undefined;
+  const raw = value && typeof value === 'object' ? value as any : {};
   const today = toLocalDateKey(now);
-  const completedToday = lastActiveDate === today ? normalizeCompletedToday(raw.completedToday) : [];
-  const normalizedMaxBubbles = Number.isFinite(maxBubbles) && maxBubbles > 0 ? Math.floor(maxBubbles) : DAILY_REWARDS_MAX_BUBBLES;
-  const normalizedStreakDays = Number.isFinite(streakDays) && streakDays > 0 ? Math.floor(streakDays) : 0;
-  const normalizedBubbles = Number.isFinite(bubbles) ? Math.max(0, Math.min(normalizedMaxBubbles, Math.floor(bubbles))) : 0;
-  const canonicalBubbleStreak = Number.isFinite(bubbleStreak)
-    ? normalizeBubbleValue(bubbleStreak, normalizedMaxBubbles)
-    : normalizedBubbles > 0
-      ? normalizedBubbles
-      : normalizeBubbleValue(normalizedStreakDays, normalizedMaxBubbles);
+  const waterStreakCurrent = legacyWaterStreakFallback(raw);
+  const waterStreakLastVisitDate = legacyLastVisitDateFallback(raw);
+  const completedToday = waterStreakLastVisitDate === today ? normalizeCompletedToday(raw.completedToday) : [];
+  const bubbles = normalizeBubbles({
+    current: legacyBubblesFallback(raw),
+    max: DAILY_REWARDS_MAX_BUBBLES,
+    lastUpdatedAt: legacyBubbleUpdatedAtFallback(raw, now),
+  }, now);
 
   return {
-    streakDays: normalizedStreakDays,
-    bubbleStreak: canonicalBubbleStreak,
-    lastActiveDate,
-    bubbles: canonicalBubbleStreak,
-    maxBubbles: normalizedMaxBubbles,
+    waterStreak: {
+      current: waterStreakCurrent,
+      lastVisitDate: waterStreakLastVisitDate,
+    },
+    bubbles,
+    streakDays: waterStreakCurrent,
+    bubbleStreak: bubbles.current,
+    lastActiveDate: waterStreakLastVisitDate ?? undefined,
+    maxBubbles: DAILY_REWARDS_MAX_BUBBLES,
     completedToday,
     updatedAt: typeof raw.updatedAt === 'string' ? raw.updatedAt : now.toISOString(),
   };
@@ -119,7 +249,7 @@ function readDailyRewardState(now = new Date()): DailyRewardState {
     const raw = storage.getItem(DAILY_REWARDS_STORAGE_KEY);
     return normalizeState(raw ? JSON.parse(raw) : undefined, now);
   } catch {
-    return { ...EMPTY_DAILY_REWARD_STATE, updatedAt: now.toISOString() };
+    return normalizeState(undefined, now);
   }
 }
 
@@ -138,28 +268,58 @@ function writeDailyRewardState(next: DailyRewardState) {
   return normalized;
 }
 
+function applyDailyVisit(state: DailyRewardState, now = new Date()) {
+  const today = toLocalDateKey(now);
+  const lastVisitDate = state.waterStreak.lastVisitDate;
+  const diff = dayDiff(lastVisitDate, today);
+
+  if (diff === 0 && state.waterStreak.current > 0) return state;
+
+  const nextWaterStreak = diff === 1 ? state.waterStreak.current + 1 : 1;
+  return writeDailyRewardState({
+    ...state,
+    waterStreak: {
+      current: nextWaterStreak,
+      lastVisitDate: today,
+    },
+    streakDays: nextWaterStreak,
+    lastActiveDate: today,
+    completedToday: diff === 0 ? state.completedToday : [],
+    updatedAt: now.toISOString(),
+  });
+}
+
 export function getDailyRewardState(): DailyRewardState {
   const now = new Date();
   const current = readDailyRewardState(now);
-  const today = toLocalDateKey(now);
+  const withDailyVisit = applyDailyVisit(current, now);
+  const normalizedBubbles = normalizeBubbles(withDailyVisit.bubbles, now);
 
-  if (current.lastActiveDate && current.lastActiveDate !== today && current.completedToday.length > 0) {
-    return writeDailyRewardState({ ...current, completedToday: [], updatedAt: now.toISOString() });
+  if (normalizedBubbles.current !== withDailyVisit.bubbles.current || normalizedBubbles.lastUpdatedAt !== withDailyVisit.bubbles.lastUpdatedAt) {
+    return writeDailyRewardState({ ...withDailyVisit, bubbles: normalizedBubbles, updatedAt: now.toISOString() });
   }
 
-  return current;
+  return withDailyVisit;
 }
 
-export function getUnifiedBubbleStreak(state: Partial<DailyRewardState> | null | undefined = getDailyRewardState()): UnifiedBubbleStreak {
+export function getUserProgress(state: Partial<DailyRewardState> | null | undefined = getDailyRewardState()): UserProgressState {
   const normalized = normalizeState(state);
-  const max = normalized.maxBubbles || DAILY_REWARDS_MAX_BUBBLES;
-  const current = Math.max(0, Math.min(max, normalized.bubbleStreak));
+  return {
+    waterStreak: normalized.waterStreak,
+    bubbles: normalized.bubbles,
+  };
+}
+
+export function getUnifiedBubbles(state: Partial<DailyRewardState> | null | undefined = getDailyRewardState()): UnifiedBubbleStreak {
+  const normalized = normalizeState(state);
+  const max = DAILY_REWARDS_MAX_BUBBLES;
+  const current = Math.max(0, Math.min(max, normalized.bubbles.current));
   const label = `Bọt biển ${current}/${max}`;
 
   return {
     current,
     max,
-    lastCheckInAt: normalized.lastActiveDate,
+    lastCheckInAt: normalized.bubbles.lastUpdatedAt ?? undefined,
     label,
     displayLabel: label,
     progressPercent: max > 0 ? Math.round((current / max) * 100) : 0,
@@ -167,8 +327,28 @@ export function getUnifiedBubbleStreak(state: Partial<DailyRewardState> | null |
   };
 }
 
+export function getWaterStreak(state: Partial<DailyRewardState> | null | undefined = getDailyRewardState()): UnifiedWaterStreak {
+  const normalized = normalizeState(state);
+  const current = Math.max(0, normalized.waterStreak.current);
+  const label = current === 1 ? '1 ngày liên tiếp' : `${current} ngày liên tiếp`;
+
+  return {
+    current,
+    lastVisitDate: normalized.waterStreak.lastVisitDate,
+    label,
+    displayLabel: `Chuỗi nước: ${label}`,
+    progressPercent: Math.min(100, Math.round((Math.min(current, 7) / 7) * 100)),
+    isFull: current >= 7,
+  };
+}
+
+/** @deprecated Use getUnifiedBubbles() for bọt biển/lives. Use getWaterStreak() for daily streak. */
+export function getUnifiedBubbleStreak(state: Partial<DailyRewardState> | null | undefined = getDailyRewardState()): UnifiedBubbleStreak {
+  return getUnifiedBubbles(state);
+}
+
 export function hasLearningActivityToday(state = getDailyRewardState()) {
-  return state.lastActiveDate === toLocalDateKey() && state.completedToday.length > 0;
+  return state.waterStreak.lastVisitDate === toLocalDateKey() && state.completedToday.length > 0;
 }
 
 export function formatLearningActivityId(activityType: LearningActivityType, activityId: string) {
@@ -181,26 +361,13 @@ export function recordLearningActivity(activityType: LearningActivityType, activ
 
   const now = new Date();
   const today = toLocalDateKey(now);
-  const current = readDailyRewardState(now);
-  const previousLastActiveDate = current.lastActiveDate;
-  const diff = dayDiff(previousLastActiveDate, today);
-  const firstActivityToday = previousLastActiveDate !== today;
-  const completedToday = firstActivityToday ? [] : current.completedToday;
+  const current = getDailyRewardState();
+  const completedToday = current.waterStreak.lastVisitDate === today ? current.completedToday : [];
   const activityKey = formatLearningActivityId(activityType, cleanActivityId);
   const nextCompletedToday = completedToday.includes(activityKey) ? completedToday : [...completedToday, activityKey];
-  const maxBubbles = current.maxBubbles || DAILY_REWARDS_MAX_BUBBLES;
-  const nextBubbleStreak = firstActivityToday
-    ? diff === 1
-      ? Math.min(maxBubbles, current.bubbleStreak + 1)
-      : 1
-    : current.bubbleStreak || 1;
 
   return writeDailyRewardState({
-    streakDays: nextBubbleStreak,
-    bubbleStreak: nextBubbleStreak,
-    lastActiveDate: today,
-    bubbles: nextBubbleStreak,
-    maxBubbles,
+    ...current,
     completedToday: nextCompletedToday,
     updatedAt: now.toISOString(),
   });
