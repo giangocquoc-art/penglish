@@ -90,3 +90,14 @@ screenshots/
 reports/
 frames/
 *.log
+
+node_modules/
+.next/
+.vercel/
+.env
+.env.*
+.venv*/
+screenshots/
+reports/
+frames/
+*.log
