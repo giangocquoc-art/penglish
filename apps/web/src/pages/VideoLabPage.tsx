@@ -49,10 +49,14 @@ type TypingStats = {
   encouragement: string;
 };
 
+type YouTubeTranscriptFailureReason = 'NO_TRANSCRIPT' | 'VIDEO_ID_INVALID' | 'PACKAGE_ERROR' | 'RATE_LIMIT_OR_BLOCKED' | 'METHOD_NOT_ALLOWED';
+
 type YouTubeTranscriptResponse = {
   ok: boolean;
   source?: 'youtube_caption';
   title?: string;
+  packageName?: string;
+  language?: string;
   segments?: Array<{
     index: number;
     startTime: number;
@@ -60,7 +64,7 @@ type YouTubeTranscriptResponse = {
     text: string;
   }>;
   transcript?: string;
-  reason?: string;
+  reason?: YouTubeTranscriptFailureReason;
   message?: string;
 };
 
@@ -144,6 +148,14 @@ function buildLesson(sourceType: SourceType, title: string, sourceUrl: string, v
 
 function wordsFromText(text: string) {
   return text.split(/\s+/).filter(Boolean);
+}
+
+function getYouTubeTranscriptFailureMessage(reason?: YouTubeTranscriptFailureReason) {
+  if (reason === 'VIDEO_ID_INVALID') return 'Poo chưa đọc được link YouTube này. Bạn kiểm tra lại link nhé.';
+  if (reason === 'NO_TRANSCRIPT') return 'Video này chưa có phụ đề tiếng Anh hoặc Poo chưa lấy được lời thoại. Bạn có thể dán transcript hoặc upload phụ đề .srt/.vtt nhé.';
+  if (reason === 'RATE_LIMIT_OR_BLOCKED') return 'YouTube đang chặn hoặc giới hạn lấy caption lúc này. Bạn thử lại sau, hoặc dán transcript/upload phụ đề .srt/.vtt nhé.';
+  if (reason === 'PACKAGE_ERROR') return 'Poo gặp lỗi khi đọc caption từ YouTube. Bạn thử lại hoặc dán transcript thủ công nhé.';
+  return 'Poo chưa lấy được lời thoại từ video này. Bạn có thể dán transcript hoặc upload phụ đề .srt/.vtt nhé.';
 }
 
 function buildTypingStats(comparison: ComparedWord[], hintCount: number, replayCount: number): TypingStats {
@@ -287,10 +299,10 @@ export function VideoLabPage() {
       }
 
       setShowManualTranscript(true);
-      setYoutubeTranscriptStatus('Poo chưa lấy được lời thoại từ video này. Bạn có thể dán transcript hoặc upload phụ đề .srt/.vtt nhé.');
+      setYoutubeTranscriptStatus(getYouTubeTranscriptFailureMessage(payload.reason));
     } catch {
       setShowManualTranscript(true);
-      setYoutubeTranscriptStatus('Poo chưa lấy được lời thoại từ video này. Bạn có thể dán transcript hoặc upload phụ đề .srt/.vtt nhé.');
+      setYoutubeTranscriptStatus('Poo chưa gọi được máy chủ lấy caption. Bạn có thể dán transcript hoặc upload phụ đề .srt/.vtt nhé.');
     } finally {
       setIsFetchingYouTubeTranscript(false);
     }

@@ -37,6 +37,8 @@
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "gsap": "^3.15.0",
-    "youtube-transcript-api-js": "^3.0.3"
+    "youtube-caption-extractor": "^1.10.2",
+    "youtube-transcript-api-js": "^3.0.3",
+    "youtube-transcript-plus": "^2.0.0"
   }
 }
