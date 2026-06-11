@@ -33,6 +33,7 @@ const NewLearningPathPage = lazy(() => import('./pages/LearningPathPage').then((
 const NewShadowingHubPage = lazy(() => import('./pages/ShadowingHubPage').then((module) => ({ default: module.ShadowingHubPage })));
 const NewShadowingPracticePage = lazy(() => import('./pages/ShadowingPage').then((module) => ({ default: module.ShadowingPracticePage })));
 const NewEnglishSpeedPage = lazy(() => import('./pages/EnglishSpeedPage').then((module) => ({ default: module.EnglishSpeedPage })));
+const NewVideoLabPage = lazy(() => import('./pages/VideoLabPage').then((module) => ({ default: module.VideoLabPage })));
 const NewInteractiveLessonPage = lazy(() => import('./pages/InteractiveLessonPage').then((module) => ({ default: module.InteractiveLessonPage })));
 const NewResourceHubPage = lazy(() => import('./pages/ResourceHubPage').then((module) => ({ default: module.ResourceHubPage })));
 const Foundation48Page = lazy(() => import('./features/foundation48/Foundation48Page').then((module) => ({ default: module.Foundation48Page })));
@@ -194,6 +195,7 @@ function AppRoutes() {
   else if (matchPath('/luyen-tieng-anh/48-ngay-lay-goc/ngay/:dayNumber', pathname)) routeElement = <ProtectedShell user={user}><Foundation48DayPage /></ProtectedShell>;
   else if (pathname === '/shadowing') routeElement = <ProtectedShell user={user}><NewShadowingHubPage /></ProtectedShell>;
   else if (matchPath('/shadowing/practice/:lessonId', pathname)) routeElement = <ProtectedShell user={user}><NewShadowingPracticePage /></ProtectedShell>;
+  else if (pathname === '/video-lab') routeElement = <ProtectedShell user={user}><NewVideoLabPage /></ProtectedShell>;
   else if (matchPath('/lessons/:lessonId', pathname)) routeElement = <ProtectedShell user={user}><NewLessonPage /></ProtectedShell>;
   else if (pathname === '/categories' || pathname === '/category-list') routeElement = <ProtectedShell user={user}><NewCategoriesPage /></ProtectedShell>;
   else if (pathname === '/vocabularies' || pathname === '/words') routeElement = <ProtectedShell user={user}><NewVocabPage /></ProtectedShell>;

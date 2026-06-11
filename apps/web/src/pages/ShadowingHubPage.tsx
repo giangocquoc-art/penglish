@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Button, Flex, HStack, Icon, SimpleGrid, Tag, TagLabel, Text, VStack } from '@chakra-ui/react';
-import { ArrowRight, BookOpen, Clock, Mic, Sparkles, Waves } from 'lucide-react';
+import { ArrowRight, BookOpen, Clock, Mic, Sparkles, Video, Waves } from 'lucide-react';
 import { OceanPageShell } from '../components/p-english/OceanPageShell';
 import { GlassPanel } from '../components/p-english/OceanBackdrop';
 import { readShadowingProgressStore, type ShadowingProgressEntry } from '../hooks/useShadowingProgress';
@@ -156,7 +156,10 @@ export function ShadowingHubPage() {
                 <Icon as={Waves} color={COLORS.oceanBlue} boxSize="7" />
               </HStack>
               <Text color={COLORS.muted} fontSize="sm" fontWeight="750" lineHeight="1.6">Đã luyện {recentLesson.practicedCount}/{recentLesson.sentenceCount} câu · Câu khó {recentLesson.difficultCount}.</Text>
-              <Button as={Link} to={lessonPath(recentLesson.id)} alignSelf="start" borderRadius="full" bg={COLORS.deepBlue} color="white" rightIcon={<Icon as={ArrowRight} />} _hover={{ bg: COLORS.oceanBlue }}>Luyện tiếp</Button>
+              <HStack gap="2" wrap="wrap">
+                <Button as={Link} to={lessonPath(recentLesson.id)} borderRadius="full" bg={COLORS.deepBlue} color="white" rightIcon={<Icon as={ArrowRight} />} _hover={{ bg: COLORS.oceanBlue }}>Luyện tiếp</Button>
+                <Button as={Link} to="/video-lab" borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} leftIcon={<Icon as={Video} />} _hover={{ bg: COLORS.softBlue }}>Tạo bài Shadowing từ video</Button>
+              </HStack>
             </VStack>
           </GlassPanel>
 

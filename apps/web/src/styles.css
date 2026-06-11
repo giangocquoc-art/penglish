@@ -173,6 +173,12 @@ button, input, select, textarea { font: inherit; }
   image-rendering: auto;
 }
 
+.shadowing-record-button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
 .pooPixelMascot {
   display: block;
   width: 92px;

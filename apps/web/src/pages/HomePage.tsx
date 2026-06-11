@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Button, Circle, Flex, HStack, Icon, SimpleGrid, Tag, TagLabel, Text, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { BookOpen, Compass, Mic2, Sparkles, Waves } from 'lucide-react';
+import { BookOpen, Compass, Mic2, Sparkles, Video, Waves } from 'lucide-react';
 import { GlassPanel, OCEAN_TOKENS } from '../components/p-english/OceanBackdrop';
 import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbles, getWaterStreak, type DailyRewardState } from '../lib/p-english/daily-rewards';
 import { LEARNING_HEARTS_UPDATED_EVENT } from '../lib/p-english/learning-hearts';
@@ -17,6 +17,7 @@ import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48Progress } from '..
 const FLASHCARD_PATH = '/words';
 const WEAK_REVIEW_PATH = '/practice';
 const SHADOWING_PATH = '/shadowing';
+const VIDEO_LAB_PATH = '/video-lab';
 const DAILY_GOAL_COUNT = 3;
 const LinkedGlassPanel = GlassPanel as any;
 
@@ -168,6 +169,15 @@ export function HomePage() {
       testId: 'home-task-shadowing',
     },
     {
+      title: 'Tạo bài Shadowing từ video',
+      subtitle: 'Dán YouTube, upload clip hoặc phụ đề để Poo tách câu luyện.',
+      cta: 'Video Lab',
+      to: VIDEO_LAB_PATH,
+      icon: Video,
+      accent: 'blue',
+      testId: 'home-task-video-lab',
+    },
+    {
       title: 'Từ vựng cần nhớ',
       subtitle: learningSummary.vocabularyDueCount > 0 ? `${learningSummary.vocabularyDueCount} từ đến hạn ôn.` : 'Ôn vài từ để giữ trí nhớ.',
       cta: 'Ôn từ',
@@ -246,6 +256,9 @@ export function HomePage() {
               </Button>
               <Button as={Link} to="/learning-path" size={{ base: 'md', md: 'lg' }} borderRadius="full" bg="rgba(255,255,255,0.72)" color={OCEAN_TOKENS.deepBlue} border="1px solid" borderColor={OCEAN_TOKENS.border} leftIcon={<Icon as={Waves} />} _hover={{ bg: 'rgba(232,244,255,0.88)' }} data-testid="home-secondary-path-cta">
                 Xem lộ trình
+              </Button>
+              <Button as={Link} to={VIDEO_LAB_PATH} size={{ base: 'md', md: 'lg' }} borderRadius="full" bg="rgba(255,255,255,0.72)" color={OCEAN_TOKENS.deepBlue} border="1px solid" borderColor={OCEAN_TOKENS.border} leftIcon={<Icon as={Video} />} _hover={{ bg: 'rgba(232,244,255,0.88)' }} data-testid="home-video-lab-cta">
+                Tạo bài Shadowing từ video
               </Button>
             </HStack>
           </VStack>

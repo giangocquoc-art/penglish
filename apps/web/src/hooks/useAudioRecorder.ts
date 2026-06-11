@@ -1,197 +1,159 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-export type RecorderState = 'idle' | 'requesting' | 'recording' | 'recorded' | 'error';
+export type AudioRecorderStatus = 'idle' | 'recording' | 'stopped' | 'error';
 
-const UNSUPPORTED_MESSAGE = 'Trình duyệt này chưa hỗ trợ ghi âm.';
-const PERMISSION_DENIED_MESSAGE = 'P-English cần quyền micro để ghi âm câu đọc.';
-const NO_MICROPHONE_MESSAGE = 'Không tìm thấy micro trên thiết bị.';
-const INTERRUPTED_MESSAGE = 'Micro bị ngắt khi đang ghi âm. Hãy thử lại với quyền micro đã bật.';
-const EMPTY_RECORDING_MESSAGE = 'Chưa ghi được âm thanh. Hãy cho phép micro và thử nói lại câu mẫu.';
+export type UseAudioRecorderResult = {
+  audioBlob: Blob | null;
+  error: string;
+  isRecording: boolean;
+  status: AudioRecorderStatus;
+  startRecording: () => Promise<void>;
+  stopRecording: () => void;
+  resetRecording: () => void;
+};
 
-function getRecordingSupport() {
-  return typeof window !== 'undefined'
-    && typeof navigator !== 'undefined'
-    && Boolean(navigator.mediaDevices?.getUserMedia)
-    && typeof MediaRecorder !== 'undefined';
+function getPreferredMimeType() {
+  if (typeof window === 'undefined' || !('MediaRecorder' in window)) return undefined;
+  const candidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+  return candidates.find((type) => MediaRecorder.isTypeSupported(type));
 }
 
-function getPreferredAudioMimeType() {
-  if (typeof MediaRecorder === 'undefined') return '';
-  const candidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4'];
-  return candidates.find((candidate) => MediaRecorder.isTypeSupported(candidate)) ?? '';
-}
+export function useAudioRecorder(): UseAudioRecorderResult {
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const chunksRef = useRef<BlobPart[]>([]);
+  const stoppingRef = useRef(false);
+  const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  const [status, setStatus] = useState<AudioRecorderStatus>('idle');
+  const [error, setError] = useState('');
 
-function stopStream(stream: MediaStream | null) {
-  stream?.getTracks().forEach((track) => track.stop());
-}
-
-function getRecorderErrorMessage(error: unknown) {
-  if (error instanceof DOMException) {
-    if (error.name === 'NotAllowedError' || error.name === 'SecurityError' || error.name === 'PermissionDeniedError') {
-      return PERMISSION_DENIED_MESSAGE;
+  const releaseStream = useCallback(() => {
+    const stream = mediaStreamRef.current;
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
     }
-
-    if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
-      return NO_MICROPHONE_MESSAGE;
-    }
-  }
-
-  return PERMISSION_DENIED_MESSAGE;
-}
-
-export function useAudioRecorder() {
-  const [state, setState] = useState<RecorderState>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const [durationSeconds, setDurationSeconds] = useState(0);
-  const [isSupported] = useState(getRecordingSupport);
-  const recorderRef = useRef<MediaRecorder | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
-  const chunksRef = useRef<Blob[]>([]);
-  const objectUrlRef = useRef<string | null>(null);
-  const startedAtRef = useRef<number | null>(null);
-  const timerRef = useRef<number | null>(null);
-
-  const revokeAudioUrl = useCallback(() => {
-    if (!objectUrlRef.current) return;
-    URL.revokeObjectURL(objectUrlRef.current);
-    objectUrlRef.current = null;
+    mediaStreamRef.current = null;
   }, []);
-
-  const stopTimer = useCallback(() => {
-    if (timerRef.current === null) return;
-    window.clearInterval(timerRef.current);
-    timerRef.current = null;
-  }, []);
-
-  const resetRecording = useCallback(() => {
-    const recorder = recorderRef.current;
-    if (recorder?.state === 'recording') {
-      recorder.stop();
-    }
-
-    stopTimer();
-    stopStream(streamRef.current);
-    streamRef.current = null;
-    recorderRef.current = null;
-    chunksRef.current = [];
-    startedAtRef.current = null;
-    revokeAudioUrl();
-    setAudioUrl(null);
-    setDurationSeconds(0);
-    setErrorMessage('');
-    setState('idle');
-  }, [revokeAudioUrl, stopTimer]);
 
   const stopRecording = useCallback(() => {
-    const recorder = recorderRef.current;
-    if (!recorder || recorder.state !== 'recording') return;
-    recorder.stop();
-  }, []);
+    const recorder = mediaRecorderRef.current;
+    const stream = mediaStreamRef.current;
 
-  const startRecording = useCallback(async () => {
-    if (!isSupported) {
-      setErrorMessage(UNSUPPORTED_MESSAGE);
-      setState('error');
+    if (!recorder && !stream) {
+      stoppingRef.current = false;
+      setStatus((current) => (current === 'recording' ? 'idle' : current));
       return;
     }
 
-    stopTimer();
-    stopStream(streamRef.current);
-    streamRef.current = null;
-    recorderRef.current = null;
-    chunksRef.current = [];
-    startedAtRef.current = null;
-    revokeAudioUrl();
-    setAudioUrl(null);
-    setDurationSeconds(0);
-    setErrorMessage('');
-    setState('requesting');
+    if (stoppingRef.current && !stream) return;
+    stoppingRef.current = true;
+
+    if (recorder) {
+      mediaRecorderRef.current = null;
+      if (recorder.state !== 'inactive') {
+        try {
+          recorder.stop();
+        } catch {
+          stoppingRef.current = false;
+          setStatus('error');
+          setError('Poo chưa dừng được lượt ghi âm. Bạn thử lại một lần nữa nha.');
+        }
+      } else {
+        stoppingRef.current = false;
+      }
+    }
+
+    releaseStream();
+    setStatus((current) => (current === 'recording' ? 'stopped' : current));
+  }, [releaseStream]);
+
+  const startRecording = useCallback(async () => {
+    if (typeof window === 'undefined' || !navigator.mediaDevices?.getUserMedia || !('MediaRecorder' in window)) {
+      setStatus('error');
+      setError('Trình duyệt chưa hỗ trợ ghi âm. Hãy thử Chrome hoặc bật quyền Microphone nha.');
+      return;
+    }
+
+    stopRecording();
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      streamRef.current = stream;
-      const mimeType = getPreferredAudioMimeType();
-      const recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
-      recorderRef.current = recorder;
+      const preferredMimeType = getPreferredMimeType();
+      const recorder = preferredMimeType ? new MediaRecorder(stream, { mimeType: preferredMimeType }) : new MediaRecorder(stream);
+      mediaStreamRef.current = stream;
+      mediaRecorderRef.current = recorder;
+      chunksRef.current = [];
+      stoppingRef.current = false;
+      setAudioBlob(null);
+      setError('');
+      setStatus('recording');
 
       recorder.ondataavailable = (event) => {
         if (event.data.size > 0) chunksRef.current.push(event.data);
       };
 
-      recorder.onerror = () => {
-        stopTimer();
-        stopStream(streamRef.current);
-        streamRef.current = null;
-        recorderRef.current = null;
-        setErrorMessage(INTERRUPTED_MESSAGE);
-        setState('error');
-      };
-
       recorder.onstop = () => {
-        stopTimer();
-        const elapsedSeconds = startedAtRef.current ? Math.max(1, Math.round((Date.now() - startedAtRef.current) / 1000)) : durationSeconds;
-        const type = recorder.mimeType || mimeType || 'audio/webm';
-        const blob = new Blob(chunksRef.current, { type });
-        stopStream(streamRef.current);
-        streamRef.current = null;
-        recorderRef.current = null;
-        startedAtRef.current = null;
-
-        if (!blob.size) {
-          setDurationSeconds(0);
-          setErrorMessage(EMPTY_RECORDING_MESSAGE);
-          setState('error');
-          return;
-        }
-
-        revokeAudioUrl();
-        const nextUrl = URL.createObjectURL(blob);
-        objectUrlRef.current = nextUrl;
-        setAudioUrl(nextUrl);
-        setDurationSeconds(elapsedSeconds);
-        setErrorMessage('');
-        setState('recorded');
+        releaseStream();
+        mediaRecorderRef.current = null;
+        stoppingRef.current = false;
+        const blob = new Blob(chunksRef.current, { type: recorder.mimeType || preferredMimeType || 'audio/webm' });
+        setAudioBlob(blob);
+        setStatus(blob.size > 0 ? 'stopped' : 'idle');
       };
 
-      recorder.start();
-      startedAtRef.current = Date.now();
-      setDurationSeconds(0);
-      timerRef.current = window.setInterval(() => {
-        if (!startedAtRef.current) return;
-        setDurationSeconds(Math.floor((Date.now() - startedAtRef.current) / 1000));
-      }, 250);
-      setState('recording');
-    } catch (error) {
-      stopTimer();
-      stopStream(streamRef.current);
-      streamRef.current = null;
-      recorderRef.current = null;
-      setDurationSeconds(0);
-      setAudioUrl(null);
-      setErrorMessage(getRecorderErrorMessage(error));
-      setState('error');
-    }
-  }, [durationSeconds, isSupported, revokeAudioUrl, stopTimer]);
+      recorder.onerror = () => {
+        releaseStream();
+        mediaRecorderRef.current = null;
+        stoppingRef.current = false;
+        setStatus('error');
+        setError('Poo gặp lỗi khi ghi âm. Bạn kiểm tra quyền Microphone rồi thử lại nha.');
+      };
 
-  useEffect(() => () => {
-    const recorder = recorderRef.current;
-    if (recorder?.state === 'recording') {
-      recorder.stop();
+      recorder.start(250);
+    } catch {
+      releaseStream();
+      mediaRecorderRef.current = null;
+      stoppingRef.current = false;
+      setStatus('error');
+      setError('Poo chưa được phép dùng Microphone. Hãy bật quyền Microphone rồi thử lại nha.');
     }
-    stopTimer();
-    stopStream(streamRef.current);
-    revokeAudioUrl();
-  }, [revokeAudioUrl, stopTimer]);
+  }, [releaseStream, stopRecording]);
+
+  const resetRecording = useCallback(() => {
+    stopRecording();
+    chunksRef.current = [];
+    setAudioBlob(null);
+    setError('');
+    setStatus('idle');
+  }, [stopRecording]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+
+    const cleanup = () => stopRecording();
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') cleanup();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', cleanup);
+    window.addEventListener('beforeunload', cleanup);
+
+    return () => {
+      cleanup();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', cleanup);
+      window.removeEventListener('beforeunload', cleanup);
+    };
+  }, [stopRecording]);
 
   return {
-    state,
-    errorMessage: !isSupported && state !== 'recording' ? UNSUPPORTED_MESSAGE : errorMessage,
-    audioUrl,
-    durationSeconds,
+    audioBlob,
+    error,
+    isRecording: status === 'recording',
+    status,
     startRecording,
     stopRecording,
     resetRecording,
-    isSupported,
   };
 }

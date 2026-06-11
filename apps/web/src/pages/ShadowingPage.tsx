@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type SyntheticEvent } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { saveShadowingAttempt } from '../lib/p-english/userDataAdapter';
 import { useGSAP } from '@gsap/react';
@@ -306,6 +306,9 @@ export function ShadowingPracticePage() {
   const recordingTimeoutRef = useRef<number | null>(null);
   const activeStreamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<BlobPart[]>([]);
+  const recordingStatusRef = useRef(recordingStatus);
+  const recordButtonGuardRef = useRef(0);
+  const stoppingRecordingRef = useRef(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const recordPulseRef = useRef<HTMLDivElement | null>(null);
@@ -365,6 +368,10 @@ export function ShadowingPracticePage() {
         : PIXEL_ASSETS.pooNeutral;
 
   useEffect(() => {
+    recordingStatusRef.current = recordingStatus;
+  }, [recordingStatus]);
+
+  useEffect(() => {
     const nextVideoId = requestedVideo?.id ?? fallbackVideo?.id ?? '';
     setSelectedVideoId(nextVideoId);
   }, [fallbackVideo?.id, requestedVideo?.id]);
@@ -418,12 +425,23 @@ export function ShadowingPracticePage() {
   }, [speed]);
 
   useEffect(() => {
-    return () => {
-      if (recordingTimeoutRef.current && typeof window !== 'undefined') window.clearTimeout(recordingTimeoutRef.current);
-      try { speechRecognitionRef.current?.stop?.(); } catch { /* noop */ }
-      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') mediaRecorderRef.current.stop();
-      activeStreamRef.current?.getTracks().forEach((track) => track.stop());
+    const cleanupRecording = () => {
+      stopAndSendRecording('cleanup');
       if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+    };
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') cleanupRecording();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', cleanupRecording);
+    window.addEventListener('beforeunload', cleanupRecording);
+
+    return () => {
+      cleanupRecording();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', cleanupRecording);
+      window.removeEventListener('beforeunload', cleanupRecording);
     };
   }, []);
 
@@ -600,8 +618,18 @@ export function ShadowingPracticePage() {
     saveAttempt(result);
   };
 
+  const clearRecordingTimeout = () => {
+    if (recordingTimeoutRef.current && typeof window !== 'undefined') {
+      window.clearTimeout(recordingTimeoutRef.current);
+      recordingTimeoutRef.current = null;
+    }
+  };
+
   const stopMicrophoneTracks = () => {
-    activeStreamRef.current?.getTracks().forEach((track) => track.stop());
+    const stream = activeStreamRef.current;
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
+    }
     activeStreamRef.current = null;
   };
 
@@ -618,6 +646,7 @@ export function ShadowingPracticePage() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       activeStreamRef.current = stream;
+      stoppingRecordingRef.current = false;
       chunksRef.current = [];
       setElapsedSeconds(0);
       setApiFeedback(null);
@@ -644,9 +673,10 @@ export function ShadowingPracticePage() {
           finalTranscript = '';
         };
         recognition.onend = () => {
-          if (recordingTimeoutRef.current) window.clearTimeout(recordingTimeoutRef.current);
+          clearRecordingTimeout();
           stopMicrophoneTracks();
           speechRecognitionRef.current = null;
+          stoppingRecordingRef.current = false;
           finishSpeechTranscript(finalTranscript);
         };
         recognition.start();
@@ -675,7 +705,10 @@ export function ShadowingPracticePage() {
         if (event.data.size > 0) chunksRef.current.push(event.data);
       };
       recorder.onstop = () => {
+        clearRecordingTimeout();
         stopMicrophoneTracks();
+        mediaRecorderRef.current = null;
+        stoppingRecordingRef.current = false;
         const blob = new Blob(chunksRef.current, { type: recorder.mimeType || preferredMimeType || 'audio/webm' });
         markSentenceCompleted(selectedSentence?.id);
         const failure: ShadowingApiFailure = { ok: false, error: blob.size > 0 ? 'API_ERROR' : 'EMPTY_AUDIO', message: SPEECH_RECOGNITION_FALLBACK_MESSAGE };
@@ -686,7 +719,7 @@ export function ShadowingPracticePage() {
         saveAttempt(failure);
       };
       recorder.start(250);
-      recordingTimeoutRef.current = window.setTimeout(() => stopAndSendRecording(), SHADOWING_RECORDING_TIMEOUT_MS);
+      recordingTimeoutRef.current = window.setTimeout(() => stopAndSendRecording('timeout'), SHADOWING_RECORDING_TIMEOUT_MS);
     } catch {
       const failure: ShadowingApiFailure = { ok: false, error: 'NO_AUDIO', message: MICROPHONE_PERMISSION_MESSAGE };
       setApiFeedback(null);
@@ -697,29 +730,70 @@ export function ShadowingPracticePage() {
     }
   };
 
-  const stopAndSendRecording = () => {
-    if (recordingTimeoutRef.current && typeof window !== 'undefined') {
-      window.clearTimeout(recordingTimeoutRef.current);
-      recordingTimeoutRef.current = null;
-    }
-    if (speechRecognitionRef.current) {
-      try { speechRecognitionRef.current.stop(); } catch { finishSpeechTranscript(''); }
+  const stopAndSendRecording = (reason: 'manual' | 'timeout' | 'cleanup' = 'manual') => {
+    clearRecordingTimeout();
+
+    const recognition = speechRecognitionRef.current;
+    const recorder = mediaRecorderRef.current;
+    const stream = activeStreamRef.current;
+
+    if (!recognition && !recorder && !stream) {
+      stoppingRecordingRef.current = false;
+      if (recordingStatusRef.current === 'recording') setRecordingStatus('idle');
       return;
     }
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-      mediaRecorderRef.current.stop();
+
+    if (stoppingRecordingRef.current && !stream) return;
+    stoppingRecordingRef.current = true;
+
+    if (recognition) {
+      speechRecognitionRef.current = null;
+      try {
+        recognition.stop();
+      } catch {
+        finishSpeechTranscript('');
+        stoppingRecordingRef.current = false;
+      }
+      stopMicrophoneTracks();
+      if (reason === 'cleanup' || recordingStatusRef.current === 'recording') setRecordingStatus('idle');
       return;
     }
+
+    if (recorder) {
+      mediaRecorderRef.current = null;
+      if (recorder.state !== 'inactive') {
+        try {
+          recorder.stop();
+        } catch {
+          stoppingRecordingRef.current = false;
+        }
+      } else {
+        stoppingRecordingRef.current = false;
+      }
+      stopMicrophoneTracks();
+      if (reason === 'cleanup' || recordingStatusRef.current === 'recording') setRecordingStatus('idle');
+      return;
+    }
+
     stopMicrophoneTracks();
-    setRecordingStatus('idle');
+    stoppingRecordingRef.current = false;
+    if (recordingStatusRef.current === 'recording') setRecordingStatus('idle');
   };
 
   const handleRecordAction = () => {
-    if (recordingStatus === 'recording') {
+    if (recordingStatusRef.current === 'recording' || mediaRecorderRef.current || speechRecognitionRef.current || activeStreamRef.current) {
       stopAndSendRecording();
       return;
     }
     void startRecording();
+  };
+
+  const handleRecordButtonActivate = (event?: SyntheticEvent) => {
+    event?.preventDefault();
+    const now = Date.now();
+    if (now - recordButtonGuardRef.current < 320) return;
+    recordButtonGuardRef.current = now;
+    handleRecordAction();
   };
 
   const retryRecording = () => {
@@ -939,8 +1013,8 @@ export function ShadowingPracticePage() {
                     <Button key={value} size="sm" borderRadius="full" colorScheme={speed === value ? 'blue' : 'gray'} aria-pressed={speed === value} onClick={() => setSpeed(value)} isDisabled={isProcessingRecording}>{value}x</Button>
                   ))}
                   <Button data-testid="shadowing-listen-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.speakerSample} alt="Loa nghe mẫu" w="24px" h="24px" />} borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD" _hover={{ bg: COLORS.softBlue }} onClick={listenSentence} isDisabled={isProcessingRecording}>Nghe mẫu</Button>
-                  <Button data-testid="shadowing-record-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Box as="img" className="pooPixelIcon" src={micPixelSrc} alt={isRecording ? 'Micro đang nghe' : apiFeedback ? 'Micro nghe thành công' : apiError ? 'Micro gặp lỗi' : 'Micro luyện nói'} w="24px" h="24px" />} borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} aria-label={isRecording ? 'Đang nghe, bấm để dừng ghi âm' : 'Nói theo Poo'} aria-pressed={isRecording} onClick={handleRecordAction} isDisabled={isProcessingRecording} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý cho bạn...'}>
-                    {isRecording ? 'Đang nghe...' : 'Nói theo Poo'}
+                  <Button className="shadowing-record-button" data-testid="shadowing-record-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Box as="img" className="pooPixelIcon" src={micPixelSrc} alt={isRecording ? 'Micro đang nghe' : apiFeedback ? 'Micro nghe thành công' : apiError ? 'Micro gặp lỗi' : 'Micro luyện nói'} w="24px" h="24px" />} borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} aria-label={isRecording ? 'Dừng thu âm' : 'Nói theo Poo'} aria-pressed={isRecording} onClick={handleRecordButtonActivate} onPointerUp={handleRecordButtonActivate} onTouchEnd={handleRecordButtonActivate} isDisabled={isProcessingRecording} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý cho bạn...'}>
+                    {isRecording ? 'Dừng thu' : 'Nói theo Poo'}
                   </Button>
                   <Button data-testid="shadowing-next-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.nextWave} alt="Sóng chuyển câu" w="24px" h="24px" />} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1 || isProcessingRecording}>Câu tiếp theo</Button>
                 </HStack>
