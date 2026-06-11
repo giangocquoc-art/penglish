@@ -194,13 +194,12 @@ export function Foundation48DayPage() {
             <Box minW="0" flex="1">
               <HStack gap="2" wrap="wrap">
                 <Text px="3" py="1.5" borderRadius="full" bg="#EFF6FF" color={COLORS.blue} fontWeight="950" fontSize="xs">Ngày {day.dayNumber}</Text>
-                <Text px="3" py="1.5" borderRadius="full" bg={completed ? '#ECFDF5' : '#F8FAFC'} color={completed ? COLORS.green : COLORS.muted} fontWeight="950" fontSize="xs">{completed ? 'Đã hoàn thành' : `Bước ${stepIndex + 1}/${steps.length}`}</Text>
-                <Text px="3" py="1.5" borderRadius="full" bg="#FFF7ED" color="#B45309" fontWeight="950" fontSize="xs">{rightCount}/{challengeCount} câu đúng</Text>
+                <Text px="3" py="1.5" borderRadius="full" bg={completed ? '#ECFDF5' : '#F8FAFC'} color={completed ? COLORS.green : COLORS.muted} fontWeight="950" fontSize="xs">{completed ? 'Đã xong' : `${stepIndex + 1}/${steps.length}`}</Text>
               </HStack>
               <Text as="h1" mt={{ base: '1.5', md: '2' }} color={COLORS.text} fontSize={{ base: 'xl', md: '4xl' }} lineHeight="1.12" fontWeight="950">
                 {day.title}
               </Text>
-              <Text mt={{ base: '1', md: '2' }} color={COLORS.muted} fontWeight="750" lineHeight="1.45" fontSize={{ base: 'sm', md: 'md' }}>Chặng {day.stageId}: {day.stageTitle}</Text>
+              <Text mt={{ base: '1', md: '2' }} color={COLORS.muted} fontWeight="750" lineHeight="1.45" fontSize={{ base: 'sm', md: 'md' }} noOfLines={2}>Poo dẫn bạn nghe, nói rồi quiz nhẹ.</Text>
               <Box mt={{ base: '3', md: '4' }}>
                 <HStack justify="space-between" mb="1">
                   <Text fontSize="xs" color={COLORS.muted} fontWeight="900">Tiến độ bài học</Text>
@@ -214,6 +213,8 @@ export function Foundation48DayPage() {
             </Box>
           </Flex>
         </Box>
+
+        <TodayThreeThingsCard />
 
         <LessonStepperCard day={day} step={currentStep} completed={completedSteps.has(currentStep?.id)} onReadyChange={setCanContinue} onContinue={goNext} />
 
@@ -309,8 +310,8 @@ function LessonStepperCard({ day, step, completed, onReadyChange, onContinue }: 
           {completed ? <Icon as={CheckCircle2} color={COLORS.green} boxSize="5" /> : null}
         </HStack>
 
-        {step.subtitle ? <Text color={COLORS.muted} fontWeight="800" lineHeight="1.6">{step.subtitle}</Text> : null}
-        {step.body ? <Text color={COLORS.text} fontWeight="750" lineHeight="1.75" whiteSpace="pre-line">{step.body}</Text> : null}
+        {step.subtitle ? <Text color={COLORS.muted} fontWeight="800" lineHeight="1.5" noOfLines={2}>{step.subtitle}</Text> : null}
+        {step.body && step.type !== 'listening' ? <PooMoreDetails body={step.body} /> : null}
         {step.type === 'intro' && step.bullets?.length ? (
           <Text display={{ base: 'block', md: 'none' }} color={COLORS.blue} fontSize="xs" fontWeight="950" lineHeight="1.45" bg="#EFF6FF" border="1px solid" borderColor={COLORS.border} borderRadius="full" px="3" py="2" data-testid="foundation48-mobile-intro-preview">
             {step.bullets.map((item) => item.replace(/^(\d+)\s+/, '$1 ')).join(' · ')}
@@ -335,6 +336,39 @@ function LessonStepperCard({ day, step, completed, onReadyChange, onContinue }: 
         {step.challenge ? <ChallengeCard dayNumber={day.dayNumber} challenge={step.challenge} onReadyChange={onReadyChange} onContinue={onContinue} /> : null}
         {step.type === 'complete' ? <CompletePrompt day={day} /> : null}
       </VStack>
+    </Box>
+  );
+}
+
+function TodayThreeThingsCard() {
+  const items = [
+    { label: '1. Nghe mẫu', icon: Headphones },
+    { label: '2. Nói theo', icon: Mic },
+    { label: '3. Quiz nhanh', icon: Sparkles },
+  ];
+
+  return (
+    <Box className="penglish-glass-card" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '3', md: '4' }} bg="rgba(255,255,255,0.74)" mb={{ base: '3', md: '4' }} data-testid="foundation48-three-things-card">
+      <Text color={COLORS.text} fontWeight="950" mb="3">Hôm nay bạn học 3 việc</Text>
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap="2.5">
+        {items.map((item) => (
+          <HStack key={item.label} border="1px solid" borderColor="rgba(186,230,253,0.78)" bg="rgba(255,255,255,0.82)" borderRadius="2xl" px="3" py="2.5" gap="2.5">
+            <Icon as={item.icon} color={COLORS.blue} boxSize="4" />
+            <Text color={COLORS.text} fontWeight="900" fontSize="sm">{item.label}</Text>
+          </HStack>
+        ))}
+      </SimpleGrid>
+    </Box>
+  );
+}
+
+function PooMoreDetails({ body }: { body: string }) {
+  return (
+    <Box as="details" border="1px solid" borderColor="rgba(186,230,253,0.72)" bg="rgba(255,255,255,0.64)" borderRadius="2xl" p="3" data-testid="foundation48-poo-more-details">
+      <Box as="summary" cursor="pointer" color={COLORS.blue} fontWeight="950" sx={{ '&::-webkit-details-marker': { display: 'none' } }}>
+        Poo giải thích thêm
+      </Box>
+      <Text mt="3" color={COLORS.text} fontWeight="750" lineHeight="1.65" whiteSpace="pre-line">{body}</Text>
     </Box>
   );
 }
@@ -501,8 +535,8 @@ function SpeakingDrillCards({ bullets }: { bullets: string[] }) {
               <Icon as={Mic} boxSize="5" />
             </Box>
             <Box minW="0">
-              <Text color={COLORS.text} fontWeight="950" lineHeight="1.25">Luyện nói từng câu</Text>
-              <Text color={COLORS.muted} fontSize="sm" fontWeight="750" lineHeight="1.45">Nghe mẫu nếu cần, nói thành tiếng, rồi tự đánh dấu.</Text>
+              <Text color={COLORS.text} fontWeight="950" lineHeight="1.25">Nói theo từng câu</Text>
+              <Text color={COLORS.muted} fontSize="sm" fontWeight="750" lineHeight="1.45" noOfLines={2}>Nghe mẫu, nói thành tiếng, rồi đánh dấu xong.</Text>
             </Box>
           </HStack>
           <Text alignSelf={{ base: 'start', sm: 'center' }} px="3" py="1.5" borderRadius="full" bg={completedCount === drills.length ? '#ECFDF5' : 'white'} color={completedCount === drills.length ? COLORS.green : COLORS.blue} border="1px solid" borderColor={completedCount === drills.length ? '#BBF7D0' : COLORS.border} fontSize="sm" fontWeight="950" role="status" aria-live="polite" data-testid="foundation48-speaking-progress">
@@ -755,12 +789,22 @@ function CompletePrompt({ day }: { day: Foundation48Day }) {
             <SummaryPill label="Kiểm tra" value={quizCount ? `${quizCount} câu` : 'Đã xem'} compact />
           </SimpleGrid>
         </Box>
-        <Flex gap="2.5" wrap="wrap" direction={{ base: 'column', sm: 'row' }} data-testid="foundation48-complete-actions">
-          <Button as={Link} to={getFoundation48DayPath(day.dayNumber)} leftIcon={<Icon as={RotateCcw} />} bg={COLORS.green} color="white" borderRadius="full" minH="50px" px="6" data-testid="foundation48-complete-review-day">Ôn lại bài này</Button>
-          {nextDay ? <Button as={Link} to={getFoundation48DayPath(nextDay)} leftIcon={<Icon as={ArrowRight} />} variant="outline" borderColor="#86EFAC" color={COLORS.green} bg="white" borderRadius="full" minH="46px" data-testid="foundation48-complete-next-day">Học bài tiếp theo</Button> : null}
-          <Button as={Link} to="/practice" leftIcon={<Icon as={Sparkles} />} variant="outline" borderColor="#86EFAC" color={COLORS.green} bg="white" borderRadius="full" minH="46px" data-testid="foundation48-complete-mistakes">Ôn câu Poo nhắc</Button>
-          <Button as={Link} to="/home" leftIcon={<Icon as={Home} />} variant="outline" borderColor={COLORS.border} color={COLORS.blue} bg="white" borderRadius="full" minH="46px" data-testid="foundation48-complete-home">Về Hôm nay học gì?</Button>
-          {day.dayNumber === foundation48Days.length ? <Button as={Link} to={FOUNDATION48_BASE_PATH} variant="outline" borderColor={COLORS.border} color={COLORS.blue} bg="white" borderRadius="full" minH="46px">Về lộ trình</Button> : null}
+        <Flex gap="2.5" direction="column" data-testid="foundation48-complete-actions">
+          {nextDay ? (
+            <Button as={Link} to={getFoundation48DayPath(nextDay)} rightIcon={<Icon as={ArrowRight} />} bg={COLORS.green} color="white" borderRadius="full" minH="52px" px="6" data-testid="foundation48-complete-next-day">Học ngày tiếp theo</Button>
+          ) : (
+            <Button as={Link} to={FOUNDATION48_BASE_PATH} bg={COLORS.green} color="white" borderRadius="full" minH="52px" px="6">Về lộ trình</Button>
+          )}
+          <Box as="details" border="1px solid" borderColor="#BBF7D0" bg="rgba(255,255,255,0.62)" borderRadius="2xl" p="3" data-testid="foundation48-complete-more-actions">
+            <Box as="summary" cursor="pointer" color={COLORS.green} fontWeight="950" sx={{ '&::-webkit-details-marker': { display: 'none' } }}>
+              Xem thêm
+            </Box>
+            <Flex mt="3" gap="2.5" wrap="wrap" direction={{ base: 'column', sm: 'row' }}>
+              <Button as={Link} to={getFoundation48DayPath(day.dayNumber)} leftIcon={<Icon as={RotateCcw} />} variant="outline" borderColor="#86EFAC" color={COLORS.green} bg="white" borderRadius="full" minH="44px" data-testid="foundation48-complete-review-day">Ôn lại bài này</Button>
+              <Button as={Link} to="/practice" leftIcon={<Icon as={Sparkles} />} variant="outline" borderColor="#86EFAC" color={COLORS.green} bg="white" borderRadius="full" minH="44px" data-testid="foundation48-complete-mistakes">Ôn câu Poo nhắc</Button>
+              <Button as={Link} to="/home" leftIcon={<Icon as={Home} />} variant="outline" borderColor={COLORS.border} color={COLORS.blue} bg="white" borderRadius="full" minH="44px" data-testid="foundation48-complete-home">Về trang chủ</Button>
+            </Flex>
+          </Box>
         </Flex>
         <GrammarReview reminders={getCompletionReminders(day, deepLesson)} />
       </VStack>
@@ -799,22 +843,14 @@ function GrammarReview({ reminders }: { reminders: string[] }) {
   if (!reminders.length) return null;
 
   return (
-    <>
-      <Box as="details" display={{ base: 'block', md: 'none' }} border="1px solid" borderColor="rgba(186,230,253,0.72)" bg="rgba(255,255,255,0.58)" borderRadius="2xl" p="3" data-testid="foundation48-grammar-review-mobile">
-        <Box as="summary" cursor="pointer" color={COLORS.blue} fontWeight="950" sx={{ '&::-webkit-details-marker': { display: 'none' } }}>
-          Xem lại kiến thức
-        </Box>
-        <VStack align="stretch" gap="2" mt="3">
-          {reminders.map((item) => <Text key={item} color={COLORS.text} fontWeight="800" lineHeight="1.45">• {item}</Text>)}
-        </VStack>
+    <Box as="details" border="1px solid" borderColor="rgba(186,230,253,0.72)" bg="rgba(255,255,255,0.58)" borderRadius="2xl" p="3" data-testid="foundation48-grammar-review">
+      <Box as="summary" cursor="pointer" color={COLORS.blue} fontWeight="950" sx={{ '&::-webkit-details-marker': { display: 'none' } }}>
+        Poo giải thích thêm
       </Box>
-      <Box display={{ base: 'none', md: 'block' }} border="1px solid" borderColor="rgba(186,230,253,0.72)" bg="rgba(255,255,255,0.58)" borderRadius="2xl" p="3.5" data-testid="foundation48-grammar-review-desktop">
-        <Text color={COLORS.blue} fontWeight="950" mb="2">Xem lại kiến thức</Text>
-        <SimpleGrid columns={{ md: 2 }} gap="2.5">
-          {reminders.map((item) => <Text key={item} color={COLORS.text} fontWeight="800" lineHeight="1.45" border="1px solid" borderColor="rgba(186,230,253,0.55)" bg="white" borderRadius="xl" p="2.5">{item}</Text>)}
-        </SimpleGrid>
-      </Box>
-    </>
+      <VStack align="stretch" gap="2" mt="3">
+        {reminders.map((item) => <Text key={item} color={COLORS.text} fontWeight="800" lineHeight="1.45">• {item}</Text>)}
+      </VStack>
+    </Box>
   );
 }
 
@@ -867,14 +903,14 @@ function getFoundation48StepLabel(step: Foundation48LessonStep) {
   if (step.challenge) return getFoundation48ChallengeLabel(step.challenge.type);
 
   const labels: Record<Foundation48LessonStep['type'], string> = {
-    intro: 'Ngày đang học',
-    explain: 'Tài liệu bài học',
+    intro: 'Bắt đầu',
+    explain: 'Mẫu câu',
     example: 'Mẫu câu',
-    practice: 'Câu luyện',
+    practice: 'Quiz nhanh',
     listening: 'Lời thoại',
-    speaking: 'Câu luyện',
+    speaking: 'Nói theo',
     challenge: 'Thử sức nhẹ',
-    complete: 'Ôn lại',
+    complete: 'Hoàn thành ngày học',
   };
 
   return labels[step.type];

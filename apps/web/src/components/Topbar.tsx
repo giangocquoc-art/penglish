@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { Box, Flex, HStack, Text, Button, Icon, IconButton } from '@chakra-ui/react';
-import { BookOpen, Star } from 'lucide-react';
+import { Box, Flex, HStack } from '@chakra-ui/react';
 import type { SidebarUser } from './Sidebar';
 import { BubbleStreakBadge } from './streak/BubbleStreakBadge';
 import { MobileDrawerToggle } from './MobileDrawer';
@@ -9,7 +7,7 @@ import { BottomNav } from './BottomNav';
 import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState } from '../lib/p-english/daily-rewards';
 import { LEARNING_HEARTS_UPDATED_EVENT } from '../lib/p-english/learning-hearts';
 import { LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
-import { OceanBackdrop, OCEAN_TOKENS } from './p-english/OceanBackdrop';
+import { OceanBackdrop } from './p-english/OceanBackdrop';
 
 export function Topbar({ user }: { user: SidebarUser | null }) {
   const [rewardState, setRewardState] = useState(() => getDailyRewardState());
@@ -50,60 +48,8 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
     >
       <MobileDrawerToggle user={user} />
 
-      <HStack as="nav" aria-label="Liên kết SEO PooEnglish" display={{ base: 'none', xl: 'flex' }} gap="3" color={OCEAN_TOKENS.muted} fontWeight="800" fontSize="sm">
-        <Button as={RouterLink} to="/hoc-tieng-anh" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
-          Học tiếng Anh
-        </Button>
-        <Button as={RouterLink} to="/lo-trinh-hoc-tieng-anh" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
-          Lộ trình
-        </Button>
-        <Button as={RouterLink} to="/shadowing-tieng-anh" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
-          Shadowing
-        </Button>
-        <Button as={RouterLink} to="/on-tieng-anh" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
-          Ôn tiếng Anh
-        </Button>
-        <Button as={RouterLink} to="/blog" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
-          Blog
-        </Button>
-      </HStack>
-
       <HStack gap={{ base: '2', md: '3' }} ml="auto">
         <BubbleStreakBadge state={rewardState} testId="topbar-bubbles-badge" />
-
-        <Button
-          as={RouterLink}
-          to="/learning-path"
-          bg="rgba(255, 255, 255, 0.70)"
-          color={OCEAN_TOKENS.deepBlue}
-          leftIcon={<Icon as={Star} />}
-          borderRadius="full"
-          px="4"
-          h="38px"
-          fontWeight="700"
-          border="1px solid"
-          borderColor={OCEAN_TOKENS.borderStrong}
-          boxShadow="0 12px 28px rgba(31, 111, 214, 0.08)"
-          _hover={{ bg: 'rgba(232, 244, 255, 0.92)', boxShadow: '0 14px 32px rgba(31, 111, 214, 0.12)' }}
-          display={{ base: 'none', md: 'inline-flex' }}
-        >
-          Học miễn phí
-        </Button>
-
-        <IconButton
-          as={RouterLink}
-          to="/learning-path"
-          aria-label="PooEnglish học miễn phí"
-          icon={<Icon as={BookOpen} />}
-          bg="rgba(255, 255, 255, 0.72)"
-          color={OCEAN_TOKENS.deepBlue}
-          borderRadius="full"
-          border="1px solid"
-          borderColor={OCEAN_TOKENS.borderStrong}
-          boxShadow="0 12px 26px rgba(31, 111, 214, 0.08)"
-          _hover={{ bg: OCEAN_TOKENS.softBlue }}
-          display={{ base: 'inline-flex', md: 'none' }}
-        />
       </HStack>
     </Flex>
   );

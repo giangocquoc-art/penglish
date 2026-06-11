@@ -22,31 +22,6 @@ const NAV: NavItem[] = [
   { label: 'Trang chủ', to: '/home', icon: Home, tint: OCEAN_TOKENS.oceanBlue, description: 'Tổng quan' },
 ];
 
-const SEO_LINKS = [
-  { label: 'Học tiếng Anh', to: '/hoc-tieng-anh' },
-  { label: 'Lộ trình', to: '/lo-trinh-hoc-tieng-anh' },
-  { label: 'Shadowing', to: '/shadowing-tieng-anh' },
-  { label: 'Từ vựng', to: '/tu-vung-tieng-anh' },
-  { label: 'Luyện nghe', to: '/luyen-nghe-tieng-anh' },
-  { label: 'Ngữ pháp', to: '/ngu-phap-tieng-anh' },
-  { label: '48 ngày', to: '/48-ngay-lay-goc' },
-  { label: 'Giới thiệu', to: '/gioi-thieu' },
-  { label: 'Blog', to: '/blog' },
-];
-
-const REVIEW_SEO_LINKS = [
-  { label: 'Ôn tiếng Anh', to: '/on-tieng-anh' },
-  { label: 'Mất gốc', to: '/on-tieng-anh-cho-nguoi-mat-goc' },
-  { label: 'Cách ôn hiệu quả', to: '/cach-on-tieng-anh-hieu-qua' },
-  { label: 'Ôn từ vựng', to: '/on-tu-vung-tieng-anh' },
-  { label: 'Ôn ngữ pháp', to: '/on-ngu-phap-tieng-anh' },
-  { label: 'Ôn luyện nghe', to: '/on-luyen-nghe-tieng-anh' },
-  { label: 'Ôn nói', to: '/on-noi-tieng-anh' },
-  { label: 'Ôn shadowing', to: '/on-shadowing-tieng-anh' },
-  { label: 'Học mỗi ngày', to: '/hoc-tieng-anh-moi-ngay' },
-  { label: 'Luyện online', to: '/luyen-tieng-anh-online' },
-];
-
 export type SidebarUser = {
   id?: string;
   name?: string;
@@ -240,37 +215,7 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
           )}
         </VStack>
 
-        <Box mt="3" px="2" py="2.5" borderRadius="2xl" bg="rgba(255, 255, 255, 0.42)" border="1px solid" borderColor={OCEAN_TOKENS.border}>
-          <Text fontSize="xs" fontWeight="900" color={OCEAN_TOKENS.deepBlue} mb="2">
-            PooEnglish
-          </Text>
-          <HStack as="nav" aria-label="Liên kết học tiếng Anh PooEnglish" wrap="wrap" gap="1.5">
-            {SEO_LINKS.map((link) => (
-              <Link key={link.to} to={link.to}>
-                <Text as="span" display="inline-flex" px="2" py="1" borderRadius="full" bg="rgba(232,244,255,0.78)" color={OCEAN_TOKENS.deepBlue} fontSize="10px" fontWeight="850">
-                  {link.label}
-                </Text>
-              </Link>
-            ))}
-          </HStack>
-        </Box>
-
-        <Box mt="2" px="2" py="2.5" borderRadius="2xl" bg="rgba(255, 255, 255, 0.42)" border="1px solid" borderColor={OCEAN_TOKENS.border}>
-          <Text fontSize="xs" fontWeight="900" color={OCEAN_TOKENS.deepBlue} mb="2">
-            Ôn tiếng Anh
-          </Text>
-          <HStack as="nav" aria-label="Liên kết cụm ôn tiếng Anh PooEnglish" wrap="wrap" gap="1.5">
-            {REVIEW_SEO_LINKS.map((link) => (
-              <Link key={link.to} to={link.to}>
-                <Text as="span" display="inline-flex" px="2" py="1" borderRadius="full" bg="rgba(232,244,255,0.78)" color={OCEAN_TOKENS.deepBlue} fontSize="10px" fontWeight="850">
-                  {link.label}
-                </Text>
-              </Link>
-            ))}
-          </HStack>
-        </Box>
-
-        <Box mt="2" textAlign="center">
+        <Box mt="3" textAlign="center">
           <FooterEasterEggButton />
         </Box>
 

@@ -3,8 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import {
   BookOpen,
   Dumbbell,
+  Mic,
   Route,
-  User,
 } from 'lucide-react';
 
 type NavItem = { label: string; to: string; icon: any };
@@ -20,9 +20,9 @@ const NAV_OCEAN = {
 
 const NAV: NavItem[] = [
   { label: 'Học', to: '/learning-path', icon: Route },
+  { label: 'Shadowing', to: '/shadowing', icon: Mic },
   { label: 'Ôn tập', to: '/practice', icon: Dumbbell },
   { label: 'Từ vựng', to: '/words', icon: BookOpen },
-  { label: 'Hồ sơ', to: '/profile', icon: User },
 ];
 
 export function BottomNav() {

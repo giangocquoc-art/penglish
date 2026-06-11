@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent, type SyntheticEvent } from 'react';
-import { Box, Button, Flex, FormControl, FormLabel, HStack, Icon, Input, SimpleGrid, Tag, TagLabel, Text, Textarea, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, FormControl, FormLabel, HStack, Icon, Input, SimpleGrid, Tag, TagLabel, Text, Textarea, VStack, useToast } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, FileVideo, Headphones, Keyboard, Mic, Play, Sparkles, Upload, Video, Waves } from 'lucide-react';
 import { OceanPageShell } from '../components/p-english/OceanPageShell';
@@ -42,6 +42,7 @@ const LinkedGlassPanel = GlassPanel as any;
 
 type SourceType = 'youtube' | 'upload' | 'manual';
 type LabMode = 'speak' | 'type';
+type FallbackChoice = 'upload' | 'manual' | 'subtitle' | 'sample' | null;
 type TypingStats = {
   correctWords: number;
   wrongWords: number;
@@ -172,6 +173,7 @@ function buildTypingStats(comparison: ComparedWord[], hintCount: number, replayC
 }
 
 export function VideoLabPage() {
+  const toast = useToast();
   const [sourceType, setSourceType] = useState<SourceType>('youtube');
   const [title, setTitle] = useState('Video Lab cùng Poo');
   const [youtubeUrl, setYoutubeUrl] = useState('');
@@ -182,6 +184,9 @@ export function VideoLabPage() {
   const [youtubeTranscriptStatus, setYoutubeTranscriptStatus] = useState('');
   const [isFetchingYouTubeTranscript, setIsFetchingYouTubeTranscript] = useState(false);
   const [showManualTranscript, setShowManualTranscript] = useState(false);
+  const [showYoutubeFallbackCard, setShowYoutubeFallbackCard] = useState(false);
+  const [fallbackChoice, setFallbackChoice] = useState<FallbackChoice>(null);
+  const [youtubeToastMessage, setYoutubeToastMessage] = useState('');
   const [lesson, setLesson] = useState<VideoLesson | null>(null);
   const [activeSegmentIndex, setActiveSegmentIndex] = useState(0);
   const [mode, setMode] = useState<LabMode>('speak');
@@ -209,10 +214,13 @@ export function VideoLabPage() {
   const typingStats = useMemo(() => buildTypingStats(typedComparison, hintCount, replayCount), [typedComparison, hintCount, replayCount]);
   const hintedText = useMemo(() => activeSegment?.text.split(/\s+/).slice(0, hintCount).join(' ') ?? '', [activeSegment?.text, hintCount]);
   const hasTranscript = transcript.trim().length > 0;
-  const shouldShowTranscriptFallback = sourceType !== 'youtube' || showManualTranscript;
-  const canCreateLesson = sourceType === 'youtube'
-    ? Boolean(youtubeVideoId) && !isFetchingYouTubeTranscript
-    : hasTranscript;
+  const shouldShowUploadFallback = fallbackChoice === 'upload';
+  const shouldShowManualTextarea = fallbackChoice === 'manual' || fallbackChoice === 'sample';
+  const shouldShowSubtitleUpload = fallbackChoice === 'subtitle';
+  const shouldShowCreateFromTranscript = shouldShowUploadFallback || shouldShowManualTextarea || shouldShowSubtitleUpload;
+  const canCreateLesson = shouldShowCreateFromTranscript
+    ? hasTranscript
+    : Boolean(youtubeVideoId) && !isFetchingYouTubeTranscript;
 
   useEffect(() => {
     uploadedVideoUrlRef.current = uploadedVideoUrl;
@@ -223,6 +231,17 @@ export function VideoLabPage() {
       if (uploadedVideoUrlRef.current) URL.revokeObjectURL(uploadedVideoUrlRef.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (!youtubeToastMessage) return;
+    toast({
+      title: youtubeToastMessage,
+      status: 'success',
+      duration: 3600,
+      isClosable: true,
+      position: 'top',
+    });
+  }, [toast, youtubeToastMessage]);
 
   const resetLessonPracticeState = () => {
     setActiveSegmentIndex(0);
@@ -255,12 +274,15 @@ export function VideoLabPage() {
   const createYouTubeLessonFromCaptions = async () => {
     if (!youtubeVideoId) {
       setYoutubeTranscriptStatus('Poo chưa đọc được link YouTube này. Bạn kiểm tra lại link nhé.');
-      setShowManualTranscript(true);
+      setShowYoutubeFallbackCard(true);
       return;
     }
 
     setIsFetchingYouTubeTranscript(true);
-    setYoutubeTranscriptStatus('Poo đang nghe lời thoại trong video...');
+    setYoutubeTranscriptStatus('Poo đang thử đọc lời thoại trong video...');
+    setShowYoutubeFallbackCard(false);
+    setFallbackChoice(null);
+    setShowManualTranscript(false);
     setTranscriptError('');
     setLesson(null);
 
@@ -292,24 +314,27 @@ export function VideoLabPage() {
         });
         resetLessonPracticeState();
         setShowManualTranscript(false);
+        setShowYoutubeFallbackCard(false);
+        setFallbackChoice(null);
         setYoutubeTranscriptStatus(`Poo đã tách được ${normalizedSegments.length} câu từ video này rồi!`);
+        setYoutubeToastMessage(`Poo đã tách được ${normalizedSegments.length} câu từ video này rồi!`);
         setSpeakMessage('YouTube đã có caption để luyện. Hãy chọn một câu rồi luyện nói hoặc gõ theo câu.');
         scrollToSegments();
         return;
       }
 
-      setShowManualTranscript(true);
+      setShowYoutubeFallbackCard(true);
       setYoutubeTranscriptStatus(getYouTubeTranscriptFailureMessage(payload.reason));
     } catch {
-      setShowManualTranscript(true);
-      setYoutubeTranscriptStatus('Poo chưa gọi được máy chủ lấy caption. Bạn có thể dán transcript hoặc upload phụ đề .srt/.vtt nhé.');
+      setShowYoutubeFallbackCard(true);
+      setYoutubeTranscriptStatus('Poo chưa đọc được lời thoại từ video này. Có thể video chưa bật phụ đề hoặc YouTube không cho lấy caption.');
     } finally {
       setIsFetchingYouTubeTranscript(false);
     }
   };
 
   const createLesson = () => {
-    if (sourceType === 'youtube' && !showManualTranscript) {
+    if (!shouldShowCreateFromTranscript) {
       void createYouTubeLessonFromCaptions();
       return;
     }
@@ -319,7 +344,18 @@ export function VideoLabPage() {
   const useSampleTranscript = () => {
     setTranscript(SAMPLE_TRANSCRIPT);
     setTranscriptError('');
+    setFallbackChoice('sample');
+    setSourceType('manual');
     setShowManualTranscript(true);
+  };
+
+  const chooseFallback = (choice: Exclude<FallbackChoice, null>) => {
+    setFallbackChoice(choice);
+    setTranscriptError('');
+    setShowManualTranscript(choice === 'manual' || choice === 'sample');
+    if (choice === 'upload') setSourceType('upload');
+    if (choice === 'manual' || choice === 'subtitle' || choice === 'sample') setSourceType('manual');
+    if (choice === 'sample') setTranscript(SAMPLE_TRANSCRIPT);
   };
 
   const handleVideoUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -338,7 +374,9 @@ export function VideoLabPage() {
     void file.text().then((content) => {
       setTranscript(content);
       setTranscriptError('');
-      setShowManualTranscript(true);
+      setFallbackChoice('subtitle');
+      setSourceType('manual');
+      setShowManualTranscript(false);
     });
   };
 
@@ -452,17 +490,11 @@ export function VideoLabPage() {
             <GlassPanel data-testid="video-lab-source-panel" p={{ base: '3.5', md: '5' }} bg="rgba(255,255,255,0.76)" borderColor={COLORS.border} borderRadius="3xl">
               <HStack justify="space-between" align="start" mb="3" gap="3" wrap="wrap">
                 <Box minW="0">
-                  <Text fontWeight="950" color={COLORS.text} fontSize={{ base: 'lg', md: '2xl' }}>Tạo bài từ video</Text>
-                  <Text mt="1" color={COLORS.muted} fontSize="sm" fontWeight="750">Dán link YouTube để Poo thử lấy caption tự động, hoặc dùng transcript thủ công khi cần.</Text>
+                  <Text fontWeight="950" color={COLORS.text} fontSize={{ base: 'lg', md: '2xl' }}>Tạo bài từ link YouTube</Text>
+                  <Text mt="1" color={COLORS.muted} fontSize="sm" fontWeight="750">Dán link trước, Poo sẽ thử đọc phụ đề có sẵn. Nếu không được, bạn chọn fallback bên dưới.</Text>
                 </Box>
                 <Button as={Link} to="/shadowing" size="sm" borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} _hover={{ bg: COLORS.softBlue }}>Về Shadowing</Button>
               </HStack>
-
-              <SimpleGrid columns={{ base: 1, md: 3 }} gap="3" mb="4">
-                <SourceCard active={sourceType === 'youtube'} label="YouTube link" icon={Video} description="Embed iframe, không tải video/audio về server." onClick={() => setSourceType('youtube')} />
-                <SourceCard active={sourceType === 'upload'} label="Upload clip" icon={FileVideo} description="Tải clip cục bộ để mock bài luyện, transcript dán riêng." onClick={() => setSourceType('upload')} />
-                <SourceCard active={sourceType === 'manual'} label="Transcript" icon={Keyboard} description="Dán nội dung hoặc phụ đề để luyện từng câu." onClick={() => setSourceType('manual')} />
-              </SimpleGrid>
 
               <VStack align="stretch" gap="3">
                 <FormControl>
@@ -470,50 +502,76 @@ export function VideoLabPage() {
                   <Input value={title} onChange={(event) => setTitle(event.target.value)} bg="white" borderColor={COLORS.border} borderRadius="2xl" />
                 </FormControl>
 
-                {sourceType === 'youtube' ? (
-                  <FormControl>
-                    <FormLabel fontWeight="900" color={COLORS.text}>YouTube link</FormLabel>
-                    <Input value={youtubeUrl} onChange={(event) => { setYoutubeUrl(event.target.value); setYoutubeTranscriptStatus(''); }} placeholder="https://www.youtube.com/watch?v=..." bg="white" borderColor={COLORS.border} borderRadius="2xl" />
-                    <Text mt="1" color={youtubeUrl && !youtubeVideoId ? '#B45309' : COLORS.muted} fontSize="xs" fontWeight="800">Poo chỉ đọc caption có sẵn và embed iframe. Không tải video/audio YouTube.</Text>
-                    {youtubeTranscriptStatus ? (
-                      <HStack mt="2" align="start" gap="2" p="3" borderRadius="2xl" bg={youtubeTranscriptStatus.startsWith('Poo đã tách') ? '#F0FDF4' : isFetchingYouTubeTranscript ? 'rgba(232,244,255,0.8)' : '#FFFBEB'} border="1px solid" borderColor={youtubeTranscriptStatus.startsWith('Poo đã tách') ? '#BBF7D0' : isFetchingYouTubeTranscript ? COLORS.border : '#FDE68A'}>
-                        <Box as="img" src={youtubeTranscriptStatus.startsWith('Poo đã tách') ? PIXEL_ASSETS.pooHappy : isFetchingYouTubeTranscript ? PIXEL_ASSETS.pooListening : PIXEL_ASSETS.pooNeutral} alt="Poo trạng thái caption" className="pooPixelIcon" w="30px" h="30px" flexShrink={0} />
-                        <Text color={youtubeTranscriptStatus.startsWith('Poo đã tách') ? '#166534' : isFetchingYouTubeTranscript ? COLORS.deepBlue : '#92400E'} fontSize="sm" fontWeight="850" lineHeight="1.5">{youtubeTranscriptStatus}</Text>
-                      </HStack>
-                    ) : null}
-                    <Button mt="2" size="sm" borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} onClick={() => setShowManualTranscript((current) => !current)}>
-                      {showManualTranscript ? 'Ẩn transcript thủ công' : 'Dán transcript thủ công'}
-                    </Button>
-                  </FormControl>
+                <FormControl>
+                  <FormLabel fontWeight="900" color={COLORS.text}>YouTube link</FormLabel>
+                  <Input value={youtubeUrl} onChange={(event) => { setYoutubeUrl(event.target.value); setYoutubeTranscriptStatus(''); setShowYoutubeFallbackCard(false); }} placeholder="https://www.youtube.com/watch?v=..." bg="white" borderColor={COLORS.border} borderRadius="2xl" />
+                  <Text mt="1" color={youtubeUrl && !youtubeVideoId ? '#B45309' : COLORS.muted} fontSize="xs" fontWeight="800">Poo sẽ thử đọc phụ đề có sẵn. Nếu video không có phụ đề, bạn có thể upload clip hoặc dán transcript.</Text>
+                  {youtubeTranscriptStatus && !showYoutubeFallbackCard ? (
+                    <HStack mt="2" align="start" gap="2" p="3" borderRadius="2xl" bg={youtubeTranscriptStatus.startsWith('Poo đã tách') ? '#F0FDF4' : 'rgba(232,244,255,0.8)'} border="1px solid" borderColor={youtubeTranscriptStatus.startsWith('Poo đã tách') ? '#BBF7D0' : COLORS.border}>
+                      <Box as="img" src={youtubeTranscriptStatus.startsWith('Poo đã tách') ? PIXEL_ASSETS.pooHappy : PIXEL_ASSETS.pooListening} alt="Poo trạng thái caption" className="pooPixelIcon" w="30px" h="30px" flexShrink={0} />
+                      <Text color={youtubeTranscriptStatus.startsWith('Poo đã tách') ? '#166534' : COLORS.deepBlue} fontSize="sm" fontWeight="850" lineHeight="1.5">{youtubeTranscriptStatus}</Text>
+                    </HStack>
+                  ) : null}
+                </FormControl>
+
+                {!shouldShowCreateFromTranscript ? (
+                  <Button onClick={createLesson} isDisabled={!canCreateLesson} isLoading={isFetchingYouTubeTranscript} loadingText="Poo đang thử đọc lời thoại trong video..." borderRadius="full" bg={COLORS.deepBlue} color="white" leftIcon={<Icon as={Sparkles} />} _hover={{ bg: COLORS.oceanBlue }} data-testid="video-lab-create-lesson">
+                    Tạo bài học từ link
+                  </Button>
                 ) : null}
 
-                {sourceType === 'upload' ? (
+                {showYoutubeFallbackCard ? (
+                  <Box p="3.5" borderRadius="3xl" bg="#FFFBEB" border="1px solid" borderColor="#FDE68A">
+                    <HStack align="start" gap="3" mb="3">
+                      <Box as="img" src={PIXEL_ASSETS.pooNeutral} alt="Poo fallback" className="pooPixelIcon" w="38px" h="38px" flexShrink={0} />
+                      <Box minW="0">
+                        <Text fontWeight="950" color={COLORS.text}>Poo chưa đọc được lời thoại từ video này.</Text>
+                        <Text mt="1" color="#92400E" fontSize="sm" fontWeight="800" lineHeight="1.5">Có thể video chưa bật phụ đề hoặc YouTube không cho lấy caption.</Text>
+                      </Box>
+                    </HStack>
+                    <SimpleGrid columns={{ base: 1, sm: 2 }} gap="2">
+                      <Button justifyContent="flex-start" whiteSpace="normal" h="auto" py="3" borderRadius="2xl" bg={fallbackChoice === 'upload' ? COLORS.deepBlue : 'white'} color={fallbackChoice === 'upload' ? 'white' : COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} leftIcon={<Icon as={FileVideo} />} onClick={() => chooseFallback('upload')}>Upload clip để Poo tự nghe</Button>
+                      <Button justifyContent="flex-start" whiteSpace="normal" h="auto" py="3" borderRadius="2xl" bg={fallbackChoice === 'manual' ? COLORS.deepBlue : 'white'} color={fallbackChoice === 'manual' ? 'white' : COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} leftIcon={<Icon as={Keyboard} />} onClick={() => chooseFallback('manual')}>Dán transcript thủ công</Button>
+                      <Button justifyContent="flex-start" whiteSpace="normal" h="auto" py="3" borderRadius="2xl" bg={fallbackChoice === 'subtitle' ? COLORS.deepBlue : 'white'} color={fallbackChoice === 'subtitle' ? 'white' : COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} leftIcon={<Icon as={Upload} />} onClick={() => chooseFallback('subtitle')}>Upload phụ đề .srt/.vtt</Button>
+                      <Button justifyContent="flex-start" whiteSpace="normal" h="auto" py="3" borderRadius="2xl" bg={fallbackChoice === 'sample' ? COLORS.deepBlue : 'white'} color={fallbackChoice === 'sample' ? 'white' : COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} leftIcon={<Icon as={Sparkles} />} onClick={useSampleTranscript}>Dùng transcript mẫu</Button>
+                    </SimpleGrid>
+                  </Box>
+                ) : null}
+
+                {shouldShowUploadFallback ? (
                   <FormControl>
                     <FormLabel fontWeight="900" color={COLORS.text}>Upload clip .mp4/.mov/.webm</FormLabel>
                     <Input type="file" accept="video/mp4,video/quicktime,video/webm" onChange={handleVideoUpload} bg="white" borderColor={COLORS.border} borderRadius="2xl" p="2" />
-                    <Text mt="1" color={COLORS.muted} fontSize="xs" fontWeight="800">{uploadedVideoName ? `Đã chọn: ${uploadedVideoName}` : 'Giai đoạn này xử lý tự động đang mock. Hãy dán transcript hoặc upload phụ đề.'}</Text>
+                    <Text mt="1" color={COLORS.muted} fontSize="xs" fontWeight="800">{uploadedVideoName ? `Đã chọn: ${uploadedVideoName}` : 'Cách này ổn định nhất vì Poo sẽ xử lý trực tiếp file của bạn.'}</Text>
                     <HStack mt="2" align="start" gap="2" p="3" borderRadius="2xl" bg="rgba(232,244,255,0.8)" border="1px solid" borderColor={COLORS.border}>
                       <Icon as={Upload} color={COLORS.deepBlue} />
-                      <Text color={COLORS.deepBlue} fontSize="sm" fontWeight="850" lineHeight="1.5">Bản hiện tại mới xem trước video. Tự tách thoại từ clip sẽ được bật ở bước AI tiếp theo.</Text>
+                      <Text color={COLORS.deepBlue} fontSize="sm" fontWeight="850" lineHeight="1.5">Cách này ổn định nhất vì Poo sẽ xử lý trực tiếp file của bạn.</Text>
                     </HStack>
                   </FormControl>
                 ) : null}
 
-                {shouldShowTranscriptFallback ? (
+                {shouldShowSubtitleUpload ? (
                   <FormControl>
-                    <HStack justify="space-between" align="center" gap="2" wrap="wrap" mb="2">
-                      <FormLabel m="0" fontWeight="900" color={COLORS.text}>Transcript hoặc phụ đề .srt/.vtt</FormLabel>
-                      <Button size="sm" borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} leftIcon={<Icon as={Sparkles} />} onClick={useSampleTranscript}>Dùng transcript mẫu</Button>
-                    </HStack>
-                    <Input type="file" accept=".srt,.vtt,text/vtt" onChange={handleSubtitleUpload} bg="white" borderColor={COLORS.border} borderRadius="2xl" p="2" mb="2" />
+                    <FormLabel fontWeight="900" color={COLORS.text}>Upload phụ đề .srt/.vtt</FormLabel>
+                    <Input type="file" accept=".srt,.vtt,text/vtt" onChange={handleSubtitleUpload} bg="white" borderColor={COLORS.border} borderRadius="2xl" p="2" />
+                    <Text mt="1" color={COLORS.muted} fontSize="xs" fontWeight="800">Sau khi upload phụ đề, Poo sẽ tách từng câu để tạo bài luyện.</Text>
+                    {transcriptError ? <Text mt="2" color="#B91C1C" fontSize="sm" fontWeight="850">{transcriptError}</Text> : null}
+                  </FormControl>
+                ) : null}
+
+                {shouldShowManualTextarea ? (
+                  <FormControl>
+                    <FormLabel fontWeight="900" color={COLORS.text}>Transcript thủ công</FormLabel>
                     <Textarea value={transcript} onChange={(event) => { setTranscript(event.target.value); setTranscriptError(''); }} minH="180px" bg="white" borderColor={transcriptError ? '#FECACA' : COLORS.border} borderRadius="2xl" fontWeight="700" placeholder="Dán transcript hoặc nội dung SRT/VTT ở đây..." />
                     {transcriptError ? <Text mt="2" color="#B91C1C" fontSize="sm" fontWeight="850">{transcriptError}</Text> : null}
                   </FormControl>
                 ) : null}
 
-                <Button onClick={createLesson} isDisabled={!canCreateLesson} isLoading={isFetchingYouTubeTranscript} loadingText="Poo đang nghe lời thoại trong video..." borderRadius="full" bg={COLORS.deepBlue} color="white" leftIcon={<Icon as={Sparkles} />} _hover={{ bg: COLORS.oceanBlue }} data-testid="video-lab-create-lesson">
-                  {sourceType === 'youtube' && !showManualTranscript ? 'Tạo bài học từ link' : 'Tạo bài học'}
-                </Button>
+                {shouldShowCreateFromTranscript ? (
+                  <Button onClick={createLesson} isDisabled={!canCreateLesson} borderRadius="full" bg={COLORS.deepBlue} color="white" leftIcon={<Icon as={Sparkles} />} _hover={{ bg: COLORS.oceanBlue }} data-testid="video-lab-create-lesson">
+                    Tạo bài học
+                  </Button>
+                ) : null}
               </VStack>
             </GlassPanel>
 
