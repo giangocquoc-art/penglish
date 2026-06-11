@@ -30,7 +30,8 @@ const NewStudyPage = lazy(() => import('./pages/StudyPage').then((module) => ({ 
 const NewPracticePage = lazy(() => import('./pages/PracticePage').then((module) => ({ default: module.PracticePage })));
 const NewLessonPage = lazy(() => import('./pages/LessonPage').then((module) => ({ default: module.LessonPage })));
 const NewLearningPathPage = lazy(() => import('./pages/LearningPathPage').then((module) => ({ default: module.LearningPathPage })));
-const NewShadowingPage = lazy(() => import('./pages/ShadowingPage').then((module) => ({ default: module.ShadowingPage })));
+const NewShadowingHubPage = lazy(() => import('./pages/ShadowingHubPage').then((module) => ({ default: module.ShadowingHubPage })));
+const NewShadowingPracticePage = lazy(() => import('./pages/ShadowingPage').then((module) => ({ default: module.ShadowingPracticePage })));
 const NewEnglishSpeedPage = lazy(() => import('./pages/EnglishSpeedPage').then((module) => ({ default: module.EnglishSpeedPage })));
 const NewInteractiveLessonPage = lazy(() => import('./pages/InteractiveLessonPage').then((module) => ({ default: module.InteractiveLessonPage })));
 const NewResourceHubPage = lazy(() => import('./pages/ResourceHubPage').then((module) => ({ default: module.ResourceHubPage })));
@@ -191,7 +192,8 @@ function AppRoutes() {
   else if (matchPath('/learn/:lessonId', pathname)) routeElement = <ProtectedShell user={user}><NewInteractiveLessonPage /></ProtectedShell>;
   else if (pathname === '/luyen-tieng-anh/48-ngay-lay-goc') routeElement = <ProtectedShell user={user}><Foundation48Page /></ProtectedShell>;
   else if (matchPath('/luyen-tieng-anh/48-ngay-lay-goc/ngay/:dayNumber', pathname)) routeElement = <ProtectedShell user={user}><Foundation48DayPage /></ProtectedShell>;
-  else if (pathname === '/shadowing') routeElement = <ProtectedShell user={user}><NewShadowingPage /></ProtectedShell>;
+  else if (pathname === '/shadowing') routeElement = <ProtectedShell user={user}><NewShadowingHubPage /></ProtectedShell>;
+  else if (matchPath('/shadowing/practice/:lessonId', pathname)) routeElement = <ProtectedShell user={user}><NewShadowingPracticePage /></ProtectedShell>;
   else if (matchPath('/lessons/:lessonId', pathname)) routeElement = <ProtectedShell user={user}><NewLessonPage /></ProtectedShell>;
   else if (pathname === '/categories' || pathname === '/category-list') routeElement = <ProtectedShell user={user}><NewCategoriesPage /></ProtectedShell>;
   else if (pathname === '/vocabularies' || pathname === '/words') routeElement = <ProtectedShell user={user}><NewVocabPage /></ProtectedShell>;

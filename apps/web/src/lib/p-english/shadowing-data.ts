@@ -1,3 +1,4 @@
+import { shadowingLessons } from '../../data/shadowingLessons';
 import { generatedShadowingVideos } from './shadowingAdapter';
 export type { AdaptedShadowingVideo } from './shadowingAdapter';
 
@@ -251,6 +252,32 @@ export const curatedShadowingVideos: ShadowingVideo[] = [
   }),
 ];
 
+const dedicatedShadowingVideos: ShadowingVideo[] = shadowingLessons.map((item) => {
+  const transcript = item.sentences.map((sentence, index) => ({
+    id: `${item.id}-${sentence.id}`,
+    start: index * 4,
+    end: index * 4 + 4,
+    text: sentence.text,
+    vi: sentence.vi,
+    focusNotes: [sentence.hint, ...(sentence.focusWords?.length ? [`Từ khóa: ${sentence.focusWords.join(', ')}`] : [])].filter((note): note is string => Boolean(note)),
+  }));
+
+  return {
+    id: item.id,
+    title: `${item.level} · ${item.title}`,
+    level: item.level,
+    topic: item.topic,
+    duration: `${item.sentenceCount} câu · ${item.durationMinutes} phút`,
+    videoUrl: '',
+    description: item.description,
+    transcript,
+    transcriptLines: transcript,
+    youtubeId: '',
+    embedAllowed: false,
+    focusNotes: item.pronunciationFocus ?? [],
+  };
+});
+
 const adaptedGeneratedVideos: ShadowingVideo[] = generatedShadowingVideos.map((item) => ({
   ...item,
   transcriptLines: item.transcriptLines ?? item.transcript,
@@ -259,4 +286,7 @@ const adaptedGeneratedVideos: ShadowingVideo[] = generatedShadowingVideos.map((i
   focusNotes: item.focusNotes ?? item.learnerTipsVi ?? [],
 }));
 
-export const shadowingVideos: ShadowingVideo[] = [...curatedShadowingVideos, ...adaptedGeneratedVideos];
+const dedicatedLessonIds = new Set(dedicatedShadowingVideos.map((item) => item.id));
+const legacyCuratedVideos = curatedShadowingVideos.filter((item) => !dedicatedLessonIds.has(item.id));
+
+export const shadowingVideos: ShadowingVideo[] = [...dedicatedShadowingVideos, ...legacyCuratedVideos, ...adaptedGeneratedVideos];

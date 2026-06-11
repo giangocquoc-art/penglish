@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { saveShadowingAttempt } from '../lib/p-english/userDataAdapter';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
@@ -276,11 +277,16 @@ function syncShadowingLearningLoop(video: ShadowingVideo | undefined, sentence: 
   });
 }
 
-export function ShadowingPage() {
+export function ShadowingPracticePage() {
+  const { lessonId } = useParams<{ lessonId: string }>();
+  const navigate = useNavigate();
   const [customVideo, setCustomVideo] = useState<ShadowingVideo | null>(() => readCustomShadowingItem());
   const videos = useMemo(() => (customVideo ? [customVideo, ...shadowingVideos] : shadowingVideos), [customVideo]);
-  const [selectedVideoId, setSelectedVideoId] = useState(customVideo?.id ?? shadowingVideos[0]?.id ?? '');
-  const selectedVideo = useMemo(() => videos.find((item) => item.id === selectedVideoId) ?? videos[0], [selectedVideoId, videos]);
+  const requestedVideo = useMemo(() => videos.find((item) => item.id === lessonId) ?? null, [lessonId, videos]);
+  const fallbackVideo = videos[0] ?? null;
+  const [selectedVideoId, setSelectedVideoId] = useState(requestedVideo?.id ?? fallbackVideo?.id ?? '');
+  const selectedVideo = useMemo(() => videos.find((item) => item.id === selectedVideoId) ?? requestedVideo ?? fallbackVideo, [fallbackVideo, requestedVideo, selectedVideoId, videos]);
+  const invalidLessonMessage = lessonId && !requestedVideo ? `Poo chưa tìm thấy bài "${lessonId}" nên mở bài đầu tiên để bạn luyện tiếp nha.` : '';
   const [customTitle, setCustomTitle] = useState(customVideo?.title ?? '');
   const [customUrl, setCustomUrl] = useState(customVideo?.videoUrl ?? '');
   const [customTranscript, setCustomTranscript] = useState(customVideo?.transcript.map((item) => item.text).join('\n') ?? '');
@@ -357,6 +363,11 @@ export function ShadowingPage() {
       : apiError
         ? PIXEL_ASSETS.pooConfused
         : PIXEL_ASSETS.pooNeutral;
+
+  useEffect(() => {
+    const nextVideoId = requestedVideo?.id ?? fallbackVideo?.id ?? '';
+    setSelectedVideoId(nextVideoId);
+  }, [fallbackVideo?.id, requestedVideo?.id]);
 
   useEffect(() => {
     setYoutubeFallbackVisible(false);
@@ -753,6 +764,7 @@ export function ShadowingPage() {
     setSelectedVideoId(next.id);
     setCurrentLineIndex(0);
     setCustomMessage(`Đã tạo bài luyện với ${transcript.length} câu. Bấm từng câu trong lời thoại để luyện.`);
+    navigate(`/shadowing/practice/${next.id}`);
   };
 
   const removeCustomPractice = () => {
@@ -873,7 +885,11 @@ export function ShadowingPage() {
             </HStack>
             <Text as="h1" fontSize={{ base: 'xl', md: '4xl' }} fontWeight="800" color={COLORS.text} lineHeight="1.08">Nói đuổi cùng Poo</Text>
             <Text mt={{ base: '1.5', md: '3' }} color={COLORS.muted} maxW="800px" fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" lineHeight={{ base: '1.4', md: '1.7' }} noOfLines={{ base: 3, md: undefined }}>Không cần nói hoàn hảo. Mục tiêu là nghe rõ hơn và nói tự nhiên hơn mỗi ngày: nghe mẫu, nói lại, rồi để Poo chỉ ra chỗ cần luyện thêm.</Text>
-            <HStack mt="4" gap="2" wrap="wrap" display={{ base: 'none', md: 'flex' }}>
+            {invalidLessonMessage ? <Text mt="2" color="#B45309" fontSize="sm" fontWeight="850" role="status">{invalidLessonMessage}</Text> : null}
+            <HStack mt="4" gap="2" wrap="wrap">
+              <Button as={Link} to="/shadowing" size="sm" borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD" _hover={{ bg: COLORS.softBlue }}>Về Shadowing</Button>
+            </HStack>
+            <HStack mt="3" gap="2" wrap="wrap" display={{ base: 'none', md: 'flex' }}>
               {SHADOWING_WORKFLOW_STEPS.map((step) => <Tag key={step} size="sm" borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD"><TagLabel>{step}</TagLabel></Tag>)}
             </HStack>
           </Box>
@@ -998,7 +1014,7 @@ export function ShadowingPage() {
                 {videos.map((item) => {
                   const active = item.id === selectedVideo?.id;
                   return (
-                    <Box data-testid={`shadowing-video-card-${item.id}`} className="shadowing-video-card" key={item.id} as="button" type="button" textAlign="left" p="3" borderRadius="2xl" bg={active ? COLORS.softBlue : 'rgba(255,255,255,0.78)'} border="1px solid" borderColor={active ? '#7DD3FC' : COLORS.border} boxShadow={active ? '0 10px 24px rgba(31, 111, 214, 0.10)' : 'none'} onClick={() => setSelectedVideoId(item.id)} w="100%" minW="0" willChange="transform, opacity" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 96px)" aria-pressed={active} aria-label={`Chọn bài nói đuổi: ${item.title}`} _focusVisible={{ outline: '3px solid', outlineColor: COLORS.oceanBlue, outlineOffset: '2px' }}>
+                    <Box data-testid={`shadowing-video-card-${item.id}`} className="shadowing-video-card" key={item.id} as="button" type="button" textAlign="left" p="3" borderRadius="2xl" bg={active ? COLORS.softBlue : 'rgba(255,255,255,0.78)'} border="1px solid" borderColor={active ? '#7DD3FC' : COLORS.border} boxShadow={active ? '0 10px 24px rgba(31, 111, 214, 0.10)' : 'none'} onClick={() => navigate(`/shadowing/practice/${item.id}`)} w="100%" minW="0" willChange="transform, opacity" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 96px)" aria-pressed={active} aria-label={`Chọn bài nói đuổi: ${item.title}`} _focusVisible={{ outline: '3px solid', outlineColor: COLORS.oceanBlue, outlineOffset: '2px' }}>
                       <Text fontWeight="700" color={COLORS.text} noOfLines={1}>{item.title}</Text>
                       <Text fontSize="sm" color={COLORS.muted} noOfLines={2}>{item.description}</Text>
                       {item.referenceVideoTitle ? <Text mt="1" fontSize="xs" color={COLORS.deepBlue} fontWeight="700" noOfLines={1}>{item.referenceVideoTitle}</Text> : null}
@@ -1077,5 +1093,9 @@ export function ShadowingPage() {
       </Box>
     </OceanPageShell>
   );
+}
+
+export function ShadowingPage() {
+  return <ShadowingPracticePage />;
 }
 

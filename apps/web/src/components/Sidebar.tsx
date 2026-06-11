@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Flex, HStack, Icon, Text, VStack, Avatar, IconButton, useColorMode, Button } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, BookOpen, Dumbbell, Moon, Sun, Coins, ChevronRight, Waves, LogOut, RefreshCw } from 'lucide-react';
+import { Home, BookOpen, Dumbbell, Moon, Sun, Coins, ChevronRight, Waves, LogOut, RefreshCw, Mic } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 import { OCEAN_TOKENS } from './p-english/OceanBackdrop';
 import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getWaterStreak } from '../lib/p-english/daily-rewards';
@@ -12,10 +12,11 @@ import { useAuth } from '../features/auth/AuthProvider';
 import { syncLocalFoundation48ProgressToCloud } from '../features/foundation48/foundation48CloudProgress';
 import { FooterEasterEggButton } from './easter-eggs/FooterEasterEggButton';
 
-type NavItem = { label: string; to: string; icon: any; tint: string; description: string };
+type NavItem = { label: string; to: string; icon: any; tint: string; description: string; pixelIconSrc?: string };
 
 const NAV: NavItem[] = [
   { label: 'Học', to: '/luyen-tieng-anh/48-ngay-lay-goc', icon: Waves, tint: OCEAN_TOKENS.whaleBlue, description: 'Bài hôm nay' },
+  { label: 'Shadowing', to: '/shadowing', icon: Mic, tint: OCEAN_TOKENS.oceanBlue, description: 'Nghe & nói', pixelIconSrc: '/assets/shadowing-pixel/micro-normal.png' },
   { label: 'Ôn tập', to: '/practice', icon: Dumbbell, tint: OCEAN_TOKENS.deepBlue, description: 'Câu cần ôn' },
   { label: 'Từ vựng', to: '/words', icon: BookOpen, tint: OCEAN_TOKENS.whaleBlue, description: 'Kho từ' },
   { label: 'Trang chủ', to: '/home', icon: Home, tint: OCEAN_TOKENS.oceanBlue, description: 'Tổng quan' },
@@ -179,7 +180,11 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
                   justify="center"
                   flexShrink={0}
                 >
-                  <Icon as={item.icon} boxSize="5" color={active ? OCEAN_TOKENS.deepBlue : item.tint} />
+                  {item.pixelIconSrc ? (
+                    <Box as="img" className="pooPixelIcon" src={item.pixelIconSrc} alt="" loading="lazy" w="24px" h="24px" opacity={active ? 1 : 0.86} />
+                  ) : (
+                    <Icon as={item.icon} boxSize="5" color={active ? OCEAN_TOKENS.deepBlue : item.tint} />
+                  )}
                 </Flex>
                 <Box minW="0">
                   <Text fontWeight={active ? '850' : '700'} fontSize="sm" lineHeight="1.15">{item.label}</Text>

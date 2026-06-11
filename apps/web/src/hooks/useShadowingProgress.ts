@@ -10,7 +10,7 @@ export type ShadowingProgressEntry = {
   updatedAt: string;
 };
 
-type ShadowingProgressStore = Record<string, ShadowingProgressEntry>;
+export type ShadowingProgressStore = Record<string, ShadowingProgressEntry>;
 
 type ProgressPatch = Partial<Pick<ShadowingProgressEntry, 'currentLineIndex' | 'practicedLineIds' | 'difficultLineIds'>>;
 
@@ -44,7 +44,7 @@ function normalizeEntry(entry: unknown, lineIds: string[]): ShadowingProgressEnt
   };
 }
 
-function readStore(): ShadowingProgressStore {
+export function readShadowingProgressStore(): ShadowingProgressStore {
   const storage = getStorage();
   if (!storage) return {};
 
@@ -71,7 +71,7 @@ function writeStore(store: ShadowingProgressStore) {
 
 function readLessonProgress(lessonId: string | undefined, lineIds: string[]) {
   if (!lessonId) return normalizeEntry(undefined, lineIds);
-  const store = readStore();
+  const store = readShadowingProgressStore();
   return normalizeEntry(store[lessonId], lineIds);
 }
 
@@ -92,7 +92,7 @@ export function useShadowingProgress(lessonId: string | undefined, lineIds: stri
       }, lineIds);
 
       if (lessonId) {
-        const store = readStore();
+        const store = readShadowingProgressStore();
         writeStore({
           ...store,
           [lessonId]: next,
