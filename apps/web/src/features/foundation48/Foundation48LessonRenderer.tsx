@@ -33,7 +33,7 @@ export function Foundation48LessonRenderer({ day }: { day: Foundation48Day }) {
         <ListSection title="Công thức / mẫu câu" items={lesson.formulas} mascot="mucMo" />
         <ListSection title="Ví dụ dễ nhớ" items={lesson.examples} mascot="poo" />
         <ListSection title="Luyện tập" items={lesson.practiceQuestions} mascot="cuaQuiz" />
-        <ListSection title="Bài kiểm tra nhỏ" items={lesson.dailyTest} mascot="cuaQuiz" />
+        <ListSection title="Thử sức nhẹ" items={lesson.dailyTest} mascot="cuaQuiz" />
         <Section title="Nhiệm vụ cuối ngày" body={lesson.finalTask} mascot="saoNhi" pose="sparkle" />
       </VStack>
     );
@@ -56,7 +56,7 @@ export function Foundation48LessonRenderer({ day }: { day: Foundation48Day }) {
         <HStack justify="space-between" align="start" gap="3" wrap="wrap" mb="3">
           <Box>
             <Text as="h2" fontSize={{ base: 'lg', md: '2xl' }} fontWeight="950" color={COLORS.text}>Bài đọc rút gọn</Text>
-            <Text mt="1" color={COLORS.muted} fontSize="sm" fontWeight="700" lineHeight="1.6">Đọc từng dòng, sau đó chuyển sang bài tập tương tác để kiểm tra.</Text>
+            <Text mt="1" color={COLORS.muted} fontSize="sm" fontWeight="700" lineHeight="1.6">Đọc từng dòng, sau đó chuyển sang bài tập tương tác để Poo xem cùng bạn.</Text>
           </Box>
         </HStack>
         <SimpleGrid columns={{ base: 1, lg: 2 }} gap="2.5">
@@ -74,7 +74,7 @@ export function Foundation48LessonRenderer({ day }: { day: Foundation48Day }) {
       />
       <Section
         title="Nhiệm vụ cuối ngày"
-        body={day.dayNumber === 48 ? 'Chuẩn bị một đoạn tự giới thiệu ngắn và nói thành tiếng như đang đứng trước lớp.' : 'Hoàn thành bài học, ghi nhớ lỗi sai, rồi chuyển sang ngày tiếp theo khi bạn thấy đủ chắc.'}
+        body={day.dayNumber === 48 ? 'Chuẩn bị một đoạn tự giới thiệu ngắn và nói thành tiếng như đang đứng trước lớp.' : 'Hoàn thành bài học, nhớ vài câu Poo nhắc, rồi chuyển sang ngày tiếp theo khi bạn thấy đủ chắc.'}
         mascot={day.dayNumber === 48 ? 'saoNhi' : 'ruaRi'}
         pose={day.dayNumber === 48 ? 'sparkle' : 'guide'}
       />

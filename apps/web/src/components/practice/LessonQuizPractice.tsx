@@ -142,11 +142,11 @@ function answerToText(answer: string | string[]) {
 }
 
 function questionLabel(question: CombinedQuizQuestion) {
-  return question.question ?? question.prompt ?? question.vietnamese ?? 'Câu kiểm tra nhanh';
+  return question.question ?? question.prompt ?? question.vietnamese ?? 'Câu thử sức nhẹ';
 }
 
 function questionSourceLabel(source: CombinedQuizQuestion['source']) {
-  if (source === 'quizQuestions') return 'Câu kiểm tra';
+  if (source === 'quizQuestions') return 'Câu Poo xem cùng bạn';
   if (source === 'sentenceOrderingTasks') return 'Sắp xếp câu';
   return 'Điền chỗ trống';
 }
@@ -448,7 +448,7 @@ export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: Engl
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px="6" py="8">
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có câu kiểm tra nhanh cho bài học này</Text>
+          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Poo mở phần thử sức ở nhịp khác</Text>
           <Text mt="2" color={COLORS.muted}>Hãy quay lại bài học hoặc luyện bằng thẻ từ trước.</Text>
           <HStack mt="6" wrap="wrap">
             <Button as={Link} to={`/lessons/${lesson.id}`} borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }} leftIcon={<Icon as={ArrowLeft} />}>Quay về bài học</Button>
@@ -482,12 +482,12 @@ export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: Engl
             <Flex justify="space-between" align={{ base: 'start', md: 'center' }} direction={{ base: 'column', md: 'row' }} gap="4">
               <Box>
                 <HStack wrap="wrap" gap="2" mb="2">
-                  <Tag bg="#EFF6FF" color={COLORS.primary} borderRadius="full" fontWeight="800">Kiểm tra nhanh</Tag>
+                  <Tag bg="#EFF6FF" color={COLORS.primary} borderRadius="full" fontWeight="800">Thử sức nhẹ</Tag>
                   <Tag bg="#F0FDF4" color="#15803D" borderRadius="full" fontWeight="800">Bài 1</Tag>
                 </HStack>
                 <Text fontSize={{ base: '2xl', md: '4xl' }} fontWeight="950" color={COLORS.text}>{lesson.titleVi}</Text>
                 <Text mt="1" color={COLORS.muted} fontWeight="700">{lesson.titleEn}</Text>
-                <Text mt="3" color={COLORS.muted}>Bài kiểm tra nhanh này giúp bạn ôn cụm câu, không chỉ ôn từ đơn.</Text>
+                <Text mt="3" color={COLORS.muted}>Phần thử sức nhẹ này giúp bạn ôn cụm câu, không chỉ ôn từ đơn.</Text>
                 <Text color={COLORS.muted}>Trả lời xong hãy đọc phần giải thích để hiểu vì sao đúng.</Text>
               </Box>
               <HStack align="center" gap="3">
@@ -543,11 +543,11 @@ export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: Engl
           <Flex justify="space-between" align="center" gap="3" wrap="wrap">
             <HStack wrap="wrap">
               <Button as={Link} to={`/lessons/${lesson.id}`} borderRadius="full" variant="outline" leftIcon={<Icon as={ArrowLeft} />}>Quay về bài học</Button>
-              <Button borderRadius="full" variant="outline" leftIcon={<Icon as={RotateCcw} />} onClick={restartAll}>Làm lại kiểm tra nhanh</Button>
+              <Button borderRadius="full" variant="outline" leftIcon={<Icon as={RotateCcw} />} onClick={restartAll}>Làm lại phần thử sức</Button>
             </HStack>
             <HStack wrap="wrap">
               <Button borderRadius="full" variant="outline" onClick={previousQuestion} isDisabled={currentIndex === 0}>Câu trước</Button>
-              {currentAnswer?.checked ? null : <Button data-testid="practice-quiz-check" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }} onClick={checkCurrent}>Kiểm tra</Button>}
+              {currentAnswer?.checked ? null : <Button data-testid="practice-quiz-check" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }} onClick={checkCurrent}>Poo xem giúp</Button>}
             </HStack>
           </Flex>
         </VStack>

@@ -8,13 +8,10 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 gsap.registerPlugin(useGSAP);
 
 const LOADING_COPY = [
-  'Đang gọi Poo dậy đi học...',
-  'Đang gom từ vựng dưới đáy biển...',
-  'Đang pha trà sữa cho cá voi...',
-  'Đang luyện phát âm với sóng biển...',
-  'Đang mở bản đồ 48 ngày lấy gốc...',
-  'Đang nhờ Poo kiểm tra bài học...',
-  'Đang vớt mấy con chữ bị rơi...',
+  'Poo đang chuẩn bị bài học hôm nay...',
+  'Poo đang mở lớp học dưới biển...',
+  'Poo đang sắp xếp lộ trình học...',
+  'Poo đang làm bài học mượt hơn...',
 ];
 
 type PooOceanRiseLoaderProps = {
@@ -29,7 +26,7 @@ function clampProgress(value: number) {
   return Math.max(0, Math.min(100, Math.round(value)));
 }
 
-export function PooOceanRiseLoader({ progress, exiting = false, delayed = false, label = 'Đang tải PooEnglish' }: PooOceanRiseLoaderProps) {
+export function PooOceanRiseLoader({ progress, exiting = false, delayed = false, label = 'Đang mở lớp học' }: PooOceanRiseLoaderProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const waterRef = useRef<HTMLDivElement | null>(null);
   const shimmerRef = useRef<HTMLDivElement | null>(null);
@@ -161,7 +158,7 @@ export function PooOceanRiseLoader({ progress, exiting = false, delayed = false,
 
           <VStack gap="2">
             <Text fontSize="xs" fontWeight="950" color="#1F6FD6" letterSpacing="0.16em" textTransform="uppercase">
-              PooEnglish Ocean
+              Vào lớp học cùng Poo
             </Text>
             <Text data-testid="poo-ocean-rise-copy" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950" color="#102A43" lineHeight="1.18">
               {copy}

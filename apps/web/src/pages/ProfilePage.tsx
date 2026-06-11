@@ -52,7 +52,7 @@ export function ProfilePage() {
         name: session.displayName,
         email: session.email ?? undefined,
         avatar: session.avatarUrl,
-        bio: 'Đã đăng nhập Google, tiến độ tách theo tài khoản.',
+        bio: 'Poo sẽ giữ tiến độ học của bạn thật an toàn.',
       });
       return;
     }
@@ -62,7 +62,7 @@ export function ProfilePage() {
       name: 'Khách',
       email: undefined,
       avatar: '',
-      bio: 'Tiến độ lưu trên thiết bị này',
+      bio: 'Poo đang giữ tiến độ cho bạn',
       coin: 0,
       streak: 0,
     });
@@ -77,7 +77,7 @@ export function ProfilePage() {
   ];
 
   const displayName = session.isSignedIn ? session.displayName : 'Khách';
-  const displayBio = session.isSignedIn ? 'Đã đăng nhập Google, tiến độ tách theo tài khoản.' : 'Tiến độ lưu trên thiết bị này';
+  const displayBio = session.isSignedIn ? 'Poo sẽ giữ tiến độ học của bạn thật an toàn.' : 'Poo đang giữ tiến độ cho bạn';
 
   const syncProgress = async () => {
     if (!session.userId) return;
@@ -110,14 +110,14 @@ export function ProfilePage() {
             <HStack gap="2" mb="1" justify={{ base: 'center', md: 'start' }} wrap="wrap">
               <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="900" color={PROFILE_COLORS.text}>{displayName}</Text>
               <Badge bg={session.isSignedIn ? '#EAFBF0' : PROFILE_COLORS.softBlue} color={session.isSignedIn ? '#16803A' : PROFILE_COLORS.deepBlue} borderRadius="full" px="2.5" py="0.5" textTransform="none">
-                {session.isSignedIn ? 'Google' : 'Guest'}
+                {session.isSignedIn ? 'Google' : 'Bạn học cùng Poo'}
               </Badge>
             </HStack>
             <Text color={PROFILE_COLORS.secondaryText} fontWeight="600" mb="3">Poo đang đồng hành cùng bạn học tiếng Anh mỗi ngày.</Text>
             <HStack data-testid="profile-data-mode" justify={{ base: 'center', md: 'start' }} gap="2" wrap="wrap" mb="4">
               <Badge borderRadius="full" px="3" py="1" bg={session.isSignedIn ? '#EAFBF0' : '#E8F4FF'} color={session.isSignedIn ? '#16803A' : PROFILE_COLORS.deepBlue}>{session.dataModeLabel}</Badge>
               <Text fontSize="sm" color={PROFILE_COLORS.secondaryText} fontWeight="700">
-                {session.isSignedIn ? session.email ?? 'Tài khoản Google' : 'Guest: dữ liệu lưu trên trình duyệt này.'}
+                {session.isSignedIn ? session.email ?? 'Tài khoản Google' : 'Poo đang giữ tiến độ cho bạn.'}
               </Text>
             </HStack>
             <Text mb="4" minH="40px" color={PROFILE_COLORS.text} lineHeight="1.7">{displayBio}</Text>
@@ -125,7 +125,7 @@ export function ProfilePage() {
               {session.isSignedIn ? (
                 <>
                   <Button size="sm" bg={PROFILE_COLORS.oceanBlue} color="white" borderRadius="full" leftIcon={<Icon as={RefreshCw} />} isLoading={syncing} onClick={syncProgress} _hover={{ bg: PROFILE_COLORS.deepBlue }}>
-                    Đồng bộ tiến độ
+                    Lưu tiến độ lên tài khoản
                   </Button>
                   <Button size="sm" variant="outline" borderRadius="full" leftIcon={<Icon as={LogOut} />} onClick={() => void auth.signOut()}>
                     Đăng xuất
@@ -133,7 +133,7 @@ export function ProfilePage() {
                 </>
               ) : (
                 <Button size="sm" bg={PROFILE_COLORS.oceanBlue} color="white" borderRadius="full" onClick={() => void auth.signInWithGoogle()} _hover={{ bg: PROFILE_COLORS.deepBlue }}>
-                  Đăng nhập Google để đồng bộ
+                  Vào học bằng Google để lưu tiến độ
                 </Button>
               )}
             </HStack>

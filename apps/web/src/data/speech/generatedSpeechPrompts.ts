@@ -187,22 +187,22 @@ const speechExpansionSeeds: PromptSeed[] = ([
 
 function commonMistakes(level: SpeechCefrLevel, targetWords: string[]) {
   const joined = targetWords.join(', ');
-  if (level === 'A1') return [`Dễ nuốt âm cuối ở: ${joined}.`, 'Nói từng từ quá rời; hãy nối các cụm ngắn.'];
-  if (level === 'A2') return [`Dễ bỏ âm nối hoặc nhấn sai ở: ${joined}.`, 'Đừng đọc quá nhanh khi gặp cụm hai hoặc ba từ.'];
-  if (level === 'B1') return [`Câu dài dễ mất trọng âm ở: ${joined}.`, 'Chú ý nhịp câu: nhóm ý trước, nói rõ sau.'];
-  return [`Từ dài dễ bị đều giọng ở: ${joined}.`, 'Giữ nhịp tự nhiên, nhấn vào từ mang ý chính.'];
+  if (level === 'A1') return [`Poo hay nghe hụt âm cuối ở: ${joined}.`, 'Mình nối cụm ngắn cho câu mềm hơn nhé.'];
+  if (level === 'A2') return [`Poo có thể nghe chưa rõ âm nối ở: ${joined}.`, 'Gặp cụm hai hoặc ba từ, mình chậm lại một chút nhé.'];
+  if (level === 'B1') return [`Câu dài có thể làm Poo nghe chưa rõ nhịp ở: ${joined}.`, 'Mình gom ý nhỏ trước, rồi nói rõ từng cụm nhé.'];
+  return [`Từ dài có thể cần nhấn nhẹ hơn ở: ${joined}.`, 'Giữ nhịp tự nhiên và nhấn nhẹ vào từ mang ý chính nhé.'];
 }
 
 function retryTips(level: SpeechCefrLevel, focusSounds: string[]) {
   const first = focusSounds[0] ?? 'âm chính';
   if (level === 'A1') return [`Nói chậm hơn 20% và giữ rõ ${first}.`, 'Nghe mẫu một lần rồi đọc lại nguyên câu.'];
   if (level === 'A2') return [`Chia câu thành hai nhịp, tập kỹ ${first}.`, 'Đọc lại từ khóa trước rồi mới nói cả câu.'];
-  if (level === 'B1') return [`Gạch nhịp trong đầu trước khi nói; ưu tiên ${first}.`, 'Nếu điểm thấp, luyện riêng ba target words.'];
+  if (level === 'B1') return [`Gạch nhịp trong đầu trước khi nói; ưu tiên ${first}.`, 'Nếu Poo nghe chưa rõ, mình luyện riêng ba từ chính nhé.'];
   return [`Nói như đang trình bày: rõ ý, rõ trọng âm, không vội.`, `Kiểm tra ${first} rồi thử lại với tốc độ tự nhiên.`];
 }
 
 function whaleCoachLines(level: SpeechCefrLevel) {
-  if (level === 'A1') return ['Cá voi nghe được ý chính rồi, giờ mình làm âm cuối sáng hơn nhé.', 'Chậm một chút thôi là câu sẽ rõ hơn nhiều.'];
+  if (level === 'A1') return ['Poo nghe được ý chính rồi, giờ mình làm âm cuối sáng hơn nhé.', 'Chậm một chút thôi là câu sẽ rõ hơn nhiều.'];
   if (level === 'A2') return ['Bạn đang kiểm soát câu tốt hơn rồi, thử nối cụm mềm hơn nhé.', 'Đọc theo nhịp ngắn, không cần vội.'];
   if (level === 'B1') return ['Câu dài vẫn ổn nếu bạn giữ trọng âm chính.', 'Tập trung vào từ khóa, phần còn lại để nhịp dẫn đi.'];
   return ['Giọng đang có chất thuyết trình rồi, hãy làm rõ điểm nhấn.', 'Một lần nữa với nhịp bình tĩnh hơn sẽ rất đẹp.'];

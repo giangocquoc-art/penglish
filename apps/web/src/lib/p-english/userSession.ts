@@ -14,7 +14,7 @@ export type PEnglishUserSession = {
   email: string | null;
   displayName: string;
   avatarUrl: string;
-  dataModeLabel: 'Tiến độ lưu trên thiết bị này' | 'Đã đồng bộ' | 'Chưa đồng bộ được';
+  dataModeLabel: 'Poo đang giữ tiến độ cho bạn' | 'Đã lưu lên tài khoản' | 'Poo sẽ lưu lên tài khoản khi mạng ổn hơn';
   syncError: string | null;
 };
 
@@ -50,7 +50,7 @@ export function avatarFromUser(user: User | null | undefined) {
 }
 
 export function getGuestDataModeLabel() {
-  return 'Tiến độ lưu trên thiết bị này' as const;
+  return 'Poo đang giữ tiến độ cho bạn' as const;
 }
 
 export async function getCurrentSupabaseUser() {
@@ -62,7 +62,7 @@ export async function getCurrentSupabaseUser() {
 
 export async function signInWithGoogle() {
   if (!supabase) {
-    return { ok: false, message: 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' };
+    return { ok: false, message: 'Cổng vào học bằng Google chưa sẵn sàng. Bạn thử lại sau một chút nhé.' };
   }
 
   const redirectTo = `${window.location.origin}/auth/callback`;
@@ -73,7 +73,7 @@ export async function signInWithGoogle() {
 
   if (error) {
     console.error('Supabase Google OAuth failed', error);
-    return { ok: false, message: 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' };
+    return { ok: false, message: 'Cổng vào học bằng Google chưa sẵn sàng. Bạn thử lại sau một chút nhé.' };
   }
 
   return { ok: true, message: null };
@@ -126,7 +126,7 @@ export function usePEnglishSession(): PEnglishUserSession {
   return useMemo(() => {
     const isSignedIn = Boolean(auth.user?.id);
     const mode: PEnglishAuthMode = isSignedIn ? 'supabase' : 'guest';
-    const dataModeLabel = isSignedIn ? (syncError ? 'Chưa đồng bộ được' : 'Đã đồng bộ') : 'Tiến độ lưu trên thiết bị này';
+    const dataModeLabel = isSignedIn ? (syncError ? 'Poo sẽ lưu lên tài khoản khi mạng ổn hơn' : 'Đã lưu lên tài khoản') : 'Poo đang giữ tiến độ cho bạn';
 
     return {
       mode,

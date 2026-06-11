@@ -2,7 +2,7 @@
 import { Box, Text, useMediaQuery } from '@chakra-ui/react';
 import { DevToolsJokeModal } from './DevToolsJokeModal';
 
-const SECRET_MESSAGE = 'Bạn vừa mở chế độ tò mò 😏 Poo chào bạn!';
+const SECRET_MESSAGE = 'Bạn vừa mở góc tò mò 😏 Poo chào bạn!';
 const SECRET_SEQUENCE = 'poo';
 
 function isTypingTarget(target: EventTarget | null) {

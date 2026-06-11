@@ -57,7 +57,7 @@ function useUserFromAuth(): User | null {
     coin: 0,
     streak: 0,
     vip: false,
-    bio: 'Đã đăng nhập Google, tiến độ tách theo tài khoản.',
+    bio: 'Poo sẽ lưu tiến độ học của bạn an toàn.',
   };
 }
 
@@ -109,10 +109,10 @@ function AuthGoogleSafePage() {
   const auth = useAuth();
   return (
     <VStack align="start" gap="4" p={{ base: '5', md: '7' }} m={{ base: '4', md: '8' }} borderRadius="3xl" bg="rgba(255,255,255,0.88)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 18px 46px rgba(31, 111, 214, 0.10)">
-      <Text fontSize="sm" fontWeight="700" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">PooEnglish Supabase Auth</Text>
+      <Text fontSize="sm" fontWeight="700" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">Vào lớp học cùng Poo</Text>
       <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color="#0F172A" lineHeight="1.12">Đăng nhập Google</Text>
       <Text color="#475569" fontWeight="650" lineHeight="1.7">
-        {auth.authUnavailable ? 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' : 'Đăng nhập bằng Google để lưu tiến độ và vào lớp học PooEnglish.'}
+        {auth.authUnavailable ? 'Poo chưa mở được cổng đăng nhập. Bạn thử lại sau một chút nhé.' : 'Đăng nhập bằng Google để Poo lưu tiến độ và đưa bạn vào lớp học.'}
       </Text>
       <Button onClick={() => void auth.signInWithGoogle()} bg="#1F6FD6" color="white" borderRadius="full" px="6" _hover={{ bg: '#185BB2' }}>
         Đăng nhập bằng Google

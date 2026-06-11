@@ -1,4 +1,4 @@
-import { Box, Center, HStack, Text, VStack } from '@chakra-ui/react';
+import { Box, Center, Text, VStack } from '@chakra-ui/react';
 import { OceanMascot } from '../../components/p-english/OceanMascot';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -53,14 +53,9 @@ export function AuthLoadingScreen() {
           </VStack>
 
           <VStack gap="3" w="100%">
-            <HStack justify="space-between" w="100%" px="1">
-              <Text fontSize="sm" fontWeight="850" color="#52667A">
-                Đang đăng nhập
-              </Text>
-              <Text fontSize="sm" fontWeight="950" color="#1F6FD6">
-                PooEnglish
-              </Text>
-            </HStack>
+            <Text fontSize="sm" fontWeight="850" color="#52667A">
+              Đang đăng nhập
+            </Text>
             <Box w="100%" h="10px" borderRadius="full" bg="rgba(221,245,255,0.92)" border="1px solid rgba(91,188,235,0.22)" overflow="hidden">
               <Box
                 data-testid="auth-loading-progress-bar"

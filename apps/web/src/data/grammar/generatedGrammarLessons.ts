@@ -93,12 +93,12 @@ function buildExpandedGrammarLesson(seed: GrammarExpansionSeed): GeneratedGramma
     vietnameseExplanation: seed.explanationVi,
     examples: seed.examples,
     exercises: [
-      { id: `${seed.id}-mc-main`, type: 'multiple-choice', promptVi: `Chọn câu đúng: ${first.meaningVi}`, options: [first.text, first.text.replace(/\b(is|are|am|have|has|do|does|did|will|would|can|should|to)\b/i, '___'), 'This grammar does not match the meaning.', 'The word order is not natural.'], answer: first.text, hintVi: 'So sánh ý tiếng Việt với câu hoàn chỉnh, tự nhiên nhất.', explanationVi: `Câu đúng dùng mẫu của bài: ${seed.titleVi}.` },
-      { id: `${seed.id}-fill-first-word`, type: 'fill-blank', promptVi: `Điền phần còn thiếu: ${second.meaningVi}`, promptEn: secondBlank, answer: secondAnswer, hintVi: 'Ô trống nằm ở đầu câu; đọc cả câu trước khi điền.', explanationVi: `“${secondAnswer}” mở đầu câu và giữ đúng cấu trúc mục tiêu.` },
-      { id: `${seed.id}-order-focus`, type: 'sentence-order', promptVi: `Sắp xếp câu: ${third.meaningVi}`, words: thirdWords, answer: thirdWords.join(' '), hintVi: 'Sắp theo thứ tự chủ ngữ → động từ → phần bổ sung.', explanationVi: 'Thứ tự này tạo câu hoàn chỉnh theo mẫu trọng tâm.' },
-      { id: `${seed.id}-mc-context`, type: 'multiple-choice', promptVi: `Chọn câu phù hợp với ngữ cảnh: ${fifth.meaningVi}`, options: [fifth.text, fifth.text.replace(/\b(not|never|already|because|although|if|when)\b/i, '___'), 'The idea is unclear in this sentence.', 'Use only one word without a full sentence.'], answer: fifth.text, hintVi: 'Chọn câu diễn đạt đủ ý và đúng cấu trúc.', explanationVi: 'Đáp án đúng diễn đạt trọn ý và giữ mẫu câu tự nhiên.' },
-      { id: `${seed.id}-fill-review`, type: 'fill-blank', promptVi: `Hoàn thành câu ôn tập: ${fourth.meaningVi}`, promptEn: fourthBlank, answer: fourthAnswer, hintVi: 'Tập trung vào từ/cụm mở đầu câu.', explanationVi: `“${fourthAnswer}” là phần cần có để câu đầy đủ và đúng mẫu.` },
-      { id: `${seed.id}-order-review`, type: 'sentence-order', promptVi: `Sắp xếp câu ôn tập: ${fourth.meaningVi}`, words: fourthWords, answer: fourthWords.join(' '), hintVi: 'Giữ đúng trật tự cụm ý, không dịch từng từ.', explanationVi: 'Câu hoàn chỉnh giúp người học luyện phản xạ theo chunk.' },
+      { id: `${seed.id}-mc-main`, type: 'multiple-choice', promptVi: `Chọn câu đúng: ${first.meaningVi}`, options: [first.text, first.text.replace(/\b(is|are|am|have|has|do|does|did|will|would|can|should|to)\b/i, '___'), 'This grammar does not match the meaning.', 'The word order is not natural.'], answer: first.text, hintVi: 'So sánh ý tiếng Việt với câu hoàn chỉnh, tự nhiên nhất.', explanationVi: `Đúng rồi, câu này đi theo mẫu chính của bài: ${seed.titleVi}.` },
+      { id: `${seed.id}-fill-first-word`, type: 'fill-blank', promptVi: `Điền phần còn thiếu: ${second.meaningVi}`, promptEn: secondBlank, answer: secondAnswer, hintVi: 'Ô trống nằm ở đầu câu; đọc cả câu trước khi điền.', explanationVi: `Đúng rồi, “${secondAnswer}” mở đầu câu tự nhiên và giữ đúng mẫu mình đang luyện.` },
+      { id: `${seed.id}-order-focus`, type: 'sentence-order', promptVi: `Sắp xếp câu: ${third.meaningVi}`, words: thirdWords, answer: thirdWords.join(' '), hintVi: 'Sắp theo thứ tự chủ ngữ → động từ → phần bổ sung.', explanationVi: 'Đúng rồi, thứ tự này tạo thành câu đầy đủ theo mẫu Poo đang dẫn bạn luyện.' },
+      { id: `${seed.id}-mc-context`, type: 'multiple-choice', promptVi: `Chọn câu phù hợp với ngữ cảnh: ${fifth.meaningVi}`, options: [fifth.text, fifth.text.replace(/\b(not|never|already|because|although|if|when)\b/i, '___'), 'The idea is unclear in this sentence.', 'Use only one word without a full sentence.'], answer: fifth.text, hintVi: 'Chọn câu diễn đạt đủ ý và đúng cấu trúc.', explanationVi: 'Đúng rồi, đáp án này nói trọn ý và nghe tự nhiên hơn.' },
+      { id: `${seed.id}-fill-review`, type: 'fill-blank', promptVi: `Hoàn thành câu ôn tập: ${fourth.meaningVi}`, promptEn: fourthBlank, answer: fourthAnswer, hintVi: 'Tập trung vào từ/cụm mở đầu câu.', explanationVi: `Đúng rồi, “${fourthAnswer}” giúp câu đầy đủ và đúng mẫu hơn.` },
+      { id: `${seed.id}-order-review`, type: 'sentence-order', promptVi: `Sắp xếp câu ôn tập: ${fourth.meaningVi}`, words: fourthWords, answer: fourthWords.join(' '), hintVi: 'Giữ đúng trật tự cụm ý, không dịch từng từ.', explanationVi: 'Đúng rồi, câu hoàn chỉnh giúp mình luyện theo cụm ngắn dễ nhớ hơn.' },
     ],
     source: { ...fluentcardsSource, sourcePatternId: seed.sourcePatternId },
   };
@@ -142,7 +142,7 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
   ] },
   { id: 'grammar-b1-relative-clauses-people-things', unitId: 'grammar-clauses-b1', level: 'B1', titleVi: 'Mệnh đề quan hệ who / which / that', titleEn: 'Relative clauses for people and things', subtitleVi: 'Nối thêm thông tin về người hoặc vật mà không tách thành hai câu rời.', patternTitle: 'Relative clauses: who, which, that', patternDescription: 'Use who for people and which/that for things or ideas.', patternSummary: 'Mẫu luyện mệnh đề quan hệ xác định trong mô tả người, đồ vật và bài học.', explanationVi: 'Dùng who cho người; which cho vật/ý; that có thể thay who/which trong nhiều câu xác định.', sourcePatternId: 'relative-clauses-basic', examples: [
     { text: 'The teacher who helped me was very patient.', meaningVi: 'Giáo viên đã giúp tôi rất kiên nhẫn.' },
-    { text: 'This is the app that tracks my progress.', meaningVi: 'Đây là ứng dụng theo dõi tiến độ của tôi.' },
+    { text: 'This is the whale that helps me practise.', meaningVi: 'Đây là chú cá voi giúp tôi luyện tập.' },
     { text: 'I like lessons which include clear examples.', meaningVi: 'Tôi thích các bài có ví dụ rõ ràng.' },
     { text: 'The friend who studies with me lives nearby.', meaningVi: 'Người bạn học cùng tôi sống gần đây.' },
     { text: 'The sentence that confused me is now easier.', meaningVi: 'Câu từng làm tôi rối giờ đã dễ hơn.' },
@@ -163,10 +163,10 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
   ] },
   { id: 'grammar-b1-passive-simple-processes', unitId: 'grammar-clauses-b1', level: 'B1', titleVi: 'Bị động hiện tại cho quy trình', titleEn: 'Present passive for simple processes', subtitleVi: 'Mô tả việc được làm như thế nào khi người thực hiện không quan trọng.', patternTitle: 'Present passive: processes', patternDescription: 'Use am/is/are plus past participle for simple processes.', patternSummary: 'Mẫu luyện bị động hiện tại trong hướng dẫn, quy trình học và mô tả sản phẩm.', explanationVi: 'Dùng am/is/are + V3 khi tập trung vào hành động/kết quả hơn người làm hành động.', sourcePatternId: 'present-passive-process', examples: [
     { text: 'New words are reviewed after each lesson.', meaningVi: 'Từ mới được ôn sau mỗi bài.' },
-    { text: 'The answer is checked automatically.', meaningVi: 'Đáp án được kiểm tra tự động.' },
+    { text: 'My answer is checked gently by Poo.', meaningVi: 'Poo xem câu trả lời của tôi thật nhẹ nhàng.' },
     { text: 'Short examples are added to the notebook.', meaningVi: 'Ví dụ ngắn được thêm vào vở.' },
     { text: 'The audio is played twice for practice.', meaningVi: 'Âm thanh được phát hai lần để luyện tập.' },
-    { text: 'Progress is saved on this device.', meaningVi: 'Tiến độ được lưu trên thiết bị này.' },
+    { text: 'Poo keeps my small steps safe.', meaningVi: 'Poo giữ lại từng bước nhỏ cho tôi.' },
   ] },
   { id: 'grammar-b2-second-conditional-careful-advice', unitId: 'grammar-clauses-b2', level: 'B2', titleVi: 'Điều kiện loại 2 cho lời khuyên mềm', titleEn: 'Second conditional for careful advice', subtitleVi: 'Đưa giả định và lời khuyên lịch sự bằng if + quá khứ, would/could.', patternTitle: 'Second conditional advice', patternDescription: 'Use if plus past simple with would or could for hypothetical advice.', patternSummary: 'Mẫu luyện tình huống giả định để đưa lời khuyên mềm mại hơn.', explanationVi: 'Dùng if + quá khứ đơn, would/could + động từ nguyên mẫu để nói điều giả định hoặc lời khuyên gián tiếp.', sourcePatternId: 'second-conditional-advice', examples: [
     { text: 'If I had more time, I would practise speaking daily.', meaningVi: 'Nếu có nhiều thời gian hơn, tôi sẽ luyện nói hằng ngày.' },
@@ -177,7 +177,7 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
   ] },
   { id: 'grammar-b2-linking-ideas-contrast', unitId: 'grammar-clauses-b2', level: 'B2', titleVi: 'Nối ý tương phản although / however', titleEn: 'Linking contrast with although and however', subtitleVi: 'Nói hai ý trái chiều một cách mạch lạc khi viết hoặc thuyết trình.', patternTitle: 'Contrast linkers', patternDescription: 'Use although inside a sentence and however between sentences.', patternSummary: 'Mẫu luyện nối ý tương phản bằng although, however, despite ở mức B2.', explanationVi: 'Although nối mệnh đề trong cùng câu; however thường đứng đầu câu mới và theo sau bằng dấu phẩy.', sourcePatternId: 'contrast-linkers-b2', examples: [
     { text: 'Although the task was difficult, we finished it on time.', meaningVi: 'Mặc dù nhiệm vụ khó, chúng tôi hoàn thành đúng hạn.' },
-    { text: 'The app is simple. However, it gives useful feedback.', meaningVi: 'Ứng dụng đơn giản. Tuy nhiên, nó đưa góp ý hữu ích.' },
+    { text: 'Poo is gentle. However, the feedback is still useful.', meaningVi: 'Poo nhẹ nhàng. Tuy nhiên, phần góp ý vẫn rất hữu ích.' },
     { text: 'Despite the noise, she stayed focused on the lesson.', meaningVi: 'Dù ồn, cô ấy vẫn tập trung vào bài học.' },
     { text: 'Although I made mistakes, I kept speaking.', meaningVi: 'Mặc dù mắc lỗi, tôi vẫn tiếp tục nói.' },
     { text: 'The sentence is long. However, the meaning is clear.', meaningVi: 'Câu dài. Tuy nhiên, nghĩa vẫn rõ.' },
@@ -211,7 +211,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     estimatedTime: '12–15 phút',
     sourcePatternTitle: 'Articles: definite vs indefinite',
     sourcePatternDescription: 'Choose the right article.',
-    sourcePatternSummary: 'Pattern gốc che DET có baseForm a/an/the và tạo bài cloze chọn đúng mạo từ.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn chọn a, an hoặc the cho đúng tình huống.',
     vietnameseExplanation: 'Dùng a trước âm phụ âm, an trước âm nguyên âm, và the khi người nghe đã biết rõ đối tượng đang nói tới.',
     examples: [
       { text: 'I have a book.', meaningVi: 'Tôi có một quyển sách.' },
@@ -235,7 +235,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     estimatedTime: '12–15 phút',
     sourcePatternTitle: 'Quantifiers: many vs much, few vs little',
     sourcePatternDescription: 'Choose the right answer.',
-    sourcePatternSummary: 'Pattern gốc che QUANT có baseForm little/few/much/many và chọn cặp đáp án theo lexeme.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn chọn many, much, few hoặc little theo danh từ đi kèm.',
     vietnameseExplanation: 'Dùng many/few với danh từ đếm được số nhiều; dùng much/little với danh từ không đếm được.',
     examples: [
       { text: 'There are many students in the class.', meaningVi: 'Có nhiều học sinh trong lớp.' },
@@ -259,7 +259,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     estimatedTime: '10–12 phút',
     sourcePatternTitle: 'Quantifiers: each vs every',
     sourcePatternDescription: 'Choose the right answer.',
-    sourcePatternSummary: 'Pattern gốc che QUANT có baseForm each/every và tạo lựa chọn each/every.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn chọn each hoặc every theo ý muốn nói.',
     vietnameseExplanation: 'each nhấn từng người/vật riêng lẻ; every nhấn toàn bộ nhóm theo nghĩa tất cả.',
     examples: [
       { text: 'Each student has a book.', meaningVi: 'Mỗi học sinh đều có một quyển sách.' },
@@ -283,7 +283,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     estimatedTime: '10–12 phút',
     sourcePatternTitle: 'Quantifiers: some vs any',
     sourcePatternDescription: 'Choose the right answer.',
-    sourcePatternSummary: 'Pattern gốc che QUANT có baseForm some/any và tạo lựa chọn some/any.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn chọn some hoặc any theo câu đang nói.',
     vietnameseExplanation: 'some thường dùng trong câu khẳng định hoặc lời mời; any thường dùng trong câu phủ định và câu hỏi thông tin chung.',
     examples: [
       { text: 'I have some water.', meaningVi: 'Tôi có một ít nước.' },
@@ -307,7 +307,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     estimatedTime: '15–18 phút',
     sourcePatternTitle: 'Verbs: irregular verbs',
     sourcePatternDescription: 'Type the correct forms of the missing verbs.',
-    sourcePatternSummary: 'Pattern gốc che VPAST/VPAP thuộc danh sách baseForm bất quy tắc và yêu cầu gõ dạng đúng.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn nhớ dạng quá khứ của vài động từ quen thuộc.',
     vietnameseExplanation: 'Một số động từ không thêm -ed ở quá khứ. Hãy học theo cụm ngắn: go–went–gone, see–saw–seen, write–wrote–written.',
     examples: [
       { text: 'I went to school yesterday.', meaningVi: 'Hôm qua tôi đã đi học.' },
@@ -331,7 +331,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     estimatedTime: '12–15 phút',
     sourcePatternTitle: 'Verbs: third person singular',
     sourcePatternDescription: 'Insert the verbal ending "-s" where necessary.',
-    sourcePatternSummary: 'Pattern gốc bắt chủ ngữ PRON/PROP/NOUN rồi che đuôi -s của VPRES để luyện thêm/bỏ -s.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn nhớ khi nào động từ cần thêm -s.',
     vietnameseExplanation: 'Ở hiện tại đơn, chủ ngữ he/she/it hoặc danh từ số ít thường làm động từ thêm -s/-es.',
     examples: [
       { text: 'She likes English.', meaningVi: 'Cô ấy thích tiếng Anh.' },
@@ -355,7 +355,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     estimatedTime: '15–18 phút',
     sourcePatternTitle: 'Verbs: phrasal verbs',
     sourcePatternDescription: 'Complete the phrasal verbs with the correct preposisions.',
-    sourcePatternSummary: 'Pattern gốc bắt động từ thường gặp rồi che PREP như out/up/down/back/on/off/for/over/away/after.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn luyện cụm động từ quen thuộc theo tình huống.',
     vietnameseExplanation: 'Phrasal verb là động từ đi với tiểu từ/giới từ tạo nghĩa mới. Học theo cụm và tình huống, không dịch từng từ rời.',
     examples: [
       { text: 'Please turn off the light.', meaningVi: 'Làm ơn tắt đèn.' },
@@ -372,14 +372,14 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
   {
     id: 'grammar-b1-modal-verbs',
     unitId: 'grammar-verbs-b1',
-    titleVi: 'Động từ khuyết thiếu can / should / must',
+    titleVi: 'Nói “có thể / nên / phải” bằng câu ngắn',
     titleEn: 'Modal verbs: can, should, must',
     subtitleVi: 'Chọn modal phù hợp để nói khả năng, lời khuyên và sự cần thiết.',
     level: 'B1',
     estimatedTime: '12–15 phút',
     sourcePatternTitle: 'Verbs: modal verbs',
     sourcePatternDescription: 'Choose the most suitable modal verb.',
-    sourcePatternSummary: 'Pattern gốc che VAUX và tạo bài chọn modal phù hợp theo ngữ cảnh.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn chọn can, should hoặc must theo ý câu.',
     vietnameseExplanation: 'can nói khả năng; should nói lời khuyên; must nói sự bắt buộc/cần thiết mạnh.',
     examples: [
       { text: 'I can speak English slowly.', meaningVi: 'Tôi có thể nói tiếng Anh chậm.' },
@@ -403,7 +403,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     estimatedTime: '12–15 phút',
     sourcePatternTitle: 'Prepositions: in, on, at',
     sourcePatternDescription: 'Choose the right preposition.',
-    sourcePatternSummary: 'Pattern gốc che PREP có baseForm in/on/at và tạo lựa chọn in/on/at.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn chọn in, on hoặc at theo nơi chốn và thời gian.',
     vietnameseExplanation: 'Dùng in cho không gian/tháng/năm, on cho ngày/bề mặt, at cho điểm thời gian/địa điểm cụ thể.',
     examples: [
       { text: 'I live in Vietnam.', meaningVi: 'Tôi sống ở Việt Nam.' },
@@ -420,14 +420,14 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
   {
     id: 'grammar-a1-be-present-simple',
     unitId: 'grammar-foundations-a1',
-    titleVi: 'Động từ be: am / is / are',
+    titleVi: 'Tập nói “là / ở / thì” bằng câu ngắn',
     titleEn: 'Present simple: am, is, are',
     subtitleVi: 'Tập nói tên, cảm xúc và vị trí bằng be trong câu ngắn A1.',
     level: 'A1',
     estimatedTime: '10–12 phút',
     sourcePatternTitle: 'Verbs: be in present simple',
     sourcePatternDescription: 'Choose the correct be verb for the subject.',
-    sourcePatternSummary: 'Pattern che BE để luyện am/is/are theo chủ ngữ và ngữ cảnh vị trí/cảm xúc.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn chọn am/is/are theo người, nơi chốn hoặc cảm xúc.',
     vietnameseExplanation: 'Dùng am với I, is với he/she/it hoặc danh từ số ít, are với you/we/they hoặc danh từ số nhiều.',
     examples: [
       { text: 'I am ready.', meaningVi: 'Tôi đã sẵn sàng.' },
@@ -444,14 +444,14 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
   {
     id: 'grammar-b1-present-perfect-experience',
     unitId: 'grammar-verbs-b1',
-    titleVi: 'Present perfect: trải nghiệm đã từng',
+    titleVi: 'Kể chuyện mình đã từng làm',
     titleEn: 'Present perfect for experiences',
     subtitleVi: 'Dùng have/has + past participle để nói trải nghiệm trong đời mà không cần nêu thời điểm cụ thể.',
     level: 'B1',
     estimatedTime: '14–16 phút',
     sourcePatternTitle: 'Verbs: present perfect experience',
     sourcePatternDescription: 'Choose have/has and the correct past participle.',
-    sourcePatternSummary: 'Pattern che AUX/VPAST để luyện have/has + past participle trong câu trải nghiệm.',
+    sourcePatternSummary: 'Poo che một chỗ nhỏ để bạn tập nói về điều mình đã từng làm.',
     vietnameseExplanation: 'Dùng have/has + V3 để nói điều đã từng xảy ra trước hiện tại. Không dùng thời gian quá khứ cụ thể như yesterday trong mẫu này.',
     examples: [
       { text: 'I have visited Da Nang.', meaningVi: 'Tôi đã từng đến Đà Nẵng.' },
@@ -459,7 +459,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'We have never missed a lesson.', meaningVi: 'Chúng tôi chưa từng bỏ lỡ buổi học nào.' },
     ],
     exercises: [
-      { id: 'present-perfect-mc-tried', type: 'multiple-choice', promptVi: 'Chọn câu đúng với she.', options: ['She has tried Korean food.', 'She have tried Korean food.', 'She has try Korean food.', 'She tried yesterday Korean food.'], answer: 'She has tried Korean food.', hintVi: 'She đi với has và sau đó là V3.', explanationVi: 'Present perfect dùng has + tried cho chủ ngữ she.' },
+      { id: 'present-perfect-mc-tried', type: 'multiple-choice', promptVi: 'Chọn câu đúng với she.', options: ['She has tried Korean food.', 'She have tried Korean food.', 'She has try Korean food.', 'She tried yesterday Korean food.'], answer: 'She has tried Korean food.', hintVi: 'She đi với has và sau đó là V3.', explanationVi: 'Đúng rồi, với she mình dùng has tried để kể điều cô ấy đã từng thử.' },
       { id: 'present-perfect-fill-visited', type: 'fill-blank', promptVi: 'Điền trợ động từ đúng.', promptEn: 'I ___ visited Da Nang.', answer: 'have', hintVi: 'I đi với have.', explanationVi: 'I/you/we/they dùng have trong hiện tại hoàn thành.' },
       { id: 'present-perfect-order-never', type: 'sentence-order', promptVi: 'Sắp xếp: Chúng tôi chưa từng bỏ lỡ buổi học nào.', words: ['We', 'have', 'never', 'missed', 'a', 'lesson'], answer: 'We have never missed a lesson', hintVi: 'never đứng giữa have và V3.', explanationVi: 'Cấu trúc tự nhiên là have never + past participle.' },
     ],
@@ -475,7 +475,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     estimatedTime: '16–18 phút',
     sourcePatternTitle: 'Clauses: nuanced conditional advice',
     sourcePatternDescription: 'Complete hypothetical if-clauses, hedged result clauses, and polite advice.',
-    sourcePatternSummary: 'Pattern được nâng cấp từ điều kiện thực tế lên điều kiện giả định + hedging để đúng mục tiêu B2.',
+    sourcePatternSummary: 'Poo nâng câu điều kiện lên một chút để bạn nói lời khuyên mềm và tự nhiên hơn.',
     vietnameseExplanation: 'Ở B2, người học không chỉ nói kết quả có thể xảy ra mà còn biết giảm độ trực tiếp: If I were you..., I would..., It might be better to..., You could consider....',
     examples: [
       { text: 'If I were you, I would focus on one pronunciation problem at a time.', meaningVi: 'Nếu tôi là bạn, tôi sẽ tập trung vào từng lỗi phát âm một.' },

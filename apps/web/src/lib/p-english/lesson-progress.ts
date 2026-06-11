@@ -143,7 +143,7 @@ export const LESSON_PROGRESS_UPDATED_EVENT = 'penglish.lesson.progress.updated';
 
 const MODE_DEFS: Array<{ mode: LessonProgressMode; field: LessonProgressModeField; label: string }> = [
   { mode: 'flashcard', field: 'flashcard', label: 'Thẻ từ' },
-  { mode: 'quiz', field: 'quiz', label: 'Kiểm tra nhanh' },
+  { mode: 'quiz', field: 'quiz', label: 'Thử sức nhẹ' },
   { mode: 'listen', field: 'listening', label: 'Luyện nghe' },
   { mode: 'reflex', field: 'reflex', label: 'Phản xạ' },
   { mode: 'type', field: 'typing', label: 'Gõ câu' },

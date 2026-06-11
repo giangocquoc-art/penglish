@@ -20,7 +20,7 @@ const COLORS = {
 
 const MODE_LABELS: Record<LessonProgressMode, string> = {
   flashcard: 'Thẻ từ',
-  quiz: 'Kiểm tra nhanh',
+  quiz: 'Thử sức nhẹ',
   listen: 'Luyện nghe',
   reflex: 'Phản xạ',
   type: 'Gõ câu',
@@ -119,7 +119,7 @@ export function RecentPracticeMemoryCard({ fallbackPath = '/learning-path' }: { 
         <VStack position="relative" align="stretch" gap="3" mt="5">
           <SimpleGrid columns={{ base: 1, sm: 3 }} gap="3">
             <Metric label="Phần luyện gần nhất" value={MODE_LABELS[latestSession.mode]} />
-            <Metric label="Điểm lượt cuối" value={`${latestSession.percentage}%`} tone={latestSession.percentage >= 70 ? 'green' : 'amber'} />
+            <Metric label="Điểm động viên" value={`${latestSession.percentage}%`} tone={latestSession.percentage >= 70 ? 'green' : 'amber'} />
             <Metric label="Mục cần ôn" value={weakCount} tone={weakCount > 0 ? 'amber' : 'green'} />
           </SimpleGrid>
 

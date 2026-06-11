@@ -266,8 +266,8 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px="6" py="8">
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có dữ liệu ghép nghĩa từ vựng</Text>
-          <Text mt="2" color={COLORS.muted}>Bài học này chưa có danh sách từ/cụm để ghép với nghĩa tiếng Việt.</Text>
+          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Poo mở phần ghép nghĩa ở nhịp khác</Text>
+          <Text mt="2" color={COLORS.muted}>Bài này ưu tiên nhịp luyện khác trước khi vào trò ghép nghĩa.</Text>
           <Button as={Link} to="/vocabularies" mt="6" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: COLORS.primaryHover }}>
             Mở sổ từ vựng
           </Button>
@@ -300,7 +300,7 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
 
           <Box mt="6" border="1px solid" borderColor="#FDE68A" bg="#FFFBEB" borderRadius="2xl" p="4">
             <Text color="#92400E" fontWeight="700">
-              Chọn một từ/cụm tiếng Anh bên trái, rồi chọn nghĩa tiếng Việt tương ứng bên phải. Đây là bài luyện từ vựng, không phải luồng Reading mới.
+              Chọn một từ/cụm tiếng Anh bên trái, rồi chọn nghĩa tiếng Việt tương ứng bên phải. Đây là trò luyện từ vựng nhẹ, Poo chỉ muốn bạn nối đúng nghĩa từng cụm.
             </Text>
           </Box>
 

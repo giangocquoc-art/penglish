@@ -20,7 +20,7 @@ export type PracticeRecommendation = {
 
 const MODE_LABELS: Record<LessonProgressMode, string> = {
   flashcard: 'Thẻ từ',
-  quiz: 'Kiểm tra nhanh',
+  quiz: 'Thử sức nhẹ',
   listen: 'Luyện nghe',
   reflex: 'Phản xạ',
   type: 'Gõ câu',

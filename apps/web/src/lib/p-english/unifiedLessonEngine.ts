@@ -217,7 +217,7 @@ function getPracticeReadinessLabel(readinessScore: number) {
 
 function getPracticeModeLabelVi(mode: UnifiedPracticeMode) {
   if (mode === 'flashcard') return 'Thẻ từ';
-  if (mode === 'quiz') return 'Kiểm tra nhanh';
+  if (mode === 'quiz') return 'Thử sức nhẹ';
   if (mode === 'listen') return 'Luyện nghe';
   if (mode === 'reflex') return 'Phản xạ nói';
   if (mode === 'type') return 'Gõ câu';
@@ -605,7 +605,7 @@ export function getUnifiedDashboardSnapshot(): UnifiedDashboardSnapshot {
     nextLessonTitle: nextUnit?.titleVi ?? 'Ôn lại lộ trình đang mở',
     confidencePath: nextUnit?.confidenceGoal ?? 'Giữ nhịp học đều và ôn lại phần yếu.',
     whaleCoachLine: learningLoop.dueReviewCount > 0
-      ? `Poo đã gom ${learningLoop.dueReviewCount} mục cần ôn thật từ lỗi sai và từ yếu. Ôn ngắn trước khi học bài mới nhé.`
+      ? `Poo đã gom ${learningLoop.dueReviewCount} mục cần ôn thật từ câu khó và từ yếu. Ôn ngắn trước khi học bài mới nhé.`
       : nextUnit?.whaleCoachLine ?? 'Cá voi nhắc bạn: mỗi ngày một bước nhỏ vẫn là tiến bộ.',
     currentStreak: Math.max(getCurrentStreak(), learningLoop.streak),
   };

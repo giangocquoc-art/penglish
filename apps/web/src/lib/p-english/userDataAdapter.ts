@@ -4,7 +4,7 @@ import { supabase } from '../supabaseClient';
 
 export type DashboardSnapshot = {
   mode: 'guest' | 'supabase';
-  dataModeLabel: 'Lưu trên thiết bị' | 'Đã đồng bộ' | 'Chưa đồng bộ được';
+  dataModeLabel: 'Poo đang giữ tiến độ cho bạn' | 'Đã lưu lên tài khoản' | 'Poo sẽ lưu lên tài khoản khi mạng ổn hơn';
   todayXp: number;
   lessonsTouched: number;
   wordsReviewed: number;
@@ -154,7 +154,7 @@ export async function getDashboardSnapshot(): Promise<DashboardSnapshot> {
     if (!error) {
       return {
         mode: 'supabase',
-        dataModeLabel: 'Đã đồng bộ',
+        dataModeLabel: 'Đã lưu lên tài khoản',
         todayXp: Number(data?.xp ?? 0),
         lessonsTouched: Number(data?.lessons_touched ?? 0),
         wordsReviewed: Number(data?.words_reviewed ?? 0),
@@ -165,7 +165,7 @@ export async function getDashboardSnapshot(): Promise<DashboardSnapshot> {
   }
 
   const local = readLocalDaily();
-  return { mode: 'guest', dataModeLabel: 'Lưu trên thiết bị', ...local };
+  return { mode: 'guest', dataModeLabel: 'Poo đang giữ tiến độ cho bạn', ...local };
 }
 
 export async function saveDailyProgressPatch(patch: DailyProgressPatch) {

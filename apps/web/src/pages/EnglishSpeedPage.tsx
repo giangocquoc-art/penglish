@@ -32,12 +32,12 @@ type SpeechLevelFilter = SpeechCefrLevel | 'all';
 type SpeedMode = 'reading' | 'listening' | 'speaking';
 
 const SPEED_MODES: Array<{ id: SpeedMode; title: string; vi: string; icon: typeof Headphones; goal: string }> = [
-  { id: 'reading', title: 'Đọc nhanh', vi: 'Đọc nhanh', icon: Waves, goal: 'Đọc câu rõ và đều trong 30 giây.' },
-  { id: 'listening', title: 'Nghe nhanh', vi: 'Nghe nhanh', icon: Headphones, goal: 'Nghe mẫu chậm rồi nhận nhịp câu.' },
-  { id: 'speaking', title: 'Nói nhanh', vi: 'Nói nhanh', icon: Mic2, goal: 'Ghi âm, nghe lại và phá kỷ lục cá nhân.' },
+  { id: 'reading', title: 'Đọc cùng Poo', vi: 'Đọc cùng Poo', icon: Waves, goal: 'Đọc câu rõ và đều, không cần vội.' },
+  { id: 'listening', title: 'Nghe nhịp câu', vi: 'Nghe nhịp câu', icon: Headphones, goal: 'Nghe mẫu chậm rồi bắt nhịp cùng Poo.' },
+  { id: 'speaking', title: 'Nói rõ và đều', vi: 'Nói rõ và đều', icon: Mic2, goal: 'Nói thử, nghe lại và giữ câu thật rõ.' },
 ];
 
-const RECORDED_FEEDBACK_MESSAGE = 'PooEnglish đã ghi âm câu đọc của bạn. Poo lưu lượt luyện, thời gian và kỷ lục trên thiết bị này.';
+const RECORDED_FEEDBACK_MESSAGE = 'Poo đã nghe lượt đọc của bạn. Poo giữ nhịp luyện, thời gian và dấu mốc nhỏ cho bạn.';
 
 const LEVEL_LABELS: Record<SpeechLevelFilter, string> = {
   all: 'Tất cả cấp độ',
@@ -123,10 +123,10 @@ function syncEnglishSpeedLearningLoop(prompt: GeneratedSpeechPrompt | undefined,
     source: 'english-speed',
     sourceId: promptId,
     type: 'speed-weak',
-    prompt: prompt?.promptText ?? 'Luyện tốc độ tiếng Anh',
+    prompt: prompt?.promptText ?? 'Đọc nhanh cùng Poo',
     correctAnswer: prompt?.promptText,
-    userAnswer: `Điểm nhẹ ${score} trong chế độ ${mode}`,
-    explanation: prompt?.retryTipsVi?.[0] ?? 'Hãy nghe chậm, chia câu thành cụm nhỏ rồi ghi âm lại.',
+    userAnswer: `Poo chấm vui ${score}; mình luyện rõ và đều hơn từng chút`,
+    explanation: prompt?.retryTipsVi?.[0] ?? 'Hãy nghe chậm, chia câu thành cụm nhỏ rồi nói lại lần nữa.',
     tags: ['english-speed', mode, prompt?.level ?? 'A1'].filter(Boolean),
   });
 }
@@ -253,7 +253,7 @@ export function EnglishSpeedPage() {
   const selectedSpeedMode = SPEED_MODES.find((mode) => mode.id === speedMode) ?? SPEED_MODES[2];
   const gentleScore = Math.min(100, Math.max(10, Math.round(sessionProgress * 0.45) + progress.attempts * 5 + (hasRecordedAudio ? 20 : 0)));
   const lastScoreText = progress.lastScore ? `${progress.lastScore}đ` : `${gentleScore}đ`;
-  const recordButtonLabel = isRecording ? 'Dừng ghi âm' : speedMode === 'speaking' ? 'Ghi âm câu đọc' : 'Ghi âm để chốt điểm';
+  const recordButtonLabel = isRecording ? 'Dừng nghe' : speedMode === 'speaking' ? 'Nói câu này' : 'Nói thử để Poo cổ vũ';
   const bestScoreText = progress.bestScore > 0 ? String(progress.bestScore) : hasRecordedAudio ? String(gentleScore) : '—';
   const micStat = !recordingSupported
     ? { value: 'Không hỗ trợ', tone: 'red' as const }
@@ -262,7 +262,7 @@ export function EnglishSpeedPage() {
       : isRecording
         ? { value: formatDuration(durationSeconds), tone: 'red' as const }
         : hasRecordedAudio
-          ? { value: 'Đã ghi', tone: 'green' as const }
+          ? { value: 'Poo đã nghe', tone: 'green' as const }
           : { value: 'Sẵn sàng', tone: 'green' as const };
 
   return (
@@ -281,11 +281,11 @@ export function EnglishSpeedPage() {
           <Box flex="1" minW="0">
             <HStack gap="2" mb={{ base: '1.5', md: '3' }} wrap="wrap" display={{ base: 'none', sm: 'flex' }}>
               <Tag borderRadius="full" bg={COLORS.softAqua} color={COLORS.deepBlue}><Icon as={Waves} boxSize="4" mr="1.5" /> Chạy trực tiếp trên web</Tag>
-              <Tag borderRadius="full" bg="#F0FDF4" color="#166534"><Icon as={Mic2} boxSize="4" mr="1.5" /> Âm thanh trên thiết bị</Tag>
+              <Tag borderRadius="full" bg="#F0FDF4" color="#166534"><Icon as={Mic2} boxSize="4" mr="1.5" /> Poo giữ âm thanh trong buổi học</Tag>
             </HStack>
-            <Text as="h1" fontSize={{ base: 'xl', sm: '2xl', md: '4xl', xl: '5xl' }} lineHeight="1.05" fontWeight="800" color={COLORS.text}>Luyện tốc độ tiếng Anh</Text>
+            <Text as="h1" fontSize={{ base: 'xl', sm: '2xl', md: '4xl', xl: '5xl' }} lineHeight="1.05" fontWeight="800" color={COLORS.text}>Đọc nhanh cùng Poo</Text>
             <Text mt={{ base: '1', md: '3' }} fontSize={{ base: 'xs', sm: 'sm', md: 'md', xl: 'lg' }} color={COLORS.muted} maxW="640px" lineHeight={{ base: '1.35', md: '1.5' }} noOfLines={{ base: 2, md: undefined }}>
-              Chọn đọc nhanh, nghe nhanh hoặc nói nhanh để luyện đều nhịp và phá kỷ lục nhẹ nhàng.
+              Chọn đọc, nghe hoặc nói cùng Poo. Mình ưu tiên rõ và đều trước nhé.
             </Text>
           </Box>
           <HStack gap={{ base: '2', md: '4' }} align="center" w={{ base: '100%', lg: 'auto' }}>
@@ -295,7 +295,7 @@ export function EnglishSpeedPage() {
             <SimpleGrid data-testid="english-speed-stat-grid" columns={{ base: 2, md: 4 }} gap={{ base: '2', md: '3' }} w={{ base: '100%', lg: '520px' }} minW={{ lg: '500px' }}>
               <StatCard label="CÂU LUYỆN" value={prompts.length.toString()} tone="blue" />
               <StatCard label="ĐÃ LUYỆN" value={progress.attempts.toString()} tone="green" />
-              <StatCard label="KỶ LỤC" value={bestScoreText} tone="amber" />
+              <StatCard label="DẤU MỐC" value={bestScoreText} tone="amber" />
               <StatCard label="LẦN CUỐI" value={isRecording ? formatDuration(durationSeconds) : lastScoreText} tone={isRecording ? 'red' : 'blue'} />
             </SimpleGrid>
           </HStack>
@@ -336,7 +336,7 @@ export function EnglishSpeedPage() {
             </HStack>
 
             <Box mt={{ base: '2', md: '4' }} p={{ base: 3, md: 5 }} borderRadius="3xl" bg="linear-gradient(135deg, rgba(248,252,255,0.72) 0%, rgba(255,255,255,0.82) 100%)" border="1px solid" borderColor="#BAE6FD" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 160px)">
-              <Text fontSize="sm" color={COLORS.muted} fontWeight="700">{selectedSpeedMode.vi} · Câu luyện {promptIndex + 1}/{prompts.length} · Điểm nhẹ {gentleScore}</Text>
+              <Text fontSize="sm" color={COLORS.muted} fontWeight="700">{selectedSpeedMode.vi} · Câu luyện {promptIndex + 1}/{prompts.length} · Điểm động viên {gentleScore}</Text>
               <Text mt={{ base: '2', md: '3' }} fontSize={{ base: 'xl', md: '3xl', xl: '4xl' }} fontWeight="700" color={COLORS.text} lineHeight="1.16">{prompt?.promptText}</Text>
               <Text mt="2" color={COLORS.deepBlue} fontWeight="700" fontSize={{ base: 'sm', md: 'md' }} noOfLines={{ base: 2, md: undefined }}>{prompt?.slowHintVi}</Text>
               <Progress mt={{ base: '3', md: '4' }} value={sessionProgress} colorScheme="blue" borderRadius="full" h="8px" bg={COLORS.softBlue} />
@@ -348,7 +348,7 @@ export function EnglishSpeedPage() {
                 <Button borderRadius="full" leftIcon={<Icon as={Headphones} />} variant="outline" borderColor={COLORS.border} bg="white" onClick={() => prompt && speakEnglish(prompt.promptText, true)}>
                   Nghe chậm
                 </Button>
-                <Button data-testid="speed-record-button" borderRadius="full" leftIcon={<Icon as={Mic2} />} bg={isRecording ? COLORS.red : COLORS.oceanBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.deepBlue }} aria-label={isRecording ? 'Dừng ghi âm' : 'Bắt đầu ghi âm câu đọc'} aria-pressed={isRecording} onClick={handleRecordAction} isDisabled={!recordingSupported || isRequestingPermission} isLoading={isRequestingPermission} loadingText="Đang xin quyền micro" flex={{ base: '1 1 100%', sm: '0 0 auto' }}>
+                <Button data-testid="speed-record-button" borderRadius="full" leftIcon={<Icon as={Mic2} />} bg={isRecording ? COLORS.red : COLORS.oceanBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.deepBlue }} aria-label={isRecording ? 'Dừng lượt nói' : 'Nói thử câu đọc'} aria-pressed={isRecording} onClick={handleRecordAction} isDisabled={!recordingSupported || isRequestingPermission} isLoading={isRequestingPermission} loadingText="Đang xin quyền micro" flex={{ base: '1 1 100%', sm: '0 0 auto' }}>
                   {recordButtonLabel}
                 </Button>
               </HStack>
@@ -358,10 +358,10 @@ export function EnglishSpeedPage() {
                   <Circle size="28px" bg="white" color={isRecording ? COLORS.red : hasRecordedAudio ? '#166534' : COLORS.deepBlue} flexShrink="0"><Icon as={isRecording ? Waves : Mic2} boxSize="4" /></Circle>
                   <Box>
                     <Text fontWeight="700" color={COLORS.text}>
-                      {isRecording ? `Đang ghi âm câu đọc... ${formatDuration(durationSeconds)}` : isRequestingPermission ? 'Đang xin quyền micro...' : hasRecordedAudio ? `Đã ghi âm ${formatDuration(durationSeconds)}` : 'Quy trình luyện phát âm'}
+                      {isRecording ? `Poo đang nghe câu đọc... ${formatDuration(durationSeconds)}` : isRequestingPermission ? 'Đang xin quyền micro...' : hasRecordedAudio ? `Poo đã nghe ${formatDuration(durationSeconds)}` : 'Nhịp luyện phát âm'}
                     </Text>
                     <Text mt="1" color={COLORS.muted} fontWeight="700" noOfLines={{ base: 2, md: undefined }}>
-                      {hasRecordedAudio ? RECORDED_FEEDBACK_MESSAGE : 'Nghe mẫu → nghe chậm nếu cần → ghi âm → đọc trọn câu → dừng ghi âm → nghe lại âm thanh trên thiết bị.'}
+                      {hasRecordedAudio ? RECORDED_FEEDBACK_MESSAGE : 'Nghe mẫu → nghe chậm nếu cần → nói thử một lượt → đọc trọn câu → dừng lại → nghe lại lượt nói cùng Poo.'}
                     </Text>
                   </Box>
                 </HStack>
@@ -381,7 +381,7 @@ export function EnglishSpeedPage() {
                 {hasRecordedAudio ? (
                   <Button data-testid="english-speed-replay" borderRadius="full" leftIcon={<Icon as={Headphones} />} bg={COLORS.deepBlue} color="white" _hover={{ bg: '#1557B8' }} onClick={playRecording}>Nghe lại bài đọc của tôi</Button>
                 ) : null}
-                <Button data-testid="english-speed-retry" borderRadius="full" leftIcon={<Icon as={RotateCcw} />} variant="outline" borderColor={COLORS.border} bg="white" onClick={retry}>Ghi lại</Button>
+                <Button data-testid="english-speed-retry" borderRadius="full" leftIcon={<Icon as={RotateCcw} />} variant="outline" borderColor={COLORS.border} bg="white" onClick={retry}>Nói lại lần nữa</Button>
                 <Button data-testid="english-speed-next" borderRadius="full" leftIcon={<Icon as={RefreshCcw} />} variant="ghost" color={COLORS.deepBlue} onClick={goNext}>Câu tiếp theo</Button>
               </HStack>
             </Box>
@@ -389,13 +389,13 @@ export function EnglishSpeedPage() {
 
           <VStack align="stretch" gap="3" gridColumn={{ lg: 'span 4' }} order={{ base: 2, lg: 0 }}>
             <Box as="details" className="penglish-glass-card" bg="rgba(255,255,255,0.76)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p="4" boxShadow="0 10px 24px rgba(31, 111, 214, 0.05)">
-              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}><HStack gap="3" align="center" display="inline-flex"><OceanMascot mascot="caNguaToc" pose="coach" size="sm" decorative motion="pulse" /><Text fontSize="lg" fontWeight="700" color={COLORS.text}>Huấn luyện viên tốc độ</Text></HStack></Box>
+              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}><HStack gap="3" align="center" display="inline-flex"><OceanMascot mascot="caNguaToc" pose="coach" size="sm" decorative motion="pulse" /><Text fontSize="lg" fontWeight="700" color={COLORS.text}>Poo cổ vũ phản xạ</Text></HStack></Box>
               <VStack align="stretch" mt="3" gap="2">
                 {prompt?.whaleCoachLines.slice(0, 2).map((line) => <Tip key={line} text={line} />)}
               </VStack>
             </Box>
             <Box as="details" className="penglish-glass-card" bg="rgba(248,252,255,0.72)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="4" boxShadow="0 10px 24px rgba(31, 111, 214, 0.045)">
-              <Box as="summary" cursor="pointer" fontSize="lg" fontWeight="700" color={COLORS.text}>Tập trung âm</Box>
+              <Box as="summary" cursor="pointer" fontSize="lg" fontWeight="700" color={COLORS.text}>Âm Poo nhắc bạn</Box>
               <HStack mt="3" wrap="wrap" gap="2">{prompt?.focusSounds.map((sound) => <Tag key={sound} borderRadius="full" bg={COLORS.softAqua} color={COLORS.deepBlue}>{sound}</Tag>)}</HStack>
               <VStack align="stretch" mt="3" gap="2">{prompt?.retryTipsVi.slice(0, 2).map((tip) => <Tip key={tip} text={tip} />)}</VStack>
             </Box>
@@ -408,7 +408,7 @@ export function EnglishSpeedPage() {
               <Box>
                 <HStack gap="2" wrap="wrap"><Icon as={Sparkles} color={COLORS.oceanBlue} /><Text fontSize="2xl" fontWeight="700" color={COLORS.text}>Bản ghi của bạn đã sẵn sàng</Text></HStack>
                 <Text mt="2" color={COLORS.muted} fontWeight="700">{RECORDED_FEEDBACK_MESSAGE}</Text>
-                <Text mt="2" color={COLORS.deepBlue} fontWeight="700">Âm thanh chỉ được giữ trong phiên học này, không gửi lên máy chủ. Điểm nhẹ hiện tại: {progress.lastScore ?? gentleScore}. Nếu điểm còn thấp, Poo đã đưa câu này vào phần luyện tập để ôn lại.</Text>
+                <Text mt="2" color={COLORS.deepBlue} fontWeight="700">Poo chỉ giữ âm thanh trong buổi học này. Điểm động viên hiện tại: {progress.lastScore ?? gentleScore}. Nếu câu còn chưa rõ, Poo đã đưa câu này vào phần luyện tập để ôn lại.</Text>
               </Box>
               <Circle size="92px" bg="#F0FDF4" color="#166534" fontWeight="700" fontSize="lg">{formatDuration(durationSeconds)}</Circle>
             </HStack>

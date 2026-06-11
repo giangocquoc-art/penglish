@@ -94,7 +94,7 @@ function getLearningLoopSourceLabel(word: LearningLoopWordRecord) {
   if (word.source === 'foundation48') return `48 ngày lấy gốc · ${word.sourceId.replace('day-', 'Ngày ')}`;
   if (word.source === 'interactive-lesson') return 'Bài học tương tác';
   if (word.source === 'shadowing') return 'Nói đuổi';
-  if (word.source === 'english-speed') return 'Tốc độ tiếng Anh';
+  if (word.source === 'english-speed') return 'Đọc nhanh cùng Poo';
   if (word.source === 'practice') return 'Luyện tập';
   return 'Sổ từ vựng';
 }
@@ -373,7 +373,7 @@ export function VocabPage() {
     try {
       return { items: getAllVocabularyItems(), error: '' };
     } catch (error) {
-      return { items: [] as VocabularyReviewItem[], error: error instanceof Error ? error.message : 'Không đọc được sổ từ vựng trên thiết bị này.' };
+      return { items: [] as VocabularyReviewItem[], error: error instanceof Error ? error.message : 'Poo chưa mở được sổ từ vựng của bạn.' };
     }
   };
   const [vocabularyState, setVocabularyState] = useState(readVocabulary);
@@ -475,7 +475,7 @@ export function VocabPage() {
         <Box maxW="760px" mx="auto" className="penglish-glass-card" bg="rgba(255,255,255,0.88)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '5', md: '8' }} boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" role="alert">
           <Tag borderRadius="full" bg="#FEF3C7" color="#9A3412" mb="4"><TagLabel>Cần tải lại sổ từ</TagLabel></Tag>
           <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color={COLORS.text}>Poo chưa mở được sổ từ vựng</Text>
-          <Text mt="3" color={COLORS.muted} fontWeight="700">Hãy thử tải lại sổ từ trên thiết bị này. Nếu lỗi còn lại, Poo sẽ ghi nhận nguyên nhân.</Text>
+          <Text mt="3" color={COLORS.muted} fontWeight="700">Bạn thử mở lại sổ từ nhé. Nếu vẫn chưa được, Poo sẽ giữ nguyên nhân để kiểm tra.</Text>
           <Text mt="3" color="#9A3412" fontSize="sm" fontWeight="700">{vocabularyState.error}</Text>
           <Button mt="6" borderRadius="full" bg={COLORS.primary} color="white" onClick={refresh}>Thử lại</Button>
         </Box>
@@ -493,11 +493,11 @@ export function VocabPage() {
             <Box>
               <HStack wrap="wrap" mb={{ base: '2', md: '3' }} display={{ base: 'none', sm: 'flex' }}>
                 <Tag borderRadius="full" bg="#FEF3C7" color={COLORS.text}><TagLabel>⭐ Sổ học của tôi</TagLabel></Tag>
-                <Tag borderRadius="full" bg="#DCFCE7" color="#166534"><TagLabel>Poo lưu từ và lỗi sai</TagLabel></Tag>
+                <Tag borderRadius="full" bg="#DCFCE7" color="#166534"><TagLabel>Poo giữ từ và câu cần ôn</TagLabel></Tag>
               </HStack>
               <Text as="h2" fontSize={{ base: 'xl', md: '5xl' }} lineHeight="1.05" fontWeight="800" color={COLORS.text}>Sổ học của tôi</Text>
               <Text mt={{ base: '2', md: '3' }} maxW="760px" color={COLORS.muted} fontWeight="700" lineHeight="1.55" fontSize={{ base: 'sm', md: 'md' }} noOfLines={{ base: 2, md: undefined }}>
-                Một nơi để Poo lưu từ vựng đã học, lỗi sai cần ôn, câu nói đuổi khó, mẫu câu hay dùng và bài cần học lại sau mỗi buổi học.
+                Một nơi để Poo giữ từ vựng đã học, câu cần ôn, câu nói đuổi khó, mẫu câu hay dùng và bài nên học lại sau mỗi buổi học.
               </Text>
               <HStack mt={{ base: '3', md: '5' }} wrap="wrap" gap={{ base: '2', md: '3' }} display={{ base: 'none', sm: 'flex' }}>
                 <Button borderRadius="full" bg={COLORS.primary} color="white" leftIcon={<Icon as={BookOpen} />} onClick={() => { setLessonFilter('all'); setStatusFilter('all'); setQuery(''); }} _hover={{ bg: '#1D4ED8' }}>
@@ -533,7 +533,7 @@ export function VocabPage() {
         <SimpleGrid columns={{ base: 1, md: 5 }} gap="2.5" mb={{ base: '3', md: '5' }} data-testid="vocab-notebook-tabs">
           {[
             { label: 'Từ vựng đã lưu', value: learnedWords.length || stats.total, icon: BookOpen, tone: '#EFF6FF' },
-            { label: 'Lỗi sai cần ôn', value: stats.difficult, icon: AlertCircle, tone: '#FFF7ED' },
+            { label: 'Câu cần ôn', value: stats.difficult, icon: AlertCircle, tone: '#FFF7ED' },
             { label: 'Câu nói đuổi khó', value: 'Nói đuổi', icon: Mic2, tone: '#F0F9FF' },
             { label: 'Mẫu câu hay dùng', value: 'A1/A2', icon: MessageCircle, tone: '#F0FDF4' },
             { label: 'Bài cần học lại', value: stats.today, icon: RotateCcw, tone: '#FEF3C7' },
@@ -567,7 +567,7 @@ export function VocabPage() {
           <Flex gap="3" direction={{ base: 'column', lg: 'row' }} align={{ base: 'stretch', lg: 'center' }} justify="space-between">
             <InputGroup maxW={{ base: '100%', lg: '380px' }}>
               <InputLeftElement><Icon as={Search} color="gray.400" /></InputLeftElement>
-              <Input data-testid="vocab-mobile-search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Tìm từ, lỗi sai, câu khó..." aria-label="Tìm trong sổ học" borderRadius="xl" />
+              <Input data-testid="vocab-mobile-search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Tìm từ, câu cần ôn, câu khó..." aria-label="Tìm trong sổ học" borderRadius="xl" />
             </InputGroup>
             <HStack wrap={{ base: 'nowrap', md: 'wrap' }} gap="2" overflowX={{ base: 'auto', md: 'visible' }} pb={{ base: '1', md: '0' }}>
               {STATUS_FILTERS.map((filter) => {
@@ -600,7 +600,7 @@ export function VocabPage() {
         <Box data-testid="vocab-review-today-card" className="penglish-glass-card" bg="rgba(255,255,255,0.82)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3', md: '5' }} mb={{ base: '3', md: '5' }} boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)">
           <Flex gap="3" align={{ base: 'start', md: 'center' }} justify="space-between" direction={{ base: 'column', md: 'row' }}>
             <Box minW="0">
-              <Tag borderRadius="full" bg="#FFF7ED" color="#9A3412"><TagLabel>Lỗi sai cần ôn</TagLabel></Tag>
+              <Tag borderRadius="full" bg="#FFF7ED" color="#9A3412"><TagLabel>Câu cần ôn</TagLabel></Tag>
               <Text mt="2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700" color={COLORS.text}>{stats.today} mục cần ôn hôm nay</Text>
               <Text mt="1" color={COLORS.muted} fontWeight="700" noOfLines={{ base: 2, md: undefined }}>
                 {nextReviewItem ? `${nextReviewItem.term} · ${nextReviewItem.meaningVi}` : 'Hôm nay chưa có từ cần ôn. Bạn có thể học thêm từ mới hoặc xem lại nhóm A1.'}
@@ -684,7 +684,7 @@ export function VocabPage() {
           <Box className="penglish-glass-card" bg="rgba(255,255,255,0.78)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p="8" textAlign="center" boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)">
             <Icon as={Waves} boxSize="10" color={COLORS.primary} />
             <Text mt="4" fontSize="2xl" fontWeight="700" color={COLORS.text}>Chưa có gì trong sổ học</Text>
-            <Text mt="2" color={COLORS.muted}>Chưa có gì trong sổ học. Học một bài đầu tiên để Poo lưu lại từ và lỗi sai cho bạn nhé.</Text>
+            <Text mt="2" color={COLORS.muted}>Chưa có gì trong sổ học. Học một bài đầu tiên để Poo giữ từ và câu cần ôn cho bạn nhé.</Text>
             <Button as={Link} to="/learning-path/lesson/unit-1-greetings/unit-1-greetings-vocabulary-0" mt="5" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }}>Học bài A1 đầu tiên</Button>
           </Box>
         ) : filtered.length === 0 ? (
@@ -768,7 +768,7 @@ export function VocabPage() {
             <Box>
               <Text fontWeight="700" color={COLORS.text}>Cách Poo lưu sổ học</Text>
               <Text mt="1" color={COLORS.muted} fontWeight="700">
-                Sau mỗi bài, Poo lưu từ vựng đã lưu, lỗi sai cần ôn, câu shadowing khó, mẫu câu hay dùng và bài cần học lại. Người mới có thể dùng bộ A1/A2/B1 mẫu trước khi có lịch sử học riêng.
+                Sau mỗi bài, Poo giữ từ vựng đã học, câu cần ôn, câu nói đuổi khó, mẫu câu hay dùng và bài nên học lại. Người mới có thể dùng bộ A1/A2/B1 mẫu trước khi có lịch sử học riêng.
               </Text>
             </Box>
           </HStack>

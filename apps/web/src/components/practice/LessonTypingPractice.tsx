@@ -392,8 +392,8 @@ export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: En
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px="6" py="8">
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có nội dung gõ câu</Text>
-          <Text mt="2" color={COLORS.muted}>Bài học này chưa có bài nghe, điền chỗ trống hoặc từ vựng phù hợp để luyện gõ.</Text>
+          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Poo mở phần gõ câu ở nhịp khác</Text>
+          <Text mt="2" color={COLORS.muted}>Bài này ưu tiên nhịp luyện khác trước khi vào phần gõ câu.</Text>
           <HStack mt="6" wrap="wrap">
             <Button as={Link} to={`/lessons/${lesson.id}`} borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: COLORS.primaryHover }}>
               Quay về bài học
@@ -465,8 +465,8 @@ export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: En
                 <Text color={COLORS.muted}>Nghe trước, gõ lại, rồi đọc to câu đúng một lần.</Text>
               </Box>
               <VStack align={{ base: 'start', md: 'end' }} gap="1">
-                <Text fontWeight="800" color={COLORS.green}>Đúng: {correctCount}</Text>
-                <Text fontWeight="800" color="#9A3412">Sai: {wrongCount}</Text>
+                <Text fontWeight="800" color={COLORS.green}>Trúng nhịp: {correctCount}</Text>
+                <Text fontWeight="800" color="#9A3412">Cần ôn: {wrongCount}</Text>
               </VStack>
             </Flex>
             <Progress mt="5" value={progressValue} colorScheme="blue" borderRadius="full" bg="#E2E8F0" />
@@ -494,7 +494,7 @@ export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: En
             ) : null}
 
             <Box mt="6">
-              <Text mb="2" color={COLORS.muted} fontSize="sm" fontWeight="800">Câu trả lời của bạn</Text>
+              <Text mb="2" color={COLORS.muted} fontSize="sm" fontWeight="800">Câu bạn gõ</Text>
               <Input
                 data-testid="practice-typing-input"
                 ref={inputRef}
@@ -510,16 +510,16 @@ export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: En
                 _focus={{ borderColor: COLORS.primary, boxShadow: `0 0 0 1px ${COLORS.primary}` }}
                 isDisabled={checked}
               />
-              <Text mt="2" fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted}>Enter kiểm tra/tiếp; R làm lại; N câu tiếp khi đã có kết quả; Escape xóa ô nhập.</Text>
+              <Text mt="2" fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted}>Enter để Poo xem/tiếp; R làm lại; N câu tiếp khi đã có kết quả; Escape xóa ô nhập.</Text>
             </Box>
 
             {checked ? (
               <Box mt="6" border="1px solid" borderColor={isCurrentCorrect ? '#BBF7D0' : '#FED7AA'} bg={isCurrentCorrect ? '#F0FDF4' : '#FFF7ED'} borderRadius="2xl" p="5" role="status" aria-live="polite">
                 <Text fontSize="lg" fontWeight="900" color={isCurrentCorrect ? '#166534' : '#9A3412'}>
-                  {isCurrentCorrect ? 'Chính xác!' : 'Chưa đúng, kiểm tra lại thứ tự từ hoặc dấu nháy.'}
+                  {isCurrentCorrect ? 'Chính xác!' : 'Gần rồi, mình xem lại thứ tự từ hoặc dấu nháy nhé.'}
                 </Text>
                 <Text mt="2" color={COLORS.text}><b>Đáp án đúng:</b> {currentTask.answer}</Text>
-                {!isCurrentCorrect ? <Text mt="1" color={COLORS.text}><b>Bạn đã gõ:</b> {input.trim() || '(trống)'}</Text> : null}
+                {!isCurrentCorrect ? <Text mt="1" color={COLORS.text}><b>Bạn vừa gõ:</b> {input.trim() || '(trống)'}</Text> : null}
                 {!isCurrentCorrect ? <Text mt="2" color="#9A3412" fontWeight="800">{heartLossText ?? 'Bạn mất 1 bọt biển.'} Cá voi vẫn bơi cùng bạn — thử lại nhịp tiếp theo nhé.</Text> : null}
                 <Text mt="3" color={isCurrentCorrect ? '#166534' : '#9A3412'} fontWeight="700">
                   {isCurrentCorrect ? 'Đọc to câu này một lần để khóa phản xạ.' : 'Hãy bấm Nghe chậm hoặc đọc lại phần mẫu câu.'}

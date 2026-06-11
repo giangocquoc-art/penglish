@@ -156,7 +156,7 @@ export function LessonPage() {
     { id: 'understand', vi: 'Hiểu', icon: BookOpen, guide: 'Nhìn nghĩa thật chậm.', task: 'Đọc 3 cụm đầu tiên và xem nghĩa tiếng Việt.' },
     { id: 'practice', vi: 'Luyện', icon: MessageCircle, guide: 'Thử ghép câu ngắn.', task: 'Đọc mẫu câu chính, rồi thay bằng tên của bạn.' },
     { id: 'speak', vi: 'Nói', icon: Mic2, guide: 'Thử nói lại nào.', task: 'Nói theo hội thoại mẫu một lần thật chậm.' },
-    { id: 'quick-check', vi: 'Kiểm tra', icon: Play, guide: 'Chọn một câu trả lời thôi.', task: 'Làm nhanh một câu kiểm tra để biết mình đã hiểu chưa.' },
+    { id: 'quick-check', vi: 'Thử sức', icon: Play, guide: 'Chọn một câu trả lời thôi.', task: 'Làm nhanh một câu để Poo xem bạn đã hiểu đến đâu.' },
     { id: 'finish', vi: 'Hoàn tất', icon: CheckCircle2, guide: 'Giỏi lắm, lưu bài nhé.', task: 'Lưu tiến độ, rồi chọn luyện thêm nếu muốn.' },
   ];
   const lessonSectionProgress = ((activeLessonSection + 1) / lessonSections.length) * 100;
@@ -312,14 +312,14 @@ export function LessonPage() {
           ) : null}
 
           {activeLessonSection === 4 ? (
-            <StepShell icon={Play} title="Bước 5: Kiểm tra nhanh" helperLabel="Kiểm tra nhanh" task="Tự trả lời một câu ngắn, rồi mở đáp án.">
+            <StepShell icon={Play} title="Bước 5: Thử sức nhẹ" helperLabel="Thử sức nhẹ" task="Tự trả lời một câu ngắn, rồi mở đáp án.">
               {firstQuiz ? (
-                <PreviewCard title={firstQuiz.question ?? firstQuiz.prompt ?? firstQuiz.vietnamese ?? 'Câu kiểm tra nhanh'} prompt={firstQuiz.options ? firstQuiz.options.join(' • ') : firstQuiz.words?.join(' / ') ?? 'Tự trả lời trước khi mở đáp án.'}>
+                <PreviewCard title={firstQuiz.question ?? firstQuiz.prompt ?? firstQuiz.vietnamese ?? 'Câu thử sức nhẹ'} prompt={firstQuiz.options ? firstQuiz.options.join(' • ') : firstQuiz.words?.join(' / ') ?? 'Tự trả lời trước khi mở đáp án.'}>
                   <Text fontWeight="700">{answerToText(firstQuiz.answer)}</Text>
                   {firstQuiz.explanationVi ? <Text fontSize="sm" color={COLORS.muted}>{firstQuiz.explanationVi}</Text> : null}
                 </PreviewCard>
               ) : null}
-              <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=quiz`} mt="3" borderRadius="full" bg={COLORS.primary} color="white" alignSelf="start" _hover={{ bg: '#1D4ED8' }}>Làm kiểm tra nhanh đầy đủ</Button>
+              <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=quiz`} mt="3" borderRadius="full" bg={COLORS.primary} color="white" alignSelf="start" _hover={{ bg: '#1D4ED8' }}>Làm phần thử sức đầy đủ</Button>
             </StepShell>
           ) : null}
 
@@ -327,7 +327,7 @@ export function LessonPage() {
             <StepShell icon={CheckCircle2} title="Bước 6: Hoàn tất" helperLabel="Hoàn tất" task="Lưu tiến độ bài học và chọn luyện thêm nếu muốn.">
               <Box bg={COLORS.text} color="white" borderRadius="3xl" p={{ base: '5', md: '6' }} position="relative" overflow="hidden" className="lesson-final-challenge" willChange="transform, opacity">
                 <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700">Hoàn thành bài học</Text>
-                <Text color="#CBD5E1" mt="1">Poo sẽ lưu tiến độ trên thiết bị này.</Text>
+                <Text color="#CBD5E1" mt="1">Poo đang giữ tiến độ cho bạn.</Text>
                 <HStack mt="4" gap="2" wrap="wrap">
                   <Button data-testid="lesson-complete-button" borderRadius="full" bg={COLORS.green} color="white" _hover={{ bg: '#16A34A' }} onClick={completeLesson}>Lưu hoàn thành</Button>
                   {finalPracticeModes.slice(0, 2).map((mode) => (

@@ -175,7 +175,7 @@ export function MobileDrawerToggle({ user }: { user: SidebarUser | null }) {
                     </Text>
                   </HStack>
                   <IconButton
-                    aria-label="Toggle theme"
+                    aria-label="Đổi màu giao diện"
                     size="sm"
                     variant="ghost"
                     color={NAV_OCEAN.deepBlue}

@@ -241,9 +241,9 @@ export function Foundation48DayPage() {
             <HStack gap="3" align="center">
               <OceanMascot mascot="saoNhi" pose="reward" size="sm" decorative motion="celebrate" />
               <Box minW="0">
-                <Text color={COLORS.green} fontWeight="950">{day.dayNumber === foundation48Days.length ? 'Đã hoàn thành 48/48 ngày' : `Đã lưu ngày ${day.dayNumber}`}</Text>
+                <Text color={COLORS.green} fontWeight="950">{day.dayNumber === foundation48Days.length ? 'Đã hoàn thành 48/48 ngày' : `Poo đã giữ ngày ${day.dayNumber}`}</Text>
                 <Text color={COLORS.text} fontWeight="800" lineHeight="1.55">
-                  {day.dayNumber === foundation48Days.length ? 'Bạn đã hoàn thành lộ trình 48 ngày lấy gốc. Hãy ôn lại các ngày khó, luyện nói đuổi và duy trì thói quen nghe/nói mỗi ngày.' : 'Tiến độ và lỗi sai được giữ trên thiết bị này để ôn lại.'}
+                  {day.dayNumber === foundation48Days.length ? 'Bạn đã hoàn thành lộ trình 48 ngày lấy gốc. Hãy ôn lại các ngày khó, luyện nói đuổi và duy trì thói quen nghe/nói mỗi ngày.' : 'Poo đang giữ tiến độ và các câu cần ôn cho bạn.'}
                 </Text>
               </Box>
             </HStack>
@@ -254,11 +254,11 @@ export function Foundation48DayPage() {
           <Box mt="3" border="1px solid" borderColor="rgba(186,230,253,0.72)" borderRadius="2xl" p={{ base: '2.5', md: '3' }} bg="rgba(255,255,255,0.66)" boxShadow="none" data-testid="foundation48-sync-prompt-inline">
             <Flex justify="space-between" align={{ base: 'stretch', md: 'center' }} gap="2.5" direction={{ base: 'column', md: 'row' }}>
               <Text color={COLORS.muted} fontWeight="800" fontSize="sm">
-                Đồng bộ tiến độ lên tài khoản Google?
+                Lưu tiến độ lên tài khoản Google nhé?
               </Text>
               <HStack gap="2" justify={{ base: 'stretch', sm: 'flex-start' }}>
                 <Button size="xs" borderRadius="full" variant="outline" borderColor={COLORS.border} color={COLORS.blue} bg="white" isLoading={syncBusy} onClick={syncCompletionProgress} flex={{ base: '1', sm: 'initial' }}>
-                  Đồng bộ
+                  Lưu lên tài khoản
                 </Button>
                 <Button size="xs" borderRadius="full" variant="ghost" color={COLORS.muted} onClick={dismissCompletionSyncPrompt} flex={{ base: '1', sm: 'initial' }}>
                   Để sau
@@ -634,7 +634,7 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange }: { dayNumber: num
         {challenge.type === 'fill-blank' ? (
           <Flex gap="3" align={{ base: 'stretch', sm: 'center' }} direction={{ base: 'column', sm: 'row' }}>
             <Input value={answer} onChange={(event) => setAnswer(event.target.value)} placeholder="Nhập đáp án..." bg="white" borderColor={COLORS.border} borderRadius="full" fontWeight="850" minH="48px" onKeyDown={(event) => { if (event.key === 'Enter') submit(); }} data-testid="foundation48-fill-answer" />
-            <Button bg={COLORS.blue} color="white" borderRadius="full" minH="48px" onClick={() => submit()} flexShrink={0}>Kiểm tra</Button>
+            <Button bg={COLORS.blue} color="white" borderRadius="full" minH="48px" onClick={() => submit()} flexShrink={0}>Poo xem giúp</Button>
           </Flex>
         ) : null}
 
@@ -651,7 +651,7 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange }: { dayNumber: num
             </Flex>
             <HStack gap="2" wrap="wrap">
               <Button leftIcon={<Icon as={RotateCcw} />} variant="outline" borderColor={COLORS.border} borderRadius="full" minH="44px" onClick={() => { setSelectedTokens([]); setFeedback(null); }}>Làm lại</Button>
-              <Button bg={COLORS.blue} color="white" borderRadius="full" minH="44px" onClick={() => submit()} data-testid="foundation48-sentence-check">Kiểm tra</Button>
+              <Button bg={COLORS.blue} color="white" borderRadius="full" minH="44px" onClick={() => submit()} data-testid="foundation48-sentence-check">Poo xem giúp</Button>
             </HStack>
           </VStack>
         ) : null}
@@ -659,7 +659,7 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange }: { dayNumber: num
         {challenge.type === 'speaking-repeat' ? (
           <VStack align="stretch" gap="3">
             <Flex gap="2.5" wrap="wrap" direction={{ base: 'column', sm: 'row' }}>
-              <Button leftIcon={<Icon as={Mic} />} bg={COLORS.blue} color="white" borderRadius="full" minH="48px" onClick={startSpeechRecognition} isLoading={listening} loadingText="Đang nghe">Nói và chấm</Button>
+              <Button leftIcon={<Icon as={Mic} />} bg={COLORS.blue} color="white" borderRadius="full" minH="48px" onClick={startSpeechRecognition} isLoading={listening} loadingText="Đang nghe">Nói để Poo nghe</Button>
               <Button leftIcon={<Icon as={selfPracticed ? CheckCircle2 : Mic} />} variant={selfPracticed ? 'solid' : 'outline'} colorScheme={selfPracticed ? 'green' : undefined} borderColor={COLORS.border} borderRadius="full" minH="48px" onClick={markSelfPracticed} data-testid="foundation48-speaking-self-practiced">{selfPracticed ? 'Đã nói xong' : 'Tự đánh dấu đã nói'}</Button>
             </Flex>
             {answer ? <Text color={COLORS.muted} fontWeight="800">Bạn nói/nhập: {answer}</Text> : null}
@@ -699,7 +699,7 @@ function CompletePrompt({ day }: { day: Foundation48Day }) {
           <OceanMascot mascot="poo" pose="reward" size="md" decorative motion="float" />
           <Box minW="0">
             <Text color={COLORS.green} fontWeight="950" fontSize={{ base: 'xl', md: '3xl' }} lineHeight="1.18">Hoàn thành Ngày {day.dayNumber}</Text>
-            <Text mt="1" color={COLORS.text} fontWeight="900" lineHeight="1.45">Giỏi lắm! Poo đã lưu lại lỗi sai của bạn. Mai mình ôn lại nhé.</Text>
+            <Text mt="1" color={COLORS.text} fontWeight="900" lineHeight="1.45">Giỏi lắm! Poo đã giữ lại vài câu cần ôn. Mai mình luyện nhẹ nhé.</Text>
           </Box>
         </HStack>
         <Box border="1px solid" borderColor="#BBF7D0" bg="rgba(255,255,255,0.74)" borderRadius="2xl" p={{ base: '3', md: '3.5' }} data-testid="foundation48-learned-summary">
@@ -713,7 +713,7 @@ function CompletePrompt({ day }: { day: Foundation48Day }) {
         <Flex gap="2.5" wrap="wrap" direction={{ base: 'column', sm: 'row' }} data-testid="foundation48-complete-actions">
           <Button as={Link} to={getFoundation48DayPath(day.dayNumber)} leftIcon={<Icon as={RotateCcw} />} bg={COLORS.green} color="white" borderRadius="full" minH="50px" px="6" data-testid="foundation48-complete-review-day">Ôn lại bài này</Button>
           {nextDay ? <Button as={Link} to={getFoundation48DayPath(nextDay)} leftIcon={<Icon as={ArrowRight} />} variant="outline" borderColor="#86EFAC" color={COLORS.green} bg="white" borderRadius="full" minH="46px" data-testid="foundation48-complete-next-day">Học bài tiếp theo</Button> : null}
-          <Button as={Link} to="/practice" leftIcon={<Icon as={Sparkles} />} variant="outline" borderColor="#86EFAC" color={COLORS.green} bg="white" borderRadius="full" minH="46px" data-testid="foundation48-complete-mistakes">Xem lỗi sai</Button>
+          <Button as={Link} to="/practice" leftIcon={<Icon as={Sparkles} />} variant="outline" borderColor="#86EFAC" color={COLORS.green} bg="white" borderRadius="full" minH="46px" data-testid="foundation48-complete-mistakes">Ôn câu Poo nhắc</Button>
           <Button as={Link} to="/home" leftIcon={<Icon as={Home} />} variant="outline" borderColor={COLORS.border} color={COLORS.blue} bg="white" borderRadius="full" minH="46px" data-testid="foundation48-complete-home">Về Hôm nay học gì?</Button>
           {day.dayNumber === foundation48Days.length ? <Button as={Link} to={FOUNDATION48_BASE_PATH} variant="outline" borderColor={COLORS.border} color={COLORS.blue} bg="white" borderRadius="full" minH="46px">Về lộ trình</Button> : null}
         </Flex>
@@ -828,7 +828,7 @@ function getFoundation48StepLabel(step: Foundation48LessonStep) {
     practice: 'Câu luyện',
     listening: 'Lời thoại',
     speaking: 'Câu luyện',
-    challenge: 'Bài kiểm tra nhỏ',
+    challenge: 'Thử sức nhẹ',
     complete: 'Ôn lại',
   };
 
@@ -837,7 +837,7 @@ function getFoundation48StepLabel(step: Foundation48LessonStep) {
 
 function getFoundation48ChallengeLabel(type: Foundation48Challenge['type']) {
   const labels: Record<Foundation48Challenge['type'], string> = {
-    'multiple-choice': 'Kiểm tra nhanh',
+    'multiple-choice': 'Thử sức nhẹ',
     'listen-and-choose': 'Lời thoại',
     'fill-blank': 'Câu luyện',
     'sentence-order': 'Câu luyện',
@@ -890,7 +890,7 @@ function buildFoundation48Steps(day: Foundation48Day, resolvedDeepLesson?: Found
     const vocabularyBullets = deepLesson.vocabulary.map((item) => `${item.term} — ${item.meaningVi}. Ví dụ: ${item.example}`);
 
     const steps: Foundation48LessonStep[] = [
-      { id: 'intro', type: 'intro', title: deepLesson.learnerTitle, subtitle: 'Bài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và kiểm tra nhanh.', body: deepLesson.goalVi, bullets: [`${deepLesson.vocabulary.length} Từ vựng`, `${deepLesson.patterns.length} Mẫu câu`, `${deepLesson.listening.length} Nghe`, `${deepLesson.speaking.length} Nói lại`, `${deepLesson.quiz.length} Kiểm tra nhanh`] },
+      { id: 'intro', type: 'intro', title: deepLesson.learnerTitle, subtitle: 'Bài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và kiểm tra nhanh.', body: deepLesson.goalVi, bullets: [`${deepLesson.vocabulary.length} Từ vựng`, `${deepLesson.patterns.length} Mẫu câu`, `${deepLesson.listening.length} Nghe`, `${deepLesson.speaking.length} Nói lại`, `${deepLesson.quiz.length} Thử sức nhẹ`] },
       { id: 'explain', type: 'explain', title: deepLesson.grammarPoint.title, subtitle: 'Poo giải thích bằng tiếng Việt trước khi luyện.', body: deepLesson.grammarPoint.explanationVi, bullets: deepLesson.grammarPoint.examples },
       { id: 'patterns', type: 'example', title: 'Mẫu câu cần nhớ', subtitle: 'Đọc mẫu chậm, chú ý trật tự từ.', bullets: patternBullets },
       { id: 'vocabulary', type: 'practice', title: 'Từ/cụm dùng ngay', subtitle: `${deepLesson.vocabulary.length} từ và cụm chính của ngày ${day.dayNumber}.`, bullets: vocabularyBullets },
@@ -921,7 +921,7 @@ function buildFoundation48Steps(day: Foundation48Day, resolvedDeepLesson?: Found
   const challenges = buildFoundation48Challenges(day);
 
   const steps: Foundation48LessonStep[] = [
-    { id: 'intro', type: 'intro', title: `Ngày ${day.dayNumber}: bài học đang mở rộng`, subtitle: 'Ngày này đã có lộ trình an toàn; nội dung sâu sẽ được Poo bổ sung dần.', body: summary },
+    { id: 'intro', type: 'intro', title: `Ngày ${day.dayNumber}: bài học cùng Poo`, subtitle: 'Poo dẫn bạn đi theo nhịp nhẹ: hiểu ý chính, luyện mẫu câu rồi thử sức.', body: summary },
     { id: 'explain', type: 'explain', title: 'Poo giải thích nhanh', subtitle: 'Nắm khung chính trước khi làm bài.', body: explanation, bullets: keyPoints },
     { id: 'example', type: 'example', title: 'Ví dụ mẫu dễ nhớ', subtitle: 'Đọc chậm từng câu, chú ý chủ ngữ và từ khóa.', bullets: examples },
     { id: 'practice', type: 'practice', title: 'Chuẩn bị kiểm tra nhanh', subtitle: 'Nhìn mẫu và tự dự đoán đáp án trước khi làm thử thách.', bullets: practice.slice(0, 4) },
@@ -937,7 +937,7 @@ function buildFoundation48Steps(day: Foundation48Day, resolvedDeepLesson?: Found
     steps.push({ id: challenge.id, type: challenge.type === 'speaking-repeat' ? 'speaking' : 'challenge', title: challengeTitle(challenge, index), subtitle: challengeSubtitle(challenge), challenge });
   });
 
-  steps.push({ id: 'complete', type: 'complete', title: 'Tổng kết và ôn lại', subtitle: 'Giỏi lắm! Poo sẽ lưu lỗi sai, từ mới và gợi ý ôn lại cho ngày mai.' });
+  steps.push({ id: 'complete', type: 'complete', title: 'Tổng kết và ôn lại', subtitle: 'Giỏi lắm! Poo sẽ giữ từ mới và các câu cần ôn cho ngày mai.' });
   return steps;
 }
 
@@ -993,12 +993,12 @@ function buildFoundation48Challenges(day: Foundation48Day): Foundation48Challeng
     {
       id: `day-${day.dayNumber}-mini-test`,
       type: 'multiple-choice',
-      prompt: dailyTest[0] || 'Kiểm tra nhanh: mẫu nào đúng với bài hôm nay?',
+      prompt: dailyTest[0] || 'Thử sức nhẹ: mẫu nào đúng với bài hôm nay?',
       target: miniTestTarget,
       answer: miniTestTarget,
       options: uniqueOptions([miniTestTarget, 'Subject + random word + not', 'Verb + subject + maybe', 'Only translate word by word']),
       hint: 'Chọn mẫu câu đúng nhất trước khi hoàn thành ngày học.',
-      explanation: 'Bài kiểm tra nhỏ giúp Poo lưu tiến độ và nhắc lại cấu trúc quan trọng nhất của ngày.',
+      explanation: 'Thử sức nhẹ giúp Poo lưu tiến độ và nhắc lại cấu trúc quan trọng nhất của ngày.',
     },
   ];
 }
@@ -1025,7 +1025,7 @@ function shuffleTokens(tokens: string[], seed: number) {
 }
 
 function challengeTitle(challenge: Foundation48Challenge, index: number) {
-  if (challenge.id.endsWith('-mini-test') || challenge.id.endsWith('-speak-review')) return `${index + 1}. Kiểm tra nhanh`;
+  if (challenge.id.endsWith('-mini-test') || challenge.id.endsWith('-speak-review')) return `${index + 1}. Thử sức nhẹ`;
 
   const labels: Record<Foundation48Challenge['type'], string> = {
     'multiple-choice': 'Chọn đáp án đúng',
@@ -1038,8 +1038,8 @@ function challengeTitle(challenge: Foundation48Challenge, index: number) {
 }
 
 function challengeSubtitle(challenge: Foundation48Challenge) {
-  if (challenge.id.endsWith('-mini-test')) return 'Chốt bài bằng một câu kiểm tra ngắn trước khi lưu tiến độ.';
+  if (challenge.id.endsWith('-mini-test')) return 'Khép lại bằng một câu thử sức nhẹ trước khi Poo giữ tiến độ.';
   if (challenge.type === 'speaking-repeat') return 'Nói chậm, rõ. Có thể tự đánh dấu nếu máy chưa hỗ trợ nhận giọng nói.';
   if (challenge.type === 'listen-and-choose') return 'Dùng giọng đọc mẫu để nghe, sau đó chọn câu đúng.';
-  return 'Làm đúng để mở bước tiếp theo. Nếu sai, lỗi sẽ được lưu vào phần ôn tập.';
+  return 'Làm từng nhịp để mở bước tiếp theo. Nếu vấp, Poo sẽ đưa câu đó vào phần ôn.';
 }

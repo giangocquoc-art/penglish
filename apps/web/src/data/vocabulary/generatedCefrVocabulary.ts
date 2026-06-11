@@ -6858,7 +6858,7 @@ function buildExpandedVocabularyItem(seed: VocabularyExpansionSeed, index: numbe
     vietnameseHint: `${levelInfo.hint} Chủ đề: ${themeVi[seed.theme]}.`,
     meaningVi: seed.meaningVi,
     example,
-    exampleMeaningVi: `Câu mẫu dùng “${seed.term}” trong ngữ cảnh ${themeVi[seed.theme]} để người học luyện theo chunk.`,
+    exampleMeaningVi: `Câu mẫu dùng “${seed.term}” trong ngữ cảnh ${themeVi[seed.theme]} để người học luyện theo cụm ngắn.`,
     flashcardPrompt: `Nhìn tình huống ${themeVi[seed.theme]} và nói lại từ/cụm: ${seed.term}.`,
     pronunciationHintVi: `Nghe mẫu, đọc “${seed.term}” chậm theo cụm, rồi nói lại tự nhiên hơn.`,
     tags: [seed.level, seed.partOfSpeech, themeVi[seed.theme], 'P-English expansion 01'],

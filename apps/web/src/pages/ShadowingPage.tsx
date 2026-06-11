@@ -261,10 +261,10 @@ export function ShadowingPage() {
   const [customTitle, setCustomTitle] = useState(customVideo?.title ?? '');
   const [customUrl, setCustomUrl] = useState(customVideo?.videoUrl ?? '');
   const [customTranscript, setCustomTranscript] = useState(customVideo?.transcript.map((item) => item.text).join('\n') ?? '');
-  const [customMessage, setCustomMessage] = useState(customVideo ? 'Đã tải bài nói đuổi tự tạo từ thiết bị này.' : 'Dán mỗi câu trên một dòng để tạo bài luyện riêng.');
+  const [customMessage, setCustomMessage] = useState(customVideo ? 'Poo đã mở bài nói đuổi bạn tự tạo.' : 'Dán mỗi câu trên một dòng để tạo bài luyện riêng.');
   const [speed, setSpeed] = useState(1);
   const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>('idle');
-  const [recordMessage, setRecordMessage] = useState('Poo sẽ nghe bản ghi và góp ý phát âm, nhịp, từ thiếu hoặc từ lệch.');
+  const [recordMessage, setRecordMessage] = useState('Poo sẽ nghe lượt nói và góp ý nhẹ về phát âm, nhịp, chỗ Poo nghe chưa rõ.');
   const [mediaMessage, setMediaMessage] = useState('');
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const [youtubeFallbackVisible, setYoutubeFallbackVisible] = useState(false);
@@ -322,7 +322,7 @@ export function ShadowingPage() {
     setLocalTranscript('');
     setRecordingStatus('idle');
     setElapsedSeconds(0);
-    setRecordMessage('Poo sẽ nghe bản ghi và góp ý phát âm, nhịp, từ thiếu hoặc từ lệch.');
+    setRecordMessage('Poo sẽ nghe lượt nói và góp ý nhẹ về phát âm, nhịp, chỗ Poo nghe chưa rõ.');
     setShadowingSyncStatus('local');
   }, [selectedVideo?.id, selectedVideo?.videoUrl]);
 
@@ -332,7 +332,7 @@ export function ShadowingPage() {
     setLocalTranscript('');
     setRecordingStatus('idle');
     setElapsedSeconds(0);
-    setRecordMessage('Poo sẽ nghe bản ghi và góp ý phát âm, nhịp, từ thiếu hoặc từ lệch.');
+    setRecordMessage('Poo sẽ nghe lượt nói và góp ý nhẹ về phát âm, nhịp, chỗ Poo nghe chưa rõ.');
     setShadowingSyncStatus('local');
   }, [selectedSentence?.id]);
 
@@ -438,7 +438,7 @@ export function ShadowingPage() {
   const listenSentence = () => {
     if (!selectedSentence) return;
     if (!speechSupported) {
-      setMediaMessage('Trình duyệt chưa hỗ trợ giọng đọc mẫu. Hãy đọc câu mẫu, ghi âm, rồi để Poo góp ý cách đọc.');
+      setMediaMessage('Trình duyệt chưa hỗ trợ giọng đọc mẫu. Hãy đọc câu mẫu, nói thử một lượt, rồi để Poo góp ý nhẹ.');
       return;
     }
 
@@ -454,14 +454,14 @@ export function ShadowingPage() {
     if (!selectedSentence) return;
     if (!videoRef.current || !selectedVideo?.videoUrl?.trim()) {
       listenSentence();
-      setRecordMessage('Không có video mẫu thu sẵn. Poo dùng giọng đọc mẫu nếu có; sau đó bạn ghi âm để Poo góp ý.');
+      setRecordMessage('Không có video mẫu thu sẵn. Poo dùng giọng đọc mẫu nếu có; sau đó bạn nói thử để Poo góp ý.');
       return;
     }
 
     videoRef.current.currentTime = selectedSentence.start;
     videoRef.current.playbackRate = speed;
     await videoRef.current.play().catch(() => {
-      setMediaMessage('Video không phát được. Bạn vẫn có thể luyện bằng lời thoại, giọng đọc mẫu và ghi âm.');
+      setMediaMessage('Video không phát được. Bạn vẫn có thể luyện bằng lời thoại, giọng đọc mẫu và lượt nói của mình.');
     });
   };
 
@@ -485,7 +485,7 @@ export function ShadowingPage() {
       setApiFeedback(result);
       setApiError(null);
       setRecordingStatus('result');
-      setRecordMessage(result.score < 78 ? `${result.coachMessage} Poo đã lưu câu này vào Practice để ôn lại.` : result.coachMessage);
+      setRecordMessage(result.score < 78 ? `${result.coachMessage} Poo đã giữ câu này ở phần ôn cùng Poo để bạn quay lại nhẹ nhàng.` : result.coachMessage);
       markSentenceCompleted(selectedSentence?.id);
     } else {
       const fallback = localTranscript.trim()
@@ -574,7 +574,7 @@ export function ShadowingPage() {
     setLocalTranscript('');
     setRecordingStatus('idle');
     setElapsedSeconds(0);
-    setRecordMessage('Poo sẽ nghe bản ghi và góp ý phát âm, nhịp, từ thiếu hoặc từ lệch.');
+    setRecordMessage('Poo sẽ nghe lượt nói và góp ý nhẹ về phát âm, nhịp, chỗ Poo nghe chưa rõ.');
   };
 
   const goToNextSentence = () => {
@@ -596,7 +596,7 @@ export function ShadowingPage() {
       topic: 'Lời thoại tự nhập',
       duration: `${transcript.length} câu`,
       videoUrl: customUrl.trim(),
-      description: 'Bài luyện nói đuổi được tạo từ lời thoại bạn nhập và lưu trên thiết bị này.',
+      description: 'Bài luyện nói đuổi được tạo từ lời thoại bạn nhập, Poo đang giữ để bạn luyện tiếp.',
       transcript,
       transcriptLines: transcript,
       youtubeId: '',
@@ -616,7 +616,7 @@ export function ShadowingPage() {
     deleteCustomShadowingItem();
     setCustomVideo(null);
     setSelectedVideoId(shadowingVideos[0]?.id ?? '');
-    setCustomMessage('Đã xóa bài tự tạo khỏi thiết bị này.');
+    setCustomMessage('Poo đã cất bài tự tạo khỏi danh sách luyện.');
   };
 
   const feedbackPanel = (
@@ -634,7 +634,7 @@ export function ShadowingPage() {
         <VStack align={{ base: 'start', md: 'end' }} gap="2">
           <Chip tone={apiFeedback ? 'green' : apiError ? 'amber' : 'blue'}>{apiFeedback ? 'Góp ý sẵn sàng' : apiError ? 'Cần thử lại' : 'Poo góp ý'}</Chip>
           <Text data-testid="shadowing-sync-status" fontSize="xs" color={shadowingSyncStatus === 'synced' ? '#166534' : shadowingSyncStatus === 'failed' ? '#92400E' : COLORS.muted} fontWeight="700" role="status" aria-live="polite">
-            {shadowingSyncStatus === 'synced' ? 'Đã lưu lượt luyện' : shadowingSyncStatus === 'failed' ? 'Chưa đồng bộ được, Poo vẫn giữ tiến độ trên thiết bị này' : 'Tiến độ của bạn vẫn an toàn'}
+            {shadowingSyncStatus === 'synced' ? 'Poo đã giữ lượt luyện' : shadowingSyncStatus === 'failed' ? 'Poo sẽ lưu lên tài khoản khi mạng ổn hơn' : 'Tiến độ của bạn vẫn an toàn'}
           </Text>
         </VStack>
       </Flex>
@@ -643,7 +643,7 @@ export function ShadowingPage() {
         <>
           <Box mb="4" p="3" borderRadius="2xl" bg="rgba(232,244,255,0.72)" border="1px solid" borderColor="#BAE6FD">
             <Text fontWeight="700" color={COLORS.text}>{apiFeedback.coachMessage}</Text>
-            <Text mt="1" fontSize="sm" color={COLORS.muted} fontWeight="700">Điểm rõ ràng: {apiFeedback.score}/100 · Độ tin cậy: {apiFeedback.confidence}</Text>
+            <Text mt="1" fontSize="sm" color={COLORS.muted} fontWeight="700">Mức rõ của câu: {apiFeedback.score}/100 · Poo nghe chắc chưa: {apiFeedback.confidence}</Text>
           </Box>
           <SimpleGrid columns={{ base: 1, md: 2 }} gap="3">
             <Box p="3" borderRadius="2xl" bg="rgba(221,245,255,0.62)" border="1px solid" borderColor="#BAE6FD">
@@ -652,11 +652,11 @@ export function ShadowingPage() {
             </Box>
             <Box p="3" borderRadius="2xl" bg="#F0FDF4" border="1px solid" borderColor="#BBF7D0">
               <Text fontSize="sm" fontWeight="700" color="#166534">Bài luyện tiếp theo</Text>
-              <Text mt="2" color={COLORS.muted} fontSize="sm">{apiFeedback.nextDrill || 'Đọc chậm câu mẫu, nghỉ một nhịp, rồi ghi âm lại.'}</Text>
+              <Text mt="2" color={COLORS.muted} fontSize="sm">{apiFeedback.nextDrill || 'Đọc chậm câu mẫu, nghỉ một nhịp, rồi nói lại lần nữa.'}</Text>
             </Box>
-            <FeedbackWordBox title="Từ khớp" empty="Chưa có từ khớp chắc chắn." tone="green" words={apiFeedback.matchedWords} />
-            <FeedbackWordBox title="Từ còn thiếu" empty="Không thấy từ thiếu rõ ràng." tone="amber" words={apiFeedback.missingWords} />
-            <FeedbackWordBox title="Từ bị thừa/lệch" empty="Không thấy từ thừa hoặc lệch rõ ràng." tone="red" words={[...apiFeedback.extraWords, ...apiFeedback.changedWords]} />
+            <FeedbackWordBox title="Từ bạn nói tốt" empty="Poo chưa nghe rõ từ nào chắc chắn, mình thử chậm hơn nhé." tone="green" words={apiFeedback.matchedWords} />
+            <FeedbackWordBox title="Từ Poo chưa nghe rõ" empty="Poo chưa thấy chỗ nào bị hụt rõ ràng." tone="amber" words={apiFeedback.missingWords} />
+            <FeedbackWordBox title="Từ Poo nghe hơi khác" empty="Poo chưa nghe thấy chỗ nào lệch rõ ràng." tone="red" words={[...apiFeedback.extraWords, ...apiFeedback.changedWords]} />
             <Box p="3" borderRadius="2xl" bg="rgba(221,245,255,0.62)" border="1px solid" borderColor="#BAE6FD">
               <Text fontSize="sm" fontWeight="700" color={COLORS.deepBlue}>Gợi ý phát âm</Text>
               <VStack mt="2" align="stretch" gap="1">
@@ -671,7 +671,7 @@ export function ShadowingPage() {
             </Box>
           </SimpleGrid>
           <HStack mt="4" gap="2" wrap="wrap">
-            <Button data-testid="shadowing-record-again-button" leftIcon={<Icon as={Mic} />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Ghi âm lại</Button>
+            <Button data-testid="shadowing-record-again-button" leftIcon={<Icon as={Mic} />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Nói lại lần nữa</Button>
             <Button data-testid="shadowing-next-sentence-button" leftIcon={<Icon as={SkipForward} />} borderRadius="full" bg={COLORS.deepBlue} color="white" _hover={{ bg: COLORS.oceanBlue }} onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1}>Câu tiếp theo</Button>
           </HStack>
         </>
@@ -681,7 +681,7 @@ export function ShadowingPage() {
             <Icon as={AlertCircle} color="#92400E" />
             <Box>
               <Text fontWeight="700" color={COLORS.text}>{apiError.message}</Text>
-              <Text mt="1" fontSize="sm" color={COLORS.muted}>Poo chưa nghe rõ lượt này. Bạn có thể ghi âm lại, hoặc nhập câu mình vừa nói ở phần nâng cao để Poo so sánh.</Text>
+              <Text mt="1" fontSize="sm" color={COLORS.muted}>Poo chưa nghe rõ lượt này. Bạn có thể nói lại lần nữa, hoặc nhập câu mình vừa nói ở phần nâng cao để Poo nghe cùng bạn.</Text>
             </Box>
           </HStack>
           <VStack align="stretch" gap="3" mt="4">
@@ -692,11 +692,11 @@ export function ShadowingPage() {
                 setApiFeedback(fallback);
                 setApiError(null);
                 setRecordingStatus('result');
-                setRecordMessage(`${fallback.coachMessage} Góp ý thử nghiệm từ câu bạn nhập.`);
+                setRecordMessage(`${fallback.coachMessage} Poo góp ý nhẹ từ câu bạn vừa nhập.`);
                 markSentenceCompleted(selectedSentence?.id);
                 saveAttempt(fallback);
-              }} isDisabled={!localTranscript.trim()}>So sánh câu nhập</Button>
-              <Button data-testid="shadowing-record-retry-button" leftIcon={<Icon as={Mic} />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Ghi âm lại</Button>
+              }} isDisabled={!localTranscript.trim()}>Nhờ Poo nghe thử</Button>
+              <Button data-testid="shadowing-record-retry-button" leftIcon={<Icon as={Mic} />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Nói lại lần nữa</Button>
             </HStack>
           </VStack>
         </Box>
@@ -778,14 +778,14 @@ export function ShadowingPage() {
                   src={selectedVideo?.videoUrl}
                   controls
                   onLoadedData={() => setMediaMessage('')}
-                  onError={() => setMediaMessage('Video không tải được. Chuyển sang luyện bằng lời thoại và ghi âm để không gián đoạn bài học.')}
+                  onError={() => setMediaMessage('Video không tải được. Chuyển sang luyện bằng lời thoại và nói thử cùng Poo để không gián đoạn bài học.')}
                   style={{ width: '100%', borderRadius: 22, background: '#102A43', display: 'block' }}
                 />
               ) : (
                 <Flex borderRadius="22px" minH={{ base: '138px', md: '168px' }} bg="linear-gradient(135deg, #E8F4FF 0%, #F8FCFF 100%)" color={COLORS.text} align="center" justify="center" textAlign="center" p={{ base: '5', md: '6' }} direction="column" gap="3" border="1px solid" borderColor="#BAE6FD">
                   <OceanMascot mascot="suaNghe" pose="wave" size="md" decorative motion="pulse" />
                   <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700">Luyện bằng lời thoại</Text>
-                  <Text maxW="620px" color={COLORS.muted} fontWeight="700" lineHeight="1.7">Bài có sẵn chưa có âm thanh/video mẫu. Nút nghe sẽ dùng giọng đọc mẫu nếu trình duyệt hỗ trợ; nếu không, bạn vẫn đọc lời thoại và ghi âm để Poo góp ý.</Text>
+                  <Text maxW="620px" color={COLORS.muted} fontWeight="700" lineHeight="1.7">Bài này luyện chính bằng lời thoại. Nút nghe sẽ dùng giọng đọc mẫu khi trình duyệt hỗ trợ; nếu không, bạn vẫn đọc theo lời thoại để Poo góp ý nhẹ.</Text>
                 </Flex>
               )}
               </Box>
@@ -798,7 +798,7 @@ export function ShadowingPage() {
                   </Box>
                   <HStack gap="2" wrap="wrap">
                     {selectedSentence && isPracticed(selectedSentence.id) ? <Chip tone="green">Đã luyện</Chip> : null}
-                    {selectedSentence && isDifficult(selectedSentence.id) ? <Chip tone="amber">Câu khó</Chip> : null}
+                    {selectedSentence && isDifficult(selectedSentence.id) ? <Chip tone="amber">Câu còn vấp</Chip> : null}
                     <Chip tone={speechSupported ? 'green' : 'amber'}>{speechSupported ? `Tốc độ nghe ${speed}x` : 'Chưa có giọng đọc mẫu'}</Chip>
                   </HStack>
                 </HStack>
@@ -812,13 +812,13 @@ export function ShadowingPage() {
                     <Text data-testid="shadowing-practiced-count" fontSize={{ base: 'lg', md: '2xl' }} color="#166534" fontWeight="700">{completedCount}/{transcriptLength}</Text>
                   </Box>
                   <Box p="3" borderRadius="2xl" bg="#FFFBEB" border="1px solid" borderColor="#FDE68A">
-                    <Text fontSize="xs" color="#92400E" fontWeight="700">Câu khó</Text>
+                    <Text fontSize="xs" color="#92400E" fontWeight="700">Câu còn vấp</Text>
                     <Text data-testid="shadowing-difficult-count" fontSize={{ base: 'lg', md: '2xl' }} color="#92400E" fontWeight="700">{difficultCount}</Text>
                   </Box>
                 </SimpleGrid>
                 <Text mt="3" fontSize={{ base: 'lg', md: '3xl' }} color={COLORS.text} fontWeight="700" lineHeight="1.22">{selectedSentence?.text ?? 'Chọn một câu trong lời thoại để bắt đầu.'}</Text>
                 {selectedSentence?.vi ? <Text mt="1" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="600" lineHeight="1.45">{selectedSentence.vi}</Text> : null}
-                {selectedSentence?.focusNotes?.length ? <Text mt="2" color={COLORS.deepBlue} fontSize="sm" fontWeight="700" lineHeight="1.45" noOfLines={{ base: 2, md: undefined }}>Focus: {selectedSentence.focusNotes.slice(0, 2).join(' · ')}</Text> : null}
+                {selectedSentence?.focusNotes?.length ? <Text mt="2" color={COLORS.deepBlue} fontSize="sm" fontWeight="700" lineHeight="1.45" noOfLines={{ base: 2, md: undefined }}>Poo nhắc: {selectedSentence.focusNotes.slice(0, 2).join(' · ')}</Text> : null}
                 <HStack mt="3" gap="2" wrap="wrap">
                   <Button data-testid="shadowing-previous-button" size={{ base: 'sm', md: 'md' }} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToPreviousSentence} isDisabled={selectedSentenceIndex <= 0 || isProcessingRecording}>Câu trước</Button>
                   <Button data-testid="shadowing-next-button" size={{ base: 'sm', md: 'md' }} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1 || isProcessingRecording}>Câu tiếp</Button>
@@ -847,7 +847,7 @@ export function ShadowingPage() {
                   <HStack mb="3" justify="space-between" align="start" gap="3" wrap="wrap">
                     <Box>
                       <Text fontWeight="700" color={COLORS.text}>2. Nói lại theo nhịp</Text>
-                      <Text mt="1" fontSize="sm" color={COLORS.muted} noOfLines={{ base: 2, md: undefined }}>Không cần nói hoàn hảo. Bấm ghi âm, nói lại theo nhịp, rồi để Poo chỉ ra chỗ cần luyện thêm.</Text>
+                      <Text mt="1" fontSize="sm" color={COLORS.muted} noOfLines={{ base: 2, md: undefined }}>Không cần nói hoàn hảo. Nói thử theo nhịp, rồi để Poo chỉ nhẹ chỗ mình luyện thêm.</Text>
                     </Box>
                     <Chip tone="amber">3. Góp ý</Chip>
                   </HStack>
@@ -859,7 +859,7 @@ export function ShadowingPage() {
                           <Icon as={isProcessingRecording ? Loader2 : isRecording ? Pause : Mic} className={isProcessingRecording ? 'shadowing-spin' : undefined} />
                         </Flex>
                         <Box>
-                          <Text fontWeight="700" color={COLORS.text}>{isRecording ? 'Poo đang nghe…' : isProcessingRecording ? processingMessage : apiFeedback ? 'Đã có góp ý' : 'Sẵn sàng ghi âm'}</Text>
+                          <Text fontWeight="700" color={COLORS.text}>{isRecording ? 'Poo đang nghe…' : isProcessingRecording ? processingMessage : apiFeedback ? 'Đã có góp ý' : 'Sẵn sàng nói thử'}</Text>
                           <Text fontSize="sm" color={COLORS.muted}>{isRecording ? `Thời gian: ${formatTimer(elapsedSeconds)}` : recordMessage}</Text>
                         </Box>
                       </HStack>
@@ -867,8 +867,8 @@ export function ShadowingPage() {
                     </HStack>
                   </Box>
                   <HStack mt="3" gap="2" wrap="wrap">
-                    <Button data-testid="shadowing-record-button" leftIcon={<Icon as={isRecording ? Pause : Mic} />} borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} aria-label={isRecording ? 'Dừng ghi âm và gửi Poo góp ý' : 'Nói theo Poo'} aria-pressed={isRecording} onClick={handleRecordAction} isDisabled={isProcessingRecording} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý cho bạn...'}>
-                      {isRecording ? 'Dừng ghi âm' : 'Nói theo Poo'}
+                    <Button data-testid="shadowing-record-button" leftIcon={<Icon as={isRecording ? Pause : Mic} />} borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} aria-label={isRecording ? 'Dừng lượt nói và gửi Poo góp ý' : 'Nói theo Poo'} aria-pressed={isRecording} onClick={handleRecordAction} isDisabled={isProcessingRecording} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý cho bạn...'}>
+                      {isRecording ? 'Dừng lượt nói' : 'Nói theo Poo'}
                     </Button>
                     <Button leftIcon={<Icon as={SkipForward} />} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1 || isProcessingRecording}>Câu tiếp theo</Button>
                   </HStack>
@@ -881,20 +881,20 @@ export function ShadowingPage() {
 
             <SimpleGrid columns={{ base: 1, md: 2 }} gap="3" display={{ base: 'none', md: 'grid' }}>
               <Box className="shadowing-custom-card" p="4" borderRadius="2xl" bg={allSentencesCompleted ? '#F0FDF4' : 'rgba(232,244,255,0.88)'} border="1px solid" borderColor={allSentencesCompleted ? '#BBF7D0' : '#BAE6FD'} role="status" aria-live="polite">
-                <HStack><Icon as={allSentencesCompleted ? CheckCircle2 : Sparkles} color={allSentencesCompleted ? COLORS.green : COLORS.oceanBlue} /><Text fontWeight="700" color={COLORS.text}>{allSentencesCompleted ? 'Hoàn thành lượt nói đuổi' : 'Tiến độ luyện tập'}</Text></HStack>
-                <Text mt="2" color={COLORS.muted} fontSize="sm">Câu {selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}. Đã luyện {completedCount}/{transcriptLength}. Câu khó {difficultCount}. Poo lưu tiến độ theo từng bài.</Text>
+                <HStack><Icon as={allSentencesCompleted ? CheckCircle2 : Sparkles} color={allSentencesCompleted ? COLORS.green : COLORS.oceanBlue} /><Text fontWeight="700" color={COLORS.text}>{allSentencesCompleted ? 'Hoàn thành lượt nói đuổi' : 'Nhịp luyện hôm nay'}</Text></HStack>
+                <Text mt="2" color={COLORS.muted} fontSize="sm">Câu {selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}. Đã luyện {completedCount}/{transcriptLength}. Câu còn vấp {difficultCount}. Poo giữ lại nhịp luyện theo từng bài.</Text>
               </Box>
               <Box className="shadowing-weak-card" p="4" borderRadius="2xl" bg="#FFFBEB" border="1px solid" borderColor="#FDE68A">
                 <Text fontWeight="700" color={COLORS.text}>Câu nên luyện tiếp</Text>
                 <Text mt="2" color={COLORS.muted} fontSize="sm">{weakSentence?.text ?? 'Chọn một câu để bắt đầu.'}</Text>
-                <Text mt="2" color={COLORS.muted} fontSize="xs" fontWeight="700">Gợi ý: nghe trước một lần, nói lại theo nhịp, rồi xem Poo góp ý từ thiếu, phát âm và nhịp nói.</Text>
+                <Text mt="2" color={COLORS.muted} fontSize="xs" fontWeight="700">Gợi ý: nghe trước một lần, nói lại theo nhịp, rồi xem Poo góp ý chỗ chưa rõ, phát âm và nhịp nói.</Text>
               </Box>
             </SimpleGrid>
           </VStack>
 
           <VStack align="stretch" gap={{ base: '3', md: '4' }} minW="0" gridColumn={{ lg: 'span 4' }} pb={{ base: '96px', lg: '0' }}>
             <Box data-testid="shadowing-lesson-picker" as="details" open={typeof window !== 'undefined' ? window.innerWidth >= 1024 : true} className="shadowing-custom-card penglish-glass-card" p="4" borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 12px 30px rgba(16, 42, 67, 0.05)" backdropFilter="blur(14px) saturate(1.1)">
-              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}>Chọn bài nói đuổi</Box>
+              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}>Danh sách bài luyện</Box>
               <HStack justify="space-between" mb="3" align="start" gap="3">
                 <Box>
                   <Text fontWeight="700" color={COLORS.text}>Chọn bài nói đuổi</Text>
@@ -936,7 +936,7 @@ export function ShadowingPage() {
                           <HStack gap="2" wrap="wrap" mb="1">
                             {active ? <Chip tone="blue">Đang luyện</Chip> : null}
                             {done ? <Chip tone="green">Đã luyện</Chip> : null}
-                            {difficult ? <Chip tone="amber">Câu khó</Chip> : null}
+                            {difficult ? <Chip tone="amber">Câu còn vấp</Chip> : null}
                           </HStack>
                           <Text fontWeight="700" color={COLORS.text} lineHeight="1.45">{sentence.text}</Text>
                           <Text fontSize="sm" color={COLORS.muted} lineHeight="1.55">{sentence.vi}</Text>
@@ -949,11 +949,11 @@ export function ShadowingPage() {
             </Box>
 
             <Box data-testid="shadowing-custom-transcript" as="details" className="shadowing-custom-card penglish-glass-card" p="4" borderRadius="3xl" bg="rgba(248,252,255,0.78)" border="1px solid" borderColor={COLORS.border} boxShadow="0 10px 24px rgba(16, 42, 67, 0.04)" backdropFilter="blur(14px) saturate(1.1)">
-              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}>Nâng cao: tự tạo lời thoại</Box>
+              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}>Tự tạo lời thoại với Poo</Box>
               <HStack mb="3" align="start">
                 <Icon as={Upload} color={COLORS.deepBlue} />
                 <Box>
-                  <Text fontWeight="700" color={COLORS.text}>Nâng cao: tự tạo lời thoại</Text>
+                  <Text fontWeight="700" color={COLORS.text}>Tự tạo lời thoại với Poo</Text>
                   <Text fontSize="sm" color={COLORS.muted}>Dán từng câu trên một dòng. Link video chỉ để tham khảo, không cần tải video lên.</Text>
                 </Box>
               </HStack>

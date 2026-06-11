@@ -9,7 +9,7 @@ export type RouteMetadata = {
 
 const DEFAULT_METADATA: RouteMetadata = {
   title: 'PooEnglish — học tiếng Anh mỗi ngày cùng Poo',
-  description: 'Ứng dụng học tiếng Anh nhẹ nhàng với lộ trình 48 ngày, nói đuổi, luyện phản xạ, từ vựng và sổ lỗi sai cá nhân.',
+  description: 'Ứng dụng học tiếng Anh nhẹ nhàng với lộ trình 48 ngày, nói đuổi, luyện phản xạ, từ vựng và sổ câu cần ôn cá nhân.',
   canonicalPath: '/',
 };
 
@@ -18,7 +18,7 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
     test: (pathname) => pathname === '/' || pathname === '/home' || pathname === '/landing',
     metadata: {
       title: 'PooEnglish — học tiếng Anh mỗi ngày cùng Poo',
-      description: 'Ứng dụng học tiếng Anh nhẹ nhàng với lộ trình 48 ngày, nói đuổi, luyện phản xạ, từ vựng và sổ lỗi sai cá nhân.',
+      description: 'Ứng dụng học tiếng Anh nhẹ nhàng với lộ trình 48 ngày, nói đuổi, luyện phản xạ, từ vựng và sổ câu cần ôn cá nhân.',
       canonicalPath: '/',
     },
   },
@@ -50,7 +50,7 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
     test: (pathname) => pathname === '/words' || pathname === '/vocabularies' || pathname.startsWith('/words?') || pathname.startsWith('/vocabularies?'),
     metadata: {
       title: 'Sổ học của tôi — PooEnglish',
-      description: 'Lưu từ vựng, lỗi sai, câu khó, mẫu câu và nội dung cần ôn lại.',
+      description: 'Lưu từ vựng, câu cần ôn, câu khó, mẫu câu và nội dung nên luyện lại.',
       canonicalPath: '/words',
     },
   },
@@ -65,8 +65,8 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/english-speed',
     metadata: {
-      title: 'Luyện tốc độ tiếng Anh — PooEnglish',
-      description: 'Luyện phản xạ tiếng Anh nhanh qua các thử thách nghe, hiểu, chọn nghĩa và nói lại.',
+      title: 'Đọc nhanh cùng Poo — PooEnglish',
+      description: 'Đọc, nghe và nói cùng Poo theo nhịp rõ ràng, đều đặn và ít áp lực.',
       canonicalPath: '/english-speed',
     },
   },
@@ -74,7 +74,7 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
     test: (pathname) => pathname === '/profile',
     metadata: {
       title: 'Hồ sơ học tập — PooEnglish',
-      description: 'Xem hồ sơ học tập, chuỗi ngày học, tiến độ trên thiết bị này và trạng thái đồng bộ của bạn trên PooEnglish.',
+      description: 'Xem hồ sơ học tập, chuỗi ngày học và tiến độ Poo đang giữ cho bạn trên PooEnglish.',
       canonicalPath: '/profile',
     },
   },

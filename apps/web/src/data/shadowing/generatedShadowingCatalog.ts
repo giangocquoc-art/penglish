@@ -12,17 +12,17 @@ const WORKFLOW_SOURCE: ShadowingSourceMetadata = {
 
 const repeatPlan: ShadowingRepeatStep[] = [
   { mode: 'listen', labelVi: 'Nghe mẫu', instructionVi: 'Nghe một lượt để nắm ý và nhịp câu.' },
-  { mode: 'chunk', labelVi: 'Chia câu', instructionVi: 'Nhìn từng đoạn ngắn, chú ý chỗ ngắt hơi.' },
-  { mode: 'repeat', labelVi: 'Lặp theo đoạn', instructionVi: 'Nói lại từng đoạn chậm hơn, rõ âm cuối.' },
-  { mode: 'record', labelVi: 'Ghi âm', instructionVi: 'Ghi giọng của bạn khi nói đuổi theo câu đang chọn.' },
-  { mode: 'compare', labelVi: 'So sánh lại', instructionVi: 'Nghe lại, chọn một câu yếu và luyện lại chậm hơn.' },
+  { mode: 'chunk', labelVi: 'Tách câu nhỏ', instructionVi: 'Nhìn từng đoạn ngắn, chú ý chỗ nghỉ hơi.' },
+  { mode: 'repeat', labelVi: 'Nói theo từng đoạn', instructionVi: 'Nói lại từng đoạn chậm hơn, để âm cuối rõ hơn.' },
+  { mode: 'record', labelVi: 'Nói thử một lượt', instructionVi: 'Nói thử câu đang chọn để Poo nghe cùng bạn.' },
+  { mode: 'compare', labelVi: 'Poo nghe lại cùng bạn', instructionVi: 'Nghe lại, chọn một câu còn vấp nhẹ và luyện chậm hơn.' },
 ];
 
 const tipsByLevel: Record<ShadowingCefrLevel, string[]> = {
   A1: ['Nói chậm, rõ từng từ.', 'Đừng cố nhanh ngay lượt đầu.', 'Ưu tiên âm cuối và nhịp câu ngắn.'],
   A2: ['Ngắt câu theo cụm ý.', 'Lặp lại câu hỏi trước khi trả lời.', 'Dùng tốc độ 0.75x nếu câu còn dài.'],
-  B1: ['Giữ nhịp tự nhiên giữa các cụm.', 'Ghi âm một lượt đầy đủ rồi nghe lại.', 'Đánh dấu câu bị vấp để luyện riêng.'],
-  B2: ['Chú ý trọng âm câu và ý chính.', 'Tập nối âm vừa phải, không nuốt âm cuối.', 'So sánh bản ghi với transcript theo từng cụm.'],
+  B1: ['Giữ nhịp tự nhiên giữa các cụm.', 'Nói thử một lượt đầy đủ rồi nghe lại cùng Poo.', 'Đánh dấu câu còn vấp để luyện riêng.'],
+  B2: ['Chú ý nhịp nhấn của câu và ý chính.', 'Tập nối âm vừa phải, giữ âm cuối rõ.', 'Nghe lại lượt nói cùng lời thoại theo từng cụm.'],
 };
 
 function makeItem(input: Omit<GeneratedShadowingItem, 'transcript' | 'chunks' | 'repeatPlan' | 'learnerTipsVi' | 'whaleCoachLines' | 'source'> & { lines: Array<{ text: string; vi: string }> }): GeneratedShadowingItem {
@@ -41,7 +41,7 @@ function makeItem(input: Omit<GeneratedShadowingItem, 'transcript' | 'chunks' | 
     })),
     repeatPlan,
     learnerTipsVi: tipsByLevel[base.level],
-    whaleCoachLines: ['Cá voi nhắc bạn: chậm mà đều sẽ tốt hơn nhanh mà vấp.', 'Chọn một câu ngắn, nghe lại, rồi nói theo như một làn sóng nhỏ.'],
+    whaleCoachLines: ['Poo nhắc bạn: chậm mà đều sẽ tốt hơn nhanh mà vấp.', 'Chọn một câu ngắn, nghe lại, rồi nói theo như một làn sóng nhỏ.'],
     source: WORKFLOW_SOURCE,
   };
 }
@@ -231,7 +231,7 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
     { text: 'I noticed a mistake in the file I sent yesterday.', vi: 'Tôi nhận ra một lỗi trong tệp tôi gửi hôm qua.' },
     { text: 'The final number was wrong because I copied an old version.', vi: 'Con số cuối bị sai vì tôi đã sao chép một phiên bản cũ.' },
     { text: 'I have corrected it and added a short note for the team.', vi: 'Tôi đã sửa và thêm một ghi chú ngắn cho nhóm.' },
-    { text: 'Next time, I will check the source before sending anything.', vi: 'Lần tới, tôi sẽ kiểm tra nguồn trước khi gửi bất kỳ thứ gì.' },
+    { text: 'Next time, I will check the source before sending anything.', vi: 'Lần tới, tôi sẽ xem lại thông tin trước khi gửi.' },
   ] }),
   makeItem({ id: 'shadow-b1-asking-for-feedback', titleVi: 'Xin góp ý', titleEn: 'Asking for feedback', level: 'B1', topic: 'asking for feedback', descriptionVi: 'Tập xin phản hồi cụ thể và lịch sự.', estimatedTime: '6 phút', lines: [
     { text: 'Could you give me feedback on my short presentation?', vi: 'Bạn có thể góp ý cho bài thuyết trình ngắn của tôi không?' },
@@ -248,7 +248,7 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
   makeItem({ id: 'shadow-b1-ocean-learning-reflection', titleVi: 'Suy ngẫm học cùng đại dương', titleEn: 'Ocean learning reflection', level: 'B1', topic: 'ocean learning reflection', descriptionVi: 'Tập kể lại trải nghiệm học Poo Ocean bằng nhịp tự nhiên.', estimatedTime: '6 phút', lines: [
     { text: 'When I practice with the whale coach, I feel less afraid of speaking.', vi: 'Khi luyện với huấn luyện viên cá voi, tôi bớt sợ nói hơn.' },
     { text: 'The small waves remind me to repeat one sentence at a time.', vi: 'Những con sóng nhỏ nhắc tôi lặp lại từng câu một.' },
-    { text: 'If I make a mistake, I slow down and try the same chunk again.', vi: 'Nếu mắc lỗi, tôi nói chậm lại và thử lại cùng một cụm.' },
+    { text: 'If I make a mistake, I slow down and try the same chunk again.', vi: 'Nếu tôi vấp một chút, tôi nói chậm lại và thử lại cùng một cụm.' },
     { text: 'This routine helps me build confidence without feeling rushed.', vi: 'Thói quen này giúp tôi xây dựng tự tin mà không thấy bị vội.' },
   ] }),
   makeItem({ id: 'shadow-b1-giving-directions-campus', titleVi: 'Chỉ đường trong khu học', titleEn: 'Giving directions on campus', level: 'B1', topic: 'giving directions on campus', descriptionVi: 'Luyện chỉ đường có mốc, thứ tự và lời nhắc lịch sự.', estimatedTime: '6 phút', lines: [
@@ -278,7 +278,7 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
   makeItem({ id: 'shadow-b2-presenting-a-project-update', titleVi: 'Cập nhật tiến độ dự án', titleEn: 'Presenting a project update', level: 'B2', topic: 'presenting a project update', descriptionVi: 'Tập báo cáo tiến độ, rủi ro và bước tiếp theo.', estimatedTime: '7 phút', lines: [
     { text: 'Today, I will give a brief update on our learning dashboard project.', vi: 'Hôm nay, tôi sẽ cập nhật ngắn về dự án bảng điều khiển học tập.' },
     { text: 'The main layout is stable, and the latest tests show better mobile readability.', vi: 'Bố cục chính đã ổn định, và các kiểm thử mới nhất cho thấy khả năng đọc trên di động tốt hơn.' },
-    { text: 'Our remaining risk is making sure every practice mode has enough reliable data.', vi: 'Rủi ro còn lại là bảo đảm mọi chế độ luyện tập có đủ dữ liệu đáng tin cậy.' },
+    { text: 'Our remaining risk is making sure every practice mode has enough reliable data.', vi: 'Điều còn cần chú ý là mỗi phần luyện phải có nội dung đủ chắc.' },
     { text: 'The next step is to review weak areas before we invite more learners to try it.', vi: 'Bước tiếp theo là xem lại các phần yếu trước khi mời thêm người học dùng thử.' },
   ] }),
   makeItem({ id: 'shadow-b2-learning-from-feedback', titleVi: 'Học từ phản hồi', titleEn: 'Learning from feedback', level: 'B2', topic: 'learning from feedback', descriptionVi: 'Luyện nói về phản hồi với thái độ bình tĩnh và chủ động.', estimatedTime: '7 phút', lines: [

@@ -350,7 +350,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px="6" py="8">
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Bài học này chưa có thẻ từ vựng</Text>
+          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Poo mở bài này theo nhịp khác</Text>
           <Text mt="2" color={COLORS.muted}>Bạn có thể quay lại bài học hoặc mở sổ từ vựng để chọn nhóm khác.</Text>
           <Button as={Link} to="/vocabularies" mt="5" borderRadius="full" bg={COLORS.primary} color="white">
             Mở sổ từ vựng
@@ -401,7 +401,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
             </Flex>
             <Progress mt="5" value={progressValue} colorScheme="blue" borderRadius="full" bg="#E2E8F0" />
             <Text mt="3" color={COLORS.muted} fontSize="sm">
-              {isDueReview ? 'Bạn đang ôn các thẻ từ vựng đã đến hạn theo lịch ôn trên thiết bị này.' : 'Đây là lượt học từ vựng: đoán nghĩa tiếng Việt, nghe mẫu, rồi đọc to ví dụ.'}
+              {isDueReview ? 'Poo đang nhắc các thẻ đã đến lúc ôn lại cho bạn.' : 'Đây là lượt học từ vựng: đoán nghĩa tiếng Việt, nghe mẫu, rồi đọc to ví dụ.'}
             </Text>
           </Box>
 
@@ -459,7 +459,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
                   </VStack>
                 ) : (
                   <VStack gap="4" w="100%" maxW="760px">
-                    <Tag borderRadius="full" bg="#DCFCE7" color="#15803D">Mặt sau · kiểm tra hiểu nghĩa</Tag>
+                    <Tag borderRadius="full" bg="#DCFCE7" color="#15803D">Mặt sau · Poo xem bạn hiểu nghĩa</Tag>
                     <SimpleGrid columns={{ base: 1, md: 2 }} gap="4" w="100%">
                       <Box bg="#F0FDF4" border="1px solid" borderColor="#BBF7D0" borderRadius="2xl" p="5">
                         <Text fontSize="xs" fontWeight="950" color="#15803D" textTransform="uppercase" letterSpacing="0.08em">Nghĩa tiếng Việt</Text>
@@ -506,7 +506,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
                       isDisabled={meaningVerified}
                     />
                     <Button onClick={checkMeaning} isDisabled={!meaningInput.trim() || meaningVerified} borderRadius="full" bg={COLORS.green} color="white" flexShrink={0}>
-                      Kiểm tra nghĩa
+                      Poo xem nghĩa
                     </Button>
                   </HStack>
                   {meaningFeedback ? (

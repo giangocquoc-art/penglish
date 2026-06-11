@@ -39,7 +39,7 @@ export function LoginPage() {
       }
     }
     const result = await auth.signInWithGoogle();
-    if (!result.ok) setAuthMessage(result.message ?? 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.');
+    if (!result.ok) setAuthMessage(result.message ?? 'Poo chưa mở được cổng đăng nhập. Bạn thử lại sau một chút nhé.');
     setGoogleLoading(false);
   };
 
@@ -132,8 +132,8 @@ export function LoginPage() {
                       <VStack align="stretch" gap="3">
                         <Text color="#9A3412" fontWeight="800" lineHeight="1.65">
                           Bạn đang mở PooEnglish bên trong trình duyệt của ứng dụng khác.<br />
-                          Google không cho đăng nhập trong màn hình này.<br />
-                          Hãy bấm dấu ba chấm ở góc trên bên phải rồi chọn Mở bằng Chrome/Safari.
+                          Poo cần mở cổng Google ở trình duyệt quen thuộc của bạn.<br />
+                          Bạn bấm dấu ba chấm ở góc trên bên phải rồi chọn Mở bằng Chrome/Safari nhé.
                         </Text>
                         <VStack align="stretch" gap="2.5">
                           <Button leftIcon={<Icon as={Copy} />} onClick={copyLoginLink} borderRadius="2xl" minH="50px" bg="white" color="#075985" border="1px solid rgba(186,230,253,0.92)" fontWeight="800" data-testid="login-copy-link">
@@ -163,7 +163,7 @@ export function LoginPage() {
                       _hover={{ transform: 'translateY(-1px)', boxShadow: '0 22px 50px rgba(14, 165, 233, 0.36)' }}
                       _active={{ transform: 'translateY(0)' }}
                     >
-                      Đăng nhập bằng Google
+                      Vào học bằng Google
                     </Button>
                   )}
                 </VStack>
@@ -316,12 +316,12 @@ export function LoginCallbackPage() {
 
 function AuthCallbackContent({ params }: { params: URLSearchParams }) {
   const navigate = useNavigate();
-  const auth = useAuth();
+  const { refreshSession } = useAuth();
 
   useEffect(() => {
     let active = true;
     const run = async () => {
-      const session = await auth.refreshSession();
+      const session = await refreshSession();
       const fallback = sanitizeAuthRedirect(params.get('next') || params.get('redirectTo'));
       let intended = fallback;
       try {
@@ -338,7 +338,7 @@ function AuthCallbackContent({ params }: { params: URLSearchParams }) {
     return () => {
       active = false;
     };
-  }, [auth, navigate, params]);
+  }, [navigate, params, refreshSession]);
 
   return <AuthLoadingScreen />;
 }

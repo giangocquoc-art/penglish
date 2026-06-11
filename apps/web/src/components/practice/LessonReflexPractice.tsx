@@ -363,8 +363,8 @@ export function LessonReflexPractice({ lesson, onWhaleMoodChange }: { lesson: En
                 <Text color={COLORS.muted}>{lesson.titleEn}</Text>
               </Box>
               <HStack wrap="wrap" gap="4">
-                <Metric label="Đúng" value={correctPromptIds.length} tone="green" compact />
-                <Metric label="Sai" value={wrongPrompts.length} tone="red" compact />
+                <Metric label="Trúng nhịp" value={correctPromptIds.length} tone="green" compact />
+                <Metric label="Cần ôn" value={wrongPrompts.length} tone="red" compact />
               </HStack>
             </Flex>
             <Progress mt="5" value={progressValue} colorScheme="blue" borderRadius="full" bg="#E2E8F0" />
@@ -422,7 +422,7 @@ export function LessonReflexPractice({ lesson, onWhaleMoodChange }: { lesson: En
                   }}
                 />
               </Box>
-              <Text mt="2" fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted}>Enter kiểm tra/tiếp; R làm lại; N câu tiếp khi đã có kết quả; Escape xóa ô nhập.</Text>
+              <Text mt="2" fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted}>Enter để Poo xem/tiếp; R làm lại; N câu tiếp khi đã có kết quả; Escape xóa ô nhập.</Text>
 
               <Flex mt="5" gap="3" wrap="wrap">
                 {!currentState.checked ? (
@@ -459,8 +459,8 @@ export function LessonReflexPractice({ lesson, onWhaleMoodChange }: { lesson: En
                     <Icon as={currentState.isCorrect ? CheckCircle2 : XCircle} color={currentState.isCorrect ? COLORS.green : '#EA580C'} />
                     <Box w="100%">
                       <Text fontWeight="900" color={COLORS.text}>{currentState.isCorrect ? 'Phản xạ tốt!' : 'Gần đúng rồi, xem lại cụm mẫu.'}</Text>
-                      {!currentState.isCorrect ? <Text mt="2" color={COLORS.muted}>Bạn trả lời: <Text as="span" fontWeight="900" color={COLORS.text}>{currentState.answer || '—'}</Text></Text> : null}
-                      <Text mt="2" color={COLORS.muted}>Đáp án gợi ý: <Text as="span" fontWeight="900" color={COLORS.text}>{currentPrompt.expectedEnglish}</Text></Text>
+                      {!currentState.isCorrect ? <Text mt="2" color={COLORS.muted}>Bạn vừa nói/gõ: <Text as="span" fontWeight="900" color={COLORS.text}>{currentState.answer || '—'}</Text></Text> : null}
+                      <Text mt="2" color={COLORS.muted}>Câu Poo gợi ý: <Text as="span" fontWeight="900" color={COLORS.text}>{currentPrompt.expectedEnglish}</Text></Text>
                       {!currentState.isCorrect ? (
                         <Text mt="2" color={COLORS.muted}>Câu cũng đúng: <Text as="span" fontWeight="800" color={COLORS.text}>{acceptedAnswers(currentPrompt).join(' / ')}</Text></Text>
                       ) : null}
@@ -520,8 +520,8 @@ function ReflexSummary({
 
           <SimpleGrid columns={{ base: 1, md: 4 }} gap="4" mt="6">
             <Metric label="Tổng câu luyện" value={prompts.length} />
-            <Metric label="Đúng" value={correctPrompts.length} tone="green" />
-            <Metric label="Sai" value={wrongPrompts.length} tone="red" />
+            <Metric label="Trúng nhịp" value={correctPrompts.length} tone="green" />
+            <Metric label="Cần ôn" value={wrongPrompts.length} tone="red" />
             <Metric label="Tỷ lệ" value={`${percentage}%`} />
           </SimpleGrid>
 
@@ -531,15 +531,15 @@ function ReflexSummary({
             <Text fontSize="lg" fontWeight="900" color={COLORS.text}>Câu cần ôn lại</Text>
             {wrongPrompts.length === 0 ? (
               <Box mt="3" border="1px solid" borderColor="#BBF7D0" bg="#F0FDF4" borderRadius="2xl" p="4">
-                <Text color={COLORS.text} fontWeight="800">Không có câu sai. Bạn có thể chuyển sang gõ câu hoặc luyện tốc độ.</Text>
+                <Text color={COLORS.text} fontWeight="800">Không có câu nào cần nhắc lại. Bạn có thể chuyển sang gõ câu hoặc luyện tốc độ.</Text>
               </Box>
             ) : (
               <VStack align="stretch" gap="3" mt="3">
                 {wrongPrompts.map((prompt) => (
                   <Box key={prompt.id} border="1px solid" borderColor="#FED7AA" bg="#FFF7ED" borderRadius="2xl" p="4">
                     <Text fontWeight="900" color={COLORS.text}>{prompt.promptVi}</Text>
-                    <Text mt="2" color={COLORS.muted}>Bạn trả lời: <Text as="span" fontWeight="900" color={COLORS.text}>{states[prompt.id]?.answer || '—'}</Text></Text>
-                    <Text mt="1" color={COLORS.muted}>Đáp án gợi ý: <Text as="span" fontWeight="900" color={COLORS.text}>{prompt.expectedEnglish}</Text></Text>
+                    <Text mt="2" color={COLORS.muted}>Bạn vừa nói/gõ: <Text as="span" fontWeight="900" color={COLORS.text}>{states[prompt.id]?.answer || '—'}</Text></Text>
+                    <Text mt="1" color={COLORS.muted}>Câu Poo gợi ý: <Text as="span" fontWeight="900" color={COLORS.text}>{prompt.expectedEnglish}</Text></Text>
                     <Text mt="1" color={COLORS.muted}>Câu cũng đúng: <Text as="span" fontWeight="800" color={COLORS.text}>{acceptedAnswers(prompt).join(' / ')}</Text></Text>
                   </Box>
                 ))}
@@ -549,7 +549,7 @@ function ReflexSummary({
 
           <Flex mt="7" gap="3" wrap="wrap">
             <Button leftIcon={<Icon as={Zap} />} borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }} isDisabled={wrongPrompts.length === 0} onClick={onRestartWrong}>
-              Ôn lại câu sai
+              Ôn câu Poo nhắc
             </Button>
             <Button leftIcon={<Icon as={RotateCcw} />} borderRadius="full" variant="outline" onClick={onRestartAll}>
               Làm lại toàn bộ

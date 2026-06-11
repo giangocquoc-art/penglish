@@ -23,8 +23,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 1: tóm tắt bài “Thể khẳng định và phủ định của động từ to be” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -49,8 +49,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 2: tóm tắt bài “Thể nghi vấn của động từ to be” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -76,8 +76,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 3: tóm tắt bài “Câu hỏi Who và What với động từ to be” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -103,8 +103,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 4: tóm tắt bài “Câu hỏi Where và When với động từ to be” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -123,14 +123,14 @@ export const foundation48LessonSummaries = [
       "Do you read books at night?"
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Động từ thường ở hiện tại” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 5: tóm tắt bài “Động từ thường ở hiện tại” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -156,8 +156,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 6: tóm tắt bài “Thể phủ định của động từ thường ở hiện tại” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -182,8 +182,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 7: tóm tắt bài “Thể nghi vấn của động từ thường ở hiện tại” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -202,14 +202,14 @@ export const foundation48LessonSummaries = [
       "Do you read books at night?"
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Thì hiện tại đơn” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 8: tóm tắt bài “Thì hiện tại đơn” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -227,14 +227,14 @@ export const foundation48LessonSummaries = [
       "Đổi một từ trong câu mẫu để tạo câu mới."
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Từ loại” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 9: tóm tắt bài “Từ loại” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -252,14 +252,14 @@ export const foundation48LessonSummaries = [
       "Are they playing football?"
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Thì hiện tại tiếp diễn” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 10: tóm tắt bài “Thì hiện tại tiếp diễn” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -277,14 +277,14 @@ export const foundation48LessonSummaries = [
       "Do you read books at night?"
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Phân biệt thì hiện tại đơn và hiện tại tiếp diễn” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 11: tóm tắt bài “Phân biệt thì hiện tại đơn và hiện tại tiếp diễn” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -302,14 +302,14 @@ export const foundation48LessonSummaries = [
       "Did they finish the homework?"
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Thì quá khứ đơn thể khẳng định” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 12: tóm tắt bài “Thì quá khứ đơn thể khẳng định” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -334,8 +334,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 13: tóm tắt bài “Thì quá khứ đơn thể phủ định và nghi vấn” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -353,14 +353,14 @@ export const foundation48LessonSummaries = [
       "She was not sleeping then."
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Thì quá khứ tiếp diễn” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 14: tóm tắt bài “Thì quá khứ tiếp diễn” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -378,14 +378,14 @@ export const foundation48LessonSummaries = [
       "Have you ever visited Da Nang?"
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Thì hiện tại hoàn thành” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 15: tóm tắt bài “Thì hiện tại hoàn thành” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -403,14 +403,14 @@ export const foundation48LessonSummaries = [
       "Will they join the class?"
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Thì tương lai đơn” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 16: tóm tắt bài “Thì tương lai đơn” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -428,22 +428,22 @@ export const foundation48LessonSummaries = [
       "They will not have arrived by noon."
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Thì tương lai hoàn thành” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 17: tóm tắt bài “Thì tương lai hoàn thành” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
   {
     "dayNumber": 18,
-    "summary": "Ngày 18 tập trung vào học đúng trọng tâm “Học ngữ âm với giáo viên nước ngoài” bằng ví dụ ngắn và bài tự luyện vừa sức.",
+    "summary": "Ngày 18 tập trung vào học đúng trọng tâm “Nghe âm và bắt chước thật chậm” bằng ví dụ ngắn và bài tự luyện vừa sức.",
     "keyPoints": [
-      "Mục tiêu chính: Học ngữ âm với giáo viên nước ngoài.",
+      "Mục tiêu chính: Nghe âm và bắt chước thật chậm.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
       "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
     ],
@@ -453,22 +453,22 @@ export const foundation48LessonSummaries = [
       "Repeat the word slowly, then in a sentence."
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
-      "Tóm tắt quy tắc của “Học ngữ âm với giáo viên nước ngoài” bằng lời của bạn."
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
+      "Tóm tắt quy tắc của “Nghe âm và bắt chước thật chậm” bằng lời của bạn."
     ],
-    "finalTask": "Kết thúc ngày 18: tóm tắt bài “Học ngữ âm với giáo viên nước ngoài” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
+    "finalTask": "Kết thúc ngày 18: tóm tắt bài “Nghe âm và bắt chước thật chậm” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
   {
     "dayNumber": 19,
-    "summary": "Ngày 19 tập trung vào quan sát nguồn video về “Tìm hiểu về trọng âm trong tiếng Anh” và rút ra quy tắc phát âm cần nhớ.",
+    "summary": "Ngày 19 tập trung vào nghe đoạn mẫu về “Nhấn nhẹ vào từ quan trọng” và rút ra quy tắc phát âm cần nhớ.",
     "keyPoints": [
-      "Mục tiêu chính: Tìm hiểu về trọng âm trong tiếng Anh.",
+      "Mục tiêu chính: Nhấn nhẹ vào từ quan trọng.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
       "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
       "Video nguồn chỉ dùng làm gợi ý; không tạo trình phát nếu file chưa public an toàn."
@@ -479,14 +479,14 @@ export const foundation48LessonSummaries = [
       "Repeat the word slowly, then in a sentence."
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
-      "Tóm tắt quy tắc của “Tìm hiểu về trọng âm trong tiếng Anh” bằng lời của bạn."
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
+      "Tóm tắt quy tắc của “Nhấn nhẹ vào từ quan trọng” bằng lời của bạn."
     ],
-    "finalTask": "Kết thúc ngày 19: tóm tắt bài “Tìm hiểu về trọng âm trong tiếng Anh” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
+    "finalTask": "Kết thúc ngày 19: tóm tắt bài “Nhấn nhẹ vào từ quan trọng” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "Có video nguồn"
     ],
     "needsReview": true
@@ -512,8 +512,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 20: tóm tắt bài “Các câu hỏi với từ để hỏi khác trong tiếng Anh” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -539,34 +539,34 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 21: tóm tắt bài “Luyện nghe số và tên” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "6 file nghe"
     ],
     "needsReview": true
   },
   {
     "dayNumber": 22,
-    "summary": "Ngày 22 tập trung vào học đúng trọng tâm “Động từ khuyết thiếu” bằng ví dụ ngắn và bài tự luyện vừa sức.",
+    "summary": "Ngày 22 tập trung vào học đúng trọng tâm “Nói “có thể / nên / phải” bằng câu ngắn” bằng ví dụ ngắn và bài tự luyện vừa sức.",
     "keyPoints": [
-      "Mục tiêu chính: Động từ khuyết thiếu.",
+      "Mục tiêu chính: Nói “có thể / nên / phải” bằng câu ngắn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
       "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
     ],
     "examples": [
-      "Ví dụ 1 theo chủ điểm: Động từ khuyết thiếu.",
+      "Ví dụ 1 theo chủ điểm: Nói “có thể / nên / phải” bằng câu ngắn.",
       "Đọc câu mẫu chậm và rõ từng âm cuối.",
       "Đổi một từ trong câu mẫu để tạo câu mới."
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
-      "Tóm tắt quy tắc của “Động từ khuyết thiếu” bằng lời của bạn."
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
+      "Tóm tắt quy tắc của “Nói “có thể / nên / phải” bằng câu ngắn” bằng lời của bạn."
     ],
-    "finalTask": "Kết thúc ngày 22: tóm tắt bài “Động từ khuyết thiếu” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
+    "finalTask": "Kết thúc ngày 22: tóm tắt bài “Nói “có thể / nên / phải” bằng câu ngắn” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -590,8 +590,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 23: tóm tắt bài “Liên từ And, But, Or, So và Because” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -615,8 +615,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 24: tóm tắt bài “Liên từ chỉ thời gian” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -640,8 +640,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 25: tóm tắt bài “Liên từ chỉ sự đối lập” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -665,8 +665,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 26: tóm tắt bài “Câu điều kiện loại 1” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -690,8 +690,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 27: tóm tắt bài “Câu điều kiện loại 2” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -715,8 +715,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 28: tóm tắt bài “Câu điều kiện loại 3” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -742,8 +742,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 29: tóm tắt bài “Luyện nghe điền từ” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "6 file nghe"
     ],
     "needsReview": true
@@ -770,8 +770,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 30: tóm tắt bài “Luyện nghe chép chính tả” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "6 file nghe"
     ],
     "needsReview": true
@@ -798,8 +798,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 31: tóm tắt bài “Luyện nghe về giờ” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "5 file nghe"
     ],
     "needsReview": true
@@ -826,8 +826,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 32: tóm tắt bài “Luyện nghe ngày tháng” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "4 file nghe"
     ],
     "needsReview": true
@@ -854,8 +854,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 33: tóm tắt bài “Luyện nghe địa điểm” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "4 file nghe"
     ],
     "needsReview": true
@@ -882,17 +882,17 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 34: tóm tắt bài “Luyện nghe về tiền bạc” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "5 file nghe"
     ],
     "needsReview": true
   },
   {
     "dayNumber": 35,
-    "summary": "Ngày 35 tập trung vào học đúng trọng tâm “Đại từ phản thân” bằng ví dụ ngắn và bài tự luyện vừa sức.",
+    "summary": "Ngày 35 tập trung vào học đúng trọng tâm “Nói về chính mình bằng câu rõ” bằng ví dụ ngắn và bài tự luyện vừa sức.",
     "keyPoints": [
-      "Mục tiêu chính: Đại từ phản thân.",
+      "Mục tiêu chính: Nói về chính mình bằng câu rõ.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
       "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
     ],
@@ -902,14 +902,14 @@ export const foundation48LessonSummaries = [
       "They fixed the bike themselves."
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
-      "Tóm tắt quy tắc của “Đại từ phản thân” bằng lời của bạn."
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
+      "Tóm tắt quy tắc của “Nói về chính mình bằng câu rõ” bằng lời của bạn."
     ],
-    "finalTask": "Kết thúc ngày 35: tóm tắt bài “Đại từ phản thân” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
+    "finalTask": "Kết thúc ngày 35: tóm tắt bài “Nói về chính mình bằng câu rõ” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -927,14 +927,14 @@ export const foundation48LessonSummaries = [
       "I knew that they were busy."
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Sự hoà hợp về thì” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 36: tóm tắt bài “Sự hoà hợp về thì” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -959,8 +959,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 37: tóm tắt bài “Tiếng Anh giao tiếp 1” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "4 file nghe"
     ],
     "needsReview": true
@@ -969,7 +969,7 @@ export const foundation48LessonSummaries = [
     "dayNumber": 38,
     "summary": "Ngày 38 tập trung vào nối hai ý ngắn bằng liên từ tương hỗ một cách rõ nghĩa.",
     "keyPoints": [
-      "Mục tiêu chính: Liên từ tương hỗ.",
+      "Mục tiêu chính: Nối hai ý đi cùng nhau.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
       "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
     ],
@@ -983,10 +983,10 @@ export const foundation48LessonSummaries = [
       "Kiểm tra xem hai vế câu có quan hệ đúng nghĩa không.",
       "Tự nói lại mỗi câu nối bằng giọng chậm và rõ."
     ],
-    "finalTask": "Kết thúc ngày 38: tóm tắt bài “Liên từ tương hỗ” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
+    "finalTask": "Kết thúc ngày 38: tóm tắt bài “Nối hai ý đi cùng nhau” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
@@ -1012,8 +1012,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 39: tóm tắt bài “Luyện nghe về các quốc gia và châu lục” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "5 file nghe"
     ],
     "needsReview": true
@@ -1040,8 +1040,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 40: tóm tắt bài “Luyện nghe về sở thích” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "4 file nghe"
     ],
     "needsReview": true
@@ -1068,8 +1068,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 41: tóm tắt bài “Luyện nghe về giao thông” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "4 file nghe"
     ],
     "needsReview": true
@@ -1096,8 +1096,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 42: tóm tắt bài “Luyện nghe về thể thao” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "4 file nghe"
     ],
     "needsReview": true
@@ -1124,8 +1124,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 43: tóm tắt bài “Luyện nghe về nghề nghiệp” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "4 PDF nguồn",
-      "4 Markdown đã chuyển",
+      "4 bài gốc Poo đã gom lại",
+      "4 bản học ngắn đã sẵn sàng",
       "4 file nghe"
     ],
     "needsReview": true
@@ -1152,8 +1152,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 44: tóm tắt bài “Luyện nghe về công nghệ” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "4 file nghe"
     ],
     "needsReview": true
@@ -1172,22 +1172,22 @@ export const foundation48LessonSummaries = [
       "I would like to ask one question."
     ],
     "practice": [
-      "Hoàn thành phần luyện tập trong tài liệu nguồn theo từng câu ngắn.",
-      "Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.",
+      "Làm phần luyện cùng Poo theo từng câu ngắn.",
+      "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
       "Tóm tắt quy tắc của “Tiếng Anh giao tiếp 2” bằng lời của bạn."
     ],
     "finalTask": "Kết thúc ngày 45: tóm tắt bài “Tiếng Anh giao tiếp 2” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển"
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng"
     ],
     "needsReview": true
   },
   {
     "dayNumber": 46,
-    "summary": "Ngày 46 tập trung vào nghe chủ động theo chủ điểm “Kỹ năng Note-taking” và ghi lại thông tin chính.",
+    "summary": "Ngày 46 tập trung vào nghe chủ động theo chủ điểm “Nghe và ghi từ khóa ngắn” và ghi lại thông tin chính.",
     "keyPoints": [
-      "Mục tiêu chính: Kỹ năng Note-taking.",
+      "Mục tiêu chính: Nghe và ghi từ khóa ngắn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
       "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa."
@@ -1200,21 +1200,21 @@ export const foundation48LessonSummaries = [
     "practice": [
       "Nghe một lượt để bắt ý chính, chưa cần dừng lại.",
       "Nghe lại từng đoạn và ghi 3 từ khóa quan trọng.",
-      "Nói lại nội dung “Kỹ năng Note-taking” bằng 2 câu ngắn."
+      "Nói lại nội dung “Nghe và ghi từ khóa ngắn” bằng 2 câu ngắn."
     ],
-    "finalTask": "Kết thúc ngày 46: tóm tắt bài “Kỹ năng Note-taking” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
+    "finalTask": "Kết thúc ngày 46: tóm tắt bài “Nghe và ghi từ khóa ngắn” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "3 file nghe"
     ],
     "needsReview": true
   },
   {
     "dayNumber": 47,
-    "summary": "Ngày 47 tập trung vào nghe chủ động theo chủ điểm “Kỹ năng Paraphrasing” và ghi lại thông tin chính.",
+    "summary": "Ngày 47 tập trung vào nghe chủ động theo chủ điểm “Nói lại cùng ý bằng câu dễ hơn” và ghi lại thông tin chính.",
     "keyPoints": [
-      "Mục tiêu chính: Kỹ năng Paraphrasing.",
+      "Mục tiêu chính: Nói lại cùng ý bằng câu dễ hơn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
       "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa."
@@ -1227,12 +1227,12 @@ export const foundation48LessonSummaries = [
     "practice": [
       "Nghe một lượt để bắt ý chính, chưa cần dừng lại.",
       "Nghe lại từng đoạn và ghi 3 từ khóa quan trọng.",
-      "Nói lại nội dung “Kỹ năng Paraphrasing” bằng 2 câu ngắn."
+      "Nói lại nội dung “Nói lại cùng ý bằng câu dễ hơn” bằng 2 câu ngắn."
     ],
-    "finalTask": "Kết thúc ngày 47: tóm tắt bài “Kỹ năng Paraphrasing” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
+    "finalTask": "Kết thúc ngày 47: tóm tắt bài “Nói lại cùng ý bằng câu dễ hơn” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "3 file nghe"
     ],
     "needsReview": true
@@ -1258,8 +1258,8 @@ export const foundation48LessonSummaries = [
     ],
     "finalTask": "Kết thúc ngày 48: tóm tắt bài “Tự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
-      "3 PDF nguồn",
-      "3 Markdown đã chuyển",
+      "3 bài gốc Poo đã gom lại",
+      "3 bản học ngắn đã sẵn sàng",
       "2 file nghe"
     ],
     "needsReview": true

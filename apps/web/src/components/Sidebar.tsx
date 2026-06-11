@@ -17,7 +17,7 @@ type NavItem = { label: string; to: string; icon: any; tint: string; description
 
 const NAV: NavItem[] = [
   { label: 'Học', to: '/luyen-tieng-anh/48-ngay-lay-goc', icon: Waves, tint: OCEAN_TOKENS.whaleBlue, description: 'Bài hôm nay' },
-  { label: 'Ôn tập', to: '/practice', icon: Dumbbell, tint: OCEAN_TOKENS.deepBlue, description: 'Lỗi sai' },
+  { label: 'Ôn tập', to: '/practice', icon: Dumbbell, tint: OCEAN_TOKENS.deepBlue, description: 'Câu cần ôn' },
   { label: 'Từ vựng', to: '/words', icon: BookOpen, tint: OCEAN_TOKENS.whaleBlue, description: 'Kho từ' },
   { label: 'Trang chủ', to: '/home', icon: Home, tint: OCEAN_TOKENS.oceanBlue, description: 'Tổng quan' },
 ];
@@ -159,7 +159,7 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
                 {session.displayName}
               </Text>
               <Text fontSize="xs" color={OCEAN_TOKENS.muted} fontWeight="650" noOfLines={1}>
-                {session.isSignedIn ? session.email : 'Tiến độ lưu trên thiết bị này'}
+                {session.isSignedIn ? session.email : 'Poo đang giữ tiến độ cho bạn'}
               </Text>
               <Text data-testid="data-mode-indicator" mt="1" display="inline-flex" px="2" py="0.5" borderRadius="full" bg={session.isSignedIn ? '#EAFBF0' : '#E8F4FF'} color={session.isSignedIn ? '#16803A' : OCEAN_TOKENS.deepBlue} fontSize="10px" fontWeight="850" noOfLines={1}>
                 {session.dataModeLabel}
@@ -173,7 +173,7 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
           {session.isSignedIn ? (
             <>
               <Button size="xs" borderRadius="full" leftIcon={<Icon as={RefreshCw} />} onClick={() => session.userId && syncLocalFoundation48ProgressToCloud(session.userId)}>
-                Đồng bộ tiến độ
+                Lưu lên tài khoản
               </Button>
               <Button size="xs" borderRadius="full" variant="outline" leftIcon={<Icon as={LogOut} />} onClick={() => void auth.signOut()}>
                 Đăng xuất
@@ -181,7 +181,7 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
             </>
           ) : (
             <Button size="xs" borderRadius="full" variant="ghost" color={OCEAN_TOKENS.deepBlue} fontWeight="800" onClick={() => void auth.signInWithGoogle()} _hover={{ bg: 'rgba(232, 244, 255, 0.70)' }}>
-              Đồng bộ bằng Google
+              Vào học bằng Google
             </Button>
           )}
         </VStack>
@@ -211,7 +211,7 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
           <Text fontSize="sm" fontWeight="750" color={OCEAN_TOKENS.text}>Giao diện</Text>
           <IconButton
             ml="auto"
-            aria-label="Toggle theme"
+            aria-label="Đổi màu giao diện"
             size="xs"
             variant="ghost"
             onClick={(event) => { event.stopPropagation(); toggleColorMode(); }}

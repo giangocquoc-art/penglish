@@ -6,14 +6,14 @@ import { foundation48SourceIndex } from './foundation48SourceIndex';
 export const FOUNDATION48_BASE_PATH = '/luyen-tieng-anh/48-ngay-lay-goc';
 
 export const foundation48Stages = [
-  { id: 1, title: 'Câu nền tảng với “to be”', days: [1, 2, 3, 4] },
-  { id: 2, title: 'Động từ thường và hiện tại đơn', days: [5, 6, 7, 8] },
-  { id: 3, title: 'Từ loại và các thì căn bản', days: [9, 10, 11, 12, 13, 14, 15, 16, 17] },
-  { id: 4, title: 'Phát âm, trọng âm và câu hỏi', days: [18, 19, 20, 21] },
-  { id: 5, title: 'Liên từ và câu điều kiện', days: [22, 23, 24, 25, 26, 27, 28] },
+  { id: 1, title: 'Tập nói “là / ở / thì” bằng câu ngắn', days: [1, 2, 3, 4] },
+  { id: 2, title: 'Kể việc mình làm mỗi ngày', days: [5, 6, 7, 8] },
+  { id: 3, title: 'Nhận mặt từ và thời gian', days: [9, 10, 11, 12, 13, 14, 15, 16, 17] },
+  { id: 4, title: 'Nói rõ hơn và hỏi tự nhiên hơn', days: [18, 19, 20, 21] },
+  { id: 5, title: 'Ghép ý và nói “nếu… thì…”', days: [22, 23, 24, 25, 26, 27, 28] },
   { id: 6, title: 'Luyện nghe nền tảng', days: [29, 30, 31, 32, 33, 34] },
-  { id: 7, title: 'Củng cố ngữ pháp và giao tiếp', days: [35, 36, 37, 38] },
-  { id: 8, title: 'Nghe chủ đề đời sống và đầu ra cuối khóa', days: [39, 40, 41, 42, 43, 44, 45, 46, 47, 48] },
+  { id: 7, title: 'Ôn câu quen và nói tự nhiên hơn', days: [35, 36, 37, 38] },
+  { id: 8, title: 'Nghe chuyện đời sống và khép lại 48 ngày', days: [39, 40, 41, 42, 43, 44, 45, 46, 47, 48] },
 ] as const;
 
 const foundation48DisplayTitles: Record<number, string> = {
@@ -34,14 +34,14 @@ const stage3InteractiveMeta: Record<number, { learnerTitle: string; readiness: '
 };
 
 const stage4InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
-  18: { learnerTitle: 'Học ngữ âm với giáo viên nước ngoài', readiness: 'complete' },
-  19: { learnerTitle: 'Tìm hiểu về trọng âm trong tiếng Anh', readiness: 'complete' },
+  18: { learnerTitle: 'Nghe âm và bắt chước thật chậm', readiness: 'complete' },
+  19: { learnerTitle: 'Nhấn nhẹ vào từ quan trọng', readiness: 'complete' },
   20: { learnerTitle: 'Các câu hỏi với từ để hỏi khác trong tiếng Anh', readiness: 'complete' },
   21: { learnerTitle: 'Luyện nghe số và tên', readiness: 'complete' },
 };
 
 const stage5InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
-  22: { learnerTitle: 'Động từ khuyết thiếu', readiness: 'complete' },
+  22: { learnerTitle: 'Nói “có thể / nên / phải” bằng câu ngắn', readiness: 'complete' },
   23: { learnerTitle: 'Liên từ And, But, Or, So và Because', readiness: 'complete' },
   24: { learnerTitle: 'Liên từ chỉ thời gian', readiness: 'complete' },
   25: { learnerTitle: 'Liên từ chỉ sự đối lập', readiness: 'complete' },
@@ -60,10 +60,10 @@ const stage6InteractiveMeta: Record<number, { learnerTitle: string; readiness: '
 };
 
 const stage7InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
-  35: { learnerTitle: 'Đại từ phản thân', readiness: 'complete' },
-  36: { learnerTitle: 'Sự hòa hợp về thì', readiness: 'complete' },
+  35: { learnerTitle: 'Nói về chính mình bằng câu rõ', readiness: 'complete' },
+  36: { learnerTitle: 'Giữ thời gian trong câu cho khớp', readiness: 'complete' },
   37: { learnerTitle: 'Tiếng Anh giao tiếp 1', readiness: 'complete' },
-  38: { learnerTitle: 'Liên từ tương hỗ', readiness: 'complete' },
+  38: { learnerTitle: 'Nối hai ý đi cùng nhau', readiness: 'complete' },
 };
 
 const stage8InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
@@ -74,8 +74,8 @@ const stage8InteractiveMeta: Record<number, { learnerTitle: string; readiness: '
   43: { learnerTitle: 'Luyện nghe về nghề nghiệp', readiness: 'complete' },
   44: { learnerTitle: 'Luyện nghe về công nghệ', readiness: 'complete' },
   45: { learnerTitle: 'Tiếng Anh giao tiếp 2', readiness: 'complete' },
-  46: { learnerTitle: 'Kỹ năng Note-taking', readiness: 'complete' },
-  47: { learnerTitle: 'Kỹ năng Paraphrasing', readiness: 'complete' },
+  46: { learnerTitle: 'Nghe và ghi từ khóa ngắn', readiness: 'complete' },
+  47: { learnerTitle: 'Nói lại cùng ý bằng câu dễ hơn', readiness: 'complete' },
   48: { learnerTitle: 'Tự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh', readiness: 'complete' },
 };
 
@@ -164,7 +164,7 @@ const fallbackSummary = (dayNumber: number, title: string) => ({
   summary: `Ngày ${dayNumber} tập trung vào ${title.toLowerCase()} với một bài học ngắn và nhiệm vụ thực hành vừa sức.`,
   keyPoints: [`Nắm ý chính của bài: ${title}.`, 'Đọc mẫu chậm, chú ý cấu trúc và từ khóa.', 'Tự tạo câu ngắn trước khi chuyển sang bài tiếp theo.'],
   examples: ['Viết 2 câu mẫu theo chủ điểm hôm nay.', 'Đọc thành tiếng từng câu và tự sửa lỗi cơ bản.'],
-  practice: ['Hoàn thành phần luyện tập trong tài liệu nguồn.', 'Tự viết 3 câu mới và kiểm tra lại chủ ngữ, động từ, dấu câu.'],
+  practice: ['Làm phần luyện cùng Poo theo từng câu ngắn.', 'Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.'],
   finalTask: `Tóm tắt bài “${title}” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.`,
   sourceLabels: [],
   needsReview: false,

@@ -52,7 +52,7 @@ function getDailyFoundation48Target() {
     path: getFoundation48DayPath(currentDay),
     label: `Foundation48 · Ngày ${currentDay}`,
     duration: '12 phút',
-    steps: ['Từ mới', 'Mẫu câu', 'Nghe', 'Nói lại', 'Kiểm tra nhanh'],
+    steps: ['Từ mới', 'Mẫu câu', 'Nghe', 'Nói lại', 'Thử sức nhẹ'],
     completedToday,
     status,
     streak: progress.streak || 0,
@@ -118,7 +118,7 @@ function PooReminderCard() {
         <Box minW="0">
           <Text color={OCEAN_TOKENS.deepBlue} fontWeight="950">Poo nhắc bạn</Text>
           <Text mt="1" color={OCEAN_TOKENS.text} fontWeight="850" fontSize={{ base: 'sm', md: 'md' }} lineHeight="1.45">
-            Bấm “Bắt đầu bài hôm nay” trước. Nếu có lỗi sai, ôn lại sau khi học xong.
+            Bấm “Bắt đầu bài hôm nay” trước. Nếu có câu nào vấp, Poo sẽ nhắc bạn ôn lại sau.
           </Text>
         </Box>
       </HStack>
@@ -151,9 +151,9 @@ export function HomePage() {
       testId: 'home-task-today-lesson',
     },
     {
-      title: 'Ôn lỗi sai',
-      subtitle: learningSummary.difficultWordCount > 0 ? `${learningSummary.difficultWordCount} lỗi cần ôn lại hôm nay.` : 'Chưa có lỗi lớn, có thể ôn nhẹ vài câu.',
-      cta: 'Ôn lỗi sai',
+      title: 'Ôn cùng Poo',
+      subtitle: learningSummary.difficultWordCount > 0 ? `${learningSummary.difficultWordCount} câu Poo muốn ôn lại hôm nay.` : 'Poo chưa thấy câu nào quá khó, mình ôn nhẹ vài câu nhé.',
+      cta: 'Ôn cùng Poo',
       to: WEAK_REVIEW_PATH,
       icon: Sparkles,
       accent: 'orange',
@@ -233,7 +233,7 @@ export function HomePage() {
                 Hôm nay học gì cùng Poo?
               </Text>
               <Text mt={{ base: '1.5', md: '3' }} fontSize={{ base: 'sm', md: 'lg' }} color={OCEAN_TOKENS.muted} fontWeight="800" lineHeight={{ base: '1.38', md: '1.5' }} maxW="620px" data-testid="home-daily-subtitle">
-                Bài nên học ngay: {dailyTarget.label}. Học {dailyTarget.duration}: {dailyTarget.steps.join(' → ')}. Poo sẽ lưu tiến độ và lỗi cần ôn.
+                Bài nên học ngay: {dailyTarget.label}. Học {dailyTarget.duration}: {dailyTarget.steps.join(' → ')}. Poo sẽ giữ tiến độ và nhắc câu cần ôn.
               </Text>
             </Box>
             <HStack gap="2.5" wrap="wrap" w="100%">
@@ -241,7 +241,7 @@ export function HomePage() {
                 Bắt đầu bài hôm nay
               </Button>
               <Button as={Link} to="/practice" size={{ base: 'md', md: 'lg' }} borderRadius="full" bg="rgba(255,255,255,0.72)" color={OCEAN_TOKENS.deepBlue} border="1px solid" borderColor={OCEAN_TOKENS.border} leftIcon={<Icon as={Sparkles} />} _hover={{ bg: 'rgba(232,244,255,0.88)' }} data-testid="home-secondary-mistakes-cta">
-                Ôn lỗi sai
+                Ôn cùng Poo
               </Button>
               <Button as={Link} to="/learning-path" size={{ base: 'md', md: 'lg' }} borderRadius="full" bg="rgba(255,255,255,0.72)" color={OCEAN_TOKENS.deepBlue} border="1px solid" borderColor={OCEAN_TOKENS.border} leftIcon={<Icon as={Waves} />} _hover={{ bg: 'rgba(232,244,255,0.88)' }} data-testid="home-secondary-path-cta">
                 Xem lộ trình

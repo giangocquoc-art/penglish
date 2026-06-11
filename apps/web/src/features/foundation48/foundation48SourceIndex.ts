@@ -599,7 +599,7 @@ export const foundation48SourceIndex = [
   {
     "dayNumber": 18,
     "dayFolder": "day-18-hoc-ngu-am-voi-giao-vien-nuoc-ngoai",
-    "title": "Học ngữ âm với giáo viên nước ngoài",
+    "title": "Nghe âm và bắt chước thật chậm",
     "pdfCount": 3,
     "mp3Count": 0,
     "mp4Count": 0,
@@ -634,7 +634,7 @@ export const foundation48SourceIndex = [
   {
     "dayNumber": 19,
     "dayFolder": "day-19-tim-hieu-ve-trong-am-trong-tieng-anh",
-    "title": "Tìm hiểu về trọng âm trong tiếng Anh",
+    "title": "Nhấn nhẹ vào từ quan trọng",
     "pdfCount": 3,
     "mp3Count": 0,
     "mp4Count": 1,
@@ -782,7 +782,7 @@ export const foundation48SourceIndex = [
   {
     "dayNumber": 22,
     "dayFolder": "day-22-dong-tu-khuyet-thieu",
-    "title": "Động từ khuyết thiếu",
+    "title": "Nói “có thể / nên / phải” bằng câu ngắn",
     "pdfCount": 3,
     "mp3Count": 0,
     "mp4Count": 0,
@@ -1453,7 +1453,7 @@ export const foundation48SourceIndex = [
   {
     "dayNumber": 35,
     "dayFolder": "day-35-dai-tu-phan-than",
-    "title": "Đại từ phản thân",
+    "title": "Nói về chính mình bằng câu rõ",
     "pdfCount": 3,
     "mp3Count": 0,
     "mp4Count": 0,
@@ -1587,7 +1587,7 @@ export const foundation48SourceIndex = [
   {
     "dayNumber": 38,
     "dayFolder": "day-38-lien-tu-tuong-ho",
-    "title": "Liên từ tương hỗ",
+    "title": "Nối hai ý đi cùng nhau",
     "pdfCount": 3,
     "mp3Count": 0,
     "mp4Count": 0,
@@ -2054,7 +2054,7 @@ export const foundation48SourceIndex = [
   {
     "dayNumber": 46,
     "dayFolder": "day-46-ki-nang-note-taking",
-    "title": "Kỹ năng Note-taking",
+    "title": "Nghe và ghi từ khóa ngắn",
     "pdfCount": 3,
     "mp3Count": 3,
     "mp4Count": 0,
@@ -2111,7 +2111,7 @@ export const foundation48SourceIndex = [
   {
     "dayNumber": 47,
     "dayFolder": "day-47-ky-nang-paraphrasing",
-    "title": "Kỹ năng Paraphrasing",
+    "title": "Nói lại cùng ý bằng câu dễ hơn",
     "pdfCount": 3,
     "mp3Count": 3,
     "mp4Count": 0,

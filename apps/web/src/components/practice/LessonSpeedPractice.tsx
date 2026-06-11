@@ -37,7 +37,7 @@ const GAME_SECONDS = 60;
 const MAX_QUESTIONS = 30;
 const AUTO_NEXT_MS = 780;
 
-type SpeedSourceLabel = 'Từ vựng' | 'Kiểm tra nhanh' | 'Phản xạ';
+type SpeedSourceLabel = 'Từ vựng' | 'Thử sức nhẹ' | 'Phản xạ';
 
 type SpeedQuestion = {
   id: string;
@@ -185,7 +185,7 @@ function quizQuestionToSpeed(question: QuizQuestion): SpeedQuestion | null {
     options: makeOptions(question.answer, question.options),
     answer: question.answer,
     explanationVi: question.explanationVi,
-    sourceLabel: 'Kiểm tra nhanh',
+    sourceLabel: 'Thử sức nhẹ',
   };
 }
 
@@ -408,7 +408,7 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px="6" py="8">
         <Box maxW="760px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
-          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Chưa có nội dung luyện tốc độ</Text>
+          <Text fontSize="2xl" fontWeight="900" color={COLORS.text}>Poo mở phần tốc độ ở nhịp khác</Text>
           <Text mt="2" color={COLORS.muted}>Bài học này chưa có đủ từ vựng, kiểm tra nhanh hoặc phản xạ để tạo trò luyện tốc độ.</Text>
           <Button as={Link} to={`/lessons/${lesson.id}`} mt="6" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: COLORS.primaryHover }}>
             Quay về bài học
@@ -435,7 +435,7 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
           <SimpleGrid columns={{ base: 1, md: 3 }} gap="4" mt="7">
             <Metric label="Kho câu hỏi" value={baseQuestions.length} />
             <Metric label="Thời gian" value={`${GAME_SECONDS}s`} tone="amber" />
-            <Metric label="Điểm tốt nhất" value={bestScore} tone="green" />
+            <Metric label="Kỷ lục vui nhất" value={bestScore} tone="green" />
           </SimpleGrid>
           <Flex mt="8" gap="3" wrap="wrap">
             <Button leftIcon={<Zap size={18} />} onClick={startGame} borderRadius="full" bg={COLORS.primary} color="white" size="lg" _hover={{ bg: COLORS.primaryHover }}>
@@ -467,13 +467,13 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
         <Box maxW="980px" mx="auto">
           <Box bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '6', md: '8' }}>
             <Badge bg="#F0FDF4" color="#166534" borderRadius="full" px="3" py="1">Hoàn thành luyện tốc độ</Badge>
-            <Text mt="4" fontSize={{ base: '3xl', md: '4xl' }} fontWeight="950" color={COLORS.text}>Tổng kết Tốc độ</Text>
+            <Text mt="4" fontSize={{ base: '3xl', md: '4xl' }} fontWeight="950" color={COLORS.text}>Tổng kết trò tốc độ</Text>
             <Text mt="2" color={COLORS.muted}>{getResultMessage(accuracy)}</Text>
             <SimpleGrid columns={{ base: 1, md: 4 }} gap="4" mt="6">
-              <Metric label="Điểm" value={score} tone="green" />
+              <Metric label="Điểm động viên" value={score} tone="green" />
               <Metric label="Kỷ lục" value={finalBestScore} tone="amber" />
-              <Metric label="Đúng / Sai" value={`${correctCount} / ${wrongCount}`} />
-              <Metric label="Độ chính xác" value={`${accuracy}%`} />
+              <Metric label="Trúng nhịp / Cần ôn" value={`${correctCount} / ${wrongCount}`} />
+              <Metric label="Mức bắt nhịp" value={`${accuracy}%`} />
               <Metric label="Chuỗi nhanh nhất" value={maxStreak} tone="amber" />
               <Metric label="Đã trả lời" value={`${answeredCount}/${questions.length}`} />
             </SimpleGrid>
@@ -481,10 +481,10 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
             <PracticeSessionFeedbackCard feedback={sessionFeedback} />
 
             <Box mt="7">
-              <Text fontWeight="900" color={COLORS.text}>Các câu cần luyện lại</Text>
+              <Text fontWeight="900" color={COLORS.text}>Các câu Poo nhắc lại</Text>
               {wrongAnswers.length === 0 ? (
                 <Box mt="3" border="1px solid" borderColor="#BBF7D0" bg="#F0FDF4" borderRadius="2xl" p="4">
-                  <Text color="#166534" fontWeight="800">Không có câu sai trong lượt này.</Text>
+                  <Text color="#166534" fontWeight="800">Không có câu nào cần nhắc lại trong lượt này.</Text>
                 </Box>
               ) : (
                 <VStack align="stretch" gap="3" mt="3">
@@ -494,8 +494,8 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
                         <Badge colorScheme="orange" borderRadius="full">{item.sourceLabel}</Badge>
                       </HStack>
                       <Text fontWeight="800" color={COLORS.text}>{item.prompt}</Text>
-                      <Text mt="1" color="#9A3412">Bạn chọn: {item.userAnswer}</Text>
-                      <Text color="#166534">Đáp án đúng: {item.correctAnswer}</Text>
+                      <Text mt="1" color="#9A3412">Bạn đã chọn: {item.userAnswer}</Text>
+                      <Text color="#166534">Đáp án Poo gợi ý: {item.correctAnswer}</Text>
                     </Box>
                   ))}
                 </VStack>
@@ -538,9 +538,9 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
               </Box>
               <HStack wrap="wrap" gap="3">
                 <ScorePill label="⏱ Thời gian" value={`${timeLeft}s`} tone="amber" />
-                <ScorePill label="Điểm" value={score} tone="green" />
+                <ScorePill label="Điểm động viên" value={score} tone="green" />
                 <ScorePill label="Đúng" value={correctCount} tone="green" />
-                <ScorePill label="Sai" value={wrongCount} tone="red" />
+                <ScorePill label="Cần ôn" value={wrongCount} tone="red" />
                 <ScorePill label="Chuỗi nhanh" value={streak} tone="amber" />
               </HStack>
             </Flex>
@@ -554,7 +554,7 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
                 <Badge borderRadius="full" bg="#F8FAFC" color={COLORS.text}>Câu {questionIndex + 1}</Badge>
                 <Badge borderRadius="full" bg="#EFF6FF" color={COLORS.primary}>{currentQuestion.sourceLabel}</Badge>
               </HStack>
-              <Text color={COLORS.muted} fontWeight="800">Chọn đáp án đúng nhanh nhất</Text>
+              <Text color={COLORS.muted} fontWeight="800">Chọn thật nhanh theo phản xạ</Text>
               <Text mt="3" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.15">
                 {currentQuestion.prompt}
               </Text>

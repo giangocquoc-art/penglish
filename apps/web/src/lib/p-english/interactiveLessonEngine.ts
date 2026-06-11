@@ -122,7 +122,7 @@ function stepFromQuiz(item: QuizQuestion, index: number, fallbackOptions: string
   return {
     id: item.id,
     type,
-    title: index === 0 ? 'Chọn đáp án đúng' : type === 'fill_blank' ? 'Điền từ còn thiếu' : type === 'sentence_order' ? 'Sắp xếp câu' : 'Kiểm tra nhanh',
+    title: index === 0 ? 'Chọn đáp án đúng' : type === 'fill_blank' ? 'Điền từ còn thiếu' : type === 'sentence_order' ? 'Sắp xếp câu' : 'Thử sức nhẹ',
     instruction: type === 'fill_blank' ? 'Gõ phần còn thiếu trong câu.' : type === 'sentence_order' ? 'Chạm các từ theo đúng thứ tự.' : 'Chọn một đáp án. Poo sẽ góp ý ngay.',
     prompt,
     answer,

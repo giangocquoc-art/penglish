@@ -205,7 +205,7 @@ function ProductMockup() {
             <Progress value={72} sx={{ '& > div': { background: `linear-gradient(90deg, ${landingColors.aquaAccent}, ${landingColors.oceanBlue})` } }} borderRadius="full" h="10px" bg={landingColors.softAqua} />
             <HStack justify="space-between" mt="3" color={landingColors.mutedText} fontSize="xs" fontWeight="700">
               <Text>Thẻ từ</Text>
-              <Text>Kiểm tra</Text>
+              <Text>Thử sức</Text>
               <Text>Nghe</Text>
               <Text>Ôn lại</Text>
             </HStack>

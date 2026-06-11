@@ -52,7 +52,7 @@ const STARTER_A1_LESSON_ID = 'unit-1-greetings-introduction';
 
 const GAMES: GameDef[] = [
   { id: 'flashcard', name: 'Thẻ từ', desc: 'Lật thẻ nhanh để ghi nhớ nghĩa và cách dùng.', icon: BookOpen, time: '3–5 phút', reward: 5 },
-  { id: 'quiz', name: 'Kiểm tra nhanh', desc: 'Chọn đáp án đúng để kiểm tra độ nhớ từ.', icon: HelpCircle, time: '4–6 phút', reward: 5 },
+  { id: 'quiz', name: 'Thử sức nhẹ', desc: 'Chọn đáp án để Poo xem bạn nhớ từ đến đâu.', icon: HelpCircle, time: '4–6 phút', reward: 5 },
   { id: 'listen', name: 'Luyện nghe', desc: 'Nghe phát âm và nhận diện từ trong ngữ cảnh.', icon: Headphones, time: '5–7 phút', reward: 10 },
   { id: 'type', name: 'Gõ câu', desc: 'Luyện chính tả bằng cách nhập lại đáp án.', icon: PenTool, time: '5–8 phút', reward: 10 },
   { id: 'match', name: 'Ghép cặp', desc: 'Ghép từ với nghĩa để củng cố phản xạ.', icon: Target, time: '3–5 phút', reward: 5 },
@@ -146,7 +146,7 @@ function getMistakeSourceLabel(mistake: LearningLoopMistakeRecord) {
   if (mistake.source === 'foundation48') return `48 ngày lấy gốc · ${mistake.sourceId.replace('day-', 'Ngày ')}`;
   if (mistake.source === 'interactive-lesson') return 'Bài học tương tác';
   if (mistake.source === 'shadowing') return 'Nói đuổi';
-  if (mistake.source === 'english-speed') return 'Luyện tốc độ tiếng Anh';
+  if (mistake.source === 'english-speed') return 'Đọc nhanh cùng Poo';
   if (mistake.source === 'words') return 'Sổ từ vựng';
   return 'Luyện tập';
 }
@@ -864,8 +864,8 @@ export function PracticePage() {
               <Box position="absolute" inset="0" bg="radial-gradient(circle at 92% 10%, rgba(91,188,235,0.20), transparent 30%), radial-gradient(circle at 8% 100%, rgba(255,243,196,0.42), transparent 28%)" pointerEvents="none" />
               <Flex position="relative" gap="4" justify="space-between" align={{ base: 'start', md: 'center' }} direction={{ base: 'column', md: 'row' }}>
                 <Box minW="0" flex="1">
-                  <Badge borderRadius="full" bg="#E0F2FE" color={PRACTICE_COLORS.deepBlue} textTransform="none" mb="2">Ôn tập / Lỗi sai</Badge>
-                  <Text as="h2" fontSize={{ base: '2xl', md: '4xl' }} lineHeight="1.06" fontWeight="950" color={PRACTICE_COLORS.text}>Ôn lỗi sai cùng Poo</Text>
+                  <Badge borderRadius="full" bg="#E0F2FE" color={PRACTICE_COLORS.deepBlue} textTransform="none" mb="2">Ôn nhẹ cùng Poo</Badge>
+                  <Text as="h2" fontSize={{ base: '2xl', md: '4xl' }} lineHeight="1.06" fontWeight="950" color={PRACTICE_COLORS.text}>Ôn câu Poo nhắc</Text>
                   <Text mt="2" color={PRACTICE_COLORS.secondaryText} fontWeight="800" fontSize={{ base: 'sm', md: 'md' }} maxW="620px">
                     {hasRealMistakes ? 'Poo gom vài chỗ bạn hay quên để ôn nhẹ hôm nay.' : 'Hôm nay chưa có lỗi lớn. Bạn có thể ôn nhẹ vài câu nền tảng.'}
                   </Text>
@@ -888,7 +888,7 @@ export function PracticePage() {
                   <HStack align="center" gap="3">
                     <Flex w="52px" h="52px" borderRadius="2xl" bg="#ECFDF5" color="#15803D" align="center" justify="center" border="1px solid #BBF7D0"><Icon as={CheckCircle2} boxSize="7" /></Flex>
                     <Box minW="0">
-                      <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950" color={PRACTICE_COLORS.text}>Poo đã dọn xong lỗi hôm nay!</Text>
+                      <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950" color={PRACTICE_COLORS.text}>Poo đã ôn xong vài câu hôm nay!</Text>
                       <Text color={PRACTICE_COLORS.secondaryText} fontWeight="800">Nhẹ thôi nhưng chắc hơn rồi đó.</Text>
                     </Box>
                   </HStack>
@@ -968,7 +968,7 @@ export function PracticePage() {
                   {pooReviewItems.slice(0, 3).map((item) => (
                     <Box key={item.id} bg="rgba(255,255,255,0.86)" border="1px solid" borderColor={item.isFallback ? '#BAE6FD' : '#FED7AA'} borderRadius="2xl" p="3.5" data-testid="practice-poo-mistake-item">
                       <Badge bg={item.isFallback ? '#E0F2FE' : '#FFF7ED'} color={item.isFallback ? PRACTICE_COLORS.deepBlue : '#B45309'} borderRadius="full" textTransform="none" mb="2">{item.sourceLabel}</Badge>
-                      <Text color={PRACTICE_COLORS.text} fontWeight="950">Sai: {item.wrongAnswer}</Text>
+                      <Text color={PRACTICE_COLORS.text} fontWeight="950">Câu còn vấp: {item.wrongAnswer}</Text>
                       <Text mt="1" color="#15803D" fontWeight="950">Đúng: {item.correctAnswer}</Text>
                       <Text mt="1" color={PRACTICE_COLORS.secondaryText} fontSize="sm" fontWeight="800">Gợi ý: {item.explanation}</Text>
                       <HStack mt="3" gap="2" wrap="wrap"><Button size="xs" borderRadius="full" onClick={startPooReview}>Tôi hiểu rồi</Button><Button as={Link} to={item.actionPath} size="xs" borderRadius="full" variant="outline">Mở nguồn</Button></HStack>

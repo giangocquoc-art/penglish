@@ -69,7 +69,7 @@ const STAGE_LEVELS: Record<number, { level: string; skill: string; next: string 
   4: { level: 'A1', skill: 'Phát âm & câu hỏi', next: 'Nghe mẫu rồi nói lại chậm.' },
   5: { level: 'A1 → A2', skill: 'Nối ý & điều kiện', next: 'Tập ghép câu dài hơn một chút.' },
   6: { level: 'A2', skill: 'Nghe nền tảng', next: 'Nghe ý chính trước, không cần hiểu hết.' },
-  7: { level: 'A2 → B1', skill: 'Giao tiếp thực tế', next: 'Ôn lỗi sai và dùng mẫu câu thật.' },
+  7: { level: 'A2 → B1', skill: 'Giao tiếp thực tế', next: 'Ôn câu Poo nhắc và dùng mẫu câu thật.' },
   8: { level: 'B1', skill: 'Đầu ra cuối khóa', next: 'Tự nói đoạn ngắn và ôn lại hằng tuần.' },
 };
 
@@ -230,7 +230,7 @@ function RoadmapHero({ completed, total, streak, currentDay, percent }: { comple
               48 ngày đi từ nền tảng đến tự tin nói câu ngắn
             </Text>
             <Text mt="2" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="750" lineHeight="1.6" maxW="680px">
-              Mỗi ô là một ngày học nhỏ: nghe trước, hiểu mẫu câu, luyện nói, làm kiểm tra nhanh rồi lưu tiến độ. Poo chỉ mở bài tiếp theo vừa đủ để bạn không bị ngợp.
+              Mỗi ô là một ngày học nhỏ: nghe trước, hiểu mẫu câu, luyện nói, thử sức nhẹ rồi lưu tiến độ. Poo chỉ mở bài tiếp theo vừa đủ để bạn không bị ngợp.
             </Text>
           </Box>
           <Flex gap="2.5" wrap="wrap" w="100%" direction={{ base: 'column', sm: 'row' }}>
@@ -333,7 +333,7 @@ function DayRoadmapCard({ item }: { item: RoadmapDay }) {
         <Box minW="0" flex="1">
           <Text color={COLORS.text} fontWeight="950" lineHeight="1.32" fontSize={{ base: 'sm', md: 'sm' }} noOfLines={2}>{getShortTopic(day)}</Text>
           <Text mt="1.5" color={COLORS.muted} fontWeight="750" fontSize="xs" lineHeight="1.45" noOfLines={2}>{day.summary.summary}</Text>
-          <Text mt="2" color={COLORS.blue} fontWeight="950" fontSize="2xs">Gợi ý: {status === 'current' ? 'Học nút này hôm nay' : status === 'completed' ? 'Ôn lại nếu còn lỗi sai' : status === 'locked' ? 'Hoàn thành ngày trước để mở' : 'Có thể học khi bạn sẵn sàng'} · 12 phút</Text>
+          <Text mt="2" color={COLORS.blue} fontWeight="950" fontSize="2xs">Gợi ý: {status === 'current' ? 'Học nút này hôm nay' : status === 'completed' ? 'Ôn lại nếu Poo còn nhắc' : status === 'locked' ? 'Hoàn thành ngày trước để mở' : 'Có thể học khi bạn sẵn sàng'} · 12 phút</Text>
         </Box>
 
         <HStack justify="space-between" gap="2" mt="auto">

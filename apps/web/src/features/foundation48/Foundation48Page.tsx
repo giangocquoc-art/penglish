@@ -44,7 +44,7 @@ export function Foundation48Page() {
                 48 ngày lấy gốc
               </Text>
               <Text mt="1" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="800" lineHeight="1.45">
-                Khóa nền tảng cho người mới: mỗi ngày khoảng 12 phút, đi theo vòng Từ mới → Mẫu câu → Lời thoại → Câu luyện → Bài kiểm tra nhỏ.
+                Khóa nền tảng cho người mới: mỗi ngày khoảng 12 phút, đi theo vòng Từ mới → Mẫu câu → Lời thoại → Câu luyện → Thử sức nhẹ.
               </Text>
             </Box>
             <Box display={{ base: 'none', md: 'block' }} pr="1" w="92px" flexShrink={0}>
@@ -90,14 +90,14 @@ export function Foundation48Page() {
               <Icon as={CheckCircle2} color={COLORS.green} boxSize="6" />
               <Box>
                 <Text color={COLORS.green} fontWeight="700">Bạn đã hoàn thành 48/48 ngày.</Text>
-                <Text color={COLORS.text} fontWeight="700">Poo đã lưu hành trình này trên thiết bị của bạn.</Text>
+                <Text color={COLORS.text} fontWeight="700">Poo đang giữ hành trình này cho bạn.</Text>
               </Box>
             </HStack>
           </Box>
         ) : null}
 
         <SimpleGrid columns={{ base: 1, md: 5 }} gap="2.5" mb="4" data-testid="foundation48-five-step-overview">
-          {['Từ mới', 'Mẫu câu', 'Lời thoại', 'Câu luyện', 'Bài kiểm tra nhỏ'].map((step, index) => (
+          {['Từ mới', 'Mẫu câu', 'Lời thoại', 'Câu luyện', 'Thử sức nhẹ'].map((step, index) => (
             <Box key={step} border="1px solid" borderColor={index === 0 ? '#7DD3FC' : COLORS.border} borderRadius="2xl" bg="rgba(255,255,255,0.74)" p="3" minW="0">
               <Text color={COLORS.blue} fontWeight="950" fontSize="xs">Bước {index + 1}</Text>
               <Text color={COLORS.text} fontWeight="950" fontSize="sm">{step}</Text>

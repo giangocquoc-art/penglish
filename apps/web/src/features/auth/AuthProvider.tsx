@@ -23,14 +23,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const authUnavailable = !isSupabaseConfigured || !supabase;
 
-  const refreshSession = useCallback(async () => {
+  const loadSessionFromProvider = useCallback(async ({ showLoading = false }: { showLoading?: boolean } = {}) => {
     if (!supabase) {
       setSession(null);
       setLoading(false);
       return null;
     }
 
-    setLoading(true);
+    if (showLoading) setLoading(true);
     const { data, error } = await supabase.auth.getSession();
     const nextSession = error ? null : data.session ?? null;
     setSession(nextSession);
@@ -38,6 +38,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     window.dispatchEvent(new Event(PENGUISH_AUTH_UPDATED_EVENT));
     return nextSession;
   }, []);
+
+  const refreshSession = useCallback(() => loadSessionFromProvider({ showLoading: true }), [loadSessionFromProvider]);
 
   useEffect(() => {
     let active = true;
@@ -47,11 +49,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (active) setLoading(false);
         return;
       }
-      const { data } = await supabase.auth.getSession();
+      const nextSession = await loadSessionFromProvider();
       if (!active) return;
-      setSession(data.session ?? null);
-      setLoading(false);
-      window.dispatchEvent(new Event(PENGUISH_AUTH_UPDATED_EVENT));
+      setSession(nextSession);
     };
 
     void hydrate();
@@ -60,16 +60,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setSession(nextSession);
       setLoading(false);
       window.dispatchEvent(new Event(PENGUISH_AUTH_UPDATED_EVENT));
-      if (nextSession?.user?.id) {
-        void mergeCloudAndLocalFoundation48Progress(nextSession.user.id).catch(() => undefined);
-      }
     });
 
     return () => {
       active = false;
       subscription?.data.subscription.unsubscribe();
     };
-  }, []);
+  }, [loadSessionFromProvider]);
 
   useEffect(() => {
     const userId = session?.user?.id;
@@ -79,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [session?.user?.id]);
 
   const signInWithGoogle = useCallback(async () => {
-    if (!supabase) return { ok: false, message: 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' };
+    if (!supabase) return { ok: false, message: 'Poo chưa mở được cổng đăng nhập. Bạn thử lại sau một chút nhé.' };
 
     const intendedPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
     if (intendedPath && !/^\/(login|auth\/callback)/.test(window.location.pathname)) {
@@ -97,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       },
     });
 
-    if (error) return { ok: false, message: 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.' };
+    if (error) return { ok: false, message: 'Poo chưa mở được cổng đăng nhập. Bạn thử lại sau một chút nhé.' };
     return { ok: true };
   }, []);
 

@@ -51,9 +51,9 @@ const NODE_META: Record<LearningPathNodeType, { label: string; icon: any; bg: st
   grammar: { label: 'Ngữ pháp', icon: PenLine, bg: '#F5F3FF', color: '#7C3AED' },
   listening: { label: 'Nghe', icon: Headphones, bg: '#ECFEFF', color: '#0891B2' },
   speaking: { label: 'Nói', icon: Mic2, bg: '#FFF7ED', color: COLORS.coral },
-  quiz: { label: 'Kiểm tra', icon: ShieldCheck, bg: '#F0FDF4', color: COLORS.green },
+  quiz: { label: 'Thử sức', icon: ShieldCheck, bg: '#F0FDF4', color: COLORS.green },
   review: { label: 'Ôn lại', icon: Dumbbell, bg: '#FFFBEB', color: '#B45309' },
-  checkpoint: { label: 'Bài kiểm tra nhỏ', icon: ShieldCheck, bg: '#E0F2FE', color: COLORS.blue },
+  checkpoint: { label: 'Chốt chặng nhẹ', icon: ShieldCheck, bg: '#E0F2FE', color: COLORS.blue },
 };
 
 const MODE_TO_NODE: Record<UnifiedPracticeMode, LearningPathNodeType> = {
@@ -113,7 +113,7 @@ export function buildLearningPathNodeUnits(
 
     nodes.push({
       id: `${unit.id}-checkpoint`,
-      title: unitIndex % 3 === 2 ? 'Bài kiểm tra nhỏ' : 'Chốt bài',
+      title: unitIndex % 3 === 2 ? 'Chốt chặng nhẹ' : 'Chốt bài',
       subtitle: unit.confidenceGoal,
       type: unitIndex % 3 === 2 ? 'checkpoint' : 'quiz',
       state: locked ? 'locked' : unitCompleted ? 'completed' : unitCurrent ? 'checkpoint' : 'review',

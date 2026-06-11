@@ -3,10 +3,10 @@ import type { DaySeed, Foundation48DeepLesson } from './foundation48DeepLessons'
 
 const stage5Seeds: Record<number, DaySeed> = {
   22: {
-    title: 'Động từ khuyết thiếu',
-    goal: 'Hôm nay bạn học cách nói nên, phải, có thể, được phép bằng các động từ khuyết thiếu quen thuộc.',
+    title: 'Nói “có thể / nên / phải” bằng câu ngắn',
+    goal: 'Hôm nay Poo dẫn bạn nói “nên”, “phải”, “có thể” bằng vài câu ngắn quen thuộc.',
     grammarTitle: 'Can, should, must, have to, may',
-    grammar: 'Động từ khuyết thiếu đứng trước động từ chính dạng nguyên mẫu. Dùng can để nói khả năng hoặc lời đề nghị, should để khuyên nhẹ, must/have to để nói điều cần làm, may/can để xin phép lịch sự. Không thêm s sau he/she/it khi dùng modal.',
+    grammar: 'Nói “có thể / nên / phải” bằng câu ngắn đứng trước động từ chính dạng nguyên mẫu. Dùng can để nói khả năng hoặc lời đề nghị, should để khuyên nhẹ, must/have to để nói điều cần làm, may/can để xin phép lịch sự. Không thêm s sau he/she/it khi dùng modal.',
     vocabulary: [
       ['can', 'có thể', 'I can help you.'],
       ['should', 'nên', 'You should drink water.'],

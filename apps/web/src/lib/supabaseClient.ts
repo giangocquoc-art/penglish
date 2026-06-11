@@ -21,12 +21,12 @@ export function getSupabaseAuthUnavailableState() {
   return {
     authUnavailable: !isSupabaseConfigured,
     reason: authUnavailableReason,
-    message: isSupabaseConfigured ? null : 'Google Login chưa được cấu hình. Vui lòng kiểm tra Supabase Auth settings.',
+    message: isSupabaseConfigured ? null : 'Cổng vào học bằng Google chưa sẵn sàng. Bạn thử lại sau một chút nhé.',
   };
 }
 
 export function getSupabaseStatusLabel(syncError = false) {
-  if (!isSupabaseConfigured) return 'Lưu trên thiết bị';
-  if (syncError) return 'Chưa đồng bộ được';
-  return 'Đã đồng bộ';
+  if (!isSupabaseConfigured) return 'Poo đang giữ tiến độ cho bạn';
+  if (syncError) return 'Poo sẽ lưu lên tài khoản khi mạng ổn hơn';
+  return 'Đã lưu lên tài khoản';
 }
