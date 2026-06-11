@@ -3,10 +3,10 @@ import { Box, Flex, HStack, Icon, Text, VStack, Avatar, IconButton, useColorMode
 import { Link, useLocation } from 'react-router-dom';
 import { Home, BookOpen, Dumbbell, Moon, Sun, Coins, ChevronRight, Waves, LogOut, RefreshCw } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
-import { LearningHeartsBadge } from './learning/LearningHeartsBadge';
-import { WaterStreakBadge } from './streak/BubbleStreakBadge';
+import { SpongeIcon } from './learning/SpongeIcon';
 import { OCEAN_TOKENS } from './p-english/OceanBackdrop';
-import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState } from '../lib/p-english/daily-rewards';
+import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getWaterStreak } from '../lib/p-english/daily-rewards';
+import { getLearningHeartsState, LEARNING_HEARTS_UPDATED_EVENT, type LearningHeartsState } from '../lib/p-english/learning-hearts';
 import { LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
 import { usePEnglishSession } from '../lib/p-english/userSession';
 import { useAuth } from '../features/auth/AuthProvider';
@@ -59,6 +59,7 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
   const location = useLocation();
   const { colorMode, toggleColorMode } = useColorMode();
   const [rewardState, setRewardState] = useState(() => getDailyRewardState());
+  const [heartsState, setHeartsState] = useState<LearningHeartsState>(() => getLearningHeartsState());
   const session = usePEnglishSession();
   const auth = useAuth();
   const isActive = (to: string) => {
@@ -68,19 +69,26 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
   };
 
   useEffect(() => {
-    const refreshRewards = () => setRewardState(getDailyRewardState());
+    const refreshRewards = () => {
+      setRewardState(getDailyRewardState());
+      setHeartsState(getLearningHeartsState());
+    };
     refreshRewards();
     window.addEventListener('focus', refreshRewards);
     window.addEventListener('storage', refreshRewards);
     window.addEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshRewards);
     window.addEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshRewards);
+    window.addEventListener(LEARNING_HEARTS_UPDATED_EVENT, refreshRewards);
     return () => {
       window.removeEventListener('focus', refreshRewards);
       window.removeEventListener('storage', refreshRewards);
       window.removeEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshRewards);
       window.removeEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshRewards);
+      window.removeEventListener(LEARNING_HEARTS_UPDATED_EVENT, refreshRewards);
     };
   }, []);
+
+  const waterStreak = getWaterStreak(rewardState);
 
   return (
     <Flex
@@ -108,14 +116,27 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
         <BrandLogo variant="full" size="md" showSubtitle />
         <HStack
           justify="space-between"
+          align="center"
           p="2"
           borderRadius="2xl"
           bg="rgba(255, 255, 255, 0.58)"
           border="1px solid"
           borderColor={OCEAN_TOKENS.border}
+          gap="2"
         >
-          <WaterStreakBadge state={rewardState} compact testId="sidebar-water-streak-badge" />
-          <HStack gap="1.5" px="2" py="1" borderRadius="full" bg={OCEAN_TOKENS.warm} color={OCEAN_TOKENS.text}>
+          <VStack align="stretch" gap="1" minW="0" flex="1" data-testid="sidebar-streak-bubbles-summary">
+            <HStack gap="1.5" minW="0" color={OCEAN_TOKENS.deepBlue}>
+              <Icon as={Waves} boxSize="4" flexShrink={0} />
+              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap">Chuỗi:</Text>
+              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap">{waterStreak.current} ngày</Text>
+            </HStack>
+            <HStack gap="1.5" minW="0" color={OCEAN_TOKENS.text}>
+              <SpongeIcon size={16} active={heartsState.heartsLeft > 0} decorative />
+              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap">Bọt biển:</Text>
+              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap">{heartsState.heartsLeft}/{heartsState.maxHearts}</Text>
+            </HStack>
+          </VStack>
+          <HStack gap="1.5" px="2" py="1" borderRadius="full" bg={OCEAN_TOKENS.warm} color={OCEAN_TOKENS.text} flexShrink={0}>
             <Icon as={Coins} boxSize="4" color="#F59E0B" />
             <Text fontWeight="850" fontSize="sm">{user?.coin ?? 0}</Text>
           </HStack>
@@ -206,10 +227,6 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
             </Button>
           )}
         </VStack>
-
-        <Box mt="3">
-          <LearningHeartsBadge compact />
-        </Box>
 
         <Box mt="3" px="2" py="2.5" borderRadius="2xl" bg="rgba(255, 255, 255, 0.42)" border="1px solid" borderColor={OCEAN_TOKENS.border}>
           <Text fontSize="xs" fontWeight="900" color={OCEAN_TOKENS.deepBlue} mb="2">

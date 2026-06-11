@@ -32,7 +32,11 @@ const COLORS = {
 
 const CUSTOM_SHADOWING_STORAGE_KEY = 'PooEnglish:custom-shadowing-item';
 const DEFAULT_CUSTOM_VIDEO_URL = '';
-const SHADOWING_WORKFLOW_STEPS = ['Nghe trước một lần', 'Nói lại theo nhịp', 'Xem góp ý'];
+const SHADOWING_WORKFLOW_STEPS = ['Nghe mẫu', 'Nói theo Poo', 'Xem góp ý'];
+const SHADOWING_RECORDING_TIMEOUT_MS = 7000;
+const MICROPHONE_PERMISSION_MESSAGE = 'Poo chưa được phép dùng micro. Hãy bật Microphone rồi thử lại nha.';
+const SPEECH_UNCLEAR_MESSAGE = 'Poo chưa nghe rõ câu này, thử nói chậm hơn một chút nha.';
+const SPEECH_RECOGNITION_FALLBACK_MESSAGE = 'Trình duyệt này chưa hỗ trợ nhận diện giọng nói. Ní thử Chrome để Poo chấm phát âm nha.';
 
 type RecordingStatus = 'idle' | 'recording' | 'transcribing' | 'analyzing' | 'result' | 'error';
 
@@ -273,6 +277,9 @@ export function ShadowingPage() {
   const [localTranscript, setLocalTranscript] = useState('');
   const [shadowingSyncStatus, setShadowingSyncStatus] = useState<'local' | 'synced' | 'failed'>('local');
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const speechRecognitionRef = useRef<any>(null);
+  const recordingTimeoutRef = useRef<number | null>(null);
+  const activeStreamRef = useRef<MediaStream | null>(null);
   const chunksRef = useRef<BlobPart[]>([]);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -307,6 +314,7 @@ export function ShadowingPage() {
   const hasSelectedYouTubeVideo = Boolean(selectedYouTubeEmbedUrl);
   const shouldShowReferenceFallback = hasSelectedVideoUrl && !hasSelectedYouTubeVideo;
   const speechSupported = typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+  const speechRecognitionSupported = typeof window !== 'undefined' && Boolean((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
   const isRecording = recordingStatus === 'recording';
   const isTranscribing = recordingStatus === 'transcribing';
   const isAnalyzing = recordingStatus === 'analyzing';
@@ -361,6 +369,16 @@ export function ShadowingPage() {
   useEffect(() => {
     if (videoRef.current) videoRef.current.playbackRate = speed;
   }, [speed]);
+
+  useEffect(() => {
+    return () => {
+      if (recordingTimeoutRef.current && typeof window !== 'undefined') window.clearTimeout(recordingTimeoutRef.current);
+      try { speechRecognitionRef.current?.stop?.(); } catch { /* noop */ }
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') mediaRecorderRef.current.stop();
+      activeStreamRef.current?.getTracks().forEach((track) => track.stop());
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) window.speechSynthesis.cancel();
+    };
+  }, []);
 
   useGSAP(() => {
     const root = rootRef.current;
@@ -437,17 +455,22 @@ export function ShadowingPage() {
 
   const listenSentence = () => {
     if (!selectedSentence) return;
-    if (!speechSupported) {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
       setMediaMessage('Trình duyệt chưa hỗ trợ giọng đọc mẫu. Hãy đọc câu mẫu, nói thử một lượt, rồi để Poo góp ý nhẹ.');
       return;
     }
 
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(selectedSentence.text);
-    utterance.lang = 'en-US';
+    const voices = window.speechSynthesis.getVoices();
+    const englishVoice = voices.find((voice) => voice.lang?.toLowerCase().startsWith('en'));
+    if (englishVoice) utterance.voice = englishVoice;
+    utterance.lang = englishVoice?.lang || 'en-US';
     utterance.rate = speed;
+    utterance.onerror = () => setMediaMessage('Poo chưa phát được giọng mẫu. Bạn thử bấm lại hoặc kiểm tra âm lượng nha.');
+    utterance.onend = () => setMediaMessage(`Đã phát câu mẫu ở tốc độ ${speed}x.`);
     window.speechSynthesis.speak(utterance);
-    setMediaMessage(`Đang dùng giọng đọc mẫu ở tốc độ ${speed}x. Đây chưa phải bản thu sẵn.`);
+    setMediaMessage(`Đang phát câu mẫu ở tốc độ ${speed}x.`);
   };
 
   const replaySentence = async () => {
@@ -508,9 +531,37 @@ export function ShadowingPage() {
     saveAttempt(result);
   };
 
+  const finishSpeechTranscript = (transcript: string) => {
+    const cleaned = transcript.trim();
+    if (!cleaned) {
+      const failure: ShadowingApiFailure = { ok: false, error: 'NO_AUDIO', message: SPEECH_UNCLEAR_MESSAGE };
+      setApiFeedback(null);
+      setApiError(failure);
+      setRecordingStatus('error');
+      setRecordMessage(SPEECH_UNCLEAR_MESSAGE);
+      saveAttempt(failure);
+      return;
+    }
+
+    const result = compareShadowingTranscript(selectedSentence?.text ?? '', cleaned);
+    setLocalTranscript(cleaned);
+    setApiFeedback(result);
+    setApiError(null);
+    setRecordingStatus('result');
+    setRecordMessage(`Nghe được: ${cleaned}. ${result.coachMessage}`);
+    markSentenceCompleted(selectedSentence?.id);
+    saveAttempt(result);
+  };
+
+  const stopMicrophoneTracks = () => {
+    activeStreamRef.current?.getTracks().forEach((track) => track.stop());
+    activeStreamRef.current = null;
+  };
+
   const startRecording = async () => {
-    if (!('MediaRecorder' in window) || !navigator.mediaDevices?.getUserMedia) {
-      const failure: ShadowingApiFailure = { ok: false, error: 'NO_AUDIO', message: 'Poo chưa nghe được giọng của bạn. Hãy kiểm tra quyền micro rồi thử lại nhé.' };
+    if (typeof window === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
+      const failure: ShadowingApiFailure = { ok: false, error: 'NO_AUDIO', message: MICROPHONE_PERMISSION_MESSAGE };
+      setApiFeedback(null);
       setApiError(failure);
       setRecordingStatus('error');
       setRecordMessage(failure.message);
@@ -519,7 +570,57 @@ export function ShadowingPage() {
 
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      activeStreamRef.current = stream;
       chunksRef.current = [];
+      setElapsedSeconds(0);
+      setApiFeedback(null);
+      setApiError(null);
+      setLocalTranscript('');
+      setRecordingStatus('recording');
+      setRecordMessage('Đang nghe...');
+
+      const SpeechRecognitionCtor = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      if (SpeechRecognitionCtor) {
+        const recognition = new SpeechRecognitionCtor();
+        let finalTranscript = '';
+        speechRecognitionRef.current = recognition;
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        recognition.onresult = (event: any) => {
+          finalTranscript = Array.from(event.results ?? [])
+            .map((result: any) => result?.[0]?.transcript ?? '')
+            .join(' ')
+            .trim();
+        };
+        recognition.onerror = () => {
+          finalTranscript = '';
+        };
+        recognition.onend = () => {
+          if (recordingTimeoutRef.current) window.clearTimeout(recordingTimeoutRef.current);
+          stopMicrophoneTracks();
+          speechRecognitionRef.current = null;
+          finishSpeechTranscript(finalTranscript);
+        };
+        recognition.start();
+        recordingTimeoutRef.current = window.setTimeout(() => {
+          try { recognition.stop(); } catch { finishSpeechTranscript(finalTranscript); }
+        }, SHADOWING_RECORDING_TIMEOUT_MS);
+        return;
+      }
+
+      if (!('MediaRecorder' in window)) {
+        stopMicrophoneTracks();
+        const failure: ShadowingApiFailure = { ok: false, error: 'NO_AUDIO', message: SPEECH_RECOGNITION_FALLBACK_MESSAGE };
+        setApiFeedback(null);
+        setApiError(failure);
+        setRecordingStatus('error');
+        setRecordMessage(failure.message);
+        saveAttempt(failure);
+        return;
+      }
+
+      setRecordMessage(`Đang nghe... ${SPEECH_RECOGNITION_FALLBACK_MESSAGE}`);
       const preferredMimeType = getPreferredAudioMimeType();
       const recorder = preferredMimeType ? new MediaRecorder(stream, { mimeType: preferredMimeType }) : new MediaRecorder(stream);
       mediaRecorderRef.current = recorder;
@@ -527,37 +628,43 @@ export function ShadowingPage() {
         if (event.data.size > 0) chunksRef.current.push(event.data);
       };
       recorder.onstop = () => {
-        stream.getTracks().forEach((track) => track.stop());
+        stopMicrophoneTracks();
         const blob = new Blob(chunksRef.current, { type: recorder.mimeType || preferredMimeType || 'audio/webm' });
-        if (blob.size <= 0) {
-          const failure: ShadowingApiFailure = { ok: false, error: 'EMPTY_AUDIO', message: 'Poo chưa nghe được giọng của bạn. Hãy kiểm tra quyền micro rồi thử lại nhé.' };
-          setApiFeedback(null);
-          setApiError(failure);
-          setRecordingStatus('error');
-          setRecordMessage(failure.message);
-          saveAttempt(failure);
-          return;
-        }
-        void sendRecordingForFeedback(blob);
+        markSentenceCompleted(selectedSentence?.id);
+        const failure: ShadowingApiFailure = { ok: false, error: blob.size > 0 ? 'API_ERROR' : 'EMPTY_AUDIO', message: SPEECH_RECOGNITION_FALLBACK_MESSAGE };
+        setApiFeedback(null);
+        setApiError(failure);
+        setRecordingStatus('error');
+        setRecordMessage(failure.message);
+        saveAttempt(failure);
       };
       recorder.start(250);
-      setElapsedSeconds(0);
-      setApiFeedback(null);
-      setApiError(null);
-      setRecordingStatus('recording');
-      setRecordMessage('Poo đang nghe…');
+      recordingTimeoutRef.current = window.setTimeout(() => stopAndSendRecording(), SHADOWING_RECORDING_TIMEOUT_MS);
     } catch {
-      const failure: ShadowingApiFailure = { ok: false, error: 'NO_AUDIO', message: 'Poo chưa nghe được giọng của bạn. Hãy kiểm tra quyền micro rồi thử lại nhé.' };
+      const failure: ShadowingApiFailure = { ok: false, error: 'NO_AUDIO', message: MICROPHONE_PERMISSION_MESSAGE };
+      setApiFeedback(null);
       setApiError(failure);
       setRecordingStatus('error');
       setRecordMessage(failure.message);
+      stopMicrophoneTracks();
     }
   };
 
   const stopAndSendRecording = () => {
+    if (recordingTimeoutRef.current && typeof window !== 'undefined') {
+      window.clearTimeout(recordingTimeoutRef.current);
+      recordingTimeoutRef.current = null;
+    }
+    if (speechRecognitionRef.current) {
+      try { speechRecognitionRef.current.stop(); } catch { finishSpeechTranscript(''); }
+      return;
+    }
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       mediaRecorderRef.current.stop();
+      return;
     }
+    stopMicrophoneTracks();
+    setRecordingStatus('idle');
   };
 
   const handleRecordAction = () => {
@@ -734,165 +841,102 @@ export function ShadowingPage() {
           </Flex>
         </Flex>
 
-        <SimpleGrid columns={{ base: 1, lg: 12 }} gap={{ base: '3', md: '5' }} minW="0" alignItems="start">
-          <VStack align="stretch" gap={{ base: '3', md: '5' }} minW="0" gridColumn={{ lg: 'span 8' }}>
-            <Box data-testid="shadowing-practice-card" className="shadowing-practice-card penglish-glass-card" p={{ base: '3', md: '5' }} borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" minW="0" willChange="transform, opacity" backdropFilter="blur(14px) saturate(1.1)">
-              <HStack justify="space-between" align="start" gap="3" wrap="wrap" mb={{ base: '2', md: '4' }}>
-                <Box minW="0">
+        <Flex direction={{ base: 'column', lg: 'row' }} gap={{ base: '3', md: '5' }} minW="0" align="start">
+          <VStack align="stretch" gap={{ base: '3', md: '4' }} minW="0" flex="1">
+            <Box data-testid="shadowing-practice-card" className="shadowing-practice-card penglish-glass-card" p={{ base: '3', md: '4' }} borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" minW="0" willChange="transform, opacity" backdropFilter="blur(14px) saturate(1.1)">
+              <HStack justify="space-between" align="start" gap="3" wrap="wrap" mb="3">
+                <Box minW="0" flex="1">
                   <Text fontSize="sm" color={COLORS.muted} fontWeight="700">Bài đang luyện</Text>
-                  <Text mt="1" fontSize={{ base: 'lg', md: '2xl' }} color={COLORS.text} fontWeight="700" lineHeight="1.2" noOfLines={{ base: 2, md: undefined }}>{selectedVideo?.title}</Text>
-                  <Text mt="1" color={COLORS.muted} fontSize="sm" fontWeight="700" noOfLines={{ base: 1, md: undefined }}>{selectedVideo?.level} · {selectedVideo?.duration} · {selectedVideo?.topic}</Text>
-                  {selectedVideo?.referenceVideoTitle ? <Text mt="1" color={COLORS.deepBlue} fontSize="sm" fontWeight="700">Video tham khảo: {selectedVideo.referenceVideoTitle}</Text> : null}
+                  <Text mt="1" fontSize={{ base: 'lg', md: '2xl' }} color={COLORS.text} fontWeight="800" lineHeight="1.18" noOfLines={{ base: 2, md: 1 }}>{selectedVideo?.title}</Text>
+                  <Text mt="1" color={COLORS.muted} fontSize="sm" fontWeight="700" noOfLines={1}>{selectedVideo?.level} · {selectedVideo?.duration} · {selectedVideo?.topic}</Text>
                 </Box>
-                <Box display={{ base: 'none', sm: 'block' }}><Chip tone={hasSelectedVideoUrl ? 'green' : 'blue'}>{hasSelectedYouTubeVideo ? 'Video tham khảo' : hasSelectedVideoUrl ? 'Có link tham khảo' : 'Luyện bằng lời thoại'}</Chip></Box>
+                <HStack gap="2" wrap="wrap" justify="end">
+                  <Chip tone={speechSupported ? 'green' : 'amber'}>{speechSupported ? `Giọng mẫu ${speed}x` : 'Chưa có giọng đọc'}</Chip>
+                  <Chip tone={speechRecognitionSupported ? 'green' : 'amber'}>{speechRecognitionSupported ? 'Chrome chấm nói' : 'Ghi âm dự phòng'}</Chip>
+                </HStack>
               </HStack>
 
-              <Box data-testid="shadowing-video-reference-details" as="details" display={{ base: hasSelectedVideoUrl ? 'block' : 'none', md: 'none' }} mb="3" border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" bg="rgba(248,252,255,0.72)" overflow="hidden">
-                <Box as="summary" cursor="pointer" px="4" py="3" fontWeight="700" color={COLORS.deepBlue}>Video tham khảo</Box>
-                <Box px="4" pb="4">
-                  {(youtubeFallbackVisible || shouldShowReferenceFallback) ? (
-                    <Flex data-testid="shadowing-video-fallback-mobile" borderRadius="18px" maxH="200px" bg="linear-gradient(135deg, #E8F4FF 0%, #F8FCFF 100%)" color={COLORS.text} align="center" justify="center" textAlign="center" p="4" direction="column" gap="2" border="1px solid" borderColor="#BAE6FD" overflow="hidden">
-                      <Text fontSize="sm" fontWeight="700" lineHeight="1.45">{YOUTUBE_FALLBACK_MESSAGE}</Text>
-                      <Text fontSize="xs" color={COLORS.muted} fontWeight="700">{selectedVideo?.title} · {selectedVideo?.topic} · {selectedVideo?.level}</Text>
-                      {selectedYouTubeWatchUrl ? <Button size="sm" as="a" href={selectedYouTubeWatchUrl} target="_blank" rel="noopener noreferrer" leftIcon={<Icon as={Video} />} borderRadius="full" bg={COLORS.deepBlue} color="white" _hover={{ bg: COLORS.oceanBlue }}>Mở trên YouTube</Button> : null}
-                    </Flex>
-                  ) : hasSelectedYouTubeVideo ? (
-                    <Button as="a" href={selectedYouTubeWatchUrl} target="_blank" rel="noopener noreferrer" leftIcon={<Icon as={Video} />} borderRadius="full" w="100%" colorScheme="blue">Mở trên YouTube</Button>
-                  ) : <Text fontSize="sm" color={COLORS.muted}>Bài này luyện chính bằng lời thoại.</Text>}
-                </Box>
-              </Box>
-
-              <Box display={{ base: 'none', md: 'block' }}>
-              {hasSelectedYouTubeVideo && !youtubeFallbackVisible ? (
-                <Box as="iframe" title={selectedVideo?.referenceVideoTitle ?? selectedVideo?.title ?? 'Video tham khảo cho bài nói đuổi'} src={selectedYouTubeEmbedUrl} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen w="100%" h={{ md: '220px', lg: '240px' }} maxH="240px" border="0" borderRadius="22px" bg="#E8F4FF" onError={() => { setYoutubeFallbackVisible(true); setMediaMessage(YOUTUBE_FALLBACK_MESSAGE); }} onLoad={() => setMediaMessage('Video tham khảo; lời thoại bên dưới vẫn là phần luyện chính.')} />
-              ) : (youtubeFallbackVisible || shouldShowReferenceFallback) ? (
-                <Flex data-testid="shadowing-video-fallback" borderRadius="22px" h={{ md: '200px', lg: '220px' }} maxH="240px" bg="linear-gradient(135deg, #E8F4FF 0%, #F8FCFF 100%)" color={COLORS.text} align="center" justify="center" textAlign="center" p={{ base: '4', md: '5' }} direction="column" gap="3" border="1px solid" borderColor="#BAE6FD" overflow="hidden">
-                  <OceanMascot mascot="suaNghe" pose="listen" size="sm" decorative motion="pulse" />
-                  <Text maxW="640px" fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" lineHeight="1.5">{YOUTUBE_FALLBACK_MESSAGE}</Text>
-                  <Text fontSize="sm" color={COLORS.muted} fontWeight="700">{selectedVideo?.title} · {selectedVideo?.topic} · {selectedVideo?.level}</Text>
-                  {selectedYouTubeWatchUrl ? <Button as="a" href={selectedYouTubeWatchUrl} target="_blank" rel="noopener noreferrer" leftIcon={<Icon as={Video} />} borderRadius="full" bg={COLORS.deepBlue} color="white" _hover={{ bg: COLORS.oceanBlue }}>Mở trên YouTube</Button> : null}
-                </Flex>
-              ) : hasSelectedVideoUrl ? (
-                <video
-                  ref={videoRef}
-                  src={selectedVideo?.videoUrl}
-                  controls
-                  onLoadedData={() => setMediaMessage('')}
-                  onError={() => setMediaMessage('Video không tải được. Chuyển sang luyện bằng lời thoại và nói thử cùng Poo để không gián đoạn bài học.')}
-                  style={{ width: '100%', borderRadius: 22, background: '#102A43', display: 'block' }}
-                />
-              ) : (
-                <Flex borderRadius="22px" minH={{ base: '138px', md: '168px' }} bg="linear-gradient(135deg, #E8F4FF 0%, #F8FCFF 100%)" color={COLORS.text} align="center" justify="center" textAlign="center" p={{ base: '5', md: '6' }} direction="column" gap="3" border="1px solid" borderColor="#BAE6FD">
-                  <OceanMascot mascot="suaNghe" pose="wave" size="md" decorative motion="pulse" />
-                  <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="700">Luyện bằng lời thoại</Text>
-                  <Text maxW="620px" color={COLORS.muted} fontWeight="700" lineHeight="1.7">Bài này luyện chính bằng lời thoại. Nút nghe sẽ dùng giọng đọc mẫu khi trình duyệt hỗ trợ; nếu không, bạn vẫn đọc theo lời thoại để Poo góp ý nhẹ.</Text>
-                </Flex>
-              )}
-              </Box>
-
-              <Box data-testid="shadowing-current-sentence" mt={{ base: '2', md: '4' }} p={{ base: '3', md: '5' }} borderRadius="3xl" bg="linear-gradient(135deg, rgba(221,245,255,0.76), rgba(248,252,255,0.84))" border="1px solid" borderColor="#BAE6FD" minW="0" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 112px)">
-                <HStack justify="space-between" align="start" gap="2" wrap="wrap">
-                  <Box>
-                    <Text fontSize="sm" color={COLORS.deepBlue} fontWeight="700">Câu hiện tại</Text>
-                    <Text data-testid="shadowing-current-line-count" mt="1" fontSize="xs" color={COLORS.muted} fontWeight="700">Câu {selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}</Text>
+              <Box data-testid="shadowing-current-sentence" p={{ base: '3', md: '4' }} borderRadius="3xl" bg="linear-gradient(135deg, rgba(221,245,255,0.82), rgba(248,252,255,0.92))" border="1px solid" borderColor="#BAE6FD" minW="0" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 112px)">
+                <HStack justify="space-between" align="start" gap="3" wrap="wrap">
+                  <Box minW="0">
+                    <Text fontSize="sm" color={COLORS.deepBlue} fontWeight="900">Câu đang luyện</Text>
+                    <Text data-testid="shadowing-current-line-count" mt="1" fontSize="xs" color={COLORS.muted} fontWeight="800">Câu {selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}</Text>
                   </Box>
                   <HStack gap="2" wrap="wrap">
                     {selectedSentence && isPracticed(selectedSentence.id) ? <Chip tone="green">Đã luyện</Chip> : null}
                     {selectedSentence && isDifficult(selectedSentence.id) ? <Chip tone="amber">Câu còn vấp</Chip> : null}
-                    <Chip tone={speechSupported ? 'green' : 'amber'}>{speechSupported ? `Tốc độ nghe ${speed}x` : 'Chưa có giọng đọc mẫu'}</Chip>
                   </HStack>
                 </HStack>
-                <SimpleGrid data-testid="shadowing-progress" ref={completionRef} mt="3" columns={{ base: 3, md: 3 }} gap="2" role="status" aria-live="polite">
-                  <Box p="3" borderRadius="2xl" bg="white" border="1px solid" borderColor="#BAE6FD">
-                    <Text fontSize="xs" color={COLORS.muted} fontWeight="700">Câu</Text>
-                    <Text fontSize={{ base: 'lg', md: '2xl' }} color={COLORS.text} fontWeight="700">{selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}</Text>
-                  </Box>
-                  <Box p="3" borderRadius="2xl" bg="#F0FDF4" border="1px solid" borderColor="#BBF7D0">
-                    <Text fontSize="xs" color="#166534" fontWeight="700">Đã luyện</Text>
-                    <Text data-testid="shadowing-practiced-count" fontSize={{ base: 'lg', md: '2xl' }} color="#166534" fontWeight="700">{completedCount}/{transcriptLength}</Text>
-                  </Box>
-                  <Box p="3" borderRadius="2xl" bg="#FFFBEB" border="1px solid" borderColor="#FDE68A">
-                    <Text fontSize="xs" color="#92400E" fontWeight="700">Câu còn vấp</Text>
-                    <Text data-testid="shadowing-difficult-count" fontSize={{ base: 'lg', md: '2xl' }} color="#92400E" fontWeight="700">{difficultCount}</Text>
-                  </Box>
-                </SimpleGrid>
-                <Text mt="3" fontSize={{ base: 'lg', md: '3xl' }} color={COLORS.text} fontWeight="700" lineHeight="1.22">{selectedSentence?.text ?? 'Chọn một câu trong lời thoại để bắt đầu.'}</Text>
-                {selectedSentence?.vi ? <Text mt="1" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="600" lineHeight="1.45">{selectedSentence.vi}</Text> : null}
-                {selectedSentence?.focusNotes?.length ? <Text mt="2" color={COLORS.deepBlue} fontSize="sm" fontWeight="700" lineHeight="1.45" noOfLines={{ base: 2, md: undefined }}>Poo nhắc: {selectedSentence.focusNotes.slice(0, 2).join(' · ')}</Text> : null}
+
+                <Text mt="3" fontSize={{ base: 'xl', md: '3xl' }} color={COLORS.text} fontWeight="900" lineHeight="1.18">{selectedSentence?.text ?? 'Chọn một câu trong lời thoại để bắt đầu.'}</Text>
+                {selectedSentence?.vi ? <Text mt="1.5" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" lineHeight="1.45">{selectedSentence.vi}</Text> : null}
+                {selectedSentence?.focusNotes?.length ? <Text mt="2" color={COLORS.deepBlue} fontSize="sm" fontWeight="800" lineHeight="1.4" noOfLines={{ base: 2, md: undefined }}>Poo nhắc: {selectedSentence.focusNotes.slice(0, 2).join(' · ')}</Text> : null}
+
                 <HStack mt="3" gap="2" wrap="wrap">
-                  <Button data-testid="shadowing-previous-button" size={{ base: 'sm', md: 'md' }} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToPreviousSentence} isDisabled={selectedSentenceIndex <= 0 || isProcessingRecording}>Câu trước</Button>
-                  <Button data-testid="shadowing-next-button" size={{ base: 'sm', md: 'md' }} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1 || isProcessingRecording}>Câu tiếp</Button>
-                  <Button data-testid="shadowing-mark-practiced-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Icon as={CheckCircle2} />} borderRadius="full" bg={selectedSentence && isPracticed(selectedSentence.id) ? COLORS.green : 'white'} color={selectedSentence && isPracticed(selectedSentence.id) ? 'white' : COLORS.deepBlue} border="1px solid" borderColor={selectedSentence && isPracticed(selectedSentence.id) ? COLORS.green : '#BAE6FD'} _hover={{ bg: selectedSentence && isPracticed(selectedSentence.id) ? '#16A34A' : COLORS.softBlue }} onClick={() => markPracticed(selectedSentence?.id)} isDisabled={!selectedSentence || isProcessingRecording}>Đánh dấu đã luyện</Button>
-                  <Button data-testid="shadowing-toggle-difficult-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Icon as={AlertCircle} />} borderRadius="full" bg={selectedSentence && isDifficult(selectedSentence.id) ? '#F59E0B' : 'white'} color={selectedSentence && isDifficult(selectedSentence.id) ? 'white' : '#92400E'} border="1px solid" borderColor={selectedSentence && isDifficult(selectedSentence.id) ? '#F59E0B' : '#FDE68A'} _hover={{ bg: selectedSentence && isDifficult(selectedSentence.id) ? '#D97706' : '#FFFBEB' }} onClick={() => toggleDifficult(selectedSentence?.id)} isDisabled={!selectedSentence || isProcessingRecording}>Đánh dấu câu khó</Button>
+                  {[0.75, 1, 1.25].map((value) => (
+                    <Button key={value} size="sm" borderRadius="full" colorScheme={speed === value ? 'blue' : 'gray'} aria-pressed={speed === value} onClick={() => setSpeed(value)} isDisabled={isProcessingRecording}>{value}x</Button>
+                  ))}
+                  <Button data-testid="shadowing-listen-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Icon as={Headphones} />} borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD" _hover={{ bg: COLORS.softBlue }} onClick={listenSentence} isDisabled={isProcessingRecording}>Nghe mẫu</Button>
+                  <Button data-testid="shadowing-record-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Icon as={isRecording ? Pause : Mic} />} borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} aria-label={isRecording ? 'Dừng ghi âm' : 'Nói theo Poo'} aria-pressed={isRecording} onClick={handleRecordAction} isDisabled={isProcessingRecording} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý cho bạn...'}>
+                    {isRecording ? 'Dừng ghi âm' : 'Nói theo Poo'}
+                  </Button>
+                  <Button data-testid="shadowing-next-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Icon as={SkipForward} />} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1 || isProcessingRecording}>Câu tiếp theo</Button>
                 </HStack>
+
+                <Box mt="3" position="relative" p="3" borderRadius="2xl" bg={isRecording ? '#FEF2F2' : isProcessingRecording ? 'rgba(232,244,255,0.9)' : 'rgba(255,255,255,0.74)'} border="1px solid" borderColor={isRecording ? '#FECACA' : '#BAE6FD'} overflow="hidden">
+                  <Box ref={recordPulseRef} position="absolute" inset="10px" borderRadius="3xl" bg="rgba(239,68,68,0.18)" pointerEvents="none" />
+                  <HStack position="relative" justify="space-between" gap="3" wrap="wrap">
+                    <HStack gap="3" minW="0">
+                      <Flex w="40px" h="40px" borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.softAqua} color={isRecording ? 'white' : COLORS.deepBlue} align="center" justify="center" flexShrink={0}>
+                        <Icon as={isProcessingRecording ? Loader2 : isRecording ? Pause : Mic} className={isProcessingRecording ? 'shadowing-spin' : undefined} />
+                      </Flex>
+                      <Box minW="0">
+                        <Text fontWeight="800" color={COLORS.text}>{isRecording ? 'Đang nghe...' : isProcessingRecording ? processingMessage : apiFeedback ? 'Đã có góp ý' : apiError ? 'Poo nghe chưa rõ' : 'Sẵn sàng nói thử'}</Text>
+                        <Text fontSize="sm" color={COLORS.muted} fontWeight="700" noOfLines={{ base: 3, md: 2 }}>{isRecording ? `Tự dừng sau ${formatTimer(Math.max(0, Math.ceil(SHADOWING_RECORDING_TIMEOUT_MS / 1000) - elapsedSeconds))}` : recordMessage}</Text>
+                      </Box>
+                    </HStack>
+                    {isRecording ? <Text fontSize="lg" fontWeight="900" color="#991B1B">{formatTimer(elapsedSeconds)}</Text> : null}
+                  </HStack>
+                </Box>
+
+                {mediaMessage ? <Text mt="2" fontSize="sm" color={COLORS.deepBlue} fontWeight="800" role="status" aria-live="polite">{mediaMessage}</Text> : null}
               </Box>
 
-              <SimpleGrid mt={{ base: '2', md: '4' }} columns={{ base: 1, md: 2 }} gap={{ base: '2', md: '4' }}>
-                <Box p={{ base: '3', md: '4' }} borderRadius="2xl" bg="rgba(248,252,255,0.78)" border="1px solid" borderColor="#BAE6FD" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 112px)">
-                  <Text fontWeight="700" color={COLORS.text}>1. Nghe trước một lần</Text>
-                  <Text mt="1" fontSize="sm" color={COLORS.muted} fontWeight="700" noOfLines={{ base: 1, md: undefined }}>Chọn tốc độ chậm nếu cần, nghe câu mẫu rồi nhẩm theo từng cụm.</Text>
-                  <HStack mt="2" gap="2" wrap="wrap">
-                    {[0.75, 1, 1.25].map((value) => (
-                      <Button key={value} size="sm" borderRadius="full" colorScheme={speed === value ? 'blue' : 'gray'} aria-pressed={speed === value} onClick={() => setSpeed(value)} isDisabled={isProcessingRecording}>{value}x</Button>
-                    ))}
-                  </HStack>
-                  <HStack mt="2" gap="2" wrap="wrap" align="center">
-                    <Button data-testid="shadowing-listen-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Icon as={Headphones} />} borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD" _hover={{ bg: COLORS.softBlue }} onClick={listenSentence} isDisabled={isProcessingRecording}>Nghe mẫu</Button>
-                    <Button data-testid="shadowing-repeat-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Icon as={RotateCcw} />} borderRadius="full" bg={COLORS.oceanBlue} color="white" _hover={{ bg: COLORS.deepBlue }} onClick={replaySentence} isDisabled={isProcessingRecording}>Nghe lại</Button>
-                  </HStack>
-                  {mediaMessage ? <Text mt="3" fontSize="sm" color={COLORS.deepBlue} fontWeight="700" role="status" aria-live="polite">{mediaMessage}</Text> : null}
-                </Box>
-
-                <Box data-testid="shadowing-recording-card" p={{ base: '3', md: '4' }} borderRadius="2xl" bg="rgba(248,252,255,0.78)" border="1px solid" borderColor="#BAE6FD" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 112px)">
-                  <HStack mb="3" justify="space-between" align="start" gap="3" wrap="wrap">
-                    <Box>
-                      <Text fontWeight="700" color={COLORS.text}>2. Nói lại theo nhịp</Text>
-                      <Text mt="1" fontSize="sm" color={COLORS.muted} noOfLines={{ base: 2, md: undefined }}>Không cần nói hoàn hảo. Nói thử theo nhịp, rồi để Poo chỉ nhẹ chỗ mình luyện thêm.</Text>
-                    </Box>
-                    <Chip tone="amber">3. Góp ý</Chip>
-                  </HStack>
-                  <Box position="relative" p={{ base: '3', md: '4' }} borderRadius="2xl" bg={isRecording ? '#FEF2F2' : isProcessingRecording ? 'rgba(232,244,255,0.9)' : 'white'} border="1px solid" borderColor={isRecording ? '#FECACA' : '#BAE6FD'} overflow="hidden">
-                    <Box ref={recordPulseRef} position="absolute" inset="10px" borderRadius="3xl" bg="rgba(239,68,68,0.18)" pointerEvents="none" />
-                    <HStack position="relative" justify="space-between" gap="3" wrap="wrap">
-                      <HStack gap="3">
-                        <Flex w="44px" h="44px" borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.softAqua} color={isRecording ? 'white' : COLORS.deepBlue} align="center" justify="center">
-                          <Icon as={isProcessingRecording ? Loader2 : isRecording ? Pause : Mic} className={isProcessingRecording ? 'shadowing-spin' : undefined} />
-                        </Flex>
-                        <Box>
-                          <Text fontWeight="700" color={COLORS.text}>{isRecording ? 'Poo đang nghe…' : isProcessingRecording ? processingMessage : apiFeedback ? 'Đã có góp ý' : 'Sẵn sàng nói thử'}</Text>
-                          <Text fontSize="sm" color={COLORS.muted}>{isRecording ? `Thời gian: ${formatTimer(elapsedSeconds)}` : recordMessage}</Text>
-                        </Box>
-                      </HStack>
-                      {isRecording ? <Text fontSize="xl" fontWeight="700" color="#991B1B">{formatTimer(elapsedSeconds)}</Text> : null}
-                    </HStack>
+              {hasSelectedVideoUrl ? (
+                <Box data-testid="shadowing-video-reference-details" as="details" mt="3" border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" bg="rgba(248,252,255,0.72)" overflow="hidden">
+                  <Box as="summary" cursor="pointer" px="4" py="3" fontWeight="800" color={COLORS.deepBlue}>Video tham khảo nếu cần</Box>
+                  <Box px="4" pb="4">
+                    {hasSelectedYouTubeVideo && !youtubeFallbackVisible ? (
+                      <Box as="iframe" title={selectedVideo?.referenceVideoTitle ?? selectedVideo?.title ?? 'Video tham khảo cho bài nói đuổi'} src={selectedYouTubeEmbedUrl} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen w="100%" h={{ base: '180px', md: '220px' }} maxH="220px" border="0" borderRadius="22px" bg="#E8F4FF" onError={() => { setYoutubeFallbackVisible(true); setMediaMessage(YOUTUBE_FALLBACK_MESSAGE); }} onLoad={() => setMediaMessage('Video tham khảo; lời thoại bên dưới vẫn là phần luyện chính.')} />
+                    ) : (youtubeFallbackVisible || shouldShowReferenceFallback) ? (
+                      <Flex data-testid="shadowing-video-fallback" borderRadius="22px" minH="140px" bg="linear-gradient(135deg, #E8F4FF 0%, #F8FCFF 100%)" color={COLORS.text} align="center" justify="center" textAlign="center" p="4" direction="column" gap="2" border="1px solid" borderColor="#BAE6FD" overflow="hidden">
+                        <Text maxW="640px" fontSize="sm" fontWeight="800" lineHeight="1.5">{YOUTUBE_FALLBACK_MESSAGE}</Text>
+                        {selectedYouTubeWatchUrl ? <Button size="sm" as="a" href={selectedYouTubeWatchUrl} target="_blank" rel="noopener noreferrer" leftIcon={<Icon as={Video} />} borderRadius="full" bg={COLORS.deepBlue} color="white" _hover={{ bg: COLORS.oceanBlue }}>Mở trên YouTube</Button> : null}
+                      </Flex>
+                    ) : (
+                      <video ref={videoRef} src={selectedVideo?.videoUrl} controls onLoadedData={() => setMediaMessage('')} onError={() => setMediaMessage('Video không tải được. Chuyển sang luyện bằng lời thoại và nói thử cùng Poo để không gián đoạn bài học.')} style={{ width: '100%', borderRadius: 22, background: '#102A43', display: 'block' }} />
+                    )}
                   </Box>
-                  <HStack mt="3" gap="2" wrap="wrap">
-                    <Button data-testid="shadowing-record-button" leftIcon={<Icon as={isRecording ? Pause : Mic} />} borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} aria-label={isRecording ? 'Dừng lượt nói và gửi Poo góp ý' : 'Nói theo Poo'} aria-pressed={isRecording} onClick={handleRecordAction} isDisabled={isProcessingRecording} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý cho bạn...'}>
-                      {isRecording ? 'Dừng lượt nói' : 'Nói theo Poo'}
-                    </Button>
-                    <Button leftIcon={<Icon as={SkipForward} />} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1 || isProcessingRecording}>Câu tiếp theo</Button>
-                  </HStack>
-                  <Text mt="3" fontSize="sm" color={COLORS.muted} role="status" aria-live="polite" display={{ base: isProcessingRecording ? 'block' : 'none', md: 'block' }}>{isProcessingRecording ? processingMessage : 'Poo sẽ chỉ ra từ bị thiếu, gợi ý phát âm, nhịp nói và khi nào nên thử lại.'}</Text>
                 </Box>
-              </SimpleGrid>
+              ) : null}
             </Box>
 
             {(apiFeedback || apiError || isProcessingRecording) ? feedbackPanel : null}
 
-            <SimpleGrid columns={{ base: 1, md: 2 }} gap="3" display={{ base: 'none', md: 'grid' }}>
+            <SimpleGrid data-testid="shadowing-progress" ref={completionRef} columns={{ base: 1, md: 2 }} gap="3">
               <Box className="shadowing-custom-card" p="4" borderRadius="2xl" bg={allSentencesCompleted ? '#F0FDF4' : 'rgba(232,244,255,0.88)'} border="1px solid" borderColor={allSentencesCompleted ? '#BBF7D0' : '#BAE6FD'} role="status" aria-live="polite">
-                <HStack><Icon as={allSentencesCompleted ? CheckCircle2 : Sparkles} color={allSentencesCompleted ? COLORS.green : COLORS.oceanBlue} /><Text fontWeight="700" color={COLORS.text}>{allSentencesCompleted ? 'Hoàn thành lượt nói đuổi' : 'Nhịp luyện hôm nay'}</Text></HStack>
-                <Text mt="2" color={COLORS.muted} fontSize="sm">Câu {selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}. Đã luyện {completedCount}/{transcriptLength}. Câu còn vấp {difficultCount}. Poo giữ lại nhịp luyện theo từng bài.</Text>
+                <HStack><Icon as={allSentencesCompleted ? CheckCircle2 : Sparkles} color={allSentencesCompleted ? COLORS.green : COLORS.oceanBlue} /><Text fontWeight="800" color={COLORS.text}>{allSentencesCompleted ? 'Hoàn thành lượt nói đuổi' : 'Nhịp luyện hôm nay'}</Text></HStack>
+                <Text mt="2" color={COLORS.muted} fontSize="sm" fontWeight="700">Câu {selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}. Đã luyện {completedCount}/{transcriptLength}. Câu còn vấp {difficultCount}. Poo giữ lại nhịp luyện theo từng bài.</Text>
               </Box>
               <Box className="shadowing-weak-card" p="4" borderRadius="2xl" bg="#FFFBEB" border="1px solid" borderColor="#FDE68A">
-                <Text fontWeight="700" color={COLORS.text}>Câu nên luyện tiếp</Text>
-                <Text mt="2" color={COLORS.muted} fontSize="sm">{weakSentence?.text ?? 'Chọn một câu để bắt đầu.'}</Text>
-                <Text mt="2" color={COLORS.muted} fontSize="xs" fontWeight="700">Gợi ý: nghe trước một lần, nói lại theo nhịp, rồi xem Poo góp ý chỗ chưa rõ, phát âm và nhịp nói.</Text>
+                <Text fontWeight="800" color={COLORS.text}>Câu nên luyện tiếp</Text>
+                <Text mt="2" color={COLORS.muted} fontSize="sm" fontWeight="700">{weakSentence?.text ?? 'Chọn một câu để bắt đầu.'}</Text>
+                <Text mt="2" color={COLORS.muted} fontSize="xs" fontWeight="800">Gợi ý: nghe mẫu, nói theo Poo, rồi xem từ còn thiếu và nhấn âm.</Text>
               </Box>
             </SimpleGrid>
           </VStack>
 
-          <VStack align="stretch" gap={{ base: '3', md: '4' }} minW="0" gridColumn={{ lg: 'span 4' }} pb={{ base: '96px', lg: '0' }}>
+          <VStack align="stretch" gap={{ base: '3', md: '4' }} minW="0" w={{ base: '100%', lg: '340px' }} flexShrink={0} position={{ lg: 'sticky' }} top={{ lg: '96px' }} maxH={{ lg: 'calc(100vh - 120px)' }} overflowY={{ lg: 'auto' }} pb={{ base: '96px', lg: '2' }} pr={{ lg: '1' }}>
             <Box data-testid="shadowing-lesson-picker" as="details" open={typeof window !== 'undefined' ? window.innerWidth >= 1024 : true} className="shadowing-custom-card penglish-glass-card" p="4" borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 12px 30px rgba(16, 42, 67, 0.05)" backdropFilter="blur(14px) saturate(1.1)">
               <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}>Danh sách bài luyện</Box>
               <HStack justify="space-between" mb="3" align="start" gap="3">
@@ -979,7 +1023,7 @@ export function ShadowingPage() {
               </VStack>
             </Box>
           </VStack>
-        </SimpleGrid>
+        </Flex>
       </Box>
     </OceanPageShell>
   );

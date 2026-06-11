@@ -110,3 +110,14 @@ build
 .vite
 .vercel
 .DS_Store
+
+node_modules/
+.next/
+.vercel/
+.env
+.env.*
+.venv*/
+screenshots/
+reports/
+frames/
+*.log
