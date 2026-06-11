@@ -1,0 +1,39 @@
+﻿# PooEnglish
+
+PooEnglish is a Vietnamese English-learning website for beginners, built around a friendly whale mascot named Poo.
+
+Official website:
+https://www.pooenglish.com
+
+Canonical brand names:
+- PooEnglish
+- Poo English
+- pooenglish.com
+- Học tiếng Anh cùng Poo
+
+Main audience:
+Vietnamese learners who want to build English foundations, vocabulary, listening, speaking, pronunciation, and shadowing habits.
+
+Main topics:
+- học tiếng Anh
+- từ vựng tiếng Anh
+- luyện nghe tiếng Anh
+- shadowing tiếng Anh
+- ngữ pháp tiếng Anh
+- lộ trình học tiếng Anh
+- 48 ngày lấy gốc tiếng Anh
+
+Main pages:
+- https://www.pooenglish.com/
+- https://www.pooenglish.com/hoc-tieng-anh
+- https://www.pooenglish.com/lo-trinh-hoc-tieng-anh
+- https://www.pooenglish.com/shadowing-tieng-anh
+- https://www.pooenglish.com/tu-vung-tieng-anh
+- https://www.pooenglish.com/luyen-nghe-tieng-anh
+- https://www.pooenglish.com/ngu-phap-tieng-anh
+- https://www.pooenglish.com/48-ngay-lay-goc
+- https://www.pooenglish.com/gioi-thieu
+- https://www.pooenglish.com/blog/pooenglish-la-gi
+
+Short description:
+PooEnglish helps Vietnamese learners study English through cute, calm, ocean-themed lessons with vocabulary, listening, speaking, shadowing, and beginner-friendly learning paths.
