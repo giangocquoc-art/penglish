@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ChangeEvent, type SyntheticEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent, type SyntheticEvent } from 'react';
 import { Box, Button, Flex, FormControl, FormLabel, HStack, Icon, Input, SimpleGrid, Tag, TagLabel, Text, Textarea, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { CheckCircle2, FileVideo, Headphones, Keyboard, Mic, Play, Sparkles, Upload, Video, Waves } from 'lucide-react';
@@ -30,19 +30,24 @@ const PIXEL_ASSETS = {
   waveDivider: '/assets/shadowing-pixel/wave-divider.png',
 };
 
-const SAMPLE_TRANSCRIPT = `00:00:01.000 --> 00:00:04.000
-Welcome to my morning routine.
-
-00:00:04.500 --> 00:00:08.000
-I usually drink a glass of water first.
-
-00:00:08.500 --> 00:00:12.000
-Then I write down three small goals for the day.`;
+const SAMPLE_TRANSCRIPT = `Welcome to my morning routine.
+I drink a glass of water first.
+Then I write down three small goals.
+I open my window and take a deep breath.
+After that, I review five new English words.
+I practice one short sentence out loud.
+Finally, I start my day with a calm mind.`;
 
 const LinkedGlassPanel = GlassPanel as any;
 
 type SourceType = 'youtube' | 'upload' | 'manual';
 type LabMode = 'speak' | 'type';
+type TypingStats = {
+  correctWords: number;
+  wrongWords: number;
+  score: number;
+  encouragement: string;
+};
 
 type SourceCardProps = {
   active: boolean;
@@ -122,31 +127,60 @@ function buildLesson(sourceType: SourceType, title: string, sourceUrl: string, v
   };
 }
 
+function wordsFromText(text: string) {
+  return text.split(/\s+/).filter(Boolean);
+}
+
+function buildTypingStats(comparison: ComparedWord[], hintCount: number, replayCount: number): TypingStats {
+  const correctWords = comparison.filter((word) => word.status === 'correct').length;
+  const wrongWords = comparison.filter((word) => word.status !== 'correct').length;
+  const replayPenalty = Math.max(0, replayCount - 2);
+  const score = (correctWords * 10) - (wrongWords * 2) - (hintCount * 3) - replayPenalty;
+  const encouragement = score >= comparison.length * 8
+    ? 'Poo vỗ tay bong bóng! Câu này rất chắc rồi đó.'
+    : correctWords >= Math.max(1, Math.ceil(comparison.length / 2))
+      ? 'Poo thấy bạn nghe được nhiều chữ rồi. Thêm một lượt nữa là mượt hơn.'
+      : 'Không sao nha, Poo bơi cùng bạn. Nghe chậm lại rồi thử câu tiếp theo.';
+  return { correctWords, wrongWords, score, encouragement };
+}
+
 export function VideoLabPage() {
   const [sourceType, setSourceType] = useState<SourceType>('youtube');
   const [title, setTitle] = useState('Video Lab cùng Poo');
   const [youtubeUrl, setYoutubeUrl] = useState('');
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState('');
   const [uploadedVideoName, setUploadedVideoName] = useState('');
-  const [transcript, setTranscript] = useState(SAMPLE_TRANSCRIPT);
+  const [transcript, setTranscript] = useState('');
+  const [transcriptError, setTranscriptError] = useState('');
   const [lesson, setLesson] = useState<VideoLesson | null>(null);
   const [activeSegmentIndex, setActiveSegmentIndex] = useState(0);
   const [mode, setMode] = useState<LabMode>('speak');
   const [typedAnswer, setTypedAnswer] = useState('');
+  const [typedAnswersBySegment, setTypedAnswersBySegment] = useState<Record<string, string>>({});
+  const [checkedSegments, setCheckedSegments] = useState<Record<string, boolean>>({});
   const [showAnswer, setShowAnswer] = useState(false);
-  const [hintCount, setHintCount] = useState(0);
+  const [typingHintCounts, setTypingHintCounts] = useState<Record<string, number>>({});
+  const [typingReplayCounts, setTypingReplayCounts] = useState<Record<string, number>>({});
   const [speakMessage, setSpeakMessage] = useState('Chọn một câu, nghe đoạn mẫu nếu có thời gian, rồi Poo sẽ bật nút ghi âm.');
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const uploadedVideoUrlRef = useRef('');
   const recordButtonGuardRef = useRef(0);
+  const segmentListRef = useRef<HTMLDivElement | null>(null);
   const recorder = useAudioRecorder();
 
   const youtubeVideoId = useMemo(() => getYouTubeVideoIdFromUrl(youtubeUrl), [youtubeUrl]);
   const youtubeEmbedUrl = youtubeVideoId ? `https://www.youtube.com/embed/${youtubeVideoId}` : '';
   const activeSegment = lesson?.segments[activeSegmentIndex] ?? null;
+  const activeSegmentId = activeSegment?.id ?? '';
+  const typingChecked = activeSegmentId ? Boolean(checkedSegments[activeSegmentId]) : false;
+  const hintCount = activeSegmentId ? typingHintCounts[activeSegmentId] ?? 0 : 0;
+  const replayCount = activeSegmentId ? typingReplayCounts[activeSegmentId] ?? 0 : 0;
   const typedComparison = useMemo(() => activeSegment ? compareTypedAnswer(activeSegment.text, typedAnswer) : [], [activeSegment, typedAnswer]);
+  const typingStats = useMemo(() => buildTypingStats(typedComparison, hintCount, replayCount), [typedComparison, hintCount, replayCount]);
   const hintedText = useMemo(() => activeSegment?.text.split(/\s+/).slice(0, hintCount).join(' ') ?? '', [activeSegment?.text, hintCount]);
-  const canCreateLesson = transcript.trim().length > 0 && (sourceType !== 'youtube' || youtubeVideoId || youtubeUrl.trim().length === 0);
+  const hasTranscript = transcript.trim().length > 0;
+  const youtubeNeedsTranscript = sourceType === 'youtube' && Boolean(youtubeVideoId) && !hasTranscript;
+  const canCreateLesson = hasTranscript && (sourceType !== 'youtube' || Boolean(youtubeVideoId) || youtubeUrl.trim().length === 0);
 
   useEffect(() => {
     uploadedVideoUrlRef.current = uploadedVideoUrl;
@@ -160,13 +194,27 @@ export function VideoLabPage() {
 
   const createLesson = () => {
     const nextLesson = buildLesson(sourceType, title, youtubeUrl, uploadedVideoUrl, transcript);
-    if (!nextLesson.segments.length) return;
+    if (!nextLesson.segments.length) {
+      setTranscriptError('Poo chưa tách được câu nào. Bạn thử xuống dòng từng câu hoặc dán transcript rõ hơn nhé.');
+      setLesson(null);
+      return;
+    }
+    setTranscriptError('');
     setLesson(nextLesson);
     setActiveSegmentIndex(0);
     setTypedAnswer('');
+    setTypedAnswersBySegment({});
+    setCheckedSegments({});
     setShowAnswer(false);
-    setHintCount(0);
+    setTypingHintCounts({});
+    setTypingReplayCounts({});
     setSpeakMessage(sourceType === 'upload' ? 'Clip đã sẵn sàng ở bản mock. Full auto transcription sẽ bật ở bước sau.' : 'Poo đã tách câu luyện. YouTube chỉ được embed, transcript do bạn cung cấp.');
+    window.setTimeout(() => segmentListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+  };
+
+  const useSampleTranscript = () => {
+    setTranscript(SAMPLE_TRANSCRIPT);
+    setTranscriptError('');
   };
 
   const handleVideoUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -182,7 +230,10 @@ export function VideoLabPage() {
   const handleSubtitleUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-    void file.text().then((content) => setTranscript(content));
+    void file.text().then((content) => {
+      setTranscript(content);
+      setTranscriptError('');
+    });
   };
 
   const playActiveSegment = async () => {
@@ -202,10 +253,10 @@ export function VideoLabPage() {
   };
 
   const selectSegment = (index: number) => {
+    const nextSegmentItem = lesson?.segments[index];
     setActiveSegmentIndex(index);
-    setTypedAnswer('');
+    setTypedAnswer(nextSegmentItem ? typedAnswersBySegment[nextSegmentItem.id] ?? '' : '');
     setShowAnswer(false);
-    setHintCount(0);
     recorder.resetRecording();
     setSpeakMessage('Poo đã chọn câu mới. Nghe lại rồi luyện nói hoặc gõ theo câu.');
   };
@@ -215,9 +266,45 @@ export function VideoLabPage() {
     selectSegment(Math.min(activeSegmentIndex + 1, lesson.segments.length - 1));
   };
 
+  const updateTypedAnswer = (value: string) => {
+    setTypedAnswer(value);
+    if (!activeSegment) return;
+    setTypedAnswersBySegment((current) => ({ ...current, [activeSegment.id]: value }));
+    setCheckedSegments((current) => ({ ...current, [activeSegment.id]: false }));
+  };
+
+  const checkTypingAnswer = () => {
+    if (!activeSegment) return;
+    setCheckedSegments((current) => ({ ...current, [activeSegment.id]: true }));
+  };
+
+  const handleTypingKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key !== 'Enter' || event.shiftKey) return;
+    event.preventDefault();
+    if (typingChecked) {
+      if (lesson && activeSegmentIndex < lesson.segments.length - 1) nextSegment();
+      return;
+    }
+    checkTypingAnswer();
+  };
+
+  const listenForTyping = async () => {
+    if (!activeSegment) return;
+    setTypingReplayCounts((current) => ({ ...current, [activeSegment.id]: (current[activeSegment.id] ?? 0) + 1 }));
+    await playActiveSegment();
+  };
+
   const revealHint = () => {
     if (!activeSegment) return;
-    setHintCount((value) => Math.min(value + 1, activeSegment.text.split(/\s+/).length));
+    const targetWords = wordsFromText(activeSegment.text);
+    const typedWords = wordsFromText(typedAnswer);
+    const nextWord = targetWords[Math.min(typedWords.length, targetWords.length - 1)];
+    if (!nextWord || typedWords.length >= targetWords.length) return;
+    const nextAnswer = `${typedAnswer.trim() ? `${typedAnswer.trim()} ` : ''}${nextWord}`;
+    setTypedAnswer(nextAnswer);
+    setTypedAnswersBySegment((current) => ({ ...current, [activeSegment.id]: nextAnswer }));
+    setCheckedSegments((current) => ({ ...current, [activeSegment.id]: false }));
+    setTypingHintCounts((current) => ({ ...current, [activeSegment.id]: Math.min((current[activeSegment.id] ?? 0) + 1, targetWords.length) }));
   };
 
   const handleRecordButtonActivate = (event?: SyntheticEvent) => {
@@ -282,6 +369,12 @@ export function VideoLabPage() {
                     <FormLabel fontWeight="900" color={COLORS.text}>YouTube link</FormLabel>
                     <Input value={youtubeUrl} onChange={(event) => setYoutubeUrl(event.target.value)} placeholder="https://www.youtube.com/watch?v=..." bg="white" borderColor={COLORS.border} borderRadius="2xl" />
                     <Text mt="1" color={youtubeUrl && !youtubeVideoId ? '#B45309' : COLORS.muted} fontSize="xs" fontWeight="800">Poo chỉ embed video bằng iframe. Không tải video/audio YouTube.</Text>
+                    {youtubeNeedsTranscript ? (
+                      <HStack mt="2" align="start" gap="2" p="3" borderRadius="2xl" bg="#FFFBEB" border="1px solid" borderColor="#FDE68A">
+                        <Box as="img" src={PIXEL_ASSETS.pooNeutral} alt="Poo nhắc transcript" className="pooPixelIcon" w="30px" h="30px" flexShrink={0} />
+                        <Text color="#92400E" fontSize="sm" fontWeight="850" lineHeight="1.5">Poo đã mở được video rồi, nhưng cần thêm lời thoại để tách thành từng câu. Bạn hãy dán transcript hoặc upload file .srt/.vtt nhé.</Text>
+                      </HStack>
+                    ) : null}
                   </FormControl>
                 ) : null}
 
@@ -290,17 +383,25 @@ export function VideoLabPage() {
                     <FormLabel fontWeight="900" color={COLORS.text}>Upload clip .mp4/.mov/.webm</FormLabel>
                     <Input type="file" accept="video/mp4,video/quicktime,video/webm" onChange={handleVideoUpload} bg="white" borderColor={COLORS.border} borderRadius="2xl" p="2" />
                     <Text mt="1" color={COLORS.muted} fontSize="xs" fontWeight="800">{uploadedVideoName ? `Đã chọn: ${uploadedVideoName}` : 'Giai đoạn này xử lý tự động đang mock. Hãy dán transcript hoặc upload phụ đề.'}</Text>
+                    <HStack mt="2" align="start" gap="2" p="3" borderRadius="2xl" bg="rgba(232,244,255,0.8)" border="1px solid" borderColor={COLORS.border}>
+                      <Icon as={Upload} color={COLORS.deepBlue} />
+                      <Text color={COLORS.deepBlue} fontSize="sm" fontWeight="850" lineHeight="1.5">Bản hiện tại mới xem trước video. Tự tách thoại từ clip sẽ được bật ở bước AI tiếp theo.</Text>
+                    </HStack>
                   </FormControl>
                 ) : null}
 
                 <FormControl>
-                  <FormLabel fontWeight="900" color={COLORS.text}>Transcript hoặc phụ đề .srt/.vtt</FormLabel>
+                  <HStack justify="space-between" align="center" gap="2" wrap="wrap" mb="2">
+                    <FormLabel m="0" fontWeight="900" color={COLORS.text}>Transcript hoặc phụ đề .srt/.vtt</FormLabel>
+                    <Button size="sm" borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} leftIcon={<Icon as={Sparkles} />} onClick={useSampleTranscript}>Dùng transcript mẫu</Button>
+                  </HStack>
                   <Input type="file" accept=".srt,.vtt,text/vtt" onChange={handleSubtitleUpload} bg="white" borderColor={COLORS.border} borderRadius="2xl" p="2" mb="2" />
-                  <Textarea value={transcript} onChange={(event) => setTranscript(event.target.value)} minH="180px" bg="white" borderColor={COLORS.border} borderRadius="2xl" fontWeight="700" placeholder="Dán transcript hoặc nội dung SRT/VTT ở đây..." />
+                  <Textarea value={transcript} onChange={(event) => { setTranscript(event.target.value); setTranscriptError(''); }} minH="180px" bg="white" borderColor={transcriptError ? '#FECACA' : COLORS.border} borderRadius="2xl" fontWeight="700" placeholder="Dán transcript hoặc nội dung SRT/VTT ở đây..." />
+                  {transcriptError ? <Text mt="2" color="#B91C1C" fontSize="sm" fontWeight="850">{transcriptError}</Text> : null}
                 </FormControl>
 
                 <Button onClick={createLesson} isDisabled={!canCreateLesson} borderRadius="full" bg={COLORS.deepBlue} color="white" leftIcon={<Icon as={Sparkles} />} _hover={{ bg: COLORS.oceanBlue }} data-testid="video-lab-create-lesson">
-                  Tạo bài luyện từ video
+                  Tạo bài học
                 </Button>
               </VStack>
             </GlassPanel>
@@ -332,7 +433,8 @@ export function VideoLabPage() {
 
           {lesson ? (
             <VStack align="stretch" gap="3">
-              <GlassPanel data-testid="video-lab-segments" p={{ base: '3.5', md: '4' }} bg="rgba(255,255,255,0.76)" borderColor={COLORS.border} borderRadius="3xl">
+              <Box ref={segmentListRef}>
+                <GlassPanel data-testid="video-lab-segments" p={{ base: '3.5', md: '4' }} bg="rgba(255,255,255,0.76)" borderColor={COLORS.border} borderRadius="3xl">
                 <HStack justify="space-between" align="start" mb="3" gap="3">
                   <Box minW="0">
                     <Text fontWeight="950" color={COLORS.text}>Danh sách câu</Text>
@@ -356,7 +458,8 @@ export function VideoLabPage() {
                     );
                   })}
                 </VStack>
-              </GlassPanel>
+                </GlassPanel>
+              </Box>
 
               {activeSegment ? (
                 <GlassPanel data-testid="video-lab-lesson-mode" p={{ base: '3.5', md: '5' }} bg="rgba(255,255,255,0.78)" borderColor={COLORS.border} borderRadius="3xl" position="relative" overflow="hidden">
@@ -391,17 +494,39 @@ export function VideoLabPage() {
                       </VStack>
                     ) : (
                       <VStack align="stretch" gap="3">
-                        <Button alignSelf="start" borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} leftIcon={<Icon as={Headphones} />} onClick={() => void playActiveSegment()}>Nghe lại</Button>
-                        {hintedText ? <Text color={COLORS.deepBlue} fontWeight="900" fontSize="sm">Gợi ý: {hintedText}</Text> : null}
-                        <Textarea value={typedAnswer} onChange={(event) => setTypedAnswer(event.target.value)} placeholder="Gõ câu bạn vừa nghe..." bg="white" borderColor={COLORS.border} borderRadius="2xl" minH="100px" fontWeight="800" />
+                        <HStack gap="2" wrap="wrap" justify="space-between" align="center">
+                          <Button borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} leftIcon={<Icon as={Headphones} />} onClick={() => void listenForTyping()}>Nghe lại</Button>
+                          <Tag borderRadius="full" bg={replayCount > 2 ? '#FFFBEB' : COLORS.softBlue} color={replayCount > 2 ? '#92400E' : COLORS.deepBlue} border="1px solid" borderColor={replayCount > 2 ? '#FDE68A' : COLORS.border}>
+                            <TagLabel>Đã nghe: {replayCount} lần</TagLabel>
+                          </Tag>
+                        </HStack>
+                        {hintedText ? <Text color={COLORS.deepBlue} fontWeight="900" fontSize="sm">Gợi ý đã điền: {hintedText}</Text> : null}
+                        <Textarea value={typedAnswer} onChange={(event) => updateTypedAnswer(event.target.value)} onKeyDown={handleTypingKeyDown} placeholder="Gõ câu bạn vừa nghe... Nhấn Enter để kiểm tra, Enter lần nữa để qua câu." bg="white" borderColor={typingChecked ? '#BBF7D0' : COLORS.border} borderRadius="2xl" minH="112px" fontWeight="800" />
                         <Box p="3" borderRadius="2xl" bg="rgba(248,252,255,0.9)" border="1px solid" borderColor={COLORS.border}>
-                          <Text mb="2" color={COLORS.text} fontWeight="950">So sánh từng chữ</Text>
-                          {typedAnswer.trim() ? typedComparison.map((word) => <WordChip key={word.id} word={word} />) : <Text color={COLORS.muted} fontSize="sm" fontWeight="750">Poo sẽ tô xanh chữ đúng, coral chữ sai, vàng chữ thiếu.</Text>}
+                          <HStack mb="2" justify="space-between" gap="2" wrap="wrap">
+                            <Text color={COLORS.text} fontWeight="950">So sánh từng chữ</Text>
+                            <Text color={COLORS.muted} fontSize="xs" fontWeight="850">Enter: {typingChecked ? 'câu tiếp theo' : 'kiểm tra'}</Text>
+                          </HStack>
+                          {typingChecked ? typedComparison.map((word) => <WordChip key={word.id} word={word} />) : <Text color={COLORS.muted} fontSize="sm" fontWeight="750">Poo sẽ tô xanh chữ đúng, coral chữ sai, vàng chữ thiếu sau khi bạn kiểm tra.</Text>}
                         </Box>
+                        {typingChecked ? (
+                          <HStack align="start" gap="3" p="3" borderRadius="2xl" bg="#F0FDF4" border="1px solid" borderColor="#BBF7D0" wrap="wrap">
+                            <Box as="img" src={PIXEL_ASSETS.pooHappy} alt="Poo cổ vũ" className="pooPixelIcon" w="40px" h="40px" flexShrink={0} />
+                            <Box minW="0" flex="1">
+                              <Text fontWeight="950" color={COLORS.text}>Kết quả câu này</Text>
+                              <SimpleGrid columns={{ base: 1, sm: 3 }} gap="2" mt="2">
+                                <Box p="2.5" bg="white" border="1px solid" borderColor="#BBF7D0" borderRadius="xl"><Text fontSize="xs" color={COLORS.muted} fontWeight="850">Đúng</Text><Text color="#166534" fontWeight="950">{typingStats.correctWords} từ</Text></Box>
+                                <Box p="2.5" bg="white" border="1px solid" borderColor="#FECACA" borderRadius="xl"><Text fontSize="xs" color={COLORS.muted} fontWeight="850">Sai/thiếu</Text><Text color="#B91C1C" fontWeight="950">{typingStats.wrongWords} từ</Text></Box>
+                                <Box p="2.5" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="xl"><Text fontSize="xs" color={COLORS.muted} fontWeight="850">Điểm</Text><Text color={COLORS.deepBlue} fontWeight="950">{typingStats.score}</Text></Box>
+                              </SimpleGrid>
+                              <Text mt="2" color={COLORS.muted} fontSize="sm" fontWeight="800" lineHeight="1.5">{typingStats.encouragement}</Text>
+                            </Box>
+                          </HStack>
+                        ) : null}
                         <HStack gap="2" wrap="wrap">
-                          <Button borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} onClick={revealHint}>Gợi ý 1 chữ</Button>
+                          <Button borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} onClick={revealHint}>Gợi ý 1 chữ (-3)</Button>
                           <Button borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} onClick={() => setShowAnswer(true)}>Hiện đáp án</Button>
-                          <Button borderRadius="full" bg={COLORS.deepBlue} color="white" rightIcon={<Icon as={CheckCircle2} />} onClick={nextSegment} isDisabled={activeSegmentIndex >= lesson.segments.length - 1}>Câu tiếp theo</Button>
+                          <Button borderRadius="full" bg={typingChecked ? COLORS.deepBlue : COLORS.green} color="white" rightIcon={<Icon as={CheckCircle2} />} onClick={typingChecked ? nextSegment : checkTypingAnswer} isDisabled={typingChecked && activeSegmentIndex >= lesson.segments.length - 1}>{typingChecked ? 'Câu tiếp theo' : 'Kiểm tra đáp án'}</Button>
                         </HStack>
                       </VStack>
                     )}
