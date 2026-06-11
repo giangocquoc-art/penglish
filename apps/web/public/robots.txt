@@ -1,4 +1,23 @@
 ﻿User-agent: *
 Allow: /
+Disallow: /auth/callback
+Disallow: /login/callback
+Disallow: /admin
+Disallow: /admin/
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
 
 Sitemap: https://www.pooenglish.com/sitemap.xml
