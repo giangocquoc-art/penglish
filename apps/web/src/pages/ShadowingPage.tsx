@@ -3,7 +3,7 @@ import { saveShadowingAttempt } from '../lib/p-english/userDataAdapter';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { Box, Button, Flex, FormControl, FormLabel, HStack, Icon, Input, SimpleGrid, Tag, TagLabel, Text, Textarea, VStack } from '@chakra-ui/react';
-import { AlertCircle, CheckCircle2, Headphones, Loader2, Mic, Pause, PlusCircle, RotateCcw, SkipForward, Sparkles, Trash2, Upload, Video, Volume2, Waves } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Mic, PlusCircle, RotateCcw, Sparkles, Trash2, Upload, Video, Volume2, Waves } from 'lucide-react';
 import { OceanMascot } from '../components/p-english/OceanMascot';
 import { OceanPageShell } from '../components/p-english/OceanPageShell';
 import { useReducedMotion } from '../hooks/useReducedMotion';
@@ -37,6 +37,25 @@ const SHADOWING_RECORDING_TIMEOUT_MS = 7000;
 const MICROPHONE_PERMISSION_MESSAGE = 'Poo chưa được phép dùng micro. Hãy bật Microphone rồi thử lại nha.';
 const SPEECH_UNCLEAR_MESSAGE = 'Poo chưa nghe rõ câu này, thử nói chậm hơn một chút nha.';
 const SPEECH_RECOGNITION_FALLBACK_MESSAGE = 'Trình duyệt này chưa hỗ trợ nhận diện giọng nói. Ní thử Chrome để Poo chấm phát âm nha.';
+const SHADOWING_PIXEL_ASSET_BASE = '/assets/shadowing-pixel';
+const PIXEL_ASSETS = {
+  speakerSample: `${SHADOWING_PIXEL_ASSET_BASE}/speaker-sample.png`,
+  microNormal: `${SHADOWING_PIXEL_ASSET_BASE}/micro-normal.png`,
+  microListening: `${SHADOWING_PIXEL_ASSET_BASE}/micro-listening.png`,
+  microSuccess: `${SHADOWING_PIXEL_ASSET_BASE}/micro-success.png`,
+  microError: `${SHADOWING_PIXEL_ASSET_BASE}/micro-error.png`,
+  nextWave: `${SHADOWING_PIXEL_ASSET_BASE}/next-wave.png`,
+  pooNeutral: `${SHADOWING_PIXEL_ASSET_BASE}/poo-neutral.png`,
+  pooListening: `${SHADOWING_PIXEL_ASSET_BASE}/poo-listening.png`,
+  pooHappy: `${SHADOWING_PIXEL_ASSET_BASE}/poo-happy.png`,
+  pooConfused: `${SHADOWING_PIXEL_ASSET_BASE}/poo-confused.png`,
+  bubbleCorner: `${SHADOWING_PIXEL_ASSET_BASE}/bubble-corner.png`,
+  waveDivider: `${SHADOWING_PIXEL_ASSET_BASE}/wave-divider.png`,
+  badgePracticed: `${SHADOWING_PIXEL_ASSET_BASE}/badge-practiced.png`,
+  badgeHard: `${SHADOWING_PIXEL_ASSET_BASE}/badge-hard.png`,
+  badgeRetry: `${SHADOWING_PIXEL_ASSET_BASE}/badge-retry.png`,
+  badgeGreat: `${SHADOWING_PIXEL_ASSET_BASE}/badge-great.png`,
+};
 
 type RecordingStatus = 'idle' | 'recording' | 'transcribing' | 'analyzing' | 'result' | 'error';
 
@@ -321,6 +340,23 @@ export function ShadowingPage() {
   const isProcessingRecording = isTranscribing || isAnalyzing;
   const processingMessage = isTranscribing ? 'Poo đang nghe lại giọng của bạn...' : isAnalyzing ? 'Poo đang góp ý cho bạn...' : '';
   const pooMoodLabel = isRecording ? 'Poo đang nghe…' : isProcessingRecording ? processingMessage : apiFeedback ? 'Poo đã có góp ý cho lượt nói này' : apiError ? 'Poo cần bạn thử lại một chút' : 'Poo sẵn sàng nghe bạn nói';
+  const selectedSentencePracticed = selectedSentence ? isPracticed(selectedSentence.id) : false;
+  const selectedSentenceDifficult = selectedSentence ? isDifficult(selectedSentence.id) : false;
+  const isGoodSpeaking = Boolean(apiFeedback && apiFeedback.score >= 80);
+  const micPixelSrc = isRecording
+    ? PIXEL_ASSETS.microListening
+    : apiFeedback
+      ? PIXEL_ASSETS.microSuccess
+      : apiError || recordingStatus === 'error'
+        ? PIXEL_ASSETS.microError
+        : PIXEL_ASSETS.microNormal;
+  const feedbackMascotSrc = isRecording || isProcessingRecording
+    ? PIXEL_ASSETS.pooListening
+    : isGoodSpeaking
+      ? PIXEL_ASSETS.pooHappy
+      : apiError
+        ? PIXEL_ASSETS.pooConfused
+        : PIXEL_ASSETS.pooNeutral;
 
   useEffect(() => {
     setYoutubeFallbackVisible(false);
@@ -727,11 +763,12 @@ export function ShadowingPage() {
   };
 
   const feedbackPanel = (
-    <Box data-testid="shadowing-feedback-panel" className="shadowing-feedback-panel penglish-glass-card" p={{ base: '4', md: '5' }} borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" backdropFilter="blur(14px) saturate(1.1)">
+    <Box data-testid="shadowing-feedback-panel" className="shadowing-feedback-panel penglish-glass-card" p={{ base: '4', md: '5' }} borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" backdropFilter="blur(14px) saturate(1.1)" position="relative" overflow="hidden">
+      <Box as="img" className="pooPixelDecor" src={PIXEL_ASSETS.bubbleCorner} alt="" loading="lazy" position="absolute" right="-6px" top="-6px" w="76px" opacity="0.22" />
       <Flex mb="4" justify="space-between" align={{ base: 'start', md: 'center' }} gap="4" direction={{ base: 'column', md: 'row' }}>
         <HStack align="center" gap="3" minW="0">
-          <Box data-testid="poo-shadowing-coach" position="relative" w="78px" flexShrink={0} pointerEvents="none" aria-hidden="true" overflow="visible">
-            <OceanMascot mascot="poo" pose="coach" size="md" decorative motion="float" />
+          <Box data-testid="poo-shadowing-coach" position="relative" w="92px" flexShrink={0} pointerEvents="none" overflow="visible">
+            <Box as="img" className="pooPixelMascot" src={feedbackMascotSrc} alt="Poo góp ý phát âm" loading="lazy" w={{ base: '78px', md: '92px' }} h={{ base: '78px', md: '92px' }} />
           </Box>
           <Box minW="0">
             <Text as="h2" fontWeight="700" color={COLORS.text}>Poo góp ý cách nói</Text>
@@ -739,7 +776,13 @@ export function ShadowingPage() {
           </Box>
         </HStack>
         <VStack align={{ base: 'start', md: 'end' }} gap="2">
-          <Chip tone={apiFeedback ? 'green' : apiError ? 'amber' : 'blue'}>{apiFeedback ? 'Góp ý sẵn sàng' : apiError ? 'Cần thử lại' : 'Poo góp ý'}</Chip>
+          <HStack gap="2" wrap="wrap" justify={{ base: 'start', md: 'end' }}>
+            <Chip tone={apiFeedback ? 'green' : apiError ? 'amber' : 'blue'}>{apiFeedback ? 'Góp ý sẵn sàng' : apiError ? 'Cần thử lại' : 'Poo góp ý'}</Chip>
+            {isGoodSpeaking ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgeGreat} alt="Huy hiệu nói tốt" loading="lazy" w="42px" h="42px" /> : null}
+            {apiError ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgeRetry} alt="Huy hiệu thử lại" loading="lazy" w="42px" h="42px" /> : null}
+            {selectedSentenceDifficult ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgeHard} alt="Huy hiệu câu khó" loading="lazy" w="42px" h="42px" /> : null}
+            {selectedSentencePracticed ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgePracticed} alt="Huy hiệu đã luyện" loading="lazy" w="42px" h="42px" /> : null}
+          </HStack>
           <Text data-testid="shadowing-sync-status" fontSize="xs" color={shadowingSyncStatus === 'synced' ? '#166534' : shadowingSyncStatus === 'failed' ? '#92400E' : COLORS.muted} fontWeight="700" role="status" aria-live="polite">
             {shadowingSyncStatus === 'synced' ? 'Poo đã giữ lượt luyện' : shadowingSyncStatus === 'failed' ? 'Poo sẽ lưu lên tài khoản khi mạng ổn hơn' : 'Tiến độ của bạn vẫn an toàn'}
           </Text>
@@ -778,8 +821,8 @@ export function ShadowingPage() {
             </Box>
           </SimpleGrid>
           <HStack mt="4" gap="2" wrap="wrap">
-            <Button data-testid="shadowing-record-again-button" leftIcon={<Icon as={Mic} />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Nói lại lần nữa</Button>
-            <Button data-testid="shadowing-next-sentence-button" leftIcon={<Icon as={SkipForward} />} borderRadius="full" bg={COLORS.deepBlue} color="white" _hover={{ bg: COLORS.oceanBlue }} onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1}>Câu tiếp theo</Button>
+            <Button data-testid="shadowing-record-again-button" leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.microNormal} alt="Micro luyện nói" w="22px" h="22px" />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Nói lại lần nữa</Button>
+            <Button data-testid="shadowing-next-sentence-button" leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.nextWave} alt="Sóng chuyển câu" w="22px" h="22px" />} borderRadius="full" bg={COLORS.deepBlue} color="white" _hover={{ bg: COLORS.oceanBlue }} onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1}>Câu tiếp theo</Button>
           </HStack>
         </>
       ) : apiError ? (
@@ -803,7 +846,7 @@ export function ShadowingPage() {
                 markSentenceCompleted(selectedSentence?.id);
                 saveAttempt(fallback);
               }} isDisabled={!localTranscript.trim()}>Nhờ Poo nghe thử</Button>
-              <Button data-testid="shadowing-record-retry-button" leftIcon={<Icon as={Mic} />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Nói lại lần nữa</Button>
+              <Button data-testid="shadowing-record-retry-button" leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.microNormal} alt="Micro luyện nói" w="22px" h="22px" />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Nói lại lần nữa</Button>
             </HStack>
           </VStack>
         </Box>
@@ -843,7 +886,8 @@ export function ShadowingPage() {
 
         <Flex direction={{ base: 'column', lg: 'row' }} gap={{ base: '3', md: '5' }} minW="0" align="start">
           <VStack align="stretch" gap={{ base: '3', md: '4' }} minW="0" flex="1">
-            <Box data-testid="shadowing-practice-card" className="shadowing-practice-card penglish-glass-card" p={{ base: '3', md: '4' }} borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" minW="0" willChange="transform, opacity" backdropFilter="blur(14px) saturate(1.1)">
+            <Box data-testid="shadowing-practice-card" className="shadowing-practice-card penglish-glass-card" p={{ base: '3', md: '4' }} borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" minW="0" willChange="transform, opacity" backdropFilter="blur(14px) saturate(1.1)" position="relative" overflow="hidden">
+              <Box as="img" className="pooPixelDecor" src={PIXEL_ASSETS.bubbleCorner} alt="" loading="lazy" position="absolute" right="-8px" top="-8px" w="72px" opacity="0.20" />
               <HStack justify="space-between" align="start" gap="3" wrap="wrap" mb="3">
                 <Box minW="0" flex="1">
                   <Text fontSize="sm" color={COLORS.muted} fontWeight="700">Bài đang luyện</Text>
@@ -856,15 +900,17 @@ export function ShadowingPage() {
                 </HStack>
               </HStack>
 
-              <Box data-testid="shadowing-current-sentence" p={{ base: '3', md: '4' }} borderRadius="3xl" bg="linear-gradient(135deg, rgba(221,245,255,0.82), rgba(248,252,255,0.92))" border="1px solid" borderColor="#BAE6FD" minW="0" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 112px)">
+              <Box data-testid="shadowing-current-sentence" p={{ base: '3', md: '4' }} borderRadius="3xl" bg="linear-gradient(135deg, rgba(221,245,255,0.82), rgba(248,252,255,0.92))" border="1px solid" borderColor="#BAE6FD" minW="0" scrollMarginBottom="calc(var(--penglish-mobile-safe-bottom) + 112px)" position="relative" overflow="hidden">
                 <HStack justify="space-between" align="start" gap="3" wrap="wrap">
                   <Box minW="0">
                     <Text fontSize="sm" color={COLORS.deepBlue} fontWeight="900">Câu đang luyện</Text>
                     <Text data-testid="shadowing-current-line-count" mt="1" fontSize="xs" color={COLORS.muted} fontWeight="800">Câu {selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}</Text>
                   </Box>
                   <HStack gap="2" wrap="wrap">
-                    {selectedSentence && isPracticed(selectedSentence.id) ? <Chip tone="green">Đã luyện</Chip> : null}
-                    {selectedSentence && isDifficult(selectedSentence.id) ? <Chip tone="amber">Câu còn vấp</Chip> : null}
+                    {selectedSentencePracticed ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgePracticed} alt="Đã luyện" loading="lazy" w="34px" h="34px" /> : null}
+                    {selectedSentencePracticed ? <Chip tone="green">Đã luyện</Chip> : null}
+                    {selectedSentenceDifficult ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgeHard} alt="Câu khó" loading="lazy" w="34px" h="34px" /> : null}
+                    {selectedSentenceDifficult ? <Chip tone="amber">Câu còn vấp</Chip> : null}
                   </HStack>
                 </HStack>
 
@@ -876,19 +922,21 @@ export function ShadowingPage() {
                   {[0.75, 1, 1.25].map((value) => (
                     <Button key={value} size="sm" borderRadius="full" colorScheme={speed === value ? 'blue' : 'gray'} aria-pressed={speed === value} onClick={() => setSpeed(value)} isDisabled={isProcessingRecording}>{value}x</Button>
                   ))}
-                  <Button data-testid="shadowing-listen-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Icon as={Headphones} />} borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD" _hover={{ bg: COLORS.softBlue }} onClick={listenSentence} isDisabled={isProcessingRecording}>Nghe mẫu</Button>
-                  <Button data-testid="shadowing-record-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Icon as={isRecording ? Pause : Mic} />} borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} aria-label={isRecording ? 'Dừng ghi âm' : 'Nói theo Poo'} aria-pressed={isRecording} onClick={handleRecordAction} isDisabled={isProcessingRecording} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý cho bạn...'}>
-                    {isRecording ? 'Dừng ghi âm' : 'Nói theo Poo'}
+                  <Button data-testid="shadowing-listen-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.speakerSample} alt="Loa nghe mẫu" w="24px" h="24px" />} borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD" _hover={{ bg: COLORS.softBlue }} onClick={listenSentence} isDisabled={isProcessingRecording}>Nghe mẫu</Button>
+                  <Button data-testid="shadowing-record-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Box as="img" className="pooPixelIcon" src={micPixelSrc} alt={isRecording ? 'Micro đang nghe' : apiFeedback ? 'Micro nghe thành công' : apiError ? 'Micro gặp lỗi' : 'Micro luyện nói'} w="24px" h="24px" />} borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} aria-label={isRecording ? 'Đang nghe, bấm để dừng ghi âm' : 'Nói theo Poo'} aria-pressed={isRecording} onClick={handleRecordAction} isDisabled={isProcessingRecording} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý cho bạn...'}>
+                    {isRecording ? 'Đang nghe...' : 'Nói theo Poo'}
                   </Button>
-                  <Button data-testid="shadowing-next-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Icon as={SkipForward} />} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1 || isProcessingRecording}>Câu tiếp theo</Button>
+                  <Button data-testid="shadowing-next-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.nextWave} alt="Sóng chuyển câu" w="24px" h="24px" />} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1 || isProcessingRecording}>Câu tiếp theo</Button>
                 </HStack>
+
+                <Box as="img" className="pooPixelDecor" src={PIXEL_ASSETS.waveDivider} alt="" loading="lazy" mt="3" w="100%" maxH="18px" opacity="0.34" />
 
                 <Box mt="3" position="relative" p="3" borderRadius="2xl" bg={isRecording ? '#FEF2F2' : isProcessingRecording ? 'rgba(232,244,255,0.9)' : 'rgba(255,255,255,0.74)'} border="1px solid" borderColor={isRecording ? '#FECACA' : '#BAE6FD'} overflow="hidden">
                   <Box ref={recordPulseRef} position="absolute" inset="10px" borderRadius="3xl" bg="rgba(239,68,68,0.18)" pointerEvents="none" />
                   <HStack position="relative" justify="space-between" gap="3" wrap="wrap">
                     <HStack gap="3" minW="0">
-                      <Flex w="40px" h="40px" borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.softAqua} color={isRecording ? 'white' : COLORS.deepBlue} align="center" justify="center" flexShrink={0}>
-                        <Icon as={isProcessingRecording ? Loader2 : isRecording ? Pause : Mic} className={isProcessingRecording ? 'shadowing-spin' : undefined} />
+                      <Flex w="40px" h="40px" borderRadius="full" bg={isRecording ? '#FEE2E2' : COLORS.softAqua} align="center" justify="center" flexShrink={0}>
+                        <Box as="img" className="pooPixelIcon" src={micPixelSrc} alt={isRecording ? 'Micro đang nghe' : apiFeedback ? 'Micro nghe thành công' : apiError ? 'Micro gặp lỗi' : 'Micro sẵn sàng'} w="26px" h="26px" />
                       </Flex>
                       <Box minW="0">
                         <Text fontWeight="800" color={COLORS.text}>{isRecording ? 'Đang nghe...' : isProcessingRecording ? processingMessage : apiFeedback ? 'Đã có góp ý' : apiError ? 'Poo nghe chưa rõ' : 'Sẵn sàng nói thử'}</Text>
@@ -979,7 +1027,9 @@ export function ShadowingPage() {
                         <Box minW="0">
                           <HStack gap="2" wrap="wrap" mb="1">
                             {active ? <Chip tone="blue">Đang luyện</Chip> : null}
+                            {done ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgePracticed} alt="Đã luyện" loading="lazy" w="32px" h="32px" /> : null}
                             {done ? <Chip tone="green">Đã luyện</Chip> : null}
+                            {difficult ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgeHard} alt="Câu khó" loading="lazy" w="32px" h="32px" /> : null}
                             {difficult ? <Chip tone="amber">Câu còn vấp</Chip> : null}
                           </HStack>
                           <Text fontWeight="700" color={COLORS.text} lineHeight="1.45">{sentence.text}</Text>

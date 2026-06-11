@@ -162,6 +162,46 @@ button, input, select, textarea { font: inherit; }
   }
 }
 
+.pooPixelIcon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  max-width: 100%;
+  object-fit: contain;
+  flex-shrink: 0;
+  vertical-align: middle;
+  image-rendering: auto;
+}
+
+.pooPixelMascot {
+  display: block;
+  width: 92px;
+  height: 92px;
+  max-width: 100%;
+  object-fit: contain;
+  flex-shrink: 0;
+  image-rendering: auto;
+}
+
+.pooPixelDecor {
+  display: block;
+  max-width: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  image-rendering: auto;
+}
+
+.pooPixelBadge {
+  display: inline-block;
+  width: 42px;
+  height: 42px;
+  max-width: 100%;
+  object-fit: contain;
+  flex-shrink: 0;
+  image-rendering: auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .poo-ocean-companion__swimmer,
   .poo-ocean-companion__swimmer img {

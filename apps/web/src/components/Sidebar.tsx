@@ -3,7 +3,6 @@ import { Box, Flex, HStack, Icon, Text, VStack, Avatar, IconButton, useColorMode
 import { Link, useLocation } from 'react-router-dom';
 import { Home, BookOpen, Dumbbell, Moon, Sun, Coins, ChevronRight, Waves, LogOut, RefreshCw } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
-import { SpongeIcon } from './learning/SpongeIcon';
 import { OCEAN_TOKENS } from './p-english/OceanBackdrop';
 import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getWaterStreak } from '../lib/p-english/daily-rewards';
 import { getLearningHeartsState, LEARNING_HEARTS_UPDATED_EVENT, type LearningHeartsState } from '../lib/p-english/learning-hearts';
@@ -89,6 +88,14 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
   }, []);
 
   const waterStreak = getWaterStreak(rewardState);
+  const diverIconSrc = waterStreak.current > 0
+    ? '/assets/shadowing-pixel/streak-diver-active.png'
+    : '/assets/shadowing-pixel/streak-diver-inactive.png';
+  const spongeIconSrc = heartsState.heartsLeft >= heartsState.maxHearts
+    ? '/assets/shadowing-pixel/sponge-full-5.png'
+    : heartsState.heartsLeft <= 2
+      ? '/assets/shadowing-pixel/sponge-low.png'
+      : '/assets/shadowing-pixel/sponge-single.png';
 
   return (
     <Flex
@@ -125,15 +132,15 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
           gap="2"
         >
           <VStack align="stretch" gap="1" minW="0" flex="1" data-testid="sidebar-streak-bubbles-summary">
-            <HStack gap="1.5" minW="0" color={OCEAN_TOKENS.deepBlue}>
-              <Icon as={Waves} boxSize="4" flexShrink={0} />
-              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap">Chuỗi:</Text>
-              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap">{waterStreak.current} ngày</Text>
+            <HStack gap="1.5" minW="0" color={OCEAN_TOKENS.deepBlue} overflow="hidden">
+              <Box as="img" className="pooPixelIcon" src={diverIconSrc} alt="Chuỗi ngày học" loading="lazy" w="20px" h="20px" flexShrink={0} />
+              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap" flexShrink={0}>Chuỗi:</Text>
+              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap" minW="0">{waterStreak.current} ngày</Text>
             </HStack>
-            <HStack gap="1.5" minW="0" color={OCEAN_TOKENS.text}>
-              <SpongeIcon size={16} active={heartsState.heartsLeft > 0} decorative />
-              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap">Bọt biển:</Text>
-              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap">{heartsState.heartsLeft}/{heartsState.maxHearts}</Text>
+            <HStack gap="1.5" minW="0" color={OCEAN_TOKENS.text} overflow="hidden">
+              <Box as="img" className="pooPixelIcon" src={spongeIconSrc} alt="Bọt biển còn lại" loading="lazy" w="20px" h="20px" flexShrink={0} />
+              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap" flexShrink={0}>Bọt biển:</Text>
+              <Text fontSize="xs" fontWeight="900" whiteSpace="nowrap" minW="0">{heartsState.heartsLeft}/{heartsState.maxHearts}</Text>
             </HStack>
           </VStack>
           <HStack gap="1.5" px="2" py="1" borderRadius="full" bg={OCEAN_TOKENS.warm} color={OCEAN_TOKENS.text} flexShrink={0}>
