@@ -12,7 +12,7 @@ User-agent: ChatGPT-User
 Allow: /
 
 User-agent: GPTBot
-Disallow: /
+Allow: /
 
 User-agent: PerplexityBot
 Allow: /
