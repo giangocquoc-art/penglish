@@ -1,12 +1,24 @@
 export type LearningActivityType = 'lesson' | 'vocabulary' | 'shadowing' | 'english-speed';
 
 export type DailyRewardState = {
+  /** @deprecated Kept only for old local data migration. UI must use bubbleStreak via getUnifiedBubbleStreak(). */
   streakDays: number;
+  bubbleStreak: number;
   lastActiveDate?: string;
   bubbles: number;
   maxBubbles: number;
   completedToday: string[];
   updatedAt: string;
+};
+
+export type UnifiedBubbleStreak = {
+  current: number;
+  max: number;
+  lastCheckInAt?: string;
+  label: string;
+  displayLabel: string;
+  progressPercent: number;
+  isFull: boolean;
 };
 
 export const DAILY_REWARDS_STORAGE_KEY = 'penglish.daily.rewards.v1';
@@ -15,7 +27,8 @@ export const DAILY_REWARDS_MAX_BUBBLES = 5;
 
 const EMPTY_DAILY_REWARD_STATE: DailyRewardState = {
   streakDays: 0,
-  bubbles: DAILY_REWARDS_MAX_BUBBLES,
+  bubbleStreak: 0,
+  bubbles: 0,
   maxBubbles: DAILY_REWARDS_MAX_BUBBLES,
   completedToday: [],
   updatedAt: new Date(0).toISOString(),
@@ -64,20 +77,34 @@ function normalizeCompletedToday(value: unknown) {
   return Array.from(new Set(value.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)));
 }
 
+function normalizeBubbleValue(value: unknown, max: number) {
+  const numeric = Number(value);
+  return Number.isFinite(numeric) && numeric > 0 ? Math.max(0, Math.min(max, Math.floor(numeric))) : 0;
+}
+
 function normalizeState(value: unknown, now = new Date()): DailyRewardState {
   const raw = value && typeof value === 'object' ? value as Partial<DailyRewardState> : {};
   const streakDays = Number(raw.streakDays);
   const maxBubbles = Number(raw.maxBubbles);
   const bubbles = Number(raw.bubbles);
+  const bubbleStreak = Number(raw.bubbleStreak);
   const lastActiveDate = typeof raw.lastActiveDate === 'string' && parseDateKey(raw.lastActiveDate) ? raw.lastActiveDate : undefined;
   const today = toLocalDateKey(now);
   const completedToday = lastActiveDate === today ? normalizeCompletedToday(raw.completedToday) : [];
   const normalizedMaxBubbles = Number.isFinite(maxBubbles) && maxBubbles > 0 ? Math.floor(maxBubbles) : DAILY_REWARDS_MAX_BUBBLES;
+  const normalizedStreakDays = Number.isFinite(streakDays) && streakDays > 0 ? Math.floor(streakDays) : 0;
+  const normalizedBubbles = Number.isFinite(bubbles) ? Math.max(0, Math.min(normalizedMaxBubbles, Math.floor(bubbles))) : 0;
+  const canonicalBubbleStreak = Number.isFinite(bubbleStreak)
+    ? normalizeBubbleValue(bubbleStreak, normalizedMaxBubbles)
+    : normalizedBubbles > 0
+      ? normalizedBubbles
+      : normalizeBubbleValue(normalizedStreakDays, normalizedMaxBubbles);
 
   return {
-    streakDays: Number.isFinite(streakDays) && streakDays > 0 ? Math.floor(streakDays) : 0,
+    streakDays: normalizedStreakDays,
+    bubbleStreak: canonicalBubbleStreak,
     lastActiveDate,
-    bubbles: Number.isFinite(bubbles) ? Math.max(0, Math.min(normalizedMaxBubbles, Math.floor(bubbles))) : DAILY_REWARDS_MAX_BUBBLES,
+    bubbles: canonicalBubbleStreak,
     maxBubbles: normalizedMaxBubbles,
     completedToday,
     updatedAt: typeof raw.updatedAt === 'string' ? raw.updatedAt : now.toISOString(),
@@ -123,6 +150,23 @@ export function getDailyRewardState(): DailyRewardState {
   return current;
 }
 
+export function getUnifiedBubbleStreak(state: Partial<DailyRewardState> | null | undefined = getDailyRewardState()): UnifiedBubbleStreak {
+  const normalized = normalizeState(state);
+  const max = normalized.maxBubbles || DAILY_REWARDS_MAX_BUBBLES;
+  const current = Math.max(0, Math.min(max, normalized.bubbleStreak));
+  const label = `Bọt biển ${current}/${max}`;
+
+  return {
+    current,
+    max,
+    lastCheckInAt: normalized.lastActiveDate,
+    label,
+    displayLabel: label,
+    progressPercent: max > 0 ? Math.round((current / max) * 100) : 0,
+    isFull: current >= max,
+  };
+}
+
 export function hasLearningActivityToday(state = getDailyRewardState()) {
   return state.lastActiveDate === toLocalDateKey() && state.completedToday.length > 0;
 }
@@ -144,17 +188,19 @@ export function recordLearningActivity(activityType: LearningActivityType, activ
   const completedToday = firstActivityToday ? [] : current.completedToday;
   const activityKey = formatLearningActivityId(activityType, cleanActivityId);
   const nextCompletedToday = completedToday.includes(activityKey) ? completedToday : [...completedToday, activityKey];
-  const nextStreakDays = firstActivityToday
+  const maxBubbles = current.maxBubbles || DAILY_REWARDS_MAX_BUBBLES;
+  const nextBubbleStreak = firstActivityToday
     ? diff === 1
-      ? current.streakDays + 1
+      ? Math.min(maxBubbles, current.bubbleStreak + 1)
       : 1
-    : current.streakDays || 1;
+    : current.bubbleStreak || 1;
 
   return writeDailyRewardState({
-    streakDays: nextStreakDays,
+    streakDays: nextBubbleStreak,
+    bubbleStreak: nextBubbleStreak,
     lastActiveDate: today,
-    bubbles: current.maxBubbles,
-    maxBubbles: current.maxBubbles || DAILY_REWARDS_MAX_BUBBLES,
+    bubbles: nextBubbleStreak,
+    maxBubbles,
     completedToday: nextCompletedToday,
     updatedAt: now.toISOString(),
   });

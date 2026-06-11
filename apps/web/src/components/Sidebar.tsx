@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Home, BookOpen, Dumbbell, Moon, Sun, Coins, ChevronRight, Waves, LogOut, RefreshCw } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 import { LearningHeartsBadge } from './learning/LearningHeartsBadge';
-import { StreakWhaleBadge } from './streak/AdaptiveWhaleStreak';
+import { BubbleStreakBadge } from './streak/BubbleStreakBadge';
 import { OCEAN_TOKENS } from './p-english/OceanBackdrop';
 import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState } from '../lib/p-english/daily-rewards';
 import { LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
@@ -32,6 +32,19 @@ const SEO_LINKS = [
   { label: '48 ngày', to: '/48-ngay-lay-goc' },
   { label: 'Giới thiệu', to: '/gioi-thieu' },
   { label: 'Blog', to: '/blog' },
+];
+
+const REVIEW_SEO_LINKS = [
+  { label: 'Ôn tiếng Anh', to: '/on-tieng-anh' },
+  { label: 'Mất gốc', to: '/on-tieng-anh-cho-nguoi-mat-goc' },
+  { label: 'Cách ôn hiệu quả', to: '/cach-on-tieng-anh-hieu-qua' },
+  { label: 'Ôn từ vựng', to: '/on-tu-vung-tieng-anh' },
+  { label: 'Ôn ngữ pháp', to: '/on-ngu-phap-tieng-anh' },
+  { label: 'Ôn luyện nghe', to: '/on-luyen-nghe-tieng-anh' },
+  { label: 'Ôn nói', to: '/on-noi-tieng-anh' },
+  { label: 'Ôn shadowing', to: '/on-shadowing-tieng-anh' },
+  { label: 'Học mỗi ngày', to: '/hoc-tieng-anh-moi-ngay' },
+  { label: 'Luyện online', to: '/luyen-tieng-anh-online' },
 ];
 
 export type SidebarUser = {
@@ -101,11 +114,7 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
           border="1px solid"
           borderColor={OCEAN_TOKENS.border}
         >
-          <StreakWhaleBadge streak={rewardState.streakDays} compact />
-          <HStack data-testid="sidebar-bubbles-badge" gap="1.5" px="2" py="1" borderRadius="full" bg={OCEAN_TOKENS.softAqua} color={OCEAN_TOKENS.text} aria-label={`Bọt biển ${rewardState.bubbles}/${rewardState.maxBubbles}`}>
-            <Icon as={Waves} boxSize="4" color={OCEAN_TOKENS.oceanBlue} />
-            <Text fontWeight="850" fontSize="sm">{rewardState.bubbles}/{rewardState.maxBubbles}</Text>
-          </HStack>
+          <BubbleStreakBadge state={rewardState} compact showLabel={false} testId="sidebar-bubbles-badge" />
           <HStack gap="1.5" px="2" py="1" borderRadius="full" bg={OCEAN_TOKENS.warm} color={OCEAN_TOKENS.text}>
             <Icon as={Coins} boxSize="4" color="#F59E0B" />
             <Text fontWeight="850" fontSize="sm">{user?.coin ?? 0}</Text>
@@ -208,6 +217,21 @@ export function Sidebar({ user }: { user: SidebarUser | null }) {
           </Text>
           <HStack as="nav" aria-label="Liên kết học tiếng Anh PooEnglish" wrap="wrap" gap="1.5">
             {SEO_LINKS.map((link) => (
+              <Link key={link.to} to={link.to}>
+                <Text as="span" display="inline-flex" px="2" py="1" borderRadius="full" bg="rgba(232,244,255,0.78)" color={OCEAN_TOKENS.deepBlue} fontSize="10px" fontWeight="850">
+                  {link.label}
+                </Text>
+              </Link>
+            ))}
+          </HStack>
+        </Box>
+
+        <Box mt="2" px="2" py="2.5" borderRadius="2xl" bg="rgba(255, 255, 255, 0.42)" border="1px solid" borderColor={OCEAN_TOKENS.border}>
+          <Text fontSize="xs" fontWeight="900" color={OCEAN_TOKENS.deepBlue} mb="2">
+            Ôn tiếng Anh
+          </Text>
+          <HStack as="nav" aria-label="Liên kết cụm ôn tiếng Anh PooEnglish" wrap="wrap" gap="1.5">
+            {REVIEW_SEO_LINKS.map((link) => (
               <Link key={link.to} to={link.to}>
                 <Text as="span" display="inline-flex" px="2" py="1" borderRadius="full" bg="rgba(232,244,255,0.78)" color={OCEAN_TOKENS.deepBlue} fontSize="10px" fontWeight="850">
                   {link.label}

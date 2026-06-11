@@ -1,5 +1,5 @@
 import { Box, Button, Flex, HStack, Icon, Input, Progress, SimpleGrid, Text, VStack } from '@chakra-ui/react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle2, ChevronLeft, Headphones, Home, Mic, Play, RotateCcw, Sparkles, Volume2 } from 'lucide-react';
 import { OceanPageShell } from '../../components/p-english/OceanPageShell';
@@ -214,7 +214,7 @@ export function Foundation48DayPage() {
           </Flex>
         </Box>
 
-        <LessonStepperCard day={day} step={currentStep} completed={completedSteps.has(currentStep?.id)} onReadyChange={setCanContinue} />
+        <LessonStepperCard day={day} step={currentStep} completed={completedSteps.has(currentStep?.id)} onReadyChange={setCanContinue} onContinue={goNext} />
 
         <Flex data-testid="foundation48-step-actions" mt="4" justify="space-between" align={{ base: 'stretch', sm: 'center' }} gap="3" direction={{ base: 'column', sm: 'row' }}>
           <Button leftIcon={<Icon as={ArrowLeft} />} variant="outline" borderColor={COLORS.border} color={COLORS.blue} borderRadius="full" isDisabled={stepIndex === 0} onClick={() => setStepIndex((value) => Math.max(0, value - 1))}>
@@ -283,7 +283,7 @@ function getFoundation48SyncPromptSessionKey(dayNumber: number, userId: string) 
   return `penglish-foundation48-sync-prompt-session:${userId}:${dayNumber}`;
 }
 
-function LessonStepperCard({ day, step, completed, onReadyChange }: { day: Foundation48Day; step?: Foundation48LessonStep; completed: boolean; onReadyChange: (ready: boolean) => void }) {
+function LessonStepperCard({ day, step, completed, onReadyChange, onContinue }: { day: Foundation48Day; step?: Foundation48LessonStep; completed: boolean; onReadyChange: (ready: boolean) => void; onContinue: () => void }) {
   useEffect(() => {
     onReadyChange(!step?.challenge);
   }, [onReadyChange, step?.id, step?.challenge]);
@@ -331,7 +331,7 @@ function LessonStepperCard({ day, step, completed, onReadyChange }: { day: Found
         {step.type === 'speaking' && !step.challenge && step.bullets?.length ? <SpeakingDrillCards bullets={step.bullets} /> : null}
 
         {step.type === 'listening' ? <ListenFirstActivity step={step} day={day} /> : null}
-        {step.challenge ? <ChallengeCard dayNumber={day.dayNumber} challenge={step.challenge} onReadyChange={onReadyChange} /> : null}
+        {step.challenge ? <ChallengeCard dayNumber={day.dayNumber} challenge={step.challenge} onReadyChange={onReadyChange} onContinue={onContinue} /> : null}
         {step.type === 'complete' ? <CompletePrompt day={day} /> : null}
       </VStack>
     </Box>
@@ -550,7 +550,7 @@ function SpeakingDrillCards({ bullets }: { bullets: string[] }) {
   );
 }
 
-function ChallengeCard({ dayNumber, challenge, onReadyChange }: { dayNumber: number; challenge: Foundation48Challenge; onReadyChange: (ready: boolean) => void }) {
+function ChallengeCard({ dayNumber, challenge, onReadyChange, onContinue }: { dayNumber: number; challenge: Foundation48Challenge; onReadyChange: (ready: boolean) => void; onContinue: () => void }) {
   const [answer, setAnswer] = useState('');
   const [selectedTokens, setSelectedTokens] = useState<string[]>([]);
   const [feedback, setFeedback] = useState<{ correct: boolean; message: string } | null>(null);
@@ -558,6 +558,7 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange }: { dayNumber: num
   const [selfPracticed, setSelfPracticed] = useState(false);
   const isChoiceChallenge = challenge.type === 'multiple-choice' || challenge.type === 'listen-and-choose';
   const progressLabel = getChallengeProgressLabel(challenge);
+  const fillBlankInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     setAnswer('');
@@ -567,14 +568,32 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange }: { dayNumber: num
     onReadyChange(false);
   }, [challenge.id, onReadyChange]);
 
+  useEffect(() => {
+    if (challenge.type !== 'fill-blank' || feedback) return;
+    const focusTimer = window.setTimeout(() => fillBlankInputRef.current?.focus(), 0);
+    return () => window.clearTimeout(focusTimer);
+  }, [challenge.id, challenge.type, feedback]);
+
   const currentAnswer = challenge.type === 'sentence-order' ? selectedTokens.join(' ') : answer;
 
   function submit(value = currentAnswer) {
+    if (!value.trim()) return;
     const correct = normalizeAnswer(value) === normalizeAnswer(challenge.answer);
     const wrongMessage = challenge.type === 'sentence-order' ? 'Thử đặt chủ ngữ trước nhé.' : 'Gần đúng rồi, xem lại gợi ý nhé.';
     setFeedback({ correct, message: correct ? 'Đúng rồi!' : wrongMessage });
     recordFoundation48ChallengeResult(dayNumber, challenge, correct, value || '(chưa trả lời)');
     onReadyChange(correct);
+  }
+
+  function handleFillBlankKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    if (feedback?.correct) {
+      onContinue();
+      return;
+    }
+    if (feedback || !answer.trim()) return;
+    submit(answer);
   }
 
   function markSelfPracticed() {
@@ -632,10 +651,13 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange }: { dayNumber: num
         ) : null}
 
         {challenge.type === 'fill-blank' ? (
-          <Flex gap="3" align={{ base: 'stretch', sm: 'center' }} direction={{ base: 'column', sm: 'row' }}>
-            <Input value={answer} onChange={(event) => setAnswer(event.target.value)} placeholder="Nhập đáp án..." bg="white" borderColor={COLORS.border} borderRadius="full" fontWeight="850" minH="48px" onKeyDown={(event) => { if (event.key === 'Enter') submit(); }} data-testid="foundation48-fill-answer" />
-            <Button bg={COLORS.blue} color="white" borderRadius="full" minH="48px" onClick={() => submit()} flexShrink={0}>Poo xem giúp</Button>
-          </Flex>
+          <VStack align="stretch" gap="2">
+            <Flex gap="3" align={{ base: 'stretch', sm: 'center' }} direction={{ base: 'column', sm: 'row' }}>
+              <Input ref={fillBlankInputRef} value={answer} onChange={(event) => { setAnswer(event.target.value); if (feedback) setFeedback(null); onReadyChange(false); }} placeholder="Nhập đáp án..." bg="white" borderColor={COLORS.border} borderRadius="full" fontWeight="850" minH="48px" onKeyDown={handleFillBlankKeyDown} data-testid="foundation48-fill-answer" />
+              <Button bg={COLORS.blue} color="white" borderRadius="full" minH="48px" onClick={() => submit()} isDisabled={!answer.trim()} flexShrink={0}>Poo xem giúp</Button>
+            </Flex>
+            <Text fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted} fontWeight="750">Mẹo: Nhấn Enter để kiểm tra, đúng rồi thì Enter lần nữa để đi tiếp.</Text>
+          </VStack>
         ) : null}
 
         {challenge.type === 'sentence-order' ? (

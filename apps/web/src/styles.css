@@ -193,6 +193,18 @@ button, input, select, textarea { font: inherit; }
 .topbar { display: flex; align-items: center; justify-content: flex-end; padding: 18px 28px 8px; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
 .topbar-left { flex: 1; }
 .topbar-actions { display: flex; align-items: center; gap: 14px; }
+.bubble-streak-badge { background: rgba(255, 247, 214, 0.88); border: 1px solid rgba(249, 185, 62, 0.34); box-shadow: 0 12px 26px rgba(249, 185, 62, 0.10); position: relative; overflow: hidden; animation: bubble-streak-bob 3.6s ease-in-out infinite; transform-origin: center; }
+.bubble-streak-badge::after { content: ""; position: absolute; inset: -45% auto auto -35%; width: 42%; height: 190%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.52), transparent); transform: rotate(18deg); animation: bubble-streak-shimmer 5.2s ease-in-out infinite; pointer-events: none; }
+.bubble-streak-badge.is-compact { background: var(--soft-aqua, #DDF5FF); box-shadow: 0 10px 22px rgba(47, 158, 235, 0.08); }
+.bubble-streak-badge.is-full { animation: bubble-streak-bob 2.8s ease-in-out infinite, bubble-streak-full-pulse 2.8s ease-in-out infinite; }
+.bubble-streak-stat { border: 1px solid rgba(186,230,253,0.86); border-radius: 18px; background: rgba(248,252,255,0.82); padding: 10px 12px; }
+.bubble-streak-progress { height: 10px; border-radius: 999px; overflow: hidden; border: 1px solid rgba(186,230,253,0.82); background: rgba(232,244,255,0.78); }
+.bubble-streak-progress-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #5BBCEB, #FFD95A, #66D9C8); transition: width .24s ease; animation: bubble-streak-water 3.8s ease-in-out infinite; }
+.bubble-streak-progress.is-full .bubble-streak-progress-fill { animation: bubble-streak-water 3.2s ease-in-out infinite, bubble-streak-full-pulse 2.8s ease-in-out infinite; }
+@keyframes bubble-streak-bob { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-2px) scale(1.01); } }
+@keyframes bubble-streak-shimmer { 0%, 64% { left: -42%; opacity: 0; } 72% { opacity: 0.55; } 88% { left: 115%; opacity: 0; } 100% { left: 115%; opacity: 0; } }
+@keyframes bubble-streak-full-pulse { 0%, 100% { box-shadow: 0 12px 26px rgba(249, 185, 62, 0.12); } 50% { box-shadow: 0 14px 30px rgba(249, 185, 62, 0.22); } }
+@keyframes bubble-streak-water { 0%, 100% { filter: saturate(1); } 50% { filter: saturate(1.14) brightness(1.02); } }
 .streak-badge { background: rgba(232, 244, 255, 0.88); color: var(--streak-active); border: 1px solid rgba(47, 158, 235, 0.24); border-radius: 999px; padding: 8px 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 10px 22px rgba(47, 158, 235, 0.08); }
 .streak-badge strong { color: var(--streak-active); }
 .streak-badge.inactive { background: rgba(241, 245, 249, 0.92); color: var(--streak-inactive); border-color: rgba(148, 163, 184, 0.34); box-shadow: 0 8px 18px rgba(100, 117, 138, 0.06); }

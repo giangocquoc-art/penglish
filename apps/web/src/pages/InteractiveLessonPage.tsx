@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { Box, Button, Flex, HStack, Icon, Input, Progress, SimpleGrid, Tag, Text, VStack } from '@chakra-ui/react';
 import { ArrowLeft, CheckCircle2, Headphones, Mic2, Sparkles, Volume2, XCircle, Zap } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -74,10 +74,11 @@ function FeedbackBox({ correct, explanation }: { correct: boolean; explanation?:
   );
 }
 
-function StepRenderer({ step, pickedWords, inputValue, onInputChange, onAnswer, onToggleWord }: {
+function StepRenderer({ step, pickedWords, inputValue, fillBlankInputRef, onInputChange, onAnswer, onToggleWord }: {
   step: InteractiveLessonStep;
   pickedWords: string[];
   inputValue: string;
+  fillBlankInputRef: RefObject<HTMLInputElement | null>;
   onInputChange: (value: string) => void;
   onAnswer: (answer: string) => void;
   onToggleWord: (word: string) => void;
@@ -141,8 +142,9 @@ function StepRenderer({ step, pickedWords, inputValue, onInputChange, onAnswer, 
       <VStack align="stretch" gap="4">
         <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" color={COLORS.text}>{step.prompt}</Text>
         {step.hint ? <Text color={COLORS.muted} fontWeight="750">Gợi ý: {step.hint}</Text> : null}
-        <Input data-testid="interactive-lesson-fill-input" value={inputValue} onChange={(event) => onInputChange(event.target.value)} size="lg" borderRadius="2xl" bg="white" borderColor={COLORS.border} placeholder="Gõ đáp án..." />
-        <Button data-testid="interactive-lesson-check-button" size="lg" borderRadius="full" bg={COLORS.blue} color="white" onClick={() => onAnswer(inputValue)} _hover={{ bg: '#185BB2' }}>
+        <Input ref={fillBlankInputRef} data-testid="interactive-lesson-fill-input" value={inputValue} onChange={(event) => onInputChange(event.target.value)} size="lg" borderRadius="2xl" bg="white" borderColor={COLORS.border} placeholder="Gõ đáp án..." />
+        <Text mt="-2" fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted} fontWeight="750">Mẹo: Nhấn Enter để kiểm tra, đúng rồi thì Enter lần nữa để đi tiếp.</Text>
+        <Button data-testid="interactive-lesson-check-button" size="lg" borderRadius="full" bg={COLORS.blue} color="white" onClick={() => onAnswer(inputValue)} isDisabled={!inputValue.trim()} _hover={{ bg: '#185BB2' }}>
           Kiểm tra
         </Button>
       </VStack>
@@ -210,6 +212,8 @@ export function InteractiveLessonPage() {
   const [weakItems, setWeakItems] = useState<InteractiveLessonStep[]>([]);
   const [result, setResult] = useState<InteractiveLessonResult | null>(null);
 
+  const fillBlankInputRef = useRef<HTMLInputElement | null>(null);
+
   useEffect(() => {
     if (lesson) startInteractiveLesson(lesson);
   }, [lesson]);
@@ -222,6 +226,35 @@ export function InteractiveLessonPage() {
     setInputValue('');
     setPickedWords([]);
   }, [stepIndex]);
+
+  useEffect(() => {
+    if (step?.type !== 'fill_blank' || feedback) return;
+    const focusTimer = window.setTimeout(() => fillBlankInputRef.current?.focus(), 0);
+    return () => window.clearTimeout(focusTimer);
+  }, [feedback, step?.id, step?.type]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Enter') return;
+      const target = event.target;
+      if (target instanceof HTMLElement) {
+        const tagName = target.tagName.toLowerCase();
+        if (tagName === 'textarea' || tagName === 'select' || target.isContentEditable) return;
+      }
+      if (!step || step.type === 'summary') return;
+      if (feedback?.correct) {
+        event.preventDefault();
+        handleContinue();
+        return;
+      }
+      if (feedback || step.type !== 'fill_blank' || !inputValue.trim()) return;
+      event.preventDefault();
+      handleAnswer(inputValue);
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [feedback, inputValue, step]);
 
   if (!lesson || !step) {
     return (
@@ -320,9 +353,9 @@ export function InteractiveLessonPage() {
             <Tag mb="3" borderRadius="full" bg="#E0F2FE" color="#0369A1" fontWeight="950"><Icon as={Sparkles} boxSize="4" /> Màn {stepIndex + 1}/{lesson.steps.length}</Tag>
             <Text mb="2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950" color={COLORS.text}>{step.title}</Text>
             <Text mb="5" color={COLORS.muted} fontWeight="750" lineHeight="1.65">{step.instruction}</Text>
-            <StepRenderer step={step} pickedWords={pickedWords} inputValue={inputValue} onInputChange={handleInputChange} onAnswer={handleAnswer} onToggleWord={handleToggleWord} />
+            <StepRenderer step={step} pickedWords={pickedWords} inputValue={inputValue} fillBlankInputRef={fillBlankInputRef} onInputChange={handleInputChange} onAnswer={handleAnswer} onToggleWord={handleToggleWord} />
             {feedback ? <FeedbackBox correct={feedback.correct} explanation={feedback.explanation} /> : null}
-            {feedback ? (
+            {feedback?.correct ? (
               <Button data-testid="interactive-lesson-continue-button" mt="4" w={{ base: '100%', md: 'auto' }} size="lg" borderRadius="full" bg={COLORS.green} color="white" onClick={handleContinue} _hover={{ bg: '#15803D' }}>
                 Tiếp tục
               </Button>

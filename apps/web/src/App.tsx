@@ -4,6 +4,9 @@ import { Sidebar as ChakraSidebar } from './components/Sidebar';
 import { Topbar as ChakraTopbar, Shell as ChakraShell } from './components/Topbar';
 import { Box, Button, Center, HStack, Text, VStack } from '@chakra-ui/react';
 import { RouteMetadataUpdater } from './components/seo/RouteMetadataUpdater';
+import { REVIEW_SEO_PATHS } from './data/reviewSeoPages';
+import { SEO_PAGE_PATHS } from './data/seoPagesData';
+import { LESSON_SEO_PATHS } from './data/lessonSeoPages';
 import { GlobalEasterEggs } from './components/easter-eggs/GlobalEasterEggs';
 import { AuthProvider, useAuth } from './features/auth/AuthProvider';
 import { avatarFromUser, displayNameFromUser } from './lib/p-english/userSession';
@@ -36,6 +39,7 @@ const Foundation48DayPage = lazy(() => import('./features/foundation48/Foundatio
 const AdminPage = lazy(() => import('./pages/AdminPage').then((module) => ({ default: module.AdminPage })));
 const SeoLandingPage = lazy(() => import('./pages/SeoLandingPage').then((module) => ({ default: module.SeoLandingPage })));
 const BlogPage = lazy(() => import('./pages/BlogPage').then((module) => ({ default: module.BlogPage })));
+const LessonSeoPage = lazy(() => import('./pages/LessonSeoPage').then((module) => ({ default: module.LessonSeoPage })));
 
 type User = {
   id: string;
@@ -167,9 +171,13 @@ function AppRoutes() {
     '/ngu-phap-tieng-anh',
     '/48-ngay-lay-goc',
     '/gioi-thieu',
+    ...REVIEW_SEO_PATHS,
+    ...SEO_PAGE_PATHS,
   ].includes(pathname);
+  const isLessonSeoRoute = LESSON_SEO_PATHS.includes(pathname);
 
   if (isSeoLandingRoute) routeElement = <NewShell user={user}><SeoLandingPage /></NewShell>;
+  else if (isLessonSeoRoute) routeElement = <NewShell user={user}><LessonSeoPage /></NewShell>;
   else if (pathname === '/blog' || pathname.startsWith('/blog/')) routeElement = <NewShell user={user}><BlogPage /></NewShell>;
   else if (isLoginCasingVariant || pathname === '/login/') routeElement = <Navigate to="/login" replace />;
   else if (pathname === '/login') routeElement = auth.user ? <Navigate to="/home" replace /> : <NewLoginPage />;

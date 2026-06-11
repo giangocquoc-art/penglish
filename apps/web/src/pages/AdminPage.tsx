@@ -126,7 +126,7 @@ function SettingsSection() {
         <AdminField label="Link Facebook" value="https://facebook.com/pooenglish" />
         <FormControl gridColumn={{ base: 'auto', lg: 'span 2' }}>
           <FormLabel color="#0F3557" fontWeight="850">Thông báo đầu trang</FormLabel>
-          <Textarea defaultValue="Học đều 15 phút mỗi ngày để giữ chuỗi ngày học." borderColor="#BAE6FD" bg="rgba(255,255,255,0.78)" borderRadius="2xl" minH="110px" />
+          <Textarea defaultValue="Học đều 15 phút mỗi ngày để giữ chuỗi bọt biển." borderColor="#BAE6FD" bg="rgba(255,255,255,0.78)" borderRadius="2xl" minH="110px" />
         </FormControl>
         <AdminField label="CTA chính" value="Bắt đầu bài hôm nay" />
       </SimpleGrid>

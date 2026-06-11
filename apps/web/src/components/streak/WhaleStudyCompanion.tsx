@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Box } from '@chakra-ui/react';
-import { getCurrentStreak, LOCAL_PROGRESS_UPDATED_EVENT } from '../../lib/p-english/local-progress';
+import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbleStreak } from '../../lib/p-english/daily-rewards';
 import { AdaptiveWhaleScene, type WhaleMood } from './AdaptiveWhaleStreak';
 
 export type WhaleCompanionPlacement = 'bottom-right' | 'card-corner' | 'floating-safe' | 'hidden-mobile';
@@ -41,19 +41,19 @@ const placementStyles: Record<WhaleCompanionPlacement, Record<string, unknown>> 
 export function WhaleStudyCompanion({ mood = 'idle', placement = 'floating-safe', streak: streakProp }: WhaleStudyCompanionProps) {
   const styles = placementStyles[placement];
   const isCardCorner = placement === 'card-corner';
-  const [localStreak, setLocalStreak] = useState(() => getCurrentStreak());
+  const [localStreak, setLocalStreak] = useState(() => getUnifiedBubbleStreak(getDailyRewardState()).current);
   const streak = streakProp ?? localStreak;
 
   useEffect(() => {
     if (streakProp !== undefined || typeof window === 'undefined') return undefined;
-    const refreshStreak = () => setLocalStreak(getCurrentStreak());
+    const refreshStreak = () => setLocalStreak(getUnifiedBubbleStreak(getDailyRewardState()).current);
     window.addEventListener('focus', refreshStreak);
     window.addEventListener('storage', refreshStreak);
-    window.addEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshStreak);
+    window.addEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshStreak);
     return () => {
       window.removeEventListener('focus', refreshStreak);
       window.removeEventListener('storage', refreshStreak);
-      window.removeEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshStreak);
+      window.removeEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshStreak);
     };
   }, [streakProp]);
 

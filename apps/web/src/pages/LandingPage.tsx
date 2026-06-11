@@ -32,7 +32,7 @@ const FEATURES = [
   { icon: Zap, title: 'Ôn đúng lúc', desc: 'Các từ đã học sẽ quay lại đúng nhịp để bạn nhớ chắc hơn.', bg: landingColors.softAqua, color: landingColors.deepBlue },
   { icon: BookOpen, title: 'Lộ trình TOEIC & IELTS', desc: 'Từ vựng được chia theo mục tiêu và trình độ để dễ bắt đầu.', bg: '#EAF7FF', color: landingColors.oceanBlue },
   { icon: Trophy, title: '6 trò luyện tương tác', desc: 'Ghép cặp, xếp chữ, luyện nghe và nhiều trò luyện ngắn khác.', bg: '#E9FAFF', color: landingColors.aquaAccent },
-  { icon: Users, title: 'Học đều mỗi ngày', desc: 'Theo dõi chuỗi ngày học và tiến độ của bạn theo cách nhẹ nhàng.', bg: landingColors.softYellow, color: landingColors.orange },
+  { icon: Users, title: 'Học đều mỗi ngày', desc: 'Theo dõi chuỗi bọt biển và tiến độ của bạn theo cách nhẹ nhàng.', bg: landingColors.softYellow, color: landingColors.orange },
 ];
 
 const TESTIMONIALS = [
@@ -390,7 +390,10 @@ export function LandingPage() {
 
       <Box bgGradient="linear(135deg, #1F6FD6, #2F9EEB)" py="10">
         <Container maxW="6xl" px={{ base: '4', md: '6' }}>
-          <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="700" lineHeight="1.45" color="white" textAlign="center">
+          <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="800" lineHeight="1.45" color="white" textAlign="center">
+            PooEnglish là website học tiếng Anh cùng cá voi Poo
+          </Text>
+          <Text mt="2" fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" lineHeight="1.5" color="whiteAlpha.900" textAlign="center">
             A1–B2 • lộ trình theo kỹ năng • 6 trò luyện tương tác
           </Text>
         </Container>

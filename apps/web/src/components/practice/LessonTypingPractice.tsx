@@ -306,20 +306,23 @@ export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: En
     if (!currentTask) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (isTypingTarget(event.target) && event.key !== 'Enter' && event.key !== 'Escape') return;
+      const typingTarget = isTypingTarget(event.target);
+      const isTextAreaTarget = event.target instanceof HTMLElement && event.target.tagName.toLowerCase() === 'textarea';
+      if (typingTarget && event.key !== 'Enter' && event.key !== 'Escape') return;
 
       if (event.key === 'Enter') {
-        event.preventDefault();
+        if (isTextAreaTarget) return;
         if (showSummary || !started) return;
         if (checked) {
           if (isCurrentCorrect) {
+            event.preventDefault();
             commitCurrentResult();
-          } else {
-            retryCurrent();
           }
-        } else {
-          checkCurrent();
+          return;
         }
+        if (!input.trim()) return;
+        event.preventDefault();
+        checkCurrent();
       }
 
       if (event.key === 'Escape') {
@@ -510,7 +513,7 @@ export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: En
                 _focus={{ borderColor: COLORS.primary, boxShadow: `0 0 0 1px ${COLORS.primary}` }}
                 isDisabled={checked}
               />
-              <Text mt="2" fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted}>Enter để Poo xem/tiếp; R làm lại; N câu tiếp khi đã có kết quả; Escape xóa ô nhập.</Text>
+              <Text mt="2" fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted}>Mẹo: Nhấn Enter để kiểm tra, đúng rồi thì Enter lần nữa để đi tiếp. R làm lại; Escape xóa ô nhập.</Text>
             </Box>
 
             {checked ? (

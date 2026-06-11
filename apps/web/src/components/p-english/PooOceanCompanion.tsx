@@ -3,7 +3,7 @@ import { Box, Image, type BoxProps } from '@chakra-ui/react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { getCurrentStreak, LOCAL_PROGRESS_UPDATED_EVENT } from '../../lib/p-english/local-progress';
+import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbleStreak } from '../../lib/p-english/daily-rewards';
 import { getOceanMascotPose } from '../../lib/p-english/oceanAssets';
 
 gsap.registerPlugin(useGSAP);
@@ -34,7 +34,7 @@ function getSafeStreakMultiplier(streak: number) {
 
 function getInitialStreak(streak?: number) {
   if (typeof streak === 'number') return streak;
-  return getCurrentStreak();
+  return getUnifiedBubbleStreak(getDailyRewardState()).current;
 }
 
 export function PooOceanCompanion({ variant = 'calm', streak, className, style, ...props }: PooOceanCompanionProps) {
@@ -108,14 +108,14 @@ export function PooOceanCompanion({ variant = 'calm', streak, className, style, 
         window.setTimeout(() => setPose('idle'), 1600);
       });
 
-      const refreshStreak = makeSafe(() => setCurrentStreak(getCurrentStreak()));
+      const refreshStreak = makeSafe(() => setCurrentStreak(getUnifiedBubbleStreak(getDailyRewardState()).current));
       window.addEventListener('poo:celebrate', celebrate as EventListener);
-      window.addEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshStreak as EventListener);
+      window.addEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshStreak as EventListener);
       window.addEventListener('storage', refreshStreak as EventListener);
 
       return () => {
         window.removeEventListener('poo:celebrate', celebrate as EventListener);
-        window.removeEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshStreak as EventListener);
+        window.removeEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshStreak as EventListener);
         window.removeEventListener('storage', refreshStreak as EventListener);
       };
     },

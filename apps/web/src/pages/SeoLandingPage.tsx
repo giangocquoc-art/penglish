@@ -3,6 +3,9 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { BookOpen, ChevronRight, Compass, HelpCircle, Sparkles, Waves } from 'lucide-react';
 import { Icon } from '@chakra-ui/react';
 import { OCEAN_TOKENS } from '../components/p-english/OceanBackdrop';
+import { getReviewSeoPageByPath, REVIEW_SEO_PATHS, type ReviewSeoPage } from '../data/reviewSeoPages';
+import { BLOG_POSTS, getBlogPostPath } from '../data/blogPosts';
+import { getSeoPageByPath, SEO_PAGE_PATHS, type SeoPage } from '../data/seoPagesData';
 
 type SeoLandingContent = {
   path: string;
@@ -25,6 +28,8 @@ export const SEO_LANDING_PATHS = [
   '/ngu-phap-tieng-anh',
   '/48-ngay-lay-goc',
   '/gioi-thieu',
+  ...REVIEW_SEO_PATHS,
+  ...SEO_PAGE_PATHS,
 ] as const;
 
 const commonFaqs = {
@@ -43,6 +48,44 @@ const commonFaqs = {
 };
 
 const LANDINGS: Record<string, SeoLandingContent> = {
+  '/': {
+    path: '/',
+    eyebrow: 'Bắt đầu cùng cá voi Poo',
+    title: 'Học tiếng Anh cùng PooEnglish',
+    intro: 'PooEnglish là nơi học tiếng Anh dành cho người Việt muốn bắt đầu lại một cách thân thiện. Thay vì ép bạn học thật nhiều trong một lần, Poo chia hành trình thành những bước nhỏ: học một cụm từ, nghe một câu, nói lại một nhịp, làm vài câu kiểm tra và quay lại ôn đúng phần còn yếu.',
+    sections: [
+      {
+        heading: 'Vì sao PooEnglish phù hợp để bắt đầu?',
+        body: 'Nhiều người sợ tiếng Anh vì từng học quá nhiều quy tắc nhưng lại không dùng được trong tình huống thật. PooEnglish đi theo hướng ngược lại: bắt đầu bằng câu gần gũi, giải thích vừa đủ, rồi cho bạn luyện lại trong các hoạt động ngắn. Cá voi Poo không vội vàng kéo bạn ra biển lớn; Poo đứng cạnh bờ, đưa từng chiếc phao nhỏ để bạn làm quen với âm, từ và mẫu câu.',
+      },
+      {
+        heading: 'Một ngày học trên PooEnglish diễn ra thế nào?',
+        body: 'Bạn có thể mở lộ trình, chọn bài hôm nay và đi theo vòng học nhỏ: nhìn từ mới, nghe câu mẫu, đọc nghĩa, nói lại, làm quiz, rồi lưu phần cần ôn. Mỗi hoạt động được thiết kế để không chiếm quá nhiều năng lượng. Nếu bạn bận, chỉ học một bài ngắn vẫn có giá trị.',
+      },
+      {
+        heading: 'Poo giúp bạn học cả nghe, nói, từ vựng và ngữ pháp',
+        body: 'PooEnglish không tách kỹ năng thành những hòn đảo rời rạc. Một từ mới sẽ xuất hiện trong câu; một mẫu ngữ pháp sẽ được đặt trong tình huống; một đoạn nghe có thể trở thành bài nói đuổi; một lỗi sai sẽ quay về sổ ôn tập.',
+      },
+      {
+        heading: 'Học miễn phí trước, đăng nhập sau cũng được',
+        body: 'PooEnglish ưu tiên việc vào học nhanh. Trang học công khai có thể mở mà không bị kẹt ở đăng nhập. Nếu hệ thống xác nhận tài khoản chậm, bạn vẫn có thể học ở chế độ khách. Khi bạn thấy PooEnglish hợp với mình, đăng nhập sẽ giúp lưu tiến độ tốt hơn.',
+      },
+    ],
+    faqs: [
+      commonFaqs.login,
+      commonFaqs.beginner,
+      commonFaqs.daily,
+      { question: 'PooEnglish khác gì một app flashcard thông thường?', answer: 'PooEnglish kết hợp lộ trình, ngữ cảnh, nghe nói, quiz và ôn lỗi sai. Từ vựng không đứng một mình mà được đặt trong câu và hoạt động học cụ thể.' },
+      { question: 'Tôi nên bắt đầu ở trang nào?', answer: 'Nếu bạn mới hoàn toàn, hãy vào lộ trình hoặc khóa 48 ngày lấy gốc. Nếu muốn luyện phát âm, hãy thử shadowing tiếng Anh cùng Poo.' },
+    ],
+    links: [
+      { label: 'Lộ trình học tiếng Anh', to: '/lo-trinh-hoc-tieng-anh' },
+      { label: '48 ngày lấy gốc', to: '/48-ngay-lay-goc' },
+      { label: 'Shadowing tiếng Anh', to: '/shadowing-tieng-anh' },
+    ],
+    ctaLabel: 'Vào học cùng Poo',
+    ctaTo: '/learning-path',
+  },
   '/hoc-tieng-anh': {
     path: '/hoc-tieng-anh',
     eyebrow: 'Bắt đầu cùng cá voi Poo',
@@ -265,9 +308,225 @@ const LANDINGS: Record<string, SeoLandingContent> = {
   },
 };
 
+function ReviewSeoContent({ page }: { page: ReviewSeoPage }) {
+  return (
+    <Box bg="linear-gradient(180deg, rgba(232,244,255,0.72), rgba(248,252,255,0.94) 44%, rgba(255,255,255,0.98))" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} py={{ base: '4', md: '7' }}>
+      <Container maxW="1040px" px="0">
+        <VStack align="stretch" gap={{ base: '5', md: '7' }}>
+          <Box as="article" className="penglish-glass-card" border="1px solid" borderColor="rgba(186,230,253,0.9)" bg="rgba(255,255,255,0.84)" borderRadius={{ base: '30px', md: '42px' }} p={{ base: '5', md: '9' }} boxShadow="0 26px 80px rgba(31,111,214,0.13)" position="relative" overflow="hidden">
+            <Box aria-hidden="true" position="absolute" inset="0" bg="radial-gradient(circle at 12% 18%, rgba(91,188,235,0.22), transparent 24%), radial-gradient(circle at 90% 12%, rgba(255,255,255,0.9), transparent 18%), radial-gradient(circle at 70% 100%, rgba(31,111,214,0.12), transparent 30%)" />
+            <VStack position="relative" align="stretch" gap={{ base: '5', md: '6' }}>
+              <VStack align={{ base: 'center', md: 'start' }} textAlign={{ base: 'center', md: 'left' }} gap="4">
+                <HStack color={OCEAN_TOKENS.deepBlue} fontWeight="900" letterSpacing="0.08em" textTransform="uppercase" fontSize="xs" wrap="wrap" justify={{ base: 'center', md: 'start' }}>
+                  <Icon as={Waves} />
+                  <Text>{page.eyebrow}</Text>
+                  <Text aria-hidden="true">•</Text>
+                  <Text>{page.keyword}</Text>
+                </HStack>
+                <Text as="h1" fontSize={{ base: '3xl', md: '5xl' }} fontWeight="950" lineHeight="1.05" color={OCEAN_TOKENS.text} maxW="920px">
+                  {page.h1}
+                </Text>
+                <Text fontSize={{ base: 'md', md: 'xl' }} lineHeight="1.85" color={OCEAN_TOKENS.muted} fontWeight="700" maxW="900px">
+                  {page.description}
+                </Text>
+                <HStack gap="3" wrap="wrap" justify={{ base: 'center', md: 'start' }}>
+                  <Button as={RouterLink} to="/learning-path" borderRadius="full" bg={OCEAN_TOKENS.deepBlue} color="white" size="lg" rightIcon={<Icon as={ChevronRight} />} _hover={{ bg: OCEAN_TOKENS.oceanBlue }}>
+                    Mở lộ trình học
+                  </Button>
+                  <Button as={RouterLink} to="/shadowing" borderRadius="full" bg="white" color={OCEAN_TOKENS.deepBlue} size="lg" border="1px solid" borderColor={OCEAN_TOKENS.borderStrong} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+                    Luyện shadowing
+                  </Button>
+                  <Button as={RouterLink} to="/words" borderRadius="full" bg="white" color={OCEAN_TOKENS.deepBlue} size="lg" border="1px solid" borderColor={OCEAN_TOKENS.borderStrong} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+                    Ôn từ vựng
+                  </Button>
+                </HStack>
+              </VStack>
+
+              <Box bg="rgba(248,252,255,0.94)" border="1px solid" borderColor="rgba(186,230,253,0.82)" borderRadius="3xl" p={{ base: '4', md: '5' }}>
+                <HStack mb="3" color={OCEAN_TOKENS.deepBlue}>
+                  <Icon as={Sparkles} />
+                  <Text as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950">Trả lời nhanh: {page.keyword} là gì?</Text>
+                </HStack>
+                <Text color={OCEAN_TOKENS.text} fontWeight="750" lineHeight="1.9">{page.quickAnswer}</Text>
+              </Box>
+
+              <VStack align="stretch" gap={{ base: '4', md: '5' }}>
+                {page.sections.map((section) => (
+                  <Box key={section.heading} bg="rgba(255,255,255,0.90)" border="1px solid" borderColor="rgba(186,230,253,0.72)" borderRadius="3xl" p={{ base: '4', md: '6' }}>
+                    <HStack mb="3" color={OCEAN_TOKENS.deepBlue} align="start">
+                      <Icon as={BookOpen} />
+                      <Text as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="900" lineHeight="1.25">{section.heading}</Text>
+                    </HStack>
+                    <VStack align="stretch" gap="3">
+                      {section.paragraphs.map((paragraph) => (
+                        <Text key={paragraph} as="p" color={OCEAN_TOKENS.muted} fontWeight="650" lineHeight="1.9">{paragraph}</Text>
+                      ))}
+                    </VStack>
+                  </Box>
+                ))}
+              </VStack>
+
+              <Box bg="rgba(255,255,255,0.88)" border="1px solid" borderColor="rgba(186,230,253,0.82)" borderRadius="3xl" p={{ base: '4', md: '6' }}>
+                <HStack mb="4" color={OCEAN_TOKENS.deepBlue}>
+                  <Icon as={Compass} />
+                  <Text as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="900">Bơi tiếp trong cụm Ôn tiếng Anh</Text>
+                </HStack>
+                <HStack wrap="wrap" gap="3">
+                  {page.clusterLinks.map((link) => (
+                    <Button key={`${link.to}-${link.label}`} as={RouterLink} to={link.to} variant="outline" borderRadius="full" borderColor={OCEAN_TOKENS.borderStrong} color={OCEAN_TOKENS.deepBlue} bg="white" _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+                      {link.label}
+                    </Button>
+                  ))}
+                </HStack>
+              </Box>
+
+              <Box bg="rgba(248,252,255,0.94)" border="1px solid" borderColor="rgba(186,230,253,0.82)" borderRadius="3xl" p={{ base: '4', md: '6' }}>
+                <HStack mb="4" color={OCEAN_TOKENS.deepBlue}>
+                  <Icon as={HelpCircle} />
+                  <Text as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="900">Câu hỏi thường gặp</Text>
+                </HStack>
+                <VStack align="stretch" gap="3">
+                  {page.faqs.map((faq) => (
+                    <Box key={faq.question} bg="white" border="1px solid" borderColor="rgba(186,230,253,0.72)" borderRadius="2xl" p="4">
+                      <Text as="h3" fontWeight="900" color={OCEAN_TOKENS.text} mb="2">{faq.question}</Text>
+                      <Text color={OCEAN_TOKENS.muted} fontWeight="650" lineHeight="1.75">{faq.answer}</Text>
+                    </Box>
+                  ))}
+                </VStack>
+              </Box>
+            </VStack>
+          </Box>
+
+          <Box textAlign="center" bg="linear-gradient(135deg, rgba(31,111,214,0.95), rgba(91,188,235,0.9))" color="white" borderRadius="3xl" p={{ base: '5', md: '7' }} boxShadow="0 24px 70px rgba(31,111,214,0.22)">
+            <Icon as={BookOpen} boxSize="8" mb="3" />
+            <Text as="h2" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" mb="3">Sẵn sàng ôn một vòng nhỏ hôm nay?</Text>
+            <Text maxW="720px" mx="auto" lineHeight="1.8" fontWeight="700" opacity="0.94" mb="5">
+              Poo không cần bạn học thật nhiều trong một lần. Hãy mở lộ trình, nói theo một câu hoặc nhặt lại vài từ vựng. Một vòng ôn nhỏ hôm nay sẽ giúp đại dương tiếng Anh bớt rộng hơn ngày mai.
+            </Text>
+            <HStack justify="center" gap="3" wrap="wrap">
+              <Button as={RouterLink} to="/learning-path" borderRadius="full" bg="white" color={OCEAN_TOKENS.deepBlue} size="lg" _hover={{ bg: '#E8F4FF' }}>Mở lộ trình học</Button>
+              <Button as={RouterLink} to="/shadowing" borderRadius="full" bg="rgba(255,255,255,0.18)" color="white" size="lg" border="1px solid" borderColor="rgba(255,255,255,0.58)" _hover={{ bg: 'rgba(255,255,255,0.26)' }}>Luyện shadowing</Button>
+              <Button as={RouterLink} to="/words" borderRadius="full" bg="rgba(255,255,255,0.18)" color="white" size="lg" border="1px solid" borderColor="rgba(255,255,255,0.58)" _hover={{ bg: 'rgba(255,255,255,0.26)' }}>Ôn từ vựng</Button>
+            </HStack>
+          </Box>
+        </VStack>
+      </Container>
+    </Box>
+  );
+}
+
+function SeoPageContent({ page }: { page: SeoPage }) {
+  const childPosts = BLOG_POSTS.filter((post) => page.childPostSlugs.includes(post.slug));
+
+  return (
+    <Box bg="linear-gradient(180deg, rgba(232,244,255,0.72), rgba(248,252,255,0.94) 44%, rgba(255,255,255,0.98))" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} py={{ base: '4', md: '7' }}>
+      <Container maxW="1040px" px="0">
+        <VStack align="stretch" gap={{ base: '5', md: '7' }}>
+          <Box as="article" className="penglish-glass-card" border="1px solid" borderColor="rgba(186,230,253,0.9)" bg="rgba(255,255,255,0.84)" borderRadius={{ base: '30px', md: '42px' }} p={{ base: '5', md: '9' }} boxShadow="0 26px 80px rgba(31,111,214,0.13)" position="relative" overflow="hidden">
+            <Box aria-hidden="true" position="absolute" inset="0" bg="radial-gradient(circle at 12% 18%, rgba(91,188,235,0.22), transparent 24%), radial-gradient(circle at 90% 12%, rgba(255,255,255,0.9), transparent 18%), radial-gradient(circle at 70% 100%, rgba(31,111,214,0.12), transparent 30%)" />
+            <VStack position="relative" align="stretch" gap={{ base: '5', md: '6' }}>
+              <VStack align={{ base: 'center', md: 'start' }} textAlign={{ base: 'center', md: 'left' }} gap="4">
+                <HStack color={OCEAN_TOKENS.deepBlue} fontWeight="900" letterSpacing="0.08em" textTransform="uppercase" fontSize="xs" wrap="wrap" justify={{ base: 'center', md: 'start' }}>
+                  <Icon as={Waves} />
+                  <Text>{page.eyebrow}</Text>
+                  <Text aria-hidden="true">•</Text>
+                  <Text>{page.keyword}</Text>
+                </HStack>
+                <Text as="h1" fontSize={{ base: '3xl', md: '5xl' }} fontWeight="950" lineHeight="1.05" color={OCEAN_TOKENS.text} maxW="920px">{page.h1}</Text>
+                <Text fontSize={{ base: 'md', md: 'xl' }} lineHeight="1.85" color={OCEAN_TOKENS.muted} fontWeight="700" maxW="900px">{page.description}</Text>
+                <HStack gap="3" wrap="wrap" justify={{ base: 'center', md: 'start' }}>
+                  {page.links.slice(0, 4).map((link, index) => (
+                    <Button key={link.to} as={RouterLink} to={link.to} borderRadius="full" bg={index === 0 ? OCEAN_TOKENS.deepBlue : 'white'} color={index === 0 ? 'white' : OCEAN_TOKENS.deepBlue} size="lg" border={index === 0 ? undefined : '1px solid'} borderColor={OCEAN_TOKENS.borderStrong} rightIcon={index === 0 ? <Icon as={ChevronRight} /> : undefined} _hover={{ bg: index === 0 ? OCEAN_TOKENS.oceanBlue : OCEAN_TOKENS.softBlue }}>
+                      {link.label}
+                    </Button>
+                  ))}
+                </HStack>
+              </VStack>
+
+              <Box bg="rgba(248,252,255,0.94)" border="1px solid" borderColor="rgba(186,230,253,0.82)" borderRadius="3xl" p={{ base: '4', md: '5' }}>
+                <HStack mb="3" color={OCEAN_TOKENS.deepBlue}>
+                  <Icon as={Sparkles} />
+                  <Text as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950">{page.quickAnswerHeading}</Text>
+                </HStack>
+                <Text color={OCEAN_TOKENS.text} fontWeight="750" lineHeight="1.9" mb="3">{page.quickAnswer}</Text>
+                <VStack align="stretch" gap="2">
+                  {page.quickBullets.map((bullet) => <Text key={bullet} color={OCEAN_TOKENS.muted} fontWeight="750" lineHeight="1.7">• {bullet}</Text>)}
+                </VStack>
+              </Box>
+
+              <VStack align="stretch" gap={{ base: '4', md: '5' }}>
+                {page.sections.map((section) => (
+                  <Box key={section.heading} bg="rgba(255,255,255,0.90)" border="1px solid" borderColor="rgba(186,230,253,0.72)" borderRadius="3xl" p={{ base: '4', md: '6' }}>
+                    <HStack mb="3" color={OCEAN_TOKENS.deepBlue} align="start">
+                      <Icon as={BookOpen} />
+                      <Text as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="900" lineHeight="1.25">{section.heading}</Text>
+                    </HStack>
+                    <VStack align="stretch" gap="3">
+                      {section.paragraphs.map((paragraph) => <Text key={paragraph.slice(0, 80)} as="p" color={OCEAN_TOKENS.muted} fontWeight="650" lineHeight="1.9">{paragraph}</Text>)}
+                    </VStack>
+                  </Box>
+                ))}
+              </VStack>
+
+              {childPosts.length > 0 && (
+                <Box bg="rgba(255,255,255,0.88)" border="1px solid" borderColor="rgba(186,230,253,0.82)" borderRadius="3xl" p={{ base: '4', md: '6' }}>
+                  <HStack mb="4" color={OCEAN_TOKENS.deepBlue}>
+                    <Icon as={Compass} />
+                    <Text as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="900">Bài viết trong cụm chủ đề này</Text>
+                  </HStack>
+                  <SimpleGrid columns={{ base: 1, md: 2 }} gap="3">
+                    {childPosts.map((post) => (
+                      <Button key={post.slug} as={RouterLink} to={getBlogPostPath(post)} justifyContent="start" whiteSpace="normal" h="auto" py="3" variant="outline" borderRadius="2xl" borderColor={OCEAN_TOKENS.borderStrong} color={OCEAN_TOKENS.deepBlue} bg="white" _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+                        {post.title}
+                      </Button>
+                    ))}
+                  </SimpleGrid>
+                </Box>
+              )}
+
+              <Box bg="rgba(255,255,255,0.88)" border="1px solid" borderColor="rgba(186,230,253,0.82)" borderRadius="3xl" p={{ base: '4', md: '6' }}>
+                <HStack mb="4" color={OCEAN_TOKENS.deepBlue}>
+                  <Icon as={Compass} />
+                  <Text as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="900">Bài liên quan</Text>
+                </HStack>
+                <HStack wrap="wrap" gap="3">
+                  {page.links.map((link) => (
+                    <Button key={`${link.to}-${link.label}`} as={RouterLink} to={link.to} variant="outline" borderRadius="full" borderColor={OCEAN_TOKENS.borderStrong} color={OCEAN_TOKENS.deepBlue} bg="white" _hover={{ bg: OCEAN_TOKENS.softBlue }}>{link.label}</Button>
+                  ))}
+                  <Button as={RouterLink} to="/blog" variant="outline" borderRadius="full" borderColor={OCEAN_TOKENS.borderStrong} color={OCEAN_TOKENS.deepBlue} bg="white" _hover={{ bg: OCEAN_TOKENS.softBlue }}>Blog học tiếng Anh</Button>
+                </HStack>
+              </Box>
+
+              <Box bg="rgba(248,252,255,0.94)" border="1px solid" borderColor="rgba(186,230,253,0.82)" borderRadius="3xl" p={{ base: '4', md: '6' }}>
+                <HStack mb="4" color={OCEAN_TOKENS.deepBlue}>
+                  <Icon as={HelpCircle} />
+                  <Text as="h2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="900">Câu hỏi thường gặp</Text>
+                </HStack>
+                <VStack align="stretch" gap="3">
+                  {page.faqs.map((faq) => (
+                    <Box key={faq.question} bg="white" border="1px solid" borderColor="rgba(186,230,253,0.72)" borderRadius="2xl" p="4">
+                      <Text as="h3" fontWeight="900" color={OCEAN_TOKENS.text} mb="2">{faq.question}</Text>
+                      <Text color={OCEAN_TOKENS.muted} fontWeight="650" lineHeight="1.75">{faq.answer}</Text>
+                    </Box>
+                  ))}
+                </VStack>
+              </Box>
+            </VStack>
+          </Box>
+        </VStack>
+      </Container>
+    </Box>
+  );
+}
+
 export function SeoLandingPage() {
   const location = useLocation();
-  const content = LANDINGS[location.pathname] ?? LANDINGS['/hoc-tieng-anh'];
+  const reviewPage = getReviewSeoPageByPath(location.pathname);
+  const seoPage = getSeoPageByPath(location.pathname);
+  const content = LANDINGS[location.pathname] ?? LANDINGS['/'];
+
+  if (reviewPage) return <ReviewSeoContent page={reviewPage} />;
+  if (seoPage) return <SeoPageContent page={seoPage} />;
 
   return (
     <Box bg="linear-gradient(180deg, rgba(232,244,255,0.72), rgba(248,252,255,0.94) 44%, rgba(255,255,255,0.98))" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} py={{ base: '4', md: '7' }}>

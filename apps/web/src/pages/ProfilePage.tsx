@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Box, SimpleGrid, HStack, VStack, Flex, Text, Button, Icon, Avatar, Badge } from '@chakra-ui/react';
-import { Trophy, BookOpen, Target, Sparkles, ArrowRight, LogOut, RefreshCw } from 'lucide-react';
+import { Trophy, BookOpen, Target, Sparkles, ArrowRight, LogOut, RefreshCw, Waves } from 'lucide-react';
 import { BlueWhaleMascot } from '../components/landing/BlueWhaleMascot';
 import { AdaptiveWhaleScene } from '../components/streak/AdaptiveWhaleStreak';
 import { useAuth } from '../features/auth/AuthProvider';
 import { syncLocalFoundation48ProgressToCloud } from '../features/foundation48/foundation48CloudProgress';
+import { getDailyRewardState, getUnifiedBubbleStreak } from '../lib/p-english/daily-rewards';
 import { usePEnglishSession } from '../lib/p-english/userSession';
 
 type Profile = {
@@ -68,9 +69,9 @@ export function ProfilePage() {
     });
   }, [session.avatarUrl, session.displayName, session.email, session.isSignedIn, session.userId]);
 
-  const profileStreak = profile?.streak ?? 0;
+  const bubbleStreak = getUnifiedBubbleStreak(getDailyRewardState());
   const stats: Stat[] = [
-    { label: profileStreak <= 0 ? 'Chưa có chuỗi' : 'Chuỗi ngày học', value: profileStreak, tint: profileStreak <= 0 ? '#64758A' : PROFILE_COLORS.deepBlue, bg: profileStreak <= 0 ? '#F1F5F9' : PROFILE_COLORS.softBlue, icon: Sparkles, whale: true },
+    { label: 'Chuỗi bọt biển', value: bubbleStreak.label, tint: bubbleStreak.current <= 0 ? '#64758A' : PROFILE_COLORS.deepBlue, bg: bubbleStreak.current <= 0 ? '#F1F5F9' : PROFILE_COLORS.softBlue, icon: Waves, whale: true },
     { label: 'Xu', value: profile?.coin ?? 0, tint: '#B7791F', bg: PROFILE_COLORS.rewardYellow, icon: Trophy },
     { label: 'Từ đã thuộc', value: 0, tint: PROFILE_COLORS.successGreen, bg: '#EAFBF0', icon: BookOpen },
     { label: 'Bộ học', value: 0, tint: PROFILE_COLORS.deepBlue, bg: PROFILE_COLORS.softBlue, icon: BookOpen },
@@ -146,7 +147,7 @@ export function ProfilePage() {
           <Box key={s.label} bg={PROFILE_COLORS.card} border="1px solid" borderColor={PROFILE_COLORS.border} borderRadius="2xl" boxShadow="0 12px 30px rgba(16, 42, 67, 0.055)" p={{ base: '4', md: '5' }}>
             <HStack mb="3" gap="2" align="center">
               <Flex w="36px" h="36px" borderRadius="xl" bg={s.bg} color={s.tint} align="center" justify="center" flexShrink={0} overflow="hidden">
-                {s.whale ? <Box w="42px" h="30px" overflow="hidden"><AdaptiveWhaleScene streak={Number(s.value) || 0} variant="badge" inactive={s.whale && Number(s.value) <= 0} /></Box> : <Icon as={s.icon} boxSize="5" />}
+                {s.whale ? <Box w="42px" h="30px" overflow="hidden"><AdaptiveWhaleScene streak={bubbleStreak.current} variant="badge" inactive={bubbleStreak.current <= 0} /></Box> : <Icon as={s.icon} boxSize="5" />}
               </Flex>
               <Text color={PROFILE_COLORS.secondaryText} fontSize="sm" fontWeight="700">{s.label}</Text>
             </HStack>

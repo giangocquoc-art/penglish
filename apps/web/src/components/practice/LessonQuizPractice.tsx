@@ -363,13 +363,17 @@ export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: Engl
       const typingTarget = isTypingTarget(event.target);
 
       if (event.key === 'Enter') {
-        event.preventDefault();
+        if (typingTarget && event.target instanceof HTMLElement && event.target.tagName.toLowerCase() === 'textarea') return;
         if (currentAnswer.checked) {
-          if (currentAnswer.isCorrect) nextQuestion();
-          else resetCurrent();
-        } else {
-          checkCurrent();
+          if (currentAnswer.isCorrect) {
+            event.preventDefault();
+            nextQuestion();
+          }
+          return;
         }
+        if (!hasAnswer(current, currentAnswer)) return;
+        event.preventDefault();
+        checkCurrent();
         return;
       }
 
@@ -625,7 +629,7 @@ function QuestionBody({
           aria-label="Nhập đáp án điền vào chỗ trống"
           onChange={(event) => onChange({ fillValue: event.target.value, warning: undefined })}
         />
-        <Text mt="2" fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted}>Enter kiểm tra/tiếp; R làm lại; N câu tiếp.</Text>
+        <Text mt="2" fontSize={{ base: 'xs', md: 'sm' }} color={COLORS.muted}>Mẹo: Nhấn Enter để kiểm tra, đúng rồi thì Enter lần nữa để đi tiếp.</Text>
       </Box>
     );
   }

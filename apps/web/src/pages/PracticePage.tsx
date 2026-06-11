@@ -20,7 +20,8 @@ import { getLearningHeartsState, getLockRemainingText, isLearningLocked, LEARNIN
 import { getLessonById } from '../lib/p-english/lesson-content-data';
 import { getAvailableLessonProgressModes, type LessonProgressMode } from '../lib/p-english/lesson-progress';
 import { getUnifiedPracticeContentDepth } from '../lib/p-english/unifiedLessonEngine';
-import { getCurrentStreak, LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
+import { LOCAL_PROGRESS_UPDATED_EVENT } from '../lib/p-english/local-progress';
+import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbleStreak } from '../lib/p-english/daily-rewards';
 import { getLearningLoopSnapshot, LEARNING_LOOP_UPDATED_EVENT, resolveLearningLoopMistake, type LearningLoopMistakeRecord, type LearningLoopWordRecord } from '../lib/p-english/learning-loop';
 import { getFoundation48DayPath, FOUNDATION48_BASE_PATH } from '../features/foundation48/foundation48Data';
 
@@ -391,7 +392,7 @@ export function PracticePage() {
   const [stats, setStats] = useState<Stats>({});
   const [picked, setPicked] = useState<string | null>(null);
   const [heartsState, setHeartsState] = useState<LearningHeartsState>(() => getLearningHeartsState());
-  const [currentStreak, setCurrentStreak] = useState(() => getCurrentStreak());
+  const [bubbleStreakCurrent, setBubbleStreakCurrent] = useState(() => getUnifiedBubbleStreak(getDailyRewardState()).current);
   const { whaleMood, triggerWhaleMood } = useWhaleMoodController('idle');
   const [learningLoopSnapshot, setLearningLoopSnapshot] = useState(() => getLearningLoopSnapshot());
   const [pooReviewStage, setPooReviewStage] = useState<PooReviewStage>('idle');
@@ -438,15 +439,15 @@ export function PracticePage() {
   }, []);
 
   useEffect(() => {
-    const refreshStreak = () => setCurrentStreak(getCurrentStreak());
-    refreshStreak();
-    window.addEventListener('focus', refreshStreak);
-    window.addEventListener('storage', refreshStreak);
-    window.addEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshStreak);
+    const refreshBubbleStreak = () => setBubbleStreakCurrent(getUnifiedBubbleStreak(getDailyRewardState()).current);
+    refreshBubbleStreak();
+    window.addEventListener('focus', refreshBubbleStreak);
+    window.addEventListener('storage', refreshBubbleStreak);
+    window.addEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshBubbleStreak);
     return () => {
-      window.removeEventListener('focus', refreshStreak);
-      window.removeEventListener('storage', refreshStreak);
-      window.removeEventListener(LOCAL_PROGRESS_UPDATED_EVENT, refreshStreak);
+      window.removeEventListener('focus', refreshBubbleStreak);
+      window.removeEventListener('storage', refreshBubbleStreak);
+      window.removeEventListener(DAILY_REWARDS_UPDATED_EVENT, refreshBubbleStreak);
     };
   }, []);
 
@@ -475,7 +476,7 @@ export function PracticePage() {
 
   const renderWithStudyWhale = (content: ReactNode, placement: WhaleCompanionPlacement = 'hidden-mobile') => (
     <Box position="relative" isolation="isolate">
-      <WhaleStudyCompanion mood={whaleMood} placement={placement} streak={currentStreak} />
+      <WhaleStudyCompanion mood={whaleMood} placement={placement} streak={bubbleStreakCurrent} />
       {content}
     </Box>
   );

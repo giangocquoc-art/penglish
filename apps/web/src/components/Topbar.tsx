@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Flex, HStack, Text, Button, Icon, IconButton } from '@chakra-ui/react';
-import { BookOpen, Star, Waves } from 'lucide-react';
+import { BookOpen, Star } from 'lucide-react';
 import type { SidebarUser } from './Sidebar';
-import { StreakWhaleBadge } from './streak/AdaptiveWhaleStreak';
+import { BubbleStreakBadge } from './streak/BubbleStreakBadge';
 import { MobileDrawerToggle } from './MobileDrawer';
 import { BottomNav } from './BottomNav';
 import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState } from '../lib/p-english/daily-rewards';
@@ -57,8 +57,8 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
         <Button as={RouterLink} to="/shadowing-tieng-anh" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
           Shadowing
         </Button>
-        <Button as={RouterLink} to="/gioi-thieu" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
-          Giới thiệu
+        <Button as={RouterLink} to="/on-tieng-anh" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+          Ôn tiếng Anh
         </Button>
         <Button as={RouterLink} to="/blog" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
           Blog
@@ -66,23 +66,7 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
       </HStack>
 
       <HStack gap={{ base: '2', md: '3' }} ml="auto">
-        <StreakWhaleBadge streak={rewardState.streakDays} />
-        <HStack
-          data-testid="topbar-bubbles-badge"
-          gap="1.5"
-          px={{ base: '2.5', md: '3' }}
-          h="38px"
-          borderRadius="full"
-          bg="rgba(255, 247, 214, 0.86)"
-          color={OCEAN_TOKENS.text}
-          border="1px solid"
-          borderColor="rgba(249, 185, 62, 0.34)"
-          boxShadow="0 12px 26px rgba(249, 185, 62, 0.10)"
-          aria-label={`Bọt biển ${rewardState.bubbles}/${rewardState.maxBubbles}`}
-        >
-          <Icon as={Waves} boxSize="4" color={OCEAN_TOKENS.oceanBlue} />
-          <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="700" noOfLines={1}>Bọt biển {rewardState.bubbles}/{rewardState.maxBubbles}</Text>
-        </HStack>
+        <BubbleStreakBadge state={rewardState} testId="topbar-bubbles-badge" />
 
         <Button
           as={RouterLink}
