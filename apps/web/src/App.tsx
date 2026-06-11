@@ -34,6 +34,8 @@ const NewResourceHubPage = lazy(() => import('./pages/ResourceHubPage').then((mo
 const Foundation48Page = lazy(() => import('./features/foundation48/Foundation48Page').then((module) => ({ default: module.Foundation48Page })));
 const Foundation48DayPage = lazy(() => import('./features/foundation48/Foundation48DayPage').then((module) => ({ default: module.Foundation48DayPage })));
 const AdminPage = lazy(() => import('./pages/AdminPage').then((module) => ({ default: module.AdminPage })));
+const SeoLandingPage = lazy(() => import('./pages/SeoLandingPage').then((module) => ({ default: module.SeoLandingPage })));
+const BlogPage = lazy(() => import('./pages/BlogPage').then((module) => ({ default: module.BlogPage })));
 
 type User = {
   id: string;
@@ -155,7 +157,20 @@ function AppRoutes() {
   const pathname = location.pathname;
 
   let routeElement: ReactNode;
-  if (pathname === '/') routeElement = <Navigate to="/home" replace />;
+  const isSeoLandingRoute = [
+    '/',
+    '/hoc-tieng-anh',
+    '/lo-trinh-hoc-tieng-anh',
+    '/shadowing-tieng-anh',
+    '/tu-vung-tieng-anh',
+    '/luyen-nghe-tieng-anh',
+    '/ngu-phap-tieng-anh',
+    '/48-ngay-lay-goc',
+    '/gioi-thieu',
+  ].includes(pathname);
+
+  if (isSeoLandingRoute) routeElement = <NewShell user={user}><SeoLandingPage /></NewShell>;
+  else if (pathname === '/blog' || pathname.startsWith('/blog/')) routeElement = <NewShell user={user}><BlogPage /></NewShell>;
   else if (isLoginCasingVariant || pathname === '/login/') routeElement = <Navigate to="/login" replace />;
   else if (pathname === '/login') routeElement = auth.user ? <Navigate to="/home" replace /> : <NewLoginPage />;
   else if (pathname === '/login/callback' || pathname === '/auth/callback') routeElement = <NewLoginCallbackPage />;

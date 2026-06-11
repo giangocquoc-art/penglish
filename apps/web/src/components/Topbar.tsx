@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { Box, Flex, HStack, Text, Button, Icon, IconButton } from '@chakra-ui/react';
-import { Star, Waves } from 'lucide-react';
+import { BookOpen, Star, Waves } from 'lucide-react';
 import type { SidebarUser } from './Sidebar';
 import { StreakWhaleBadge } from './streak/AdaptiveWhaleStreak';
 import { MobileDrawerToggle } from './MobileDrawer';
@@ -46,9 +47,23 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
     >
       <MobileDrawerToggle user={user} />
 
-      <Box display={{ base: 'none', md: 'block' }} color={OCEAN_TOKENS.muted} fontWeight="700" fontSize="sm">
-        PooEnglish · vùng học yên tĩnh
-      </Box>
+      <HStack as="nav" aria-label="Liên kết SEO PooEnglish" display={{ base: 'none', xl: 'flex' }} gap="3" color={OCEAN_TOKENS.muted} fontWeight="800" fontSize="sm">
+        <Button as={RouterLink} to="/hoc-tieng-anh" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+          Học tiếng Anh
+        </Button>
+        <Button as={RouterLink} to="/lo-trinh-hoc-tieng-anh" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+          Lộ trình
+        </Button>
+        <Button as={RouterLink} to="/shadowing-tieng-anh" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+          Shadowing
+        </Button>
+        <Button as={RouterLink} to="/gioi-thieu" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+          Giới thiệu
+        </Button>
+        <Button as={RouterLink} to="/blog" variant="ghost" size="sm" borderRadius="full" color={OCEAN_TOKENS.deepBlue} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+          Blog
+        </Button>
+      </HStack>
 
       <HStack gap={{ base: '2', md: '3' }} ml="auto">
         <StreakWhaleBadge streak={rewardState.streakDays} />
@@ -70,6 +85,8 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
         </HStack>
 
         <Button
+          as={RouterLink}
+          to="/learning-path"
           bg="rgba(255, 255, 255, 0.70)"
           color={OCEAN_TOKENS.deepBlue}
           leftIcon={<Icon as={Star} />}
@@ -87,8 +104,10 @@ export function Topbar({ user }: { user: SidebarUser | null }) {
         </Button>
 
         <IconButton
+          as={RouterLink}
+          to="/learning-path"
           aria-label="PooEnglish học miễn phí"
-          icon={<Icon as={Star} />}
+          icon={<Icon as={BookOpen} />}
           bg="rgba(255, 255, 255, 0.72)"
           color={OCEAN_TOKENS.deepBlue}
           borderRadius="full"
