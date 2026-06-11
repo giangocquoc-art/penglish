@@ -53,11 +53,25 @@ export function getGuestDataModeLabel() {
   return 'Poo đang giữ tiến độ cho bạn' as const;
 }
 
+const PENGUISH_USER_SESSION_TIMEOUT_MS = 2500;
+
+async function withGuestTimeout<T>(task: Promise<T>, fallback: T): Promise<T> {
+  return Promise.race([
+    task.catch(() => fallback),
+    new Promise<T>((resolve) => {
+      if (typeof window === 'undefined') return resolve(fallback);
+      window.setTimeout(() => resolve(fallback), PENGUISH_USER_SESSION_TIMEOUT_MS);
+    }),
+  ]);
+}
+
 export async function getCurrentSupabaseUser() {
   if (!supabase) return null;
-  const { data, error } = await supabase.auth.getUser();
-  if (error) return null;
-  return data.user ?? null;
+  const result = await withGuestTimeout(
+    supabase.auth.getUser().then(({ data, error }) => (error ? null : data.user ?? null)),
+    null,
+  );
+  return result;
 }
 
 export async function signInWithGoogle() {
@@ -65,11 +79,14 @@ export async function signInWithGoogle() {
     return { ok: false, message: 'Cổng vào học bằng Google chưa sẵn sàng. Bạn thử lại sau một chút nhé.' };
   }
 
-  const redirectTo = `${window.location.origin}/auth/callback`;
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo },
-  });
+  const redirectTo = new URL('/auth/callback', window.location.origin).toString();
+  const { error } = await withGuestTimeout(
+    supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo },
+    }),
+    { data: { provider: 'google' as const, url: '' }, error: null },
+  );
 
   if (error) {
     console.error('Supabase Google OAuth failed', error);
@@ -81,7 +98,7 @@ export async function signInWithGoogle() {
 
 export async function signOutSupabase() {
   if (!supabase) return;
-  await supabase.auth.signOut();
+  await withGuestTimeout(supabase.auth.signOut(), { error: null });
   if (typeof window !== 'undefined') window.dispatchEvent(new Event(SUPABASE_AUTH_EVENT));
 }
 

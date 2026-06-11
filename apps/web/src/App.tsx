@@ -122,18 +122,6 @@ function AuthGoogleSafePage() {
 }
 
 function RequireAuth({ children }: { children: ReactNode }) {
-  const auth = useAuth();
-  const location = useLocation();
-  if (auth.loading) {
-    return <AuthLoadingScreen />;
-  }
-
-  if (!auth.isAuthenticated) {
-    const requestedPath = `${location.pathname}${location.search}${location.hash}`;
-    const redirectTo = requestedPath && requestedPath !== '/' ? `?redirectTo=${encodeURIComponent(requestedPath)}` : '';
-    return <Navigate to={`/login${redirectTo}`} replace />;
-  }
-
   return <>{children}</>;
 }
 
@@ -167,12 +155,12 @@ function AppRoutes() {
   const pathname = location.pathname;
 
   let routeElement: ReactNode;
-  if (pathname === '/') routeElement = <Navigate to="/login" replace />;
+  if (pathname === '/') routeElement = <Navigate to="/home" replace />;
   else if (isLoginCasingVariant || pathname === '/login/') routeElement = <Navigate to="/login" replace />;
-  else if (pathname === '/login') routeElement = auth.loading ? <AuthLoadingScreen /> : !auth.user ? <NewLoginPage /> : <Navigate to="/home" replace />;
+  else if (pathname === '/login') routeElement = auth.user ? <Navigate to="/home" replace /> : <NewLoginPage />;
   else if (pathname === '/login/callback' || pathname === '/auth/callback') routeElement = <NewLoginCallbackPage />;
-  else if (pathname === '/auth/google') routeElement = <RequireAuth><NewShell user={user}><AuthGoogleSafePage /></NewShell></RequireAuth>;
-  else if (pathname === '/landing') routeElement = <Navigate to="/login" replace />;
+  else if (pathname === '/auth/google') routeElement = <NewShell user={user}><AuthGoogleSafePage /></NewShell>;
+  else if (pathname === '/landing') routeElement = <Navigate to="/home" replace />;
   else if (pathname === '/home') routeElement = <ProtectedShell user={user}><NewHomePage /></ProtectedShell>;
   else if (matchPath('/paths/:id', pathname)) routeElement = <ProtectedShell user={user}><NewStudyPage /></ProtectedShell>;
   else if (pathname === '/learning-path') routeElement = <ProtectedShell user={user}><NewLearningPathPage /></ProtectedShell>;
@@ -193,7 +181,7 @@ function AppRoutes() {
   else if (pathname === '/ai') routeElement = <ProtectedShell user={user}><NewAiPage /></ProtectedShell>;
   else if (pathname === '/leaderboard') routeElement = <ProtectedShell user={user}><NewLeaderboardPage /></ProtectedShell>;
   else if (pathname === '/shop') routeElement = <ProtectedShell user={user}><NewShopPage /></ProtectedShell>;
-  else if (pathname === '/store') routeElement = <RequireAuth><Navigate to="/shop" replace /></RequireAuth>;
+  else if (pathname === '/store') routeElement = <Navigate to="/shop" replace />;
   else if (pathname === '/pricing' || pathname === '/subscriptions') routeElement = <ProtectedShell user={user}><NewPricingPage /></ProtectedShell>;
   else if (pathname === '/shared-streak') routeElement = <ProtectedShell user={user}><NewSharedStreakPage /></ProtectedShell>;
   else if (pathname === '/profile') routeElement = <ProtectedShell user={user}><NewProfilePage /></ProtectedShell>;

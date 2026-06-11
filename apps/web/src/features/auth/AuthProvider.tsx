@@ -5,6 +5,8 @@ import { mergeCloudAndLocalFoundation48Progress } from '../foundation48/foundati
 
 export const PENGUISH_AUTH_UPDATED_EVENT = 'penglish-auth-updated';
 
+const AUTH_GUEST_TIMEOUT_MS = 2500;
+
 type AuthContextValue = {
   user: User | null;
   session: Session | null;
@@ -18,6 +20,28 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+function dispatchAuthUpdated() {
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event(PENGUISH_AUTH_UPDATED_EVENT));
+}
+
+async function withAuthTimeout<T>(task: Promise<T>, fallback: T, label: string): Promise<T> {
+  let timeoutId: number | undefined;
+
+  const timeout = new Promise<T>((resolve) => {
+    if (typeof window === 'undefined') return resolve(fallback);
+    timeoutId = window.setTimeout(() => {
+      console.warn(`[PooEnglish auth] ${label} timed out after ${AUTH_GUEST_TIMEOUT_MS}ms; continuing as guest.`);
+      resolve(fallback);
+    }, AUTH_GUEST_TIMEOUT_MS);
+  });
+
+  try {
+    return await Promise.race([task, timeout]);
+  } finally {
+    if (timeoutId) window.clearTimeout(timeoutId);
+  }
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,43 +51,72 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!supabase) {
       setSession(null);
       setLoading(false);
+      dispatchAuthUpdated();
       return null;
     }
 
     if (showLoading) setLoading(true);
-    const { data, error } = await supabase.auth.getSession();
-    const nextSession = error ? null : data.session ?? null;
-    setSession(nextSession);
-    setLoading(false);
-    window.dispatchEvent(new Event(PENGUISH_AUTH_UPDATED_EVENT));
-    return nextSession;
+    try {
+      const nextSession = await withAuthTimeout(
+        supabase.auth.getSession()
+          .then(({ data, error }) => (error ? null : data.session ?? null))
+          .catch((error) => {
+            console.warn('[PooEnglish auth] Could not read Supabase session; continuing as guest.', error);
+            return null;
+          }),
+        null,
+        'getSession',
+      );
+      setSession(nextSession);
+      return nextSession;
+    } finally {
+      setLoading(false);
+      dispatchAuthUpdated();
+    }
   }, []);
 
   const refreshSession = useCallback(() => loadSessionFromProvider({ showLoading: true }), [loadSessionFromProvider]);
 
   useEffect(() => {
     let active = true;
+    let fallbackTimer: number | undefined;
+
+    if (typeof window !== 'undefined') {
+      fallbackTimer = window.setTimeout(() => {
+        if (!active) return;
+        console.warn(`[PooEnglish auth] Initial auth check exceeded ${AUTH_GUEST_TIMEOUT_MS}ms; rendering guest mode.`);
+        setSession(null);
+        setLoading(false);
+        dispatchAuthUpdated();
+      }, AUTH_GUEST_TIMEOUT_MS);
+    }
 
     const hydrate = async () => {
-      if (!supabase) {
+      try {
+        const nextSession = await loadSessionFromProvider();
+        if (!active) return;
+        setSession(nextSession);
+      } catch (error) {
+        console.warn('[PooEnglish auth] Initial auth check failed; rendering guest mode.', error);
+        if (active) setSession(null);
+      } finally {
+        if (fallbackTimer) window.clearTimeout(fallbackTimer);
         if (active) setLoading(false);
-        return;
+        dispatchAuthUpdated();
       }
-      const nextSession = await loadSessionFromProvider();
-      if (!active) return;
-      setSession(nextSession);
     };
 
     void hydrate();
 
     const subscription = supabase?.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession);
+      setSession(nextSession ?? null);
       setLoading(false);
-      window.dispatchEvent(new Event(PENGUISH_AUTH_UPDATED_EVENT));
+      dispatchAuthUpdated();
     });
 
     return () => {
       active = false;
+      if (fallbackTimer) window.clearTimeout(fallbackTimer);
       subscription?.data.subscription.unsubscribe();
     };
   }, [loadSessionFromProvider]);
@@ -72,13 +125,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const userId = session?.user?.id;
     if (!userId) return;
 
-    void mergeCloudAndLocalFoundation48Progress(userId).catch(() => undefined);
+    void withAuthTimeout(
+      mergeCloudAndLocalFoundation48Progress(userId).catch((error) => {
+        console.warn('[PooEnglish auth] Could not merge cloud progress; keeping local guest progress available.', error);
+      }),
+      undefined,
+      'mergeCloudAndLocalFoundation48Progress',
+    );
   }, [session?.user?.id]);
 
   const signInWithGoogle = useCallback(async () => {
-    if (!supabase) return { ok: false, message: 'Poo chưa mở được cổng đăng nhập. Bạn thử lại sau một chút nhé.' };
+    if (!supabase) return { ok: false, message: 'Poo chưa mở được cổng đăng nhập. Bạn vẫn có thể học ở chế độ khách nhé.' };
 
-    const intendedPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    const intendedPath = `${window.location.pathname}${window.location.search}${window.location.hash}`.replace(/#$/, '');
     if (intendedPath && !/^\/(login|auth\/callback)/.test(window.location.pathname)) {
       try {
         window.sessionStorage.setItem('penglish-auth-redirect', intendedPath);
@@ -87,24 +146,46 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     }
 
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
+    try {
+      const result = await withAuthTimeout(
+        supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: new URL('/auth/callback', window.location.origin).toString(),
+          },
+        }),
+        { data: { provider: 'google' as const, url: '' }, error: null },
+        'signInWithOAuth',
+      );
 
-    if (error) return { ok: false, message: 'Poo chưa mở được cổng đăng nhập. Bạn thử lại sau một chút nhé.' };
-    return { ok: true };
+      if (result.error) return { ok: false, message: 'Poo chưa mở được cổng đăng nhập. Bạn vẫn có thể học ở chế độ khách nhé.' };
+      return { ok: true };
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   const signOut = useCallback(async () => {
-    if (!supabase) return { ok: false, message: 'Đăng nhập Google chưa bật.' };
-    const { error } = await supabase.auth.signOut();
-    setSession(null);
-    window.dispatchEvent(new Event(PENGUISH_AUTH_UPDATED_EVENT));
-    if (error) return { ok: false, message: 'Chưa đăng xuất được khỏi Google.' };
-    return { ok: true };
+    if (!supabase) {
+      setSession(null);
+      setLoading(false);
+      dispatchAuthUpdated();
+      return { ok: true };
+    }
+
+    try {
+      const { error } = await withAuthTimeout(
+        supabase.auth.signOut().catch((error) => ({ error })),
+        { error: null },
+        'signOut',
+      );
+      if (error) return { ok: false, message: 'Chưa đăng xuất được khỏi Google.' };
+      return { ok: true };
+    } finally {
+      setSession(null);
+      setLoading(false);
+      dispatchAuthUpdated();
+    }
   }, []);
 
   const value = useMemo<AuthContextValue>(() => ({

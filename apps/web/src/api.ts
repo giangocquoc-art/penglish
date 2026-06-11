@@ -57,7 +57,7 @@ api.interceptors.response.use(
         queue = [];
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        window.location.href = '/login';
+        console.warn('[PooEnglish auth] Token refresh failed; continuing in guest mode.');
       } finally {
         refreshing = false;
       }

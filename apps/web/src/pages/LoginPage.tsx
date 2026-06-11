@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BrandLogo } from '../components/BrandLogo';
 import { useAuth } from '../features/auth/AuthProvider';
-import { AuthLoadingScreen } from '../features/auth/AuthLoadingScreen';
 import { OceanMascot } from '../components/p-english/OceanMascot';
+import { supabase } from '../lib/supabaseClient';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
 const cardHeadingWeight = '700';
@@ -20,7 +20,7 @@ export function LoginPage() {
   const [loginParams] = useSearchParams();
   const isInAppBrowser = isInAppLoginBrowser();
   const loginUrl = getLoginUrl();
-  const visibleInfoMessage = authMessage || 'PooEnglish cần đăng nhập để lưu tiến độ học tập của bạn.';
+  const visibleInfoMessage = authMessage || 'Đăng nhập Google là tùy chọn. Bạn vẫn có thể học cùng Poo ở chế độ khách.';
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -38,9 +38,12 @@ export function LoginPage() {
         // Redirect preservation is helpful but not required for auth to work.
       }
     }
-    const result = await auth.signInWithGoogle();
-    if (!result.ok) setAuthMessage(result.message ?? 'Poo chưa mở được cổng đăng nhập. Bạn thử lại sau một chút nhé.');
-    setGoogleLoading(false);
+    try {
+      const result = await auth.signInWithGoogle();
+      if (!result.ok) setAuthMessage(result.message ?? 'Poo chưa mở được cổng đăng nhập. Bạn vẫn có thể học ở chế độ khách nhé.');
+    } finally {
+      setGoogleLoading(false);
+    }
   };
 
   const copyLoginLink = async () => {
@@ -89,7 +92,7 @@ export function LoginPage() {
                 Vào lớp học PooEnglish
               </Text>
               <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="600" color="rgba(240, 249, 255, 0.88)" lineHeight="1.65">
-                Đăng nhập để lưu tiến độ và tiếp tục hành trình học cùng Poo.
+                Bạn có thể vào học ngay. Đăng nhập Google chỉ giúp Poo lưu tiến độ lên tài khoản.
               </Text>
             </VStack>
           </VStack>
@@ -122,7 +125,7 @@ export function LoginPage() {
                     Vào lớp học PooEnglish
                   </Text>
                   <Text color="#475569" fontSize="sm" fontWeight={softEmphasisWeight} lineHeight="1.7" maxW="340px">
-                    Bạn cần đăng nhập để lưu tiến độ và vào lớp học.
+                    Bạn có thể học ngay ở chế độ khách, hoặc đăng nhập để lưu tiến độ lên tài khoản.
                   </Text>
                 </VStack>
 
@@ -148,7 +151,7 @@ export function LoginPage() {
                   ) : (
                     <Button
                       data-testid="login-google-supabase"
-                      isLoading={googleLoading || auth.loading}
+                      isLoading={googleLoading}
                       onClick={connectGoogle}
                       w="100%"
                       h={{ base: '54px', md: '58px' }}
@@ -320,32 +323,69 @@ function AuthCallbackContent({ params }: { params: URLSearchParams }) {
 
   useEffect(() => {
     let active = true;
+    const redirectToLearning = (target: string) => {
+      if (active) navigate(target, { replace: true });
+    };
+
     const run = async () => {
-      const session = await refreshSession();
+      cleanEmptyCallbackHash();
       const fallback = sanitizeAuthRedirect(params.get('next') || params.get('redirectTo'));
+      const code = params.get('code');
       let intended = fallback;
+
       try {
         intended = sanitizeAuthRedirect(window.sessionStorage.getItem('penglish-auth-redirect')) || fallback;
         window.sessionStorage.removeItem('penglish-auth-redirect');
       } catch {
         intended = fallback;
       }
-      window.setTimeout(() => {
-        if (active) navigate(session?.user ? intended : '/login', { replace: true });
-      }, 250);
+
+      const timeout = window.setTimeout(() => redirectToLearning(intended), 2500);
+
+      try {
+        if (code && supabase) {
+          await withCallbackTimeout(
+            supabase.auth.exchangeCodeForSession(code).catch((error) => {
+              console.warn('[PooEnglish auth] Could not exchange callback code; continuing as guest.', error);
+              return null;
+            }),
+          );
+        }
+
+        await withCallbackTimeout(refreshSession().catch(() => null));
+      } catch (error) {
+        console.warn('[PooEnglish auth] Callback could not finish auth; continuing as guest.', error);
+      } finally {
+        window.clearTimeout(timeout);
+        window.setTimeout(() => redirectToLearning(intended), 50);
+      }
     };
+
     void run();
     return () => {
       active = false;
     };
   }, [navigate, params, refreshSession]);
 
-  return <AuthLoadingScreen />;
+  return null;
+}
+
+function cleanEmptyCallbackHash() {
+  if (window.location.hash === '#') {
+    window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+  }
+}
+
+function withCallbackTimeout<T>(task: Promise<T>) {
+  return Promise.race([
+    task,
+    new Promise<null>((resolve) => window.setTimeout(() => resolve(null), 2500)),
+  ]);
 }
 
 function sanitizeAuthRedirect(value: string | null) {
-  if (!value) return '/home';
-  if (!value.startsWith('/') || value.startsWith('//')) return '/home';
-  if (/^\/(login|login\/callback|auth\/callback)(\/|\?|#|$)/i.test(value)) return '/home';
-  return value;
+  if (!value) return '/learning-path';
+  if (!value.startsWith('/') || value.startsWith('//')) return '/learning-path';
+  if (/^\/(login|login\/callback|auth\/callback)(\/|\?|#|$)/i.test(value)) return '/learning-path';
+  return value.replace(/#$/, '');
 }

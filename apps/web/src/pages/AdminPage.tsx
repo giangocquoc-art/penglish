@@ -1,7 +1,7 @@
 import { Box, Button, Center, Checkbox, Flex, FormControl, FormLabel, HStack, Icon, Input, Progress, SimpleGrid, Text, Textarea, VStack } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
 import { Activity, BookCheck, MessageSquareWarning, Plus, Upload, UserPlus, Users } from 'lucide-react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../features/auth/AuthProvider';
 import { AdminLayout } from '../features/admin/AdminLayout';
 import { AdminTable, type AdminColumn } from '../features/admin/AdminTable';
@@ -26,22 +26,6 @@ export function AdminPage() {
   const auth = useAuth();
   const location = useLocation();
   const section = getAdminSection(location.pathname);
-
-  if (auth.loading) {
-    return (
-      <Center minH="100vh" bg="linear-gradient(135deg, #E0F2FE, #FFFFFF)">
-        <VStack className="penglish-glass-card" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" bg="rgba(255,255,255,0.82)" p="8" gap="3">
-          <Text color="#0F3557" fontWeight="900" fontSize="xl">Đang kiểm tra quyền quản trị</Text>
-          <Text color="#52667A" fontWeight="650">PooEnglish đang xác minh tài khoản admin.</Text>
-        </VStack>
-      </Center>
-    );
-  }
-
-  if (!auth.isAuthenticated) {
-    const requestedPath = `${location.pathname}${location.search}${location.hash}`;
-    return <Navigate to={`/login?redirectTo=${encodeURIComponent(requestedPath)}`} replace />;
-  }
 
   if ((auth.user?.email ?? '').toLowerCase() !== ADMIN_EMAIL) {
     return (

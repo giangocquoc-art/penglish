@@ -6,6 +6,10 @@ const supabaseAnonKey = String(import.meta.env.VITE_SUPABASE_ANON_KEY ?? '').tri
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 export const authUnavailableReason = isSupabaseConfigured ? null : 'missing-supabase-env';
 
+if (!isSupabaseConfigured) {
+  console.warn('[PooEnglish auth] Missing Supabase env. Google login is optional and the app will continue in guest mode.');
+}
+
 export const supabase: SupabaseClient | null = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {

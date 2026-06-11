@@ -126,8 +126,18 @@ function saveSignedInFoundation48Day(dayNumber: number, day: Foundation48Progres
     .then(async ({ saveCloudFoundation48DayProgress }) => {
       const { supabase } = await import('../../lib/supabaseClient');
       if (!supabase) return;
-      const { data } = await supabase.auth.getSession();
-      const userId = data.session?.user?.id;
+
+      const session = await Promise.race([
+        supabase.auth.getSession()
+          .then(({ data }) => data.session ?? null)
+          .catch(() => null),
+        new Promise<null>((resolve) => {
+          if (typeof window === 'undefined') return resolve(null);
+          window.setTimeout(() => resolve(null), 2500);
+        }),
+      ]);
+
+      const userId = session?.user?.id;
       if (!userId) return;
       await saveCloudFoundation48DayProgress(userId, { ...day, dayNumber });
     })
