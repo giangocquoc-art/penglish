@@ -1,3 +1,0 @@
-- Monorepo root `PSVip_RELEASE_KH`; npm workspaces under `apps/*`.
-- P-English lesson-import governance: keep downloaded repos read-only in `external-sources/`; use `extracted-lessons/` for copied/intermediate data; final generated lessons should live under `apps/web/src/data/lessons/generated/` or current equivalent after architecture review; reports under `reports/open-source-lesson-import/`.
-- Read focused module notes before editing: web architecture in `mem:web/core`; commands in `mem:suggested_commands`; completion checks in `mem:task_completion`.

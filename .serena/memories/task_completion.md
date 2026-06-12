@@ -1,4 +1,0 @@
-- For report-only/source-review tasks, do not run full build unless project code changed.
-- For coding tasks affecting web code, minimum completion checks are TypeScript/build commands available in package scripts: root `npm run build` or focused `npm run build -w @pshare/web` when only frontend changed.
-- Lesson-import completion after implementation should include: schema validation script if present/created, TypeScript/build, Chrome DevTools QA of homepage and generated lesson route, console/network error inspection, screenshots under the configured reports screenshots directory.
-- Never use `npm audit fix --force` as a completion step unless explicitly requested.

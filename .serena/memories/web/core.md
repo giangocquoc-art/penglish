@@ -1,6 +1,0 @@
-- Frontend is `apps/web`: Vite 5 + React 18 + TypeScript + React Router 6 + Chakra UI.
-- Root app wiring: `apps/web/src/main.tsx` wraps `App` in `BrowserRouter` and `ChakraProvider`; `apps/web/src/App.tsx` owns primary routes.
-- Main P-English lesson-related route files discovered so far: `pages/HomePage.tsx`, `pages/LearningPathPage.tsx`, `pages/LessonPage.tsx`, `pages/PracticePage.tsx`, `pages/StudyPage.tsx`.
-- Lesson/practice data and local state live under `apps/web/src/lib/p-english/`, including `lesson-content-data.ts`, `lesson-content-validation.ts`, `lesson-progress.ts`, `local-progress.ts`, `learning-path-data.ts`, `practice-randomization.ts`, `vocabulary-review.ts`.
-- Practice components live under `apps/web/src/components/practice/`: flashcard, listening, match, quiz, reflex, speed, typing variants.
-- Current import review task must not modify production lesson data or UI; only produce reports under `reports/open-source-lesson-import/`.

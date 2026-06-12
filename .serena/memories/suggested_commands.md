@@ -1,4 +1,0 @@
-- Root scripts: `npm run dev:api`, `npm run dev:web`, `npm run build`, `npm run start:api`, `npm run start:web`.
-- Web workspace scripts: `npm run dev -w @pshare/web`, `npm run build -w @pshare/web`, `npm run preview -w @pshare/web`.
-- Windows note from project memory-bank: use `npm.cmd` instead of `npm` if PowerShell blocks `npm.ps1`.
-- Safety invariants for lesson-import work: never run `npm audit fix --force`; do not deploy; do not run `taskkill`; do not close VS Code; do not print secrets from env/local config.

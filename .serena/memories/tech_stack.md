@@ -1,5 +1,0 @@
-- Root package manager: npm workspaces with `package-lock.json`.
-- Frontend stack: Vite, React, TypeScript, React Router, Chakra UI, Emotion, Framer Motion, Lucide/React Icons.
-- Lesson-import supporting deps at root: `zod`, `yaml`, `csv-parse`, `fast-glob`, `tsx`, `playwright`.
-- Animation deps present: GSAP and `@gsap/react` at root; frontend also uses Framer Motion.
-- Avoid reading/printing local secret-bearing config. `.env.example` is visible but real `.env`/local MCP config should not be printed for lesson-import work.

@@ -1,5 +1,0 @@
-- Lesson-import work is safety-first: source -> inspect -> license review -> extract intermediate data -> normalize to P-English schema -> validate -> integrate UI -> browser QA -> report.
-- `external-sources/` is read-only downloaded material; never edit it directly.
-- Prefer small typed lesson data modules and backward-compatible UI integration.
-- Vietnamese is primary UI/explanation language; English appears inside learning content.
-- Keyboard UX target for lesson exercises: Enter submits typing/fill-blank answers; after correct answer Enter advances; A/B/C/D and 1/2/3/4 select multiple-choice answers; focus returns to main input after question changes; hints should be subtle.
