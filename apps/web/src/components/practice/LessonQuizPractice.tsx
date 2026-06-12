@@ -250,7 +250,7 @@ function makeInitialAnswers(questions: CombinedQuizQuestion[]) {
 function getSummaryMessage(percentage: number) {
   if (percentage >= 80) return 'Tốt lắm! Bạn đã nắm khá chắc bài này.';
   if (percentage >= 50) return 'Ổn rồi, hãy ôn lại các câu sai một lượt.';
-  return 'Nên quay lại phần từ vựng và mẫu câu trước khi làm lại kiểm tra nhanh.';
+  return 'Nên quay lại phần từ vựng và mẫu câu trước khi làm lộ trình.';
 }
 
 export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {

@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { getBlogPostBySlug, getBlogPostPath, type BlogPost } from '../../data/blogPosts';
 import { getReviewSeoPageByPath, type ReviewSeoPage } from '../../data/reviewSeoPages';
 import { getSeoPageByPath, type SeoPage } from '../../data/seoPagesData';
+import { getSeoV3Top1PageByPath, type SeoV3Top1Page } from '../../data/seoV3Top1Pages';
 import { getLessonSeoPageByPath, type LessonSeoPage } from '../../data/lessonSeoPages';
 
 export const SEO_BASE_URL = 'https://www.pooenglish.com';
@@ -28,10 +29,10 @@ function websiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'PooEnglish',
-    alternateName: ['Poo English', 'PooEnglish học tiếng Anh', 'PooEnglish cá voi Poo'],
+    alternateName: ['Poo English', 'PooEnglishọc tiếng Anh', 'PooEnglish cá voi Poo'],
     url: SEO_BASE_URL,
     inLanguage: 'vi-VN',
-    description: 'PooEnglish là website học tiếng Anh thân thiện cho người Việt: lộ trình 48 ngày lấy gốc, shadowing, từ vựng, luyện nghe, ngữ pháp và ôn tập mỗi ngày cùng cá voi Poo.',
+    description: 'PooEnglish là website học tiếng Anh thân thiện cho người Việt: hành trình 48 ngày lấy gốc, shadowing, từ vựng, luyện ngữ pháp và ôn tập mỗi ngày cùng cá voi Poo.',
     potentialAction: {
       '@type': 'SearchAction',
       target: `${SEO_BASE_URL}/hoc-tieng-anh?q={search_term_string}`,
@@ -45,10 +46,10 @@ function organizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'PooEnglish',
-    alternateName: ['Poo English', 'PooEnglish học tiếng Anh', 'PooEnglish cá voi Poo'],
+    alternateName: ['Poo English', 'PooEnglishọc tiếng Anh', 'PooEnglish cá voi Poo'],
     url: SEO_BASE_URL,
     logo: SEO_IMAGE_URL,
-    description: 'PooEnglish là website học tiếng Anh cùng cá voi Poo, giúp người Việt xây nền tiếng Anh bằng bài học nhỏ, shadowing, từ vựng, luyện nghe và ngữ pháp mỗi ngày.',
+    description: 'PooEnglish là website học tiếng cá voi Poo, giúp người Việt xây nền tiếng Anh bằng bài học nhỏ, shadowing, từ vựng, luyện nghe và ngữ pháp mỗi ngày.',
     sameAs: [SEO_BASE_URL],
   };
 }
@@ -108,6 +109,72 @@ function courseSchema(path: string, name: string, description: string) {
   };
 }
 
+function pagePath(page: ReviewSeoPage | SeoPage | SeoV3Top1Page) {
+  return 'path' in page ? page.path : page.route;
+}
+
+function softwareApplicationSchema(page: SeoPage | SeoV3Top1Page) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: page.h1,
+    description: page.description,
+    url: absoluteUrl(pagePath(page)),
+    applicationCategory: 'EducationalApplication',
+    operatingSystem: 'Web',
+    inLanguage: 'vi-VN',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'VND',
+    },
+    provider: {
+      '@type': 'Organization',
+      name: 'PooEnglish',
+      url: SEO_BASE_URL,
+    },
+    audience: {
+      '@type': 'Audience',
+      audienceType: 'Người Việt học tiếng Anh miễn phí',
+    },
+  };
+}
+
+function seoArticleSchema(page: SeoPage | SeoV3Top1Page) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: page.h1,
+    description: page.description,
+    url: absoluteUrl(pagePath(page)),
+    mainEntityOfPage: absoluteUrl(pagePath(page)),
+    image: SEO_IMAGE_URL,
+    datePublished: '2026-06-12',
+    dateModified: '2026-06-12',
+    about: page.keyword,
+    inLanguage: 'vi-VN',
+    author: {
+      '@type': 'Organization',
+      name: 'PooEnglish',
+      url: SEO_BASE_URL,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'PooEnglish',
+      logo: {
+        '@type': 'ImageObject',
+        url: SEO_IMAGE_URL,
+      },
+    },
+  };
+}
+
+function schemaForSeoPage(page: SeoPage | SeoV3Top1Page) {
+  if (page.schemaType === 'SoftwareApplication') return softwareApplicationSchema(page);
+  if (page.schemaType === 'Article') return seoArticleSchema(page);
+  return courseSchema(pagePath(page), page.h1, page.description);
+}
+
 function articleSchema(post: BlogPost) {
   const path = getBlogPostPath(post);
   return {
@@ -139,14 +206,14 @@ function articleSchema(post: BlogPost) {
   };
 }
 
-function webPageSchema(page: ReviewSeoPage | SeoPage) {
+function webPageSchema(page: ReviewSeoPage | SeoPage | SeoV3Top1Page) {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: page.h1,
     headline: page.h1,
     description: page.description,
-    url: absoluteUrl(page.path),
+    url: absoluteUrl(pagePath(page)),
     inLanguage: 'vi-VN',
     isPartOf: {
       '@type': 'WebSite',
@@ -169,7 +236,7 @@ function webPageSchema(page: ReviewSeoPage | SeoPage) {
   };
 }
 
-function faqPageSchema(page: ReviewSeoPage | SeoPage | BlogPost | LessonSeoPage) {
+function faqPageSchema(page: ReviewSeoPage | SeoPage | SeoV3Top1Page | BlogPost | LessonSeoPage) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -181,6 +248,27 @@ function faqPageSchema(page: ReviewSeoPage | SeoPage | BlogPost | LessonSeoPage)
         text: faq.answer,
       },
     })),
+  };
+}
+
+function getSeoV3Top1Metadata(pathname: string): RouteMetadata | null {
+  const page = getSeoV3Top1PageByPath(pathname);
+  if (!page) return null;
+
+  const canonicalPath = new URL(page.canonical).pathname;
+
+  return {
+    title: page.title,
+    description: page.description,
+    canonicalPath,
+    structuredData: [
+      webPageSchema(page),
+      schemaForSeoPage(page),
+      breadcrumbSchema(page.route, page.h1, page.route.startsWith('/blog/') ? { path: '/blog', label: 'Blog học tiếng Anh cùng PooEnglish' } : undefined),
+      faqPageSchema(page),
+      websiteSchema(),
+      organizationSchema(),
+    ],
   };
 }
 
@@ -212,6 +300,7 @@ function getSeoPageMetadata(pathname: string): RouteMetadata | null {
     canonicalPath: page.path,
     structuredData: [
       webPageSchema(page),
+      schemaForSeoPage(page),
       breadcrumbSchema(page.path, page.h1),
       faqPageSchema(page),
     ],
@@ -248,7 +337,7 @@ function getLessonSeoMetadata(pathname: string): RouteMetadata | null {
     canonicalPath: page.path,
     structuredData: [
       lessonSeoSchema(page),
-      breadcrumbSchema(page.path, page.h1, { path: '/learning-path', label: 'Lộ trình học' }),
+      breadcrumbSchema(page.path, page.h1, { path: '/learning-path', labelộ trình học' }),
       faqPageSchema(page),
     ],
   };
@@ -258,7 +347,7 @@ function getBlogMetadata(pathname: string): RouteMetadata | null {
   if (pathname === '/blog') {
     return {
       title: 'Blog học tiếng Anh cùng PooEnglish',
-      description: 'Blog học tiếng Anh cùng PooEnglish gồm các cụm chủ đề ôn tiếng Anh, mất gốc, shadowing, từ vựng, luyện nghe, ngữ pháp và lộ trình học.',
+      description: 'Blog học tiếng Anh cùng PooEnglish gồm các cụm chủ đề ôn tiếng Anh, mất gốc, shadowing, từ vựng, luyện ngữ pháp và hành trình học.',
       canonicalPath: '/blog',
       structuredData: [breadcrumbSchema('/blog', 'Blog học tiếng Anh cùng PooEnglish')],
     };
@@ -282,8 +371,8 @@ function getBlogMetadata(pathname: string): RouteMetadata | null {
 }
 
 const DEFAULT_METADATA: RouteMetadata = {
-  title: 'PooEnglish — Học tiếng Anh mỗi ngày cùng cá voi Poo',
-  description: 'PooEnglish là website học tiếng Anh thân thiện cho người Việt: lộ trình 48 ngày lấy gốc, shadowing, từ vựng, luyện nghe, ngữ pháp và ôn tập mỗi ngày cùng cá voi Poo.',
+  title: 'PooEnglishọc tiếng Anh mỗi ngày cùng cá voi Poo',
+  description: 'PooEnglish là website học tiếng Anh thân thiện cho người Việt: hành trình 48 ngày lấy gốc, shadowing, từ vựng, luyện ngữ pháp và ôn tập mỗi ngày cùng cá voi Poo.',
   canonicalPath: '/',
   structuredData: [websiteSchema(), organizationSchema()],
 };
@@ -296,19 +385,19 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/hoc-tieng-anh',
     metadata: {
-      title: 'Học tiếng Anh cùng PooEnglish — Bắt đầu nhẹ nhàng mỗi ngày',
-      description: 'Học tiếng Anh cùng cá voi Poo qua bài học nhỏ, lộ trình rõ ràng, từ vựng dễ nhớ, luyện nghe nói và ôn tập thân thiện cho người Việt.',
+      title: 'học tiếng Anh cùng PooEnglish — Bắt đầu nhẹ nhàng mỗi ngày',
+      descriptiếng Anh cùng cá voi Poo qua bài học nhỏ, hành trình học rõ ràng, từ vựng dễ nhớ, luyện nghe nói và ôn tập thân thiện cho người Việt.',
       canonicalPath: '/hoc-tieng-anh',
-      structuredData: [breadcrumbSchema('/hoc-tieng-anh', 'Học tiếng Anh')],
+      structuredData: [breadcrumbSchema('/hoc-tieng-anhọc tiếng Anh')],
     },
   },
   {
     test: (pathname) => pathname === '/lo-trinh-hoc-tieng-anh' || pathname === '/learning-path',
     metadata: {
-      title: 'Lộ trình học tiếng Anh cho người mất gốc — PooEnglish',
+      title: 'học tiếng Anh cho người mất gốc — PooEnglish',
       description: 'Bản đồ học tiếng Anh từng bước cùng cá voi Poo: biết hôm nay học gì, ôn gì, luyện nghe nói ra sao và đi tiếp thế nào mà không bị lạc tài liệu.',
       canonicalPath: pathnameToCanonical('/lo-trinh-hoc-tieng-anh'),
-      structuredData: [breadcrumbSchema('/lo-trinh-hoc-tieng-anh', 'Lộ trình học tiếng Anh')],
+      structuredData: [breadcrumbSchema('/lo-trinh-hoc-tieng-anhọc tiếng Anh')],
     },
   },
   {
@@ -317,23 +406,23 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
       title: 'Shadowing tiếng Anh cho người mới — Nói đuổi cùng Poo',
       description: 'Luyện shadowing tiếng Anh bằng câu ngắn: nghe mẫu, bắt nhịp, nói theo và lặp lại nhẹ nhàng để người Việt bớt ngại phát âm.',
       canonicalPath: '/shadowing-tieng-anh',
-      structuredData: [breadcrumbSchema('/shadowing-tieng-anh', 'Shadowing tiếng Anh'), courseSchema('/shadowing-tieng-anh', 'Shadowing tiếng Anh cùng Poo', 'Khóa luyện nói đuổi tiếng Anh theo từng câu ngắn, phù hợp người học muốn cải thiện phát âm và phản xạ.')],
+      structuredData: [breadcrumbSchema('/shadowing-tieng-anh', 'Shadowing tiếng Anh'), courseSchema('/shadowing-tieng-anh', 'Shadowing tiếng Anh cùng Poo', 'Khóa luyện nói đuổi tiếng Anh theo từng câu ngữ pháp người học muốn cải thiện phát âm và phản xạ.')],
     },
   },
   {
     test: (pathname) => pathname === '/tu-vung-tieng-anh',
     metadata: {
-      title: 'Từ vựng tiếng Anh dễ nhớ — Học trong câu cùng Poo',
-      description: 'Học từ vựng tiếng Anh bằng ngữ cảnh, ví dụ đời thường và sổ ôn cá nhân để biết từ nào mới, từ nào hay quên, từ nào đã thuộc.',
+      titừ vựng Anh dễ nhớ — Học trong cùng Poo',
+      description: 'Học từ vựng Anh bằng ngữ cảnh, ví dụ đời thường và sổ ôn cá nhân để biết từ nào mới, từ nào hay quên, từ nào đã thuộc.',
       canonicalPath: '/tu-vung-tieng-anh',
-      structuredData: [breadcrumbSchema('/tu-vung-tieng-anh', 'Từ vựng tiếng Anh')],
+      structuredData: [breadcrumbSchema('/tu-vung-tieng-anh', 'từ vựng Anh')],
     },
   },
   {
     test: (pathname) => pathname === '/luyen-nghe-tieng-anh',
     metadata: {
-      title: 'Luyện nghe tiếng Anh cho người mới — Nghe chậm cùng Poo',
-      description: 'Bắt đầu luyện nghe tiếng Anh bằng câu ngắn, từ quen, transcript đúng lúc và shadowing nhẹ để tai quen âm mà không bị ngợp.',
+      title: 'Luyện nghe tiếng Anh cho người mới — Nghe cùng Poo',
+      description: 'Bắt đầu luyện nghe tiếng Anh bằng câu ngắn, từ quen, lời thoại đúng lúc và shadowing nhẹ để tai quen âm mà không bị ngợp.',
       canonicalPath: '/luyen-nghe-tieng-anh',
       structuredData: [breadcrumbSchema('/luyen-nghe-tieng-anh', 'Luyện nghe tiếng Anh'), courseSchema('/luyen-nghe-tieng-anh', 'Luyện nghe tiếng Anh cùng Poo', 'Chương trình luyện nghe tiếng Anh bằng bài ngắn, từ vựng quen thuộc và hoạt động nghe nói lặp lại.')],
     },
@@ -341,17 +430,17 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/ngu-phap-tieng-anh',
     metadata: {
-      title: 'Ngữ pháp tiếng Anh cơ bản — Hiểu mẫu câu cùng Poo',
-      description: 'Học ngữ pháp tiếng Anh qua mẫu câu đời thường, ví dụ tiếng Việt dễ hiểu và bài luyện nhỏ để người mất gốc dám dùng ngay.',
+      title: 'ngữ pháp tiếng Anh cơ bản — Hiểu mẫu cùng Poo',
+      description: 'Học ngữ pháp tiếng Anh qua mẫu câu đời từ vựng Việt dễ hiểu và bài luyện nhỏ để người mất gốc dám dùng ngay.',
       canonicalPath: '/ngu-phap-tieng-anh',
-      structuredData: [breadcrumbSchema('/ngu-phap-tieng-anh', 'Ngữ pháp tiếng Anh')],
+      structuredData: [breadcrumbSchema('/ngu-phap-tieng-anh', 'ngữ pháp tiếng Anh')],
     },
   },
   {
     test: (pathname) => pathname === '/48-ngay-lay-goc' || pathname.startsWith('/luyen-tieng-anh/48-ngay-lay-goc'),
     metadata: {
       title: '48 ngày lấy gốc tiếng Anh cho người mất gốc — PooEnglish',
-      description: 'Khóa 48 ngày lấy gốc cùng cá voi Poo: mỗi ngày học một gói nhỏ gồm từ vựng, mẫu câu, nghe chậm, shadowing, quiz và ôn lại.',
+      description: 'Khóa 48 ngày lấy gốc cùng cá voi Poo: mỗi ngày học một gói nhỏ gồm từ vựng, mẫu câu, nghe chậm, shadowing, câu đố nhỏ và ôn lại.',
       canonicalPath: '/48-ngay-lay-goc',
       structuredData: [breadcrumbSchema('/48-ngay-lay-goc', '48 ngày lấy gốc'), courseSchema('/48-ngay-lay-goc', '48 ngày lấy gốc tiếng Anh cùng Poo', 'Khóa học nền tảng 48 ngày cho người mất gốc hoặc muốn bắt đầu lại tiếng Anh bằng bài học nhỏ mỗi ngày.')],
     },
@@ -359,8 +448,8 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/gioi-thieu',
     metadata: {
-      title: 'Giới thiệu PooEnglish — Website học tiếng Anh cùng cá voi Poo',
-      description: 'Tìm hiểu PooEnglish, website học tiếng Anh thân thiện với mascot cá voi Poo, giúp người học đi từng bước nhỏ và duy trì thói quen mỗi ngày.',
+      title: 'Giới thiệu PooEnglish — website học tiếng cá voi Poo',
+      description: 'Tìm hiểu PooEnglishọc tiếng Anh thân thiện với mascot cá voi Poo, giúp người học đi từng bước nhỏ và duy trì thói quen mỗi ngày.',
       canonicalPath: '/gioi-thieu',
       structuredData: [breadcrumbSchema('/gioi-thieu', 'Giới thiệu PooEnglish'), organizationSchema()],
     },
@@ -376,7 +465,7 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/words' || pathname === '/vocabularies',
     metadata: {
-      title: 'Sổ từ vựng tiếng Anh — PooEnglish',
+      title: 'Sổ từ vựng Anh — PooEnglish',
       description: 'Lưu từ vựng, câu cần ôn, câu khó, mẫu câu và nội dung nên luyện lại cùng PooEnglish.',
       canonicalPath: '/words',
     },
@@ -392,7 +481,7 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/english-speed',
     metadata: {
-      title: 'Đọc nhanh cùng Poo — PooEnglish',
+      title: 'Đọcùng Poo — PooEnglish',
       description: 'Đọc, nghe và nói cùng Poo theo nhịp rõ ràng, đều đặn và ít áp lực.',
       canonicalPath: '/english-speed',
     },
@@ -400,8 +489,8 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/profile',
     metadata: {
-      title: 'Hồ sơ học tập — PooEnglish',
-      description: 'Xem hồ sơ học tập, chuỗi bọt biển và tiến độ Poo đang giữ cho bạn trên PooEnglish.',
+      title: 'Góc của bạn — PooEnglish',
+      description: 'Xem hồ sơ học tập, chuỗi bọt biển và hành trình học Poo đang giữ cho bạn trên PooEnglish.',
       canonicalPath: '/profile',
     },
   },
@@ -439,7 +528,7 @@ function upsertMeta(selector: string, create: () => HTMLMetaElement | HTMLLinkEl
 }
 
 function getMetadata(pathname: string) {
-  return getSeoPageMetadata(pathname) ?? getLessonSeoMetadata(pathname) ?? getReviewSeoMetadata(pathname) ?? getBlogMetadata(pathname) ?? ROUTE_METADATA.find((entry) => entry.test(pathname))?.metadata ?? DEFAULT_METADATA;
+  return getSeoV3Top1Metadata(pathname) ?? getSeoPageMetadata(pathname) ?? getLessonSeoMetadata(pathname) ?? getReviewSeoMetadata(pathname) ?? getBlogMetadata(pathname) ?? ROUTE_METADATA.find((entry) => entry.test(pathname))?.metadata ?? DEFAULT_METADATA;
 }
 
 function syncJsonLd(metadata: RouteMetadata) {
@@ -510,7 +599,7 @@ export function RouteMetadataUpdater() {
       const meta = document.createElement('meta');
       meta.setAttribute('property', 'og:image:alt');
       return meta;
-    }, 'PooEnglish - học tiếng Anh cùng cá voi Poo');
+    }, 'PooEnglishọc tiếng Anh cùng cá voi Poo');
     upsertMeta('meta[name="twitter:card"]', () => {
       const meta = document.createElement('meta');
       meta.name = 'twitter:card';
@@ -540,7 +629,7 @@ export function RouteMetadataUpdater() {
       const meta = document.createElement('meta');
       meta.name = 'twitter:image:alt';
       return meta;
-    }, 'PooEnglish - học tiếng Anh cùng cá voi Poo');
+    }, 'PooEnglishọc tiếng Anh cùng cá voi Poo');
     upsertMeta('link[rel="canonical"]', () => {
       const link = document.createElement('link');
       link.rel = 'canonical';

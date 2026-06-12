@@ -65,7 +65,7 @@ export function FooterEasterEggButton({ onNavigate }: { onNavigate?: () => void 
           <ModalBody px={{ base: '5', md: '7' }} pb="2">
             <VStack align="stretch" gap="2">
               <Text color="#52667A" fontWeight="750" lineHeight="1.75">
-                Nhưng vì bạn tò mò, Poo tặng bạn một lời nhắc: học 15 phút mỗi ngày còn hơn đợi có động lực mới học.
+                Nhưng vì bạn tò mò, Poo tặng bạn một lời nhắc: học 15 phát âmỗi ngày còn hơn đợi có động lực mới học.
               </Text>
             </VStack>
           </ModalBody>

@@ -16,9 +16,9 @@ type Game = {
 };
 
 const GAMES: Game[] = [
-  { id: 'memory', name: 'Ghép cặp trí nhớ', desc: 'Lật thẻ tìm cặp từ và nghĩa', icon: Target, tint: 'pink.500', bg: 'pink.50', difficulty: 'Dễ' },
+  { id: 'memory', name: 'Ghép cặp trí nhớ', desc: 'Lật thẻ tìm cặp từ vựnghĩa', icon: Target, tint: 'pink.500', bg: 'pink.50', difficulty: 'Dễ' },
   { id: 'scramble', name: 'Xếp chữ thành từ', desc: 'Xếp lại chữ cái thành từ đúng', icon: Shuffle, tint: 'purple.500', bg: 'purple.50', difficulty: 'Vừa' },
-  { id: 'listening', name: 'Thử thách nghe', desc: 'Nghe và viết lại từ vựng', icon: Headphones, tint: 'blue.500', bg: 'blue.50', difficulty: 'Khó' },
+  { id: 'listening', name: 'Thử thách nghe', desc: 'Nghe và viếtừ vựng', icon: Headphones, tint: 'blue.500', bg: 'blue.50', difficulty: 'Khó' },
   { id: 'speed', name: 'Kiểm tra tốc độ', desc: 'Trả lời nhanh trong thời gian ngắn', icon: Zap, tint: 'orange.500', bg: 'orange.50', difficulty: 'Vừa' },
   { id: 'reflex', name: 'Trò phản xạ', desc: 'Phản xạ với từ xuất hiện ngẫu nhiên', icon: Clock, tint: 'red.500', bg: 'red.50', difficulty: 'Khó' },
   { id: 'champion', name: 'Thử thách tổng hợp', desc: 'Gộp nhiều trò luyện thành một thử thách', icon: Trophy, tint: 'red.500', bg: 'red.50', difficulty: 'Khó' },

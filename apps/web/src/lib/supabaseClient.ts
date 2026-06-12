@@ -10,12 +10,46 @@ if (!isSupabaseConfigured) {
   console.warn('[PooEnglish auth] Missing Supabase env. Google login is optional and the app will continue in guest mode.');
 }
 
+type SupabaseAuthStorage = {
+  getItem: (key: string) => string | null | Promise<string | null>;
+  setItem: (key: string, value: string) => void | Promise<void>;
+  removeItem: (key: string) => void | Promise<void>;
+};
+
+const sessionAuthStorage: SupabaseAuthStorage = {
+  getItem(key) {
+    if (typeof window === 'undefined') return null;
+    try {
+      return window.sessionStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  },
+  setItem(key, value) {
+    if (typeof window === 'undefined') return;
+    try {
+      window.sessionStorage.setItem(key, value);
+    } catch {
+      console.warn('[PooEnglish auth] Session storage is unavailable; Google login may need a fresh sign-in.');
+    }
+  },
+  removeItem(key) {
+    if (typeof window === 'undefined') return;
+    try {
+      window.sessionStorage.removeItem(key);
+    } catch {
+      // Ignore cleanup failures when browser privacy settings block storage access.
+    }
+  },
+};
+
 export const supabase: SupabaseClient | null = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: true,
         autoRefreshToken: true,
         detectSessionInUrl: true,
+        storage: sessionAuthStorage,
         storageKey: 'p-english:supabase-auth',
       },
     })

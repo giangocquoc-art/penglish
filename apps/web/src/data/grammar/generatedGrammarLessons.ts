@@ -41,7 +41,7 @@ function buildGrammarReviewExercises(lesson: GeneratedGrammarLessonSource): Gene
       words: orderWords,
       answer: orderAnswer,
       hintVi: 'Giữ đúng thứ tự chủ ngữ, động từ và phần bổ sung ý nghĩa.',
-      explanationVi: 'Thứ tự này tạo thành câu hoàn chỉnh, đúng mẫu ngữ pháp của bài.',
+      explanationVi: 'Thứ tự này tạo thành câu hoàn chỉnh, đúngữ pháp của bài.',
     },
   ];
 }
@@ -94,9 +94,9 @@ function buildExpandedGrammarLesson(seed: GrammarExpansionSeed): GeneratedGramma
     examples: seed.examples,
     exercises: [
       { id: `${seed.id}-mc-main`, type: 'multiple-choice', promptVi: `Chọn câu đúng: ${first.meaningVi}`, options: [first.text, first.text.replace(/\b(is|are|am|have|has|do|does|did|will|would|can|should|to)\b/i, '___'), 'This grammar does not match the meaning.', 'The word order is not natural.'], answer: first.text, hintVi: 'So sánh ý tiếng Việt với câu hoàn chỉnh, tự nhiên nhất.', explanationVi: `Đúng rồi, câu này đi theo mẫu chính của bài: ${seed.titleVi}.` },
-      { id: `${seed.id}-fill-first-word`, type: 'fill-blank', promptVi: `Điền phần còn thiếu: ${second.meaningVi}`, promptEn: secondBlank, answer: secondAnswer, hintVi: 'Ô trống nằm ở đầu câu; đọc cả câu trước khi điền.', explanationVi: `Đúng rồi, “${secondAnswer}” mở đầu câu tự nhiên và giữ đúng mẫu mình đang luyện.` },
+      { id: `${seed.id}-fill-first-word`, type: 'fill-blank', promptVi: `Điền phần còn thiếu: ${second.meaningVi}`, promptEn: secondBlank, answer: secondAnswer, hintVi: 'Ô trống nằm ở đầu câu; đọc cả câu trước khi điền.', explanationVi: `Đúng rồi, “${secondAnswer}” mở đầu câu từ vựng mẫu mình đang luyện.` },
       { id: `${seed.id}-order-focus`, type: 'sentence-order', promptVi: `Sắp xếp câu: ${third.meaningVi}`, words: thirdWords, answer: thirdWords.join(' '), hintVi: 'Sắp theo thứ tự chủ ngữ → động từ → phần bổ sung.', explanationVi: 'Đúng rồi, thứ tự này tạo thành câu đầy đủ theo mẫu Poo đang dẫn bạn luyện.' },
-      { id: `${seed.id}-mc-context`, type: 'multiple-choice', promptVi: `Chọn câu phù hợp với ngữ cảnh: ${fifth.meaningVi}`, options: [fifth.text, fifth.text.replace(/\b(not|never|already|because|although|if|when)\b/i, '___'), 'The idea is unclear in this sentence.', 'Use only one word without a full sentence.'], answer: fifth.text, hintVi: 'Chọn câu diễn đạt đủ ý và đúng cấu trúc.', explanationVi: 'Đúng rồi, đáp án này nói trọn ý và nghe tự nhiên hơn.' },
+      { id: `${seed.id}-mc-context`, type: 'multiple-choice', promptVi: `Chọn câu phù hợp với ngữ cảnh: ${fifth.meaningVi}`, options: [fifth.text, fifth.text.replace(/\b(not|never|already|because|although|if|when)\b/i, '___'), 'The idea is unclear in this sentence.', 'Use only one word without a full sentence.'], answer: fifth.text, hintVi: 'Chọn câu diễn đạtừ vựng cấu trúc.', explanationVi: 'Đúng rồi, đáp án này nói từ vựnghe tự nhiên hơn.' },
       { id: `${seed.id}-fill-review`, type: 'fill-blank', promptVi: `Hoàn thành câu ôn tập: ${fourth.meaningVi}`, promptEn: fourthBlank, answer: fourthAnswer, hintVi: 'Tập trung vào từ/cụm mở đầu câu.', explanationVi: `Đúng rồi, “${fourthAnswer}” giúp câu đầy đủ và đúng mẫu hơn.` },
       { id: `${seed.id}-order-review`, type: 'sentence-order', promptVi: `Sắp xếp câu ôn tập: ${fourth.meaningVi}`, words: fourthWords, answer: fourthWords.join(' '), hintVi: 'Giữ đúng trật tự cụm ý, không dịch từng từ.', explanationVi: 'Đúng rồi, câu hoàn chỉnh giúp mình luyện theo cụm ngắn dễ nhớ hơn.' },
     ],
@@ -120,7 +120,7 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'My brother can draw a blue whale.', meaningVi: 'Em trai tôi có thể vẽ một chú cá voi xanh.' },
   ] },
   { id: 'grammar-a2-past-simple-regular', unitId: 'grammar-verbs-a2', level: 'A2', titleVi: 'Quá khứ đơn với động từ có quy tắc', titleEn: 'Past simple with regular verbs', subtitleVi: 'Kể việc đã xảy ra bằng động từ thêm -ed và mốc thời gian rõ.', patternTitle: 'Past simple: regular verbs', patternDescription: 'Use regular -ed verbs with finished time.', patternSummary: 'Mẫu luyện V-ed với yesterday, last night, ago và các hoạt động quen thuộc.', explanationVi: 'Dùng quá khứ đơn cho hành động đã kết thúc. Động từ có quy tắc thường thêm -ed/-d, câu phủ định dùng did not + động từ nguyên mẫu.', sourcePatternId: 'past-simple-regular', examples: [
-    { text: 'I watched a short video yesterday.', meaningVi: 'Hôm qua tôi đã xem một video ngắn.' },
+    { text: 'I watched a short video yesterday.', meaningVi: 'Hôm qua tôi đã xem mộtừ vựngắn.' },
     { text: 'She cleaned her room last night.', meaningVi: 'Tối qua cô ấy đã dọn phòng.' },
     { text: 'We practiced pronunciation after class.', meaningVi: 'Chúng tôi đã luyện phát âm sau giờ học.' },
     { text: 'They visited the museum two days ago.', meaningVi: 'Họ đã thăm bảo tàng hai ngày trước.' },
@@ -133,21 +133,21 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'Reading slowly is better than guessing quickly.', meaningVi: 'Đọc chậm tốt hơn đoán nhanh.' },
     { text: 'The new lesson is more useful for speaking.', meaningVi: 'Bài mới hữu ích hơn cho nói.' },
   ] },
-  { id: 'grammar-a2-going-to-plans', unitId: 'grammar-verbs-a2', level: 'A2', titleVi: 'Be going to cho kế hoạch', titleEn: 'Be going to for plans', subtitleVi: 'Nói kế hoạch gần hoặc ý định đã có trước bằng am/is/are going to.', patternTitle: 'Future plans: be going to', patternDescription: 'Use be going to plus base verb for planned future actions.', patternSummary: 'Mẫu luyện am/is/are going to + verb trong kế hoạch học, đi lại và cuối tuần.', explanationVi: 'Dùng be going to khi đã có ý định hoặc kế hoạch. Chọn am/is/are theo chủ ngữ, sau đó dùng động từ nguyên mẫu.', sourcePatternId: 'going-to-plans', examples: [
+  { id: 'grammar-a2-going-to-plans', unitId: 'grammar-verbs-a2', level: 'A2', titleVi: 'Be going to cho kế hoạch', titleEn: 'Be going to for plans', subtitleVi: 'Nói kế hoạch gần hoặc ý định đã có trước bằng am/is/are going to.', patternTitle: 'Future plans: be going to', patternDescription: 'Use be going to plus base verb for planned future actions.', patternSummary: 'Mẫu luyện am/is/are going từ vựng kế hoạch học, đi lại và cuối tuần.', explanationVi: 'Dùng be going to khi đã có ý định hoặc kế hoạch. Chọn am/is/are theo chủ ngữ, sau đó dùng động từ nguyên mẫu.', sourcePatternId: 'going-to-plans', examples: [
     { text: 'I am going to review vocabulary tonight.', meaningVi: 'Tối nay tôi sẽ ôn từ vựng.' },
     { text: 'She is going to visit her aunt on Sunday.', meaningVi: 'Chủ nhật cô ấy sẽ thăm dì.' },
     { text: 'We are going to watch an English movie.', meaningVi: 'Chúng tôi sẽ xem một bộ phim tiếng Anh.' },
     { text: 'They are going to meet at the station.', meaningVi: 'Họ sẽ gặp nhau ở nhà ga.' },
     { text: 'He is not going to buy a new phone.', meaningVi: 'Anh ấy sẽ không mua điện thoại mới.' },
   ] },
-  { id: 'grammar-b1-relative-clauses-people-things', unitId: 'grammar-clauses-b1', level: 'B1', titleVi: 'Mệnh đề quan hệ who / which / that', titleEn: 'Relative clauses for people and things', subtitleVi: 'Nối thêm thông tin về người hoặc vật mà không tách thành hai câu rời.', patternTitle: 'Relative clauses: who, which, that', patternDescription: 'Use who for people and which/that for things or ideas.', patternSummary: 'Mẫu luyện mệnh đề quan hệ xác định trong mô tả người, đồ vật và bài học.', explanationVi: 'Dùng who cho người; which cho vật/ý; that có thể thay who/which trong nhiều câu xác định.', sourcePatternId: 'relative-clauses-basic', examples: [
+  { id: 'grammar-b1-relative-clauses-people-things', unitId: 'grammar-clauses-b1', level: 'B1', titleVi: 'Mệnh đề quan hệ who / which / that', titleEn: 'Relative clauses for people and things', subtitleVi: 'Nối thêm từ vựngười hoặc vật mà không tách thành hai câu rời.', patternTitle: 'Relative clauses: who, which, that', patternDescription: 'Use who for people and which/that for things or ideas.', patternSummary: 'Mẫu luyện mệnh đề quan hệ xác định trong mô tả người, đồ vật và bài học.', explanationVi: 'Dùng who cho người; which cho vật/ý; that có thể thay who/which trong nhiều câu xác định.', sourcePatternId: 'relative-clauses-basic', examples: [
     { text: 'The teacher who helped me was very patient.', meaningVi: 'Giáo viên đã giúp tôi rất kiên nhẫn.' },
     { text: 'This is the whale that helps me practise.', meaningVi: 'Đây là chú cá voi giúp tôi luyện tập.' },
     { text: 'I like lessons which include clear examples.', meaningVi: 'Tôi thích các bài có ví dụ rõ ràng.' },
     { text: 'The friend who studies with me lives nearby.', meaningVi: 'Người bạn học cùng tôi sống gần đây.' },
     { text: 'The sentence that confused me is now easier.', meaningVi: 'Câu từng làm tôi rối giờ đã dễ hơn.' },
   ] },
-  { id: 'grammar-b1-gerunds-after-verbs', unitId: 'grammar-verbs-b1', level: 'B1', titleVi: 'V-ing sau một số động từ', titleEn: 'Gerunds after common verbs', subtitleVi: 'Dùng V-ing sau enjoy, avoid, practise, finish để nói hoạt động tự nhiên hơn.', patternTitle: 'Gerunds after verbs', patternDescription: 'Use -ing forms after selected common verbs.', patternSummary: 'Mẫu luyện enjoy/avoid/practise/finish + V-ing trong học tập và sinh hoạt.', explanationVi: 'Một số động từ thường đi với V-ing phía sau. Không dùng to + verb sau enjoy, avoid, practise hoặc finish trong mẫu này.', sourcePatternId: 'gerunds-after-verbs', examples: [
+  { id: 'grammar-b1-gerunds-after-verbs', unitId: 'grammar-verbs-b1', level: 'B1', titleVi: 'V-ing sau một số động từ', titleEn: 'Gerunds after common verbs', subtitleVi: 'Dùng V-ing sau enjoy, avoid, practise, finish để nói hoạt động tự nhiên hơn.', patternTitle: 'Gerunds after verbs', patternDescription: 'Use -ing forms after selected common verbs.', patternSummary: 'Mẫu luyện enjoy/avoid/practise/finish + V-ing trong học tập và sinh hoạt.', explanationVi: 'Một số động từ từ vựng phía sau. Không dùng to + verb sau enjoy, avoid, practise hoặc finish trong mẫu này.', sourcePatternId: 'gerunds-after-verbs', examples: [
     { text: 'I enjoy listening to short conversations.', meaningVi: 'Tôi thích nghe các đoạn hội thoại ngắn.' },
     { text: 'She avoids checking her phone while studying.', meaningVi: 'Cô ấy tránh kiểm tra điện thoại khi học.' },
     { text: 'We practise speaking English every morning.', meaningVi: 'Chúng tôi luyện nói tiếng Anh mỗi sáng.' },
@@ -182,12 +182,12 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'Although I made mistakes, I kept speaking.', meaningVi: 'Mặc dù mắc lỗi, tôi vẫn tiếp tục nói.' },
     { text: 'The sentence is long. However, the meaning is clear.', meaningVi: 'Câu dài. Tuy nhiên, nghĩa vẫn rõ.' },
   ] },
-  { id: 'grammar-b2-reported-speech-feedback', unitId: 'grammar-clauses-b2', level: 'B2', titleVi: 'Tường thuật góp ý và lời nhắc', titleEn: 'Reported speech for feedback', subtitleVi: 'Kể lại lời góp ý, lời nhắc hoặc ý kiến mà không cần trích nguyên văn.', patternTitle: 'Reported speech: feedback', patternDescription: 'Report advice, reminders, and opinions with said, told, and suggested.', patternSummary: 'Mẫu luyện said that, told someone to, suggested -ing trong ngữ cảnh học tập.', explanationVi: 'Khi tường thuật, có thể dùng said that + mệnh đề, told someone to + verb, hoặc suggested + V-ing.', sourcePatternId: 'reported-speech-feedback', examples: [
+  { id: 'grammar-b2-reported-speech-feedback', unitId: 'grammar-clauses-b2', level: 'B2', titleVi: 'Tường thuật góp ý và lời nhắc', titleEn: 'Reported speech for feedback', subtitleVi: 'Kể lại lời góp ý, lời nhắc hoặc ý kiến mà không cần trích nguyên văn.', patternTitle: 'Reported speech: feedback', patternDescription: 'Report advice, reminders, and opinions with said, told, and suggested.', patternSummary: 'Mẫu luyện said that, told someone to, suggested -ing trong ngữ cảnh học tập.', explanationVi: 'Khi tường thuật, có thể dùng said that + mệnh đề, told someone to + verb, hoặc suggestừ vựng.', sourcePatternId: 'reported-speech-feedback', examples: [
     { text: 'My teacher said that my pronunciation was clearer.', meaningVi: 'Giáo viên nói phát âm của tôi rõ hơn.' },
     { text: 'She told me to slow down before long words.', meaningVi: 'Cô ấy bảo tôi chậm lại trước các từ dài.' },
     { text: 'He suggested recording one sentence again.', meaningVi: 'Anh ấy đề nghị ghi âm lại một câu.' },
     { text: 'They said that the explanation was easy to follow.', meaningVi: 'Họ nói phần giải thích dễ theo dõi.' },
-    { text: 'The coach told us to focus on word stress.', meaningVi: 'Huấn luyện viên bảo chúng tôi tập trung vào trọng âm từ.' },
+    { text: 'The coach told us to focus on word stress.', meaningVi: 'Huấn luyện viên bảo chúng tôi từ vựng âm từ.' },
   ] },
 ];
 
@@ -230,7 +230,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     unitId: 'grammar-quantifiers-a2',
     titleVi: 'many / much / few / little',
     titleEn: 'Quantifiers: many, much, few, little',
-    subtitleVi: 'Phân biệt lượng đếm được và không đếm được trong câu đời sống hằng ngày.',
+    subtitleVi: 'phátừ vựng đếm được trong câu đời sống hằng ngày.',
     level: 'A2',
     estimatedTime: '12–15 phút',
     sourcePatternTitle: 'Quantifiers: many vs much, few vs little',
@@ -478,7 +478,7 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
     sourcePatternSummary: 'Poo nâng câu điều kiện lên một chút để bạn nói lời khuyên mềm và tự nhiên hơn.',
     vietnameseExplanation: 'Ở B2, người học không chỉ nói kết quả có thể xảy ra mà còn biết giảm độ trực tiếp: If I were you..., I would..., It might be better to..., You could consider....',
     examples: [
-      { text: 'If I were you, I would focus on one pronunciation problem at a time.', meaningVi: 'Nếu tôi là bạn, tôi sẽ tập trung vào từng lỗi phát âm một.' },
+      { text: 'If I were you, I would focus on one pronunciation problem at a time.', meaningVi: 'Nếu tôi là bạn, tôi sẽ từ vựng lỗi phát âmột.' },
       { text: 'If the feedback felt too general, you could ask for one specific example.', meaningVi: 'Nếu góp ý quá chung chung, bạn có thể xin một ví dụ cụ thể.' },
       { text: 'It might be better to repeat the sentence slowly before increasing your speed.', meaningVi: 'Có lẽ tốt hơn là lặp lại câu chậm trước khi tăng tốc.' },
     ],

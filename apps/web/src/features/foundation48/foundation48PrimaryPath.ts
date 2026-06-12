@@ -19,9 +19,9 @@ type DaySeed = {
   pattern: string;
   patternMeaning: string;
   patternExplanation: string;
-  examples: Array<[en: string, vi: string]>;
+  examples: Array<[en: stừ vựng]>;
   dialogueSituation: string;
-  dialogueLines: Array<[speaker: string, en: string, vi: string]>;
+  dialogueLines: Array<[speaker: string, en: stừ vựng]>;
   mistake: {
     vi: string;
     wrong?: string;
@@ -130,7 +130,7 @@ const daySeeds: DaySeed[] = [
     examples: [['How are you?', 'Bạn khỏe không?'], ['I am fine, thank you.', 'Mình ổn, cảm ơn.']],
     dialogueSituation: 'Poo hỏi thăm bạn hôm nay.',
     dialogueLines: [['Poo', 'How are you today?', 'Hôm nay bạn khỏe không?'], ['Learner', 'I am good.', 'Mình khỏe.'], ['Poo', 'Great!', 'Tuyệt!'], ['Learner', 'Thank you.', 'Cảm ơn.']],
-    mistake: { vi: 'Trả lời thiếu chủ ngữ.', wrong: 'Am good.', correct: 'I am good.', explanation: 'Tiếng Anh cần nói rõ “I am”.' },
+    mistake: { vi: 'Trả lời thiếu chủ ngữ.', wrong: 'Am good.', correct: 'I am good.', explanatiếng Anh cần nói rõ “I am”.' },
     speakingTask: 'Nói 2 câu: How are you? I am good.',
   },
   {
@@ -147,7 +147,7 @@ const daySeeds: DaySeed[] = [
     examples: [['Two fish.', 'Hai con cá.'], ['Ten shells.', 'Mười vỏ sò.']],
     dialogueSituation: 'Poo hỏi bạn nhìn thấy bao nhiêu con cá.',
     dialogueLines: [['Poo', 'How many fish?', 'Có bao nhiêu con cá?'], ['Learner', 'Two fish.', 'Hai con cá.'], ['Poo', 'How many shells?', 'Có bao nhiêu vỏ sò?'], ['Learner', 'Ten shells.', 'Mười vỏ sò.']],
-    mistake: { vi: 'Phát âm “three” thành “tree”.', wrong: 'tree', correct: 'three', explanation: 'Đặt lưỡi nhẹ giữa răng để nói âm /θ/ trong three.' },
+    mistake: { vi: 'phát âm “three” thành “tree”.', wrong: 'tree', correct: 'three', explanation: 'Đặt lưỡi nhẹ giữa răng để nói âm /θ/ trong three.' },
     speakingTask: 'Đếm chậm từ one đến ten, rồi nói “Two fish.”',
   },
   {
@@ -164,14 +164,14 @@ const daySeeds: DaySeed[] = [
     examples: [['I am ten years old.', 'Mình 10 tuổi.'], ['How old are you?', 'Bạn bao nhiêu tuổi?']],
     dialogueSituation: 'Poo hỏi tuổi trong bữa tiệc sinh nhật.',
     dialogueLines: [['Poo', 'How old are you?', 'Bạn bao nhiêu tuổi?'], ['Learner', 'I am ten years old.', 'Mình 10 tuổi.'], ['Poo', 'Happy birthday!', 'Chúc mừng sinh nhật!'], ['Learner', 'Thank you.', 'Cảm ơn.']],
-    mistake: { vi: 'Dùng “have” để nói tuổi theo tiếng Việt.', wrong: 'I have ten years old.', correct: 'I am ten years old.', explanation: 'Tiếng Anh dùng “I am” khi nói tuổi.' },
+    mistừ vựng “have” để nói tuổi theo tiếng Việt.', wrong: 'I have ten years old.', correct: 'I am ten years old.', explanatiếng Anh dùng “I am” khi nói tuổi.' },
     speakingTask: 'Nói tuổi thật hoặc tuổi tưởng tượng của bạn bằng một câu.',
   },
   {
     day: 6,
     stageId: 1,
     title: 'Nói quê quán',
-    goal: 'Nói mình đến từ đâu và hỏi người khác đến từ đâu.',
+    goal: 'Nói mình đến từ vựngười khác đến từ đâu.',
     theme: 'Poo Whale mở bản đồ biển Việt Nam.',
     area: 'open-sea',
     vocabulary: [['from', 'đến từ', 'I am from Ha Noi.', 'Mình đến từ Hà Nội.'], ['city', 'thành phố', 'Da Nang is a city.', 'Đà Nẵng là một thành phố.'], ['country', 'đất nước', 'Viet Nam is my country.', 'Việt Nam là đất nước của tôi.'], ['where', 'ở đâu/từ đâu', 'Where are you from?', 'Bạn đến từ đâu?']],
@@ -266,7 +266,7 @@ const daySeeds: DaySeed[] = [
     examples: [['I wake up early.', 'Tôi thức dậy sớm.'], ['I eat breakfast every morning.', 'Tôi ăn sáng mỗi sáng.']],
     dialogueSituation: 'Poo hỏi bạn làm gì vào buổi sáng.',
     dialogueLines: [['Poo', 'What do you do in the morning?', 'Bạn làm gì vào buổi sáng?'], ['Learner', 'I wake up early.', 'Tôi thức dậy sớm.'], ['Learner', 'I brush my teeth.', 'Tôi đánh răng.'], ['Poo', 'Good routine!', 'Thói quen tốt đó!']],
-    mistake: { vi: 'Thêm s sau động từ với chủ ngữ I.', wrong: 'I wakes up.', correct: 'I wake up.', explanation: 'Với “I”, động từ không thêm s.' },
+    mistake: { vi: 'Thêm s sau động từ vựngữ I.', wrong: 'I wakes up.', correct: 'I wake up.', explanation: 'Với “I”, động từ không thêm s.' },
     speakingTask: 'Nói 3 việc bạn làm mỗi sáng.',
   },
   {
@@ -283,24 +283,24 @@ const daySeeds: DaySeed[] = [
     examples: [['I like music.', 'Tôi thích âm nhạc.'], ['I do not like football.', 'Tôi không thích bóng đá.']],
     dialogueSituation: 'Poo hỏi sở thích của bạn.',
     dialogueLines: [['Poo', 'What do you like?', 'Bạn thích gì?'], ['Learner', 'I like music.', 'Tôi thích âm nhạc.'], ['Poo', 'Do you like football?', 'Bạn thích bóng đá không?'], ['Learner', 'No, I do not.', 'Không, mình không thích.']],
-    mistake: { vi: 'Nói “I like read” thay vì thêm ing.', wrong: 'I like read.', correct: 'I like reading.', explanation: 'Sau like, nếu dùng động từ thì nên dùng dạng -ing trong mẫu này.' },
+    mistake: { vi: 'Nói “I like read” từ vựng.', wrong: 'I like read.', correct: 'I like reading.', explanation: 'Sau like, nếu dùng động từ thì nên dùng dạng -ing trong mẫu này.' },
     speakingTask: 'Nói 2 thứ bạn thích và 1 thứ bạn không thích.',
   },
   {
     day: 13,
     stageId: 2,
     title: 'Một ngày của tôi',
-    goal: 'Kể lịch trình rất ngắn trong ngày.',
+    goal: 'Kể lộ trình rất ngắn trong ngày.',
     theme: 'Poo Whale đi theo lịch sinh hoạt của bạn.',
     area: 'open-sea',
-    vocabulary: [['study', 'học', 'I study English.', 'Tôi học tiếng Anh.'], ['go to school', 'đi học', 'I go to school.', 'Tôi đi học.'], ['play', 'chơi', 'I play with friends.', 'Tôi chơi với bạn bè.'], ['sleep', 'ngủ', 'I sleep at ten.', 'Tôi ngủ lúc 10 giờ.']],
+    vocabulary: [['study', 'học', 'I study Englishọc tiếng Anh.'], ['go to school', 'đi học', 'I go to school.', 'Tôi đi học.'], ['play', 'chơi', 'I play with friends.', 'Tôi chơi với bạn bè.'], ['sleep', 'ngủ', 'I sleep at ten.', 'Tôi ngủ lúc 10 giờ.']],
     pattern: 'First, I... Then, I...',
     patternMeaning: 'Đầu tiên, tôi... Sau đó, tôi...',
     patternExplanation: 'Dùng first và then để nối hai việc đơn giản.',
     examples: [['First, I study.', 'Đầu tiên, tôi học.'], ['Then, I play.', 'Sau đó, tôi chơi.']],
     dialogueSituation: 'Bạn kể một ngày của mình cho Poo.',
     dialogueLines: [['Poo', 'Tell me about your day.', 'Kể cho mình về ngày của bạn đi.'], ['Learner', 'First, I go to school.', 'Đầu tiên, tôi đi học.'], ['Learner', 'Then, I study English.', 'Sau đó, tôi học tiếng Anh.'], ['Poo', 'Great job!', 'Làm tốt lắm!']],
-    mistake: { vi: 'Quên chủ ngữ ở đầu câu.', wrong: 'Go to school.', correct: 'I go to school.', explanation: 'Câu tiếng Anh cơ bản cần chủ ngữ “I”.' },
+    mistake: { vi: 'Quên chủ ngữ ở đầu câu.', wrong: 'Go to school.', correct: 'I go to school.', explanatiếng Anh cơ bản cần chủ ngữ “I”.' },
     speakingTask: 'Nói 3 câu về ngày của bạn, bắt đầu bằng “I”.',
   },
   {
@@ -315,7 +315,7 @@ const daySeeds: DaySeed[] = [
     patternMeaning: 'Bạn có ... không? / Có. / Không.',
     patternExplanation: 'Dùng Do you để hỏi thói quen với “you”.',
     examples: [['Do you study English?', 'Bạn có học tiếng Anh không?'], ['Yes, I do.', 'Có.']],
-    dialogueSituation: 'Poo hỏi bạn có học tiếng Anh mỗi ngày không.',
+    dialogueSituation: 'Poo học tiếng Anh mỗi ngày không.',
     dialogueLines: [['Poo', 'Do you study English every day?', 'Bạn có học tiếng Anh mỗi ngày không?'], ['Learner', 'Yes, I do.', 'Có.'], ['Poo', 'Do you play football?', 'Bạn có chơi bóng đá không?'], ['Learner', 'Sometimes.', 'Thỉnh thoảng.']],
     mistake: { vi: 'Trả lời “Yes, I am” cho câu hỏi Do you.', wrong: 'Yes, I am.', correct: 'Yes, I do.', explanation: 'Câu hỏi bắt đầu bằng Do thì trả lời ngắn bằng do.' },
     speakingTask: 'Hỏi Poo 2 câu bắt đầu bằng “Do you...?”.',
@@ -323,7 +323,7 @@ const daySeeds: DaySeed[] = [
   {
     day: 15,
     stageId: 2,
-    title: 'Nói về người thân',
+    titừ vựngười thân',
     goal: 'Nói người thân làm gì hoặc thích gì bằng câu ngắn.',
     theme: 'Poo Whale nghe bạn kể về gia đình.',
     area: 'kelp-forest',
@@ -351,7 +351,7 @@ const daySeeds: DaySeed[] = [
     examples: [['I like music.', 'Tôi thích âm nhạc.'], ['My family is happy.', 'Gia đình tôi vui vẻ.'], ['We eat together.', 'Chúng tôi ăn cùng nhau.']],
     dialogueSituation: 'Bạn nói một mini talk cho Poo nghe.',
     dialogueLines: [['Poo', 'Tell me about your family.', 'Kể mình nghe về gia đình bạn nhé.'], ['Learner', 'My family is happy.', 'Gia đình mình vui vẻ.'], ['Learner', 'We eat together.', 'Chúng mình ăn cùng nhau.'], ['Poo', 'Beautiful talk!', 'Bài nói rất hay!']],
-    mistake: { vi: 'Dùng “my family are” khi nói gia đình như một nhóm chung.', wrong: 'My family are happy.', correct: 'My family is happy.', explanation: 'Trong mẫu đơn giản này, coi family là một nhóm nên dùng “is”.' },
+    mistừ vựng “my family are” khi nói gia đình như một nhóm chung.', wrong: 'My family are happy.', correct: 'My family is happy.', explanation: 'Trong mẫu đơn giản này, coi family là một nhóm nên dùng “is”.' },
     speakingTask: 'Nói mini talk 5 câu: tên, quê, một người thân, sở thích, thói quen.',
   },
 ];
@@ -490,7 +490,7 @@ function makeLesson(seed: DaySeed): PooLesson {
       migrationStatus: 'mapped-from-legacy',
       notesVi: [
         `${stage.title} được chuẩn hoá thành tuyến học chính của PooEnglish.`,
-        'Dữ liệu này là additive: chưa thay thế renderer Foundation48 cũ và không phá progress hiện tại.',
+        'Dữ liệu này là additive: chưa thay thế renderer Foundatừ vựngữ pháprogress hiện tại.',
       ],
     },
   };

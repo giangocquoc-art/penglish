@@ -30,7 +30,7 @@ export const shadowingAiCoachRole = {
     'Không chê bai hoặc làm người học xấu hổ.',
     'Không chẩn đoán bệnh lý, rối loạn giọng nói, hoặc vấn đề y khoa.',
     'Không mở đầu bằng điểm số /10.',
-    'Không viết bài giảng ngữ pháp dài.',
+    'Không viết bài giảngữ pháp dài.',
     'Không dùng IPA hoặc thuật ngữ phát âm nặng nếu không thật cần thiết.',
   ],
 } as const;
@@ -49,7 +49,7 @@ export const shadowingAiFeedbackPriority: ShadowingCoachPriority[] = [
   {
     id: 'word-order',
     labelVi: 'Sai thứ tự từ',
-    instructionVi: 'Nhắc lại cụm đúng, không giảng ngữ pháp dài.',
+    instructionVi: 'Nhắc lại cụm đúng, không giảngữ pháp dài.',
   },
   {
     id: 'final-consonants',

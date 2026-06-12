@@ -124,7 +124,7 @@ function makeInitialStates(prompts: SpeakingReflexPrompt[]) {
 function summaryMessage(percentage: number) {
   if (percentage >= 80) return 'Phản xạ tốt! Bạn có thể chuyển sang gõ câu hoặc luyện tốc độ.';
   if (percentage >= 50) return 'Ổn rồi, hãy ôn lại các câu sai một lượt.';
-  return 'Nên quay lại Thẻ từ và Luyện nghe trước khi luyện phản xạ lại.';
+  return 'Nên quay lại từ vựnghe trước khi luyện phản xạ lại.';
 }
 
 export function LessonReflexPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {

@@ -132,7 +132,7 @@ function flashcardSceneHint(card: FlashcardItem, lesson: EnglishLesson) {
 function flashcardPronunciationHint(card: FlashcardItem, lesson: EnglishLesson) {
   const vocabularyId = vocabularyWordIdFromFlashcard(card.id);
   const vocabularyItem = lesson.vocabulary.find((item) => item.id === vocabularyId || item.term.toLowerCase() === card.front.toLowerCase());
-  return vocabularyItem?.pronunciation ? `Phát âm: ${vocabularyItem.pronunciation}` : 'Nghe mẫu, đọc chậm, rồi nói lại rõ ràng.';
+  return vocabularyItem?.pronunciation ? `phát âm: ${vocabularyItem.pronunciation}` : 'Nghe mẫu, đọc chậm, rồi nói lại rõ ràng.';
 }
 
 function progressKey(lessonId: string) {
@@ -388,7 +388,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
             <Flex justify="space-between" align={{ base: 'start', md: 'center' }} direction={{ base: 'column', md: 'row' }} gap="4">
               <Box>
                 <HStack wrap="wrap" gap="2" mb="2">
-                  <Tag borderRadius="full" bg="#DBEAFE" color={COLORS.primary}>{isDueReview ? 'Thẻ từ vựng đến hạn' : 'Thẻ từ vựng'}</Tag>
+                  <Tag borderRadius="full" bg="#DBEAFE" color={COLORS.primary}>{isDueReview ? 'từ vựng đến hạn' : 'từ vựng'}</Tag>
                   <Tag borderRadius="full" bg="#FEF3C7" color="#B45309">{allCards.length} thẻ</Tag>
                   <Tag borderRadius="full" bg="#DCFCE7" color="#15803D">{showSummary ? total : currentIndex + 1} / {total}</Tag>
                 </HStack>
@@ -401,7 +401,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
             </Flex>
             <Progress mt="5" value={progressValue} colorScheme="blue" borderRadius="full" bg="#E2E8F0" />
             <Text mt="3" color={COLORS.muted} fontSize="sm">
-              {isDueReview ? 'Poo đang nhắc các thẻ đã đến lúc ôn lại cho bạn.' : 'Đây là lượt học từ vựng: đoán nghĩa tiếng Việt, nghe mẫu, rồi đọc to ví dụ.'}
+              {isDueReview ? 'Poo đang nhắc các thẻ đã đến lúc ôn lại cho bạn.' : 'Đây là lượtừ vựng: đoán nghĩa từ vựnghe mẫu, rồi đọc to ví dụ.'}
             </Text>
           </Box>
 
@@ -608,7 +608,7 @@ function Summary({
 
   return (
     <Box bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '6', md: '8' }}>
-      <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" color={COLORS.text}>Tổng kết lượt học từ vựng</Text>
+      <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" color={COLORS.text}>Tổng kết lượtừ vựng</Text>
       <SimpleGrid columns={{ base: 1, md: 4 }} gap="4" mt="5">
         <SummaryMetric label="Tổng thẻ" value={total} />
         <SummaryMetric label="Đã nhớ" value={rememberedCount} />
@@ -622,7 +622,7 @@ function Summary({
       <Box mt="6">
         {needsReviewCards.length === 0 ? (
           <Box bg="#F0FDF4" border="1px solid" borderColor="#BBF7D0" borderRadius="2xl" p="5">
-            <Text fontWeight="900" color="#15803D">Bạn đã nhớ toàn bộ thẻ từ vựng trong lượt này.</Text>
+            <Text fontWeight="900" color="#15803D">Bạn đã nhớ toàn bộ từ vựng lượt này.</Text>
           </Box>
         ) : (
           <VStack align="stretch" gap="3">

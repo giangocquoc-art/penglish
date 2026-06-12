@@ -7,9 +7,9 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thể khẳng định và phủ định của động từ to be.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Hoàn thành ít nhất 3 câu mẫu trước khi sang bước mini test.",
-      "Khi phủ định, kiểm tra trợ động từ và đưa động từ chính về dạng đúng."
+      "Khi phủ định, kiểm tra trợ động từ vựng từ vựng đúng."
     ],
     "examples": [
       "I am ready.",
@@ -34,7 +34,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thể nghi vấn của động từ to be.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Hoàn thành ít nhất 3 câu mẫu trước khi sang bước mini test."
     ],
     "examples": [
@@ -56,13 +56,13 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 3,
-    "summary": "Ngày 3 tập trung vào nắm chắc câu hỏi who và what với động từ to be qua câu mẫu rất ngắn.",
+    "summary": "Ngày 3 tập trung vào nắm chắc câu hỏi who và whatừ vựng từ to be qua câu mẫu rất ngắn.",
     "keyPoints": [
-      "Mục tiêu chính: Câu hỏi Who và What với động từ to be.",
+      "Mục tiêu chính: Câu hỏi Who và Whatừ vựng từ to be.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Hoàn thành ít nhất 3 câu mẫu trước khi sang bước mini test.",
-      "Luôn kiểm tra vị trí từ hỏi và trợ động từ/to be trong câu."
+      "Luôn kiểm tra vị trí từ vựng từ/to be trong câu."
     ],
     "examples": [
       "I am ready.",
@@ -74,7 +74,7 @@ export const foundation48LessonSummaries = [
       "Tự trả lời mỗi câu bằng câu ngắn Yes/No hoặc thông tin cụ thể.",
       "Sửa lại vị trí từ hỏi, to be hoặc trợ động từ nếu câu bị sai."
     ],
-    "finalTask": "Kết thúc ngày 3: tóm tắt bài “Câu hỏi Who và What với động từ to be” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
+    "finalTask": "Kết thúc ngày 3: tóm tắt bài “Câu hỏi Who và Whatừ vựng từ to be” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
       "3 bài gốc Poo đã gom lại",
       "3 bản học ngắn đã sẵn sàng"
@@ -87,9 +87,9 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Câu hỏi Where và When với động từ to be.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Hoàn thành ít nhất 3 câu mẫu trước khi sang bước mini test.",
-      "Luôn kiểm tra vị trí từ hỏi và trợ động từ/to be trong câu."
+      "Luôn kiểm tra vị trí từ vựng từ/to be trong câu."
     ],
     "examples": [
       "I am ready.",
@@ -114,7 +114,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Động từ thường ở hiện tại.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Hoàn thành ít nhất 3 câu mẫu trước khi sang bước mini test."
     ],
     "examples": [
@@ -140,9 +140,9 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thể phủ định của động từ thường ở hiện tại.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Hoàn thành ít nhất 3 câu mẫu trước khi sang bước mini test.",
-      "Khi phủ định, kiểm tra trợ động từ và đưa động từ chính về dạng đúng."
+      "Khi phủ định, kiểm tra trợ động từ vựng từ vựng đúng."
     ],
     "examples": [
       "I study English every day.",
@@ -167,7 +167,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thể nghi vấn của động từ thường ở hiện tại.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Hoàn thành ít nhất 3 câu mẫu trước khi sang bước mini test."
     ],
     "examples": [
@@ -193,7 +193,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thì hiện tại đơn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Hoàn thành ít nhất 3 câu mẫu trước khi sang bước mini test."
     ],
     "examples": [
@@ -219,7 +219,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Từ loại.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "Ví dụ 1 theo chủ điểm: Từ loại.",
@@ -244,7 +244,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thì hiện tại tiếp diễn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I am learning English now.",
@@ -269,7 +269,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Phân biệt thì hiện tại đơn và hiện tại tiếp diễn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I study English every day.",
@@ -294,7 +294,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thì quá khứ đơn thể khẳng định.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I visited my friend yesterday.",
@@ -319,8 +319,8 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thì quá khứ đơn thể phủ định và nghi vấn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
-      "Khi phủ định, kiểm tra trợ động từ và đưa động từ chính về dạng đúng."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
+      "Khi phủ định, kiểm tra trợ động từ vựng từ vựng đúng."
     ],
     "examples": [
       "I visited my friend yesterday.",
@@ -345,7 +345,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thì quá khứ tiếp diễn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I was studying at eight o’clock.",
@@ -370,7 +370,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thì hiện tại hoàn thành.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I have finished my homework.",
@@ -395,7 +395,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thì tương lai đơn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I will call you tomorrow.",
@@ -420,7 +420,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Thì tương lai hoàn thành.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I will have finished the report by Friday.",
@@ -445,7 +445,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Nghe âm và bắt chước thật chậm.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "Listen to the word stress first.",
@@ -466,11 +466,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 19,
-    "summary": "Ngày 19 tập trung vào nghe đoạn mẫu về “Nhấn nhẹ vào từ quan trọng” và rút ra quy tắc phát âm cần nhớ.",
+    "summary": "Ngày 19 từ vựnghe đoạn mẫu về “Nhấn nhẹ vào từ quan trọng” và rút ra quy tắc phát âm cần nhớ.",
     "keyPoints": [
       "Mục tiêu chính: Nhấn nhẹ vào từ quan trọng.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Video nguồn chỉ dùng làm gợi ý; không tạo trình phát nếu file chưa public an toàn."
     ],
     "examples": [
@@ -497,8 +497,8 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Các câu hỏi với từ để hỏi khác trong tiếng Anh.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
-      "Luôn kiểm tra vị trí từ hỏi và trợ động từ/to be trong câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
+      "Luôn kiểm tra vị trí từ vựng từ/to be trong câu."
     ],
     "examples": [
       "Who is your teacher?",
@@ -519,11 +519,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 21,
-    "summary": "Ngày 21 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe số và tên” và ghi lại thông tin chính.",
+    "summary": "Ngày 21 từ vựnghe chủ động theo chủ điểm “Luyện nghe số và tên” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe số và tên.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -551,7 +551,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Nói “có thể / nên / phải” bằng câu ngắn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "Ví dụ 1 theo chủ điểm: Nói “có thể / nên / phải” bằng câu ngắn.",
@@ -576,7 +576,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Liên từ And, But, Or, So và Because.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I am tired, but I will study.",
@@ -601,7 +601,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Liên từ chỉ thời gian.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I am tired, but I will study.",
@@ -626,7 +626,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Liên từ chỉ sự đối lập.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I am tired, but I will study.",
@@ -651,7 +651,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Câu điều kiện loại 1.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "If it rains, I will stay home.",
@@ -676,7 +676,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Câu điều kiện loại 2.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "If I had more time, I would read more.",
@@ -701,7 +701,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Câu điều kiện loại 3.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "If I had studied harder, I would have passed.",
@@ -722,11 +722,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 29,
-    "summary": "Ngày 29 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe điền từ” và ghi lại thông tin chính.",
+    "summary": "Ngày 29 từ vựnghe chủ động theo chủ điểm “Luyện nghe điền từ” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe điền từ.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -750,11 +750,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 30,
-    "summary": "Ngày 30 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe chép chính tả” và ghi lại thông tin chính.",
+    "summary": "Ngày 30 từ vựnghe chủ động theo chủ điểm “Luyện nghe chép chính tả” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe chép chính tả.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -778,11 +778,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 31,
-    "summary": "Ngày 31 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe về giờ” và ghi lại thông tin chính.",
+    "summary": "Ngày 31 từ vựnghe chủ động theo chủ điểm “Luyện nghe về giờ” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe về giờ.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -806,11 +806,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 32,
-    "summary": "Ngày 32 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe ngày tháng” và ghi lại thông tin chính.",
+    "summary": "Ngày 32 từ vựnghe chủ động theo chủ điểm “Luyện nghe ngày tháng” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe ngày tháng.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -834,11 +834,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 33,
-    "summary": "Ngày 33 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe địa điểm” và ghi lại thông tin chính.",
+    "summary": "Ngày 33 từ vựnghe chủ động theo chủ điểm “Luyện nghe địa điểm” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe địa điểm.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -862,11 +862,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 34,
-    "summary": "Ngày 34 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe về tiền bạc” và ghi lại thông tin chính.",
+    "summary": "Ngày 34 từ vựnghe chủ động theo chủ điểm “Luyện nghe về tiền bạc” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe về tiền bạc.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -894,7 +894,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Nói về chính mình bằng câu rõ.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I made this cake myself.",
@@ -919,7 +919,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Sự hoà hợp về thì.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "He said he was tired.",
@@ -940,11 +940,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 37,
-    "summary": "Ngày 37 tập trung vào nghe chủ động theo chủ điểm “Tiếng Anh giao tiếp 1” và ghi lại thông tin chính.",
+    "summary": "Ngày 37 từ vựnghe chủ động theo chủ điểm “tiếng Anh giao tiếp 1” và ghi lại thông tin chính.",
     "keyPoints": [
-      "Mục tiêu chính: Tiếng Anh giao tiếp 1.",
+      "Mục tiêu chính: tiếng Anh giao tiếp 1.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa."
     ],
     "examples": [
@@ -955,9 +955,9 @@ export const foundation48LessonSummaries = [
     "practice": [
       "Nghe một lượt để bắt ý chính, chưa cần dừng lại.",
       "Nghe lại từng đoạn và ghi 3 từ khóa quan trọng.",
-      "Nói lại nội dung “Tiếng Anh giao tiếp 1” bằng 2 câu ngắn."
+      "Nói lại nội dung “tiếng Anh giao tiếp 1” bằng 2 câu ngắn."
     ],
-    "finalTask": "Kết thúc ngày 37: tóm tắt bài “Tiếng Anh giao tiếp 1” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
+    "finalTask": "Kết thúc ngày 37: tóm tắt bài “tiếng Anh giao tiếp 1” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
       "3 bài gốc Poo đã gom lại",
       "3 bản học ngắn đã sẵn sàng",
@@ -971,7 +971,7 @@ export const foundation48LessonSummaries = [
     "keyPoints": [
       "Mục tiêu chính: Nối hai ý đi cùng nhau.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "I am tired, but I will study.",
@@ -992,11 +992,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 39,
-    "summary": "Ngày 39 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe về các quốc gia và châu lục” và ghi lại thông tin chính.",
+    "summary": "Ngày 39 từ vựnghe chủ động theo chủ điểm “Luyện nghe về các quốc gia và châu lục” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe về các quốc gia và châu lục.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -1020,11 +1020,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 40,
-    "summary": "Ngày 40 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe về sở thích” và ghi lại thông tin chính.",
+    "summary": "Ngày 40 từ vựnghe chủ động theo chủ điểm “Luyện nghe về sở thích” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe về sở thích.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -1048,11 +1048,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 41,
-    "summary": "Ngày 41 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe về giao thông” và ghi lại thông tin chính.",
+    "summary": "Ngày 41 từ vựnghe chủ động theo chủ điểm “Luyện nghe về giao thông” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe về giao thông.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -1076,11 +1076,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 42,
-    "summary": "Ngày 42 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe về thể thao” và ghi lại thông tin chính.",
+    "summary": "Ngày 42 từ vựnghe chủ động theo chủ điểm “Luyện nghe về thể thao” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe về thể thao.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -1104,11 +1104,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 43,
-    "summary": "Ngày 43 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe về nghề nghiệp” và ghi lại thông tin chính.",
+    "summary": "Ngày 43 từ vựnghe chủ động theo chủ điểm “Luyện nghe về nghề nghiệp” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe về nghề nghiệp.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -1132,11 +1132,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 44,
-    "summary": "Ngày 44 tập trung vào nghe chủ động theo chủ điểm “Luyện nghe về công nghệ” và ghi lại thông tin chính.",
+    "summary": "Ngày 44 từ vựnghe chủ động theo chủ điểm “Luyện nghe về công nghệ” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Luyện nghe về công nghệ.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa.",
       "Sau khi nghe, nói lại nội dung bằng 1–2 câu đơn giản."
     ],
@@ -1160,11 +1160,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 45,
-    "summary": "Ngày 45 tập trung vào học đúng trọng tâm “Tiếng Anh giao tiếp 2” bằng ví dụ ngắn và bài tự luyện vừa sức.",
+    "summary": "Ngày 45 tập trung vào học đúng trọng tâm “tiếng Anh giao tiếp 2” bằng ví dụ ngắn và bài tự luyện vừa sức.",
     "keyPoints": [
-      "Mục tiêu chính: Tiếng Anh giao tiếp 2.",
+      "Mục tiêu chính: tiếng Anh giao tiếp 2.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu."
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu."
     ],
     "examples": [
       "Hello, nice to meet you.",
@@ -1174,9 +1174,9 @@ export const foundation48LessonSummaries = [
     "practice": [
       "Làm phần luyện cùng Poo theo từng câu ngắn.",
       "Tự viết 3 câu mới rồi để Poo nhắc lại chủ ngữ, động từ và dấu câu.",
-      "Tóm tắt quy tắc của “Tiếng Anh giao tiếp 2” bằng lời của bạn."
+      "Tóm tắt quy tắc của “tiếng Anh giao tiếp 2” bằng lời của bạn."
     ],
-    "finalTask": "Kết thúc ngày 45: tóm tắt bài “Tiếng Anh giao tiếp 2” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
+    "finalTask": "Kết thúc ngày 45: tóm tắt bài “tiếng Anh giao tiếp 2” bằng 3 gạch đầu dòng và tự tạo ít nhất 3 câu ví dụ.",
     "sourceLabels": [
       "3 bài gốc Poo đã gom lại",
       "3 bản học ngắn đã sẵn sàng"
@@ -1185,11 +1185,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 46,
-    "summary": "Ngày 46 tập trung vào nghe chủ động theo chủ điểm “Nghe và ghi từ khóa ngắn” và ghi lại thông tin chính.",
+    "summary": "Ngày 46 từ vựnghe chủ động theo chủ điểm “Nghe và ghi từ khóa ngắn” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Nghe và ghi từ khóa ngắn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa."
     ],
     "examples": [
@@ -1212,11 +1212,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 47,
-    "summary": "Ngày 47 tập trung vào nghe chủ động theo chủ điểm “Nói lại cùng ý bằng câu dễ hơn” và ghi lại thông tin chính.",
+    "summary": "Ngày 47 từ vựnghe chủ động theo chủ điểm “Nói lại cùng ý bằng câu dễ hơn” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Nói lại cùng ý bằng câu dễ hơn.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa."
     ],
     "examples": [
@@ -1239,11 +1239,11 @@ export const foundation48LessonSummaries = [
   },
   {
     "dayNumber": 48,
-    "summary": "Ngày 48 tập trung vào nghe chủ động theo chủ điểm “Tự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh” và ghi lại thông tin chính.",
+    "summary": "Ngày 48 từ vựnghe chủ động theo chủ điểm “Tự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh” và ghi lại thông tin chính.",
     "keyPoints": [
       "Mục tiêu chính: Tự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh.",
       "Đọc phần giải thích ngắn trước, sau đó luyện bằng câu tự tạo.",
-      "Ưu tiên câu rõ chủ ngữ, đúng động từ và đúng dấu câu.",
+      "Ưu tiên câu rõ chủ ngữ, đúng động từ vựng dấu câu.",
       "Nghe một lượt để bắt ý, nghe lại từng đoạn để ghi từ khóa."
     ],
     "examples": [

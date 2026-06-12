@@ -29,7 +29,7 @@ const stage7Seeds: Record<number, DaySeed> = {
     finalPrompt: 'Đọc cặp câu hiện tại/quá khứ: says/is, said/was, think/likes, thought/liked.',
   },
   37: {
-    title: 'Tiếng Anh giao tiếp 1',
+    tiếng Anh giao tiếp 1',
     goal: 'Hôm nay bạn học các câu giao tiếp ngắn để xin giúp đỡ, hỏi lại và nói khi chưa hiểu.',
     grammarTitle: 'Câu giao tiếp cứu nguy ngắn',
     grammar: 'Trong giao tiếp thật, người mới cần vài câu ngắn để không bị đứng hình: xin giúp đỡ, nhờ lặp lại, nói chưa hiểu, hỏi đường đơn giản.',
@@ -45,7 +45,7 @@ const stage7Seeds: Record<number, DaySeed> = {
     title: 'Nối hai ý đi cùng nhau',
     goal: 'Hôm nay bạn học cách nối hai lựa chọn hoặc hai ý song song bằng both...and, either...or.',
     grammarTitle: 'Both...and, either...or, neither...nor, not only...but also',
-    grammar: 'Nối hai ý đi cùng nhau đi theo cặp. Với người mới, dùng câu ngắn và rõ: both...and để lấy cả hai, either...or để chọn một trong hai, neither...nor để không cái nào, not only...but also để khen thêm ý.',
+    grammar: 'Nối hai ý đi cùng nhau đi từ vựngười mới, dùng câu ngắn và rõ: both...and để lấy cả hai, either...or để chọn một trong hai, neither...nor để không cái nào, not only...but also để khen thêm ý.',
     vocabulary: [['both','cả hai','Both Lan and Nam study English.'],['either','hoặc một trong hai','You can choose either tea or coffee.'],['neither','không cái nào trong hai','Neither he nor she is ready.'],['not only','không chỉ','She is not only kind but also smart.'],['ready','sẵn sàng','She is ready.'],['smart','thông minh','She is smart.']],
     patterns: [['Both A and B','cả A và B',['Both Lan and Nam study English.','Both tea and coffee are good.']],['Either A or B','chọn A hoặc B',['You can choose either tea or coffee.','Either you or I can go.']],['Neither A nor B','không A cũng không B',['Neither he nor she is ready.','Neither tea nor coffee is here.']],['Not only A but also B','không chỉ A mà còn B',['She is not only kind but also smart.','He is not only fast but also careful.']]],
     sentences: [['Both Lan and Nam study English.','Cả Lan và Nam đều học tiếng Anh.'],['You can choose either tea or coffee.','Bạn có thể chọn trà hoặc cà phê.'],['Neither he nor she is ready.','Cả anh ấy và cô ấy đều chưa sẵn sàng.'],['She is not only kind but also smart.','Cô ấy không chỉ tốt bụng mà còn thông minh.'],['Both tea and coffee are good.','Cả trà và cà phê đều ngon.']],

@@ -7720,7 +7720,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: He does not plays.",
       "answer": "I do not like coffee.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: I do not like coffee."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: I do not like coffee."
     },
     {
       "id": 62,
@@ -7728,7 +7728,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: I not like coffee.",
       "answer": "He does not play games.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: He does not play games."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: He does not play games."
     },
     {
       "id": 63,
@@ -7736,7 +7736,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: They not tired.",
       "answer": "They are not tired.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: They are not tired."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: They are not tired."
     },
     {
       "id": 64,
@@ -7744,7 +7744,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: He does not plays.",
       "answer": "I do not like coffee.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: I do not like coffee."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: I do not like coffee."
     },
     {
       "id": 65,
@@ -7752,7 +7752,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: I not like coffee.",
       "answer": "He does not play games.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: He does not play games."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: He does not play games."
     },
     {
       "id": 66,
@@ -7760,7 +7760,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: They not tired.",
       "answer": "They are not tired.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: They are not tired."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: They are not tired."
     },
     {
       "id": 67,
@@ -7768,7 +7768,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: He does not plays.",
       "answer": "I do not like coffee.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: I do not like coffee."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: I do not like coffee."
     },
     {
       "id": 68,
@@ -7776,7 +7776,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: I not like coffee.",
       "answer": "He does not play games.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: He does not play games."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: He does not play games."
     },
     {
       "id": 69,
@@ -7784,7 +7784,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: They not tired.",
       "answer": "They are not tired.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: They are not tired."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: They are not tired."
     },
     {
       "id": 70,
@@ -7792,7 +7792,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: He does not plays.",
       "answer": "I do not like coffee.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: I do not like coffee."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: I do not like coffee."
     },
     {
       "id": 71,
@@ -7800,7 +7800,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: I not like coffee.",
       "answer": "He does not play games.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: He does not play games."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: He does not play games."
     },
     {
       "id": 72,
@@ -7808,7 +7808,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: They not tired.",
       "answer": "They are not tired.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: They are not tired."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: They are not tired."
     },
     {
       "id": 73,
@@ -7816,7 +7816,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: He does not plays.",
       "answer": "I do not like coffee.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: I do not like coffee."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: I do not like coffee."
     },
     {
       "id": 74,
@@ -7824,7 +7824,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: I not like coffee.",
       "answer": "He does not play games.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: He does not play games."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: He does not play games."
     },
     {
       "id": 75,
@@ -7832,7 +7832,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: They not tired.",
       "answer": "They are not tired.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: They are not tired."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: They are not tired."
     },
     {
       "id": 76,
@@ -7840,7 +7840,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: He does not plays.",
       "answer": "I do not like coffee.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: I do not like coffee."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: I do not like coffee."
     },
     {
       "id": 77,
@@ -7848,7 +7848,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: I not like coffee.",
       "answer": "He does not play games.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: He does not play games."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: He does not play games."
     },
     {
       "id": 78,
@@ -7856,7 +7856,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: They not tired.",
       "answer": "They are not tired.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: They are not tired."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: They are not tired."
     },
     {
       "id": 79,
@@ -7864,7 +7864,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: He does not plays.",
       "answer": "I do not like coffee.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: I do not like coffee."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: I do not like coffee."
     },
     {
       "id": 80,
@@ -7872,7 +7872,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: I not like coffee.",
       "answer": "He does not play games.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: He does not play games."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: He does not play games."
     },
     {
       "id": 81,
@@ -7880,7 +7880,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: They not tired.",
       "answer": "They are not tired.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: They are not tired."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: They are not tired."
     },
     {
       "id": 82,
@@ -7888,7 +7888,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: He does not plays.",
       "answer": "I do not like coffee.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: I do not like coffee."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: I do not like coffee."
     },
     {
       "id": 83,
@@ -7896,7 +7896,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: I not like coffee.",
       "answer": "He does not play games.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: He does not play games."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: He does not play games."
     },
     {
       "id": 84,
@@ -7904,7 +7904,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: They not tired.",
       "answer": "They are not tired.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: They are not tired."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: They are not tired."
     },
     {
       "id": 85,
@@ -7912,7 +7912,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: He does not plays.",
       "answer": "I do not like coffee.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: I do not like coffee."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: I do not like coffee."
     },
     {
       "id": 86,
@@ -7920,7 +7920,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: I not like coffee.",
       "answer": "He does not play games.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: He does not play games."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: He does not play games."
     },
     {
       "id": 87,
@@ -7928,7 +7928,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: They not tired.",
       "answer": "They are not tired.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: They are not tired."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: They are not tired."
     },
     {
       "id": 88,
@@ -7936,7 +7936,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: He does not plays.",
       "answer": "I do not like coffee.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: I do not like coffee."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: I do not like coffee."
     },
     {
       "id": 89,
@@ -7944,7 +7944,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: I not like coffee.",
       "answer": "He does not play games.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: He does not play games."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: He does not play games."
     },
     {
       "id": 90,
@@ -7952,7 +7952,7 @@ export const seoV3SupplementBanks = {
       "formula": "S + do/does not + V",
       "question": "Sửa lỗi sai: They not tired.",
       "answer": "They are not tired.",
-      "explanationVi": "Dùng mẫu: S + do/does not + V. Câu đúng là: They are not tired."
+      "explanationVi": "Dùng mẫu: S + do/does notừ vựng là: They are not tired."
     },
     {
       "id": 91,
@@ -8488,7 +8488,7 @@ export const seoV3SupplementBanks = {
       "id": 7,
       "level": "A1",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "listen-repeat"
     },
@@ -8512,7 +8512,7 @@ export const seoV3SupplementBanks = {
       "id": 10,
       "level": "A1",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "listen-repeat"
     },
@@ -8568,7 +8568,7 @@ export const seoV3SupplementBanks = {
       "id": 17,
       "level": "A1",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "slow-shadowing"
     },
@@ -8592,7 +8592,7 @@ export const seoV3SupplementBanks = {
       "id": 20,
       "level": "A1",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "slow-shadowing"
     },
@@ -8648,7 +8648,7 @@ export const seoV3SupplementBanks = {
       "id": 27,
       "level": "A1",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "record-compare"
     },
@@ -8672,7 +8672,7 @@ export const seoV3SupplementBanks = {
       "id": 30,
       "level": "A1",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "record-compare"
     },
@@ -8728,7 +8728,7 @@ export const seoV3SupplementBanks = {
       "id": 37,
       "level": "A1",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "listen-repeat"
     },
@@ -8752,7 +8752,7 @@ export const seoV3SupplementBanks = {
       "id": 40,
       "level": "A1",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "listen-repeat"
     },
@@ -8808,7 +8808,7 @@ export const seoV3SupplementBanks = {
       "id": 47,
       "level": "A1",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "slow-shadowing"
     },
@@ -8832,7 +8832,7 @@ export const seoV3SupplementBanks = {
       "id": 50,
       "level": "A1",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "slow-shadowing"
     },
@@ -8888,7 +8888,7 @@ export const seoV3SupplementBanks = {
       "id": 57,
       "level": "A2",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "record-compare"
     },
@@ -8912,7 +8912,7 @@ export const seoV3SupplementBanks = {
       "id": 60,
       "level": "A2",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "record-compare"
     },
@@ -8968,7 +8968,7 @@ export const seoV3SupplementBanks = {
       "id": 67,
       "level": "A2",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "listen-repeat"
     },
@@ -8992,7 +8992,7 @@ export const seoV3SupplementBanks = {
       "id": 70,
       "level": "A2",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "listen-repeat"
     },
@@ -9048,7 +9048,7 @@ export const seoV3SupplementBanks = {
       "id": 77,
       "level": "A2",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "slow-shadowing"
     },
@@ -9072,7 +9072,7 @@ export const seoV3SupplementBanks = {
       "id": 80,
       "level": "A2",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "slow-shadowing"
     },
@@ -9128,7 +9128,7 @@ export const seoV3SupplementBanks = {
       "id": 87,
       "level": "A2",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "record-compare"
     },
@@ -9152,7 +9152,7 @@ export const seoV3SupplementBanks = {
       "id": 90,
       "level": "A2",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "record-compare"
     },
@@ -9208,7 +9208,7 @@ export const seoV3SupplementBanks = {
       "id": 97,
       "level": "B1",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "listen-repeat"
     },
@@ -9232,7 +9232,7 @@ export const seoV3SupplementBanks = {
       "id": 100,
       "level": "B1",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "listen-repeat"
     },
@@ -9288,7 +9288,7 @@ export const seoV3SupplementBanks = {
       "id": 107,
       "level": "B1",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "slow-shadowing"
     },
@@ -9312,7 +9312,7 @@ export const seoV3SupplementBanks = {
       "id": 110,
       "level": "B1",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "slow-shadowing"
     },
@@ -9368,7 +9368,7 @@ export const seoV3SupplementBanks = {
       "id": 117,
       "level": "B1",
       "text": "My pronunciation is getting better.",
-      "translationVi": "Phát âm của tôi đang tốt hơn.",
+      "translationVi": "phát âm của tôi đang tốt hơn.",
       "focus": "nhịp nói",
       "practiceMode": "record-compare"
     },
@@ -9392,7 +9392,7 @@ export const seoV3SupplementBanks = {
       "id": 120,
       "level": "B1",
       "text": "Learning English can be friendly.",
-      "translationVi": "Học tiếng Anh có thể rất thân thiện.",
+      "translationVi": "học tiếng Anh có thể rất thân thiện.",
       "focus": "ngữ điệu",
       "practiceMode": "record-compare"
     }

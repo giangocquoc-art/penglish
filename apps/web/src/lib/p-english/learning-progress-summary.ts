@@ -122,7 +122,7 @@ export function getLearningPathProgressSnapshot(): LearningPathProgressSnapshot 
   const earnedXp = units.reduce((sum, item) => sum + (item.completed ? item.unit.xp : 0), 0);
   const totalLessonsCount = availableUnits.reduce((sum, item) => sum + (item.unit.lessonCount ?? (item.lesson ? 1 : 0)), 0);
   const completedLessonsCount = completedUnits.reduce((sum, item) => sum + (item.unit.lessonCount ?? 1), 0);
-  const nextLessonTitle = nextUnit ? cleanUnitTitle(nextUnit.unit.title) : 'Ôn lại lộ trình đang mở';
+  const nextLessonTitle = nextUnit ? cleanUnitTitle(nextUnit.unit.title) : 'Ôn lộ trình đang mở';
   const unifiedDashboard = getUnifiedDashboardSnapshot();
   const unifiedPathPercentage = unifiedDashboard.pathPercentage || pathPercentage;
 

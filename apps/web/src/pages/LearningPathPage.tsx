@@ -52,17 +52,17 @@ function getShortTopic(day: Foundation48Day) {
 }
 
 function getStatusLabel(status: DayStatus) {
-  if (status === 'completed') return 'Hoàn thành';
-  if (status === 'current') return 'Đang học';
-  if (status === 'available') return 'Có thể học';
-  return 'Chưa mở';
+  if (status === 'completed') return 'Xong một chặng nhỏ';
+  if (status === 'current') return 'Đang bơi';
+  if (status === 'available') return 'Sẵn sàng lặn học';
+  return 'Mở sau nha';
 }
 
 const STAGE_LEVELS: Record<number, { level: string; skill: string; next: string }> = {
   1: { level: 'A0', skill: 'Nền tảng câu', next: 'Bắt đầu với câu giới thiệu thật ngắn.' },
   2: { level: 'A0 → A1', skill: 'Động từ thường', next: 'Tập nói câu thói quen mỗi ngày.' },
   3: { level: 'A1', skill: 'Từ loại & thì căn bản', next: 'Củng cố mẫu câu trước khi tăng tốc.' },
-  4: { level: 'A1', skill: 'Phát âm & câu hỏi', next: 'Nghe mẫu rồi nói lại chậm.' },
+  4: { level: 'A1', skill: 'phát âm & câu hỏi', next: 'Nghe mẫu rồi nói lại chậm.' },
   5: { level: 'A1 → A2', skill: 'Nối ý & điều kiện', next: 'Tập ghép câu dài hơn một chút.' },
   6: { level: 'A2', skill: 'Nghe nền tảng', next: 'Nghe ý chính trước, không cần hiểu hết.' },
   7: { level: 'A2 → B1', skill: 'Giao tiếp thực tế', next: 'Ôn câu Poo nhắc và dùng mẫu câu thật.' },
@@ -70,15 +70,15 @@ const STAGE_LEVELS: Record<number, { level: string; skill: string; next: string 
 };
 
 function getStageLevel(stageId: number) {
-  return STAGE_LEVELS[stageId] ?? { level: 'A1', skill: 'Kỹ năng tổng hợp', next: 'Học tiếp nút được Poo gợi ý.' };
+  return STAGE_LEVELS[stageId] ?? { level: 'A1', skill: 'Kỹ năng tổng hợp', next: 'Bơi tiếp theo nút Poo gợi ý.' };
 }
 
 function getDaySkillLabel(day: Foundation48Day) {
   const text = `${day.title} ${day.summary.summary}`.toLowerCase();
   if (text.includes('nghe') || text.includes('listening')) return 'Nghe';
   if (text.includes('nói') || text.includes('speak') || text.includes('phát âm')) return 'Nói';
-  if (text.includes('từ') || text.includes('vocabulary')) return 'Từ vựng';
-  if (text.includes('câu hỏi') || text.includes('grammar') || text.includes('thì')) return 'Ngữ pháp';
+  if (text.includes('từ') || text.includes('vocabulary')) retừ vựng';
+  if (text.includes('câu hỏi') || text.includes('grammar') || text.includes('thì')) return 'ngữ pháp';
   return 'Mẫu câu';
 }
 
@@ -165,7 +165,7 @@ export function LearningPathPage() {
 }
 
 function RoadmapHero({ completed, total, waterStreak, currentDay, percent }: { completed: number; total: number; waterStreak: UnifiedWaterStreak; currentDay: Foundation48Day; percent: number }) {
-  const ctaLabel = completed === 0 && currentDay.dayNumber === 1 ? 'Bắt đầu ngày 1' : 'Tiếp tục học';
+  const ctaLabel = completed === 0 && currentDay.dayNumber === 1 ? 'Bắt đầu ngày 1' : 'Bơi tiếp';
 
   return (
     <Box className="penglish-glass-card" bg="rgba(255,255,255,0.72)" border="1px solid" borderColor="rgba(125,211,252,0.72)" borderRadius="3xl" p={{ base: '4', md: '6' }} mb={{ base: '3', md: '4' }} overflow="hidden" position="relative" boxShadow="0 14px 34px rgba(31,111,214,0.08)" backdropFilter={{ base: 'none', md: 'blur(10px) saturate(1.04)' }} data-testid="foundation48-roadmap-hero">
@@ -174,10 +174,10 @@ function RoadmapHero({ completed, total, waterStreak, currentDay, percent }: { c
         <VStack align="start" gap={{ base: '3', md: '4' }} flex="1" minW="0">
           <Box minW="0">
             <Text as="h1" color={COLORS.text} fontWeight="950" lineHeight="1.05" fontSize={{ base: '2xl', md: '4xl' }} data-testid="foundation48-roadmap-title">
-              Lộ trình học
+              Hành trình học
             </Text>
             <Text mt="2" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="850" noOfLines={1}>
-              Học tiếp nhé
+              Bơi tiếp nha
             </Text>
           </Box>
           <Flex gap="3" wrap="wrap" w="100%" direction={{ base: 'column', sm: 'row' }} align={{ base: 'stretch', sm: 'center' }}>
@@ -186,7 +186,7 @@ function RoadmapHero({ completed, total, waterStreak, currentDay, percent }: { c
             </Button>
             <Box flex="1" minW={{ base: '100%', sm: '220px' }} alignSelf="center">
               <Text color={COLORS.muted} fontWeight="900" fontSize="xs" mb="1">{completed}/{total} ngày · {percent}%</Text>
-              <Box h="8px" borderRadius="full" bg="#E2E8F0" overflow="hidden" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100} aria-label={`Tiến độ Foundation48 ${percent}%`}>
+              <Box h="8px" borderRadius="full" bg="#E2E8F0" overflow="hidden" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100} aria-labelộ trình 48 ngày ${percent}%`}>
                 <Box h="100%" w={`${Math.max(3, percent)}%`} bg="linear-gradient(90deg, #2F9EEB, #22C55E)" />
               </Box>
             </Box>
@@ -295,7 +295,7 @@ function DayRoadmapCard({ item }: { item: RoadmapDay }) {
         <HStack justify="space-between" gap="2" mt="auto">
           <HStack gap="1.5" color={tone.color}>
             <Icon as={status === 'locked' ? LockKeyhole : status === 'completed' ? CheckCircle2 : Play} boxSize="3.5" />
-            <Text fontSize="xs" fontWeight="950">{status === 'locked' ? 'Mở sau' : stepCount > 0 && status !== 'completed' ? `${stepCount} bước` : status === 'completed' ? 'Đã lưu' : 'Bắt đầu'}</Text>
+            <Text fontSize="xs" fontWeight="950">{status === 'locked' ? 'Mở sau nha' : stepCount > 0 && status !== 'completed' ? `${stepCount} bước` : status === 'completed' ? 'Poo đã giữ' : 'Lặn học'}</Text>
           </HStack>
           <Box display="flex" gap="1">
             {[0, 1, 2].map((index) => (

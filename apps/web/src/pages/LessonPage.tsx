@@ -146,8 +146,8 @@ export function LessonPage() {
   const firstQuiz = lesson.quizQuestions[0];
   const learningLocked = isLearningLocked(heartsState);
   const lessonSections = [
-    { id: 'listen', vi: 'Nghe', icon: Headphones, guide: 'Nghe trước nhé.', task: 'Bấm nghe một câu mẫu. Chỉ cần nghe, chưa cần nhớ hết.' },
-    { id: 'understand', vi: 'Hiểu', icon: BookOpen, guide: 'Nhìn nghĩa thật chậm.', task: 'Đọc 3 cụm đầu tiên và xem nghĩa tiếng Việt.' },
+    { id: 'listừ vựnghe', icon: Headphones, guide: 'Nghe trước nhé.', task: 'Bấm nghe một câu mẫu. Chỉ cần nghe, chưa cần nhớ hết.' },
+    { id: 'understand', vi: 'Hiểu', icon: BookOpen, guide: 'Nhìn nghĩa thật chậm.', task: 'Đọc 3 cụm đầu từ vựnghĩa tiếng Việt.' },
     { id: 'practice', vi: 'Luyện', icon: MessageCircle, guide: 'Thử ghép câu ngắn.', task: 'Đọc mẫu câu chính, rồi thay bằng tên của bạn.' },
     { id: 'speak', vi: 'Nói', icon: Mic2, guide: 'Thử nói lại nào.', task: 'Nói theo hội thoại mẫu một lần thật chậm.' },
     { id: 'quick-check', vi: 'Thử sức', icon: Play, guide: 'Chọn một câu trả lời thôi.', task: 'Làm nhanh một câu để Poo xem bạn đã hiểu đến đâu.' },
@@ -209,7 +209,7 @@ export function LessonPage() {
           ) : null}
 
           {activeLessonSection === 1 ? (
-            <StepShell icon={BookOpen} title="Bước 2: Hiểu" helperLabel="Hiểu" task="Nhìn 3 cụm quan trọng nhất và nghĩa tiếng Việt.">
+            <StepShell icon={BookOpen} title="Bước 2: Hiểu" helperLabel="Hiểu" task="Nhìn 3 cụm quan trọng nhấtừ vựnghĩa tiếng Việt.">
               <SimpleGrid columns={{ base: 1, md: 3 }} gap="3">
                 {lesson.vocabulary.slice(0, 3).map((item) => (
                   <Box key={item.id} bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="2xl" p="4">

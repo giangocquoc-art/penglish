@@ -282,7 +282,7 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
         <Box maxW="860px" mx="auto" bg="rgba(255,255,255,0.92)" backdropFilter="blur(16px)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '6', md: '8' }} boxShadow="0 16px 38px rgba(31, 111, 214, 0.08)">
           <Flex justify="space-between" align={{ base: 'start', md: 'center' }} gap="4" direction={{ base: 'column', md: 'row' }}>
             <Box>
-              <Badge colorScheme="cyan" borderRadius="full" px="3" py="1">Từ vựng • Ghép cặp</Badge>
+              <Badge colorScheme="cyan" borderRadius="full" px="3" py="1">từ vựng • Ghép cặp</Badge>
               <Text mt="4" fontSize={{ base: '3xl', md: '4xl' }} fontWeight="900" color={COLORS.text}>Ghép nghĩa từ vựng</Text>
             </Box>
             <Box display={{ base: 'none', sm: 'block' }} pointerEvents="none">
@@ -300,7 +300,7 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
 
           <Box mt="6" border="1px solid" borderColor="#FDE68A" bg="#FFFBEB" borderRadius="2xl" p="4">
             <Text color="#92400E" fontWeight="700">
-              Chọn một từ/cụm tiếng Anh bên trái, rồi chọn nghĩa tiếng Việt tương ứng bên phải. Đây là trò luyện từ vựng nhẹ, Poo chỉ muốn bạn nối đúng nghĩa từng cụm.
+              Chọn một từ/cụm tiếng Anh bên trái, rồi chọn nghĩa từ vựng ứng bên phải. Đây là trò luyện từ vựng nhẹ, Poo chỉ muốn bạn nối đúng nghĩa từng cụm.
             </Text>
           </Box>
 
@@ -344,7 +344,7 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
                   <Badge bg="#EFF6FF" color="#1D4ED8" borderRadius="full" px="3" py="1">Vòng {roundIndex + 1}/{rounds.length}</Badge>
                 </HStack>
                 <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="900" color={COLORS.text}>Ghép nghĩa từ vựng</Text>
-                <Text color={COLORS.muted}>Ưu tiên nhận diện từ/cụm và nghĩa tiếng Việt trước, không dịch từng chữ.</Text>
+                <Text color={COLORS.muted}>Ưu tiên nhận diện từ vựnghĩa tiếng Việt trước, không dịch từng chữ.</Text>
               </Box>
               <HStack align="center" gap="3">
                 <Box display={{ base: 'none', sm: 'block' }} pointerEvents="none">
@@ -421,9 +421,9 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
             <Box bg="rgba(240,253,244,0.94)" border="1px solid" borderColor="#BBF7D0" borderRadius="3xl" p={{ base: '5', md: '7' }}>
               <HStack align="center" gap="3" mb="2">
                 <OceanMascot mascot="cuaQuiz" pose="happy" size="sm" decorative motion="celebrate" />
-                <Text fontSize="2xl" fontWeight="900" color="#166534">Hoàn thành vòng {roundIndex + 1}</Text>
+                <Text fontSize="2xl" fontWeight="900" color="#166534">Hoàn từ vựng {roundIndex + 1}</Text>
               </HStack>
-              <Text mt="2" color={COLORS.muted}>Số lỗi trong vòng này: {roundMistakes}</Text>
+              <Text mt="2" color={COLORS.muted}>Số lỗi từ vựng này: {roundMistakes}</Text>
               <Button mt="5" onClick={goNextRound} borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: COLORS.primaryHover }}>
                 {roundIndex >= rounds.length - 1 ? 'Xem tổng kết' : 'Vòng tiếp theo'}
               </Button>
@@ -560,7 +560,7 @@ function MatchSummary({
               Làm lại toàn bộ
             </Button>
             <Button as={Link} to={`/practice?lessonId=${lesson.id}&mode=speed`} borderRadius="full" variant="outline">
-              Luyện tốc độ từ vựng
+              Luyện từ vựng
             </Button>
             <Button as={Link} to="/vocabularies" borderRadius="full" variant="outline">
               Về hub từ vựng

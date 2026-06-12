@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Box, Button, Flex, HStack, Input, SimpleGrid, Tag, TagLabel, Text, VStack } from '@chakra-ui/react';
 import { ExternalLink, Search, Waves } from 'lucide-react';
 import { generatedEnglishResourceHub } from '../data/resources/generatedEnglishResourceHub';
@@ -16,7 +16,7 @@ const COLORS = {
   yellow: '#FFF3C4',
 };
 
-const SKILL_FILTERS: Array<'Tất cả' | EnglishResourceSkillTag> = ['Tất cả', 'Từ vựng', 'Ngữ pháp', 'Đọc', 'Nghe', 'Shadowing', 'Phát âm', 'Tự học miễn phí'];
+const SKILL_FILTERS: Array<'Tất cả' | EnglishResourceSkillTag> = ['Tất cả', 'từ vựngữ pháp', 'Đọc', 'Nghe', 'Shadowing', 'phát âm', 'Tự học miễn phí'];
 const CEFR_FILTERS: Array<'Tất cả' | EnglishResourceCefrLevel> = ['Tất cả', 'A1', 'A2', 'B1', 'B2', 'All'];
 
 function skillLabel(skill: string) {
@@ -49,7 +49,7 @@ export function ResourceHubPage() {
             <Tag borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD"><TagLabel>Học trong PooEnglish trước, dùng link sau</TagLabel></Tag>
           </HStack>
           <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="900" color={COLORS.text} lineHeight="1.1">Kho tài nguyên học thêm</Text>
-          <Text mt="3" color={COLORS.muted} maxW="760px" fontWeight="600">Tài nguyên miễn phí được chọn lọc theo CEFR và kỹ năng. Mỗi gợi ý có cách dùng rõ ràng để bạn không bị lạc trong quá nhiều link.</Text>
+          <Text mt="3" color={COLORS.muted} maxW="760px" fontWeight="600">Tài nguyên miễn phí được chọn lọc từ vựng. Mỗi gợi ý có cách dùng rõ ràng để bạn không bị lộ trìnhiều link.</Text>
         </Box>
         <Flex align="center" justify="center" minW={{ md: '120px' }} pointerEvents="none" aria-hidden="true"><Text fontSize="6xl">🌊</Text></Flex>
       </Flex>
@@ -82,7 +82,7 @@ export function ResourceHubPage() {
             </HStack>
           </Box>
         </Flex>
-        <Text mt="3" color={COLORS.muted} fontSize="sm" fontWeight="700">Đang hiển thị {filteredResources.length}/{generatedEnglishResourceHub.length} gợi ý. Link ngoài chỉ để học thêm, không thay thế lộ trình chính.</Text>
+        <Text mt="3" color={COLORS.muted} fontSize="sm" fontWeight="700">Đang hiển thị {filteredResources.length}/{generatedEnglishResourceHub.length} gợi ý. Link ngoài chỉ để học thêm, không thay thế lộ trình.</Text>
       </Box>
 
       <SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} gap="5">

@@ -1,8 +1,10 @@
+import { isSoftRateLimited } from '../../lib/security/softRateLimit';
 import { supabase } from '../../lib/supabaseClient';
 import type { Foundation48ProgressDay, Foundation48ProgressState } from './foundation48Types';
 import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48Progress, saveFoundation48ProgressSnapshot } from './foundation48Progress';
 
 const TABLE_NAME = 'foundation48_progress';
+const FOUNDATION48_SAVE_LIMIT = { limit: 24, windowMs: 60_000 };
 
 type Foundation48CloudRow = {
   user_id: string;
@@ -104,6 +106,7 @@ export async function loadCloudFoundation48Progress(userId: string): Promise<Fou
 }
 
 export async function saveCloudFoundation48DayProgress(userId: string, dayProgress: Foundation48ProgressDay & { dayNumber?: number }) {
+  if (isSoftRateLimited('foundation48-save-progress', FOUNDATION48_SAVE_LIMIT)) return { ok: false, reason: 'rate-limited' as const };
   if (!supabase || !userId) return { ok: false, reason: 'auth-unavailable' as const };
   const dayNumber = Number(dayProgress.dayNumber);
   if (!Number.isFinite(dayNumber) || dayNumber < 1) return { ok: false, reason: 'invalid-day' as const };
@@ -130,6 +133,7 @@ export async function syncLocalFoundation48ProgressToCloud(userId: string) {
 }
 
 export async function mergeCloudAndLocalFoundation48Progress(userId: string) {
+  if (isSoftRateLimited('foundation48-merge-progress', FOUNDATION48_SAVE_LIMIT)) return { ok: false, reason: 'rate-limited' as const };
   if (!supabase || !userId) return { ok: false, reason: 'auth-unavailable' as const };
 
   const local = getFoundation48Progress();

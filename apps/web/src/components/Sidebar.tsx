@@ -17,6 +17,7 @@ type NavItem = { label: string; to: string; icon: any; tint: string; description
 const NAV: NavItem[] = [
   { label: 'Học', to: '/luyen-tieng-anh/48-ngay-lay-goc', icon: Waves, tint: OCEAN_TOKENS.whaleBlue, description: 'Bài hôm nay' },
   { label: 'Shadowing', to: '/shadowing', icon: Mic, tint: OCEAN_TOKENS.oceanBlue, description: 'Nghe & nói', pixelIconSrc: '/assets/shadowing-pixel/micro-normal.png' },
+  { label: 'Speaking', to: '/speaking-coach', icon: Mic, tint: OCEAN_TOKENS.oceanBlue, description: 'Poo chấm nói' },
   { label: 'Ôn tập', to: '/practice', icon: Dumbbell, tint: OCEAN_TOKENS.deepBlue, description: 'Câu cần ôn' },
   { label: 'Từ vựng', to: '/words', icon: BookOpen, tint: OCEAN_TOKENS.whaleBlue, description: 'Kho từ' },
   { label: 'Trang chủ', to: '/home', icon: Home, tint: OCEAN_TOKENS.oceanBlue, description: 'Tổng quan' },

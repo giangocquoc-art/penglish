@@ -64,7 +64,7 @@ export const adminWords: AdminWord[] = [
 
 export const adminFeedback: AdminFeedback[] = [
   { id: 'f-1', sender: 'Thanh Trúc', email: 'tructhanh@example.com', content: 'Âm thanh bài nghe hơi nhỏ trên điện thoại.', page: '/lessons/unit-1-greetings-introduction', createdAt: '10/06/2026 18:12', status: 'Mới' },
-  { id: 'f-2', sender: 'Hoàng Nam', email: 'namhoang@example.com', content: 'Em muốn có thêm ví dụ tiếng Việt ở phần từ mới.', page: '/words', createdAt: '10/06/2026 14:40', status: 'Đang xử lý' },
+  { id: 'f-2', sender: 'Hoàng Nam', email: 'namhoang@example.com', content: 'Em muốn có từ vựng Việt ở phần từ mới.', page: '/words', createdAt: '10/06/2026 14:40', status: 'Đang xử lý' },
   { id: 'f-3', sender: 'Mai Chi', email: 'maichi@example.com', content: 'Trang luyện nói tải hơi chậm lần đầu.', page: '/shadowing', createdAt: '09/06/2026 22:05', status: 'Đã xử lý' },
   { id: 'f-4', sender: 'Bảo An', email: 'baoan@example.com', content: 'Nhầm nút ôn lại với bắt đầu bài mới.', page: '/home', createdAt: '09/06/2026 09:16', status: 'Bỏ qua' },
 ];

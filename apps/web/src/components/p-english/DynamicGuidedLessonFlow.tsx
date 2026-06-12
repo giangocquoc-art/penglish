@@ -105,7 +105,7 @@ export function DynamicGuidedLessonFlow({
     return (
       <Box mb="6" bg="white" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '5', md: '6' }} boxShadow="0 18px 44px rgba(31, 111, 214, 0.08)">
         <Text fontSize="2xl" fontWeight="950" color={COLORS.text}>Poo đang dẫn bạn đọc phần chính trước.</Text>
-        <Text mt="2" color={COLORS.muted} fontWeight="700">Bài này ưu tiên đọc hiểu trước. Bạn có thể đọc nội dung bên dưới hoặc quay lại lộ trình để chọn nhịp luyện khác.</Text>
+        <Text mt="2" color={COLORS.muted} fontWeight="700">Bài này ưu tiên đọc hiểu trước. Bạn có thể đọc nội dung bên dưới hoặc quay lộ trình để chọn nhịp luyện khác.</Text>
         <HStack mt="5" wrap="wrap">
           <Button as={Link} to="/learning-path" borderRadius="full" bg={COLORS.primary} color="white">Xem lộ trình</Button>
           <Button as={Link} to="/home" borderRadius="full" variant="outline">Về Hôm nay học gì?</Button>
@@ -192,7 +192,7 @@ function ModeLearningBlock({ lesson, mode, speakEnglish }: { lesson: EnglishLess
   }
   if (mode === 'match') {
     const pairs = (lesson.matchPairs ?? []).slice(0, 4).map((item) => ({ title: item.left, text: item.right, hint: 'Ghép hai vế tương ứng.' }));
-    const vocabPairs = lesson.vocabulary.slice(0, 4).map((item) => ({ title: item.term, text: item.meaningVi, hint: 'Ghép từ với nghĩa.' }));
+    const vocabPairs = lesson.vocabulary.slice(0, 4).map((item) => ({ title: item.term, text: item.meaningVi, hint: 'Ghép từ vựnghĩa.' }));
     return <PreviewList items={pairs.length > 0 ? pairs : vocabPairs} empty="Poo sẽ mở cặp từ ở nhịp luyện phù hợp." />;
   }
   return (
@@ -245,7 +245,7 @@ function FlashcardPreview({ lesson, speakEnglish }: { lesson: EnglishLesson; spe
           <Button size="sm" borderRadius="full" bg={COLORS.primary} color="white" onClick={goNext} rightIcon={<Icon as={ArrowRight} />} _hover={{ bg: '#1D4ED8' }}>Thẻ tiếp</Button>
         </HStack>
         <Box as="details" mt="2" bg="rgba(248,252,255,0.54)" border="1px solid" borderColor="rgba(186,230,253,0.72)" borderRadius="2xl" p="2" fontSize="sm">
-          <Box as="summary" cursor="pointer" fontWeight="850" color={COLORS.primary}>Xem tất cả từ vựng</Box>
+          <Box as="summary" cursor="pointer" fontWeight="850" color={COLORS.primary}>Xem từ vựng</Box>
           <SimpleGrid columns={1} gap="2" mt="3" maxH="320px" overflowY="auto" pr="1">
             {cards.map((item) => <FlowCard key={item.id} title={item.term} text={item.meaningVi} hint={item.exampleMeaningVi || item.example} onClick={() => speakEnglish(item.term)} />)}
           </SimpleGrid>

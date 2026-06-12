@@ -28,11 +28,11 @@ const fallbackIcon = {
 const guideByStage: Record<number, Foundation48MascotGuideConfig> = {
   1: { key: 'pip', name: 'Pip + Poo', role: 'Bạn đồng hành khởi động', message: 'Không cần học nhanh, chỉ cần học chắc từng ngày.', pose: 'happy' },
   2: { key: 'mucMo', name: 'Mực Mo', role: 'Gia sư công thức', message: 'Mực Mo giúp bạn nhìn mẫu câu rõ ràng hơn.', pose: 'teacher' },
-  3: { key: 'mucMo', name: 'Mực Mo + Rùa Rì', role: 'Ngữ pháp và ôn chậm', message: 'Cứ đi chậm, công thức nào cũng có nhịp riêng để nhớ.', pose: 'explain' },
-  4: { key: 'suaNghe', name: 'Sứa Nghe + Poo', role: 'Phát âm và nghe nền', message: 'Sứa Nghe chuẩn bị nhịp nghe nhẹ để bạn bắt âm tốt hơn.', pose: 'listen' },
+  3: { key: 'mucMo', name: 'Mực Mo + Rùa Rì', role: 'ngữ pháp và ôn chậm', message: 'Cứ đi chậm, công thức nào cũng có nhịp riêng để nhớ.', pose: 'explain' },
+  4: { key: 'suaNghe', name: 'Sứa Nghe + Poo', role: 'phátừ vựnghe nền', message: 'Sứa Nghe chuẩn bị nhịp nghe nhẹ để bạn bắt âm tốt hơn.', pose: 'listen' },
   5: { key: 'mucMo', name: 'Mực Mo', role: 'Liên kết ý', message: 'Hôm nay mình nối ý từng bước, không cần ôm hết một lần.', pose: 'hint' },
   6: { key: 'suaNghe', name: 'Sứa Nghe', role: 'Luyện nghe nền tảng', message: 'Nghe lượt đầu để bắt ý, lượt sau mới soi chi tiết.', pose: 'wave' },
-  7: { key: 'cuaQuiz', name: 'Cua Quiz + Rùa Rì', role: 'Kiểm tra nhẹ', message: 'Cua Quiz kiểm tra nhẹ thôi, mục tiêu là biết mình cần ôn gì.', pose: 'quiz' },
+  7: { key: 'cuaQuiz', name: 'Cua Quiz + Rùa Rì', rolộ trìnhẹ', message: 'Cua Quiz kiểm tra nhẹ thôi, mục tiêu là biết mình cần ôn gì.', pose: 'quiz' },
   8: { key: 'saoNhi', name: 'Sao Nhi + Poo', role: 'Về đích tự tin', message: 'Sao Nhi giữ chỗ cho khoảnh khắc bạn nói về chính mình.', pose: 'sparkle' },
 };
 

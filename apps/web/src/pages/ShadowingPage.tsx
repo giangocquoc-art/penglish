@@ -35,9 +35,9 @@ const CUSTOM_SHADOWING_STORAGE_KEY = 'PooEnglish:custom-shadowing-item';
 const DEFAULT_CUSTOM_VIDEO_URL = '';
 const SHADOWING_WORKFLOW_STEPS = ['Nghe mẫu', 'Nói theo Poo', 'Xem góp ý'];
 const SHADOWING_RECORDING_TIMEOUT_MS = 7000;
-const MICROPHONE_PERMISSION_MESSAGE = 'Poo chưa được phép dùng micro. Hãy bật Microphone rồi thử lại nha.';
+const MICROPHONE_PERMISSION_MESSAGE = 'Poo chưa được phép dùng micro. Hãy bật micro rồi nói lại nhẹ một lần nha.';
 const SPEECH_UNCLEAR_MESSAGE = 'Poo chưa nghe rõ câu này, thử nói chậm hơn một chút nha.';
-const SPEECH_RECOGNITION_FALLBACK_MESSAGE = 'Trình duyệt này chưa hỗ trợ nhận diện giọng nói. Ní thử Chrome để Poo chấm phát âm nha.';
+const SPEECH_RECOGNITION_FALLBACK_MESSAGE = 'Trình duyệt này chưa hỗ trợ nghe giọng nói. Ní mở Chrome để Poo nghe cùng nha.';
 const SHADOWING_PIXEL_ASSET_BASE = '/assets/shadowing-pixel';
 const PIXEL_ASSETS = {
   speakerSample: `${SHADOWING_PIXEL_ASSET_BASE}/speaker-sample.png`,
@@ -239,7 +239,7 @@ function compareShadowingTranscript(targetText: string, attemptText: string): Sh
       ? 'Bạn có thể nói hơi thiếu từ. Hãy nghe lại rồi đọc chậm từng cụm.'
       : 'Nhịp nói khá sát. Giữ tốc độ đều và làm rõ âm cuối.';
   const pooBooMessage = /\bpoo\b/.test(normalizedTarget) && /\bboo\b/.test(normalizedTranscript)
-    ? "Đạt rồi đó! Poo nghe hơi giống 'boo' một chút, lần sau thử bật nhẹ âm /p/ nha."
+    ? "Ổn rồi đó! Poo nghe hơi giống 'boo' một chút, lần sau bật nhẹ âm /p/ nha."
     : '';
 
   return {
@@ -257,7 +257,7 @@ function compareShadowingTranscript(targetText: string, attemptText: string): Sh
     pronunciationTips: missingWords.length ? [`Poo góp ý nhẹ: thử nhấn rõ hơn ${missingWords.slice(0, 4).join(', ')}.`] : ['Bạn đã giữ đủ từ chính. Luyện thêm âm cuối để câu tự nhiên hơn.'],
     rhythmTips: [pacingHint, 'Chỉ cần nói câu ngắn, đúng ý, rõ nhịp. Không cần nói hoàn hảo.'],
     nextDrill: passed ? 'Nếu muốn mượt hơn, nghe mẫu một lần rồi nói lại nhẹ nhàng.' : 'Nghe mẫu một lần, nghỉ một nhịp, rồi nói lại câu này trước khi sang câu tiếp theo.',
-    coachMessage: pooBooMessage || (status === 'correct' ? `Đúng rồi! Poo nghe câu này rất sát: ${score}%.` : status === 'nearCorrect' ? `Đạt rồi, Poo góp ý nhẹ nha. Poo nghe được ý chính (${score}%).` : `Poo so sánh được ${score}%. Hãy luyện lại những từ còn thiếu nhé.`),
+    coachMessage: pooBooMessage || (status === 'correct' ? `Ổn rồi đó! Độ khớp câu này rất xinh: ${score}%.` : status === 'nearCorrect' ? `Ổn rồi đó, Poo nghe được ý chính (${score}%).` : `Độ khớp ${score}%. Mình nói lại nhẹ những từ còn vấp nha.`),
     status,
     passed,
     allowContinue: passed,
@@ -364,7 +364,7 @@ export function ShadowingPracticePage() {
   const isAnalyzing = recordingStatus === 'analyzing';
   const isProcessingRecording = isTranscribing || isAnalyzing;
   const processingMessage = isTranscribing ? 'Poo đang nghe lại giọng của bạn...' : isAnalyzing ? 'Poo đang góp ý cho bạn...' : '';
-  const pooMoodLabel = isRecording ? 'Poo đang nghe…' : isProcessingRecording ? processingMessage : apiFeedback ? 'Poo đã có góp ý cho lượt nói này' : apiError ? 'Poo cần bạn thử lại một chút' : 'Poo sẵn sàng nghe bạn nói';
+  const pooMoodLabel = isRecording ? 'Poo đang nghe…' : isProcessingRecording ? processingMessage : apiFeedback ? 'Poo đã có góp ý cho lượt nói này' : apiError ? 'Poo mời bạn nói lại nhẹ nha' : 'Poo sẵn sàng nghe bạn nói';
   const selectedSentencePracticed = selectedSentence ? isPracticed(selectedSentence.id) : false;
   const selectedSentenceDifficult = selectedSentence ? isDifficult(selectedSentence.id) : false;
   const isGoodSpeaking = Boolean(apiFeedback?.allowContinue);
@@ -394,7 +394,7 @@ export function ShadowingPracticePage() {
 
   useEffect(() => {
     setYoutubeFallbackVisible(false);
-    setMediaMessage(selectedVideo?.videoUrl?.trim() ? 'Lời thoại là phần luyện chính. Video tham khảo chỉ phát được khi nền tảng cho phép.' : 'Bài này luyện bằng lời thoại. Nút nghe dùng giọng đọc mẫu nếu trình duyệt hỗ trợ.');
+    setMediaMessage(selectedVideo?.videoUrl?.trim() ? 'Lời thoại là phần luyện chính. Video tham khảo chỉ phát được khi nền tảngữ pháp.' : 'Bài này luyện bằng lời thoại. Nút nghe dùng giọng đọc mẫu nếu trình duyệt hỗ trợ.');
     setApiFeedback(null);
     setApiError(null);
     setLocalTranscript('');
@@ -549,9 +549,9 @@ export function ShadowingPracticePage() {
     utterance.lang = englishVoice?.lang || 'en-US';
     utterance.rate = speed;
     utterance.onerror = () => setMediaMessage('Poo chưa phát được giọng mẫu. Bạn thử bấm lại hoặc kiểm tra âm lượng nha.');
-    utterance.onend = () => setMediaMessage(`Đã phát câu mẫu ở tốc độ ${speed}x.`);
+    utterance.onend = () => setMediaMessage(`Đã phát âmẫu ở tốc độ ${speed}x.`);
     window.speechSynthesis.speak(utterance);
-    setMediaMessage(`Đang phát câu mẫu ở tốc độ ${speed}x.`);
+    setMediaMessage(`Đang phát âmẫu ở tốc độ ${speed}x.`);
   };
 
   const replaySentence = async () => {
@@ -828,7 +828,7 @@ export function ShadowingPracticePage() {
   const createCustomPractice = () => {
     const transcript = createSegmentsFromTranscript(customTranscript);
     if (transcript.length === 0) {
-      setCustomMessage('Bạn cần nhập ít nhất một câu luyện để tạo bài.');
+      setCustomMessage('Bạn thêm ít nhất một câu để Poo tạo bài nha.');
       return;
     }
 
@@ -852,7 +852,7 @@ export function ShadowingPracticePage() {
     setCustomVideo(next);
     setSelectedVideoId(next.id);
     setCurrentLineIndex(0);
-    setCustomMessage(`Đã tạo bài luyện với ${transcript.length} câu. Bấm từng câu trong lời thoại để luyện.`);
+    setCustomMessage(`Poo đã tạo ${transcript.length} câu luyện. Bấm từng câu trong lời thoại để lặn học nha.`);
     navigate(`/shadowing/practice/${next.id}`);
   };
 
@@ -878,14 +878,14 @@ export function ShadowingPracticePage() {
         </HStack>
         <VStack align={{ base: 'start', md: 'end' }} gap="2">
           <HStack gap="2" wrap="wrap" justify={{ base: 'start', md: 'end' }}>
-            <Chip tone={apiFeedback?.allowContinue ? 'green' : apiFeedback ? 'amber' : apiError ? 'amber' : 'blue'}>{apiFeedback?.allowContinue ? 'Đạt rồi' : apiFeedback ? 'Cần thử lại' : apiError ? 'Cần thử lại' : 'Poo góp ý'}</Chip>
+            <Chip tone={apiFeedback?.allowContinue ? 'green' : apiFeedback ? 'amber' : apiError ? 'amber' : 'blue'}>{apiFeedback?.allowContinue ? 'Ổn rồi đó' : apiFeedback ? 'Nói lại nhẹ nha' : apiError ? 'Nói lại nhẹ nha' : 'Poo góp ý'}</Chip>
             {isGoodSpeaking ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgeGreat} alt="Huy hiệu nói tốt" loading="lazy" w="42px" h="42px" /> : null}
             {apiError ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgeRetry} alt="Huy hiệu thử lại" loading="lazy" w="42px" h="42px" /> : null}
             {selectedSentenceDifficult ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgeHard} alt="Huy hiệu câu khó" loading="lazy" w="42px" h="42px" /> : null}
             {selectedSentencePracticed ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgePracticed} alt="Huy hiệu đã luyện" loading="lazy" w="42px" h="42px" /> : null}
           </HStack>
           <Text data-testid="shadowing-sync-status" fontSize="xs" color={shadowingSyncStatus === 'synced' ? '#166534' : shadowingSyncStatus === 'failed' ? '#92400E' : COLORS.muted} fontWeight="700" role="status" aria-live="polite">
-            {shadowingSyncStatus === 'synced' ? 'Poo đã giữ lượt luyện' : shadowingSyncStatus === 'failed' ? 'Poo sẽ lưu lên tài khoản khi mạng ổn hơn' : 'Tiến độ của bạn vẫn an toàn'}
+            {shadowingSyncStatus === 'synced' ? 'Poo đã giữ lượt luyện' : shadowingSyncStatus === 'failed' ? 'Poo sẽ lưu lên tài khoản khi mạng ổn hơn' : 'Hành trình học của bạn vẫn an toàn'}
           </Text>
         </VStack>
       </Flex>
@@ -893,7 +893,7 @@ export function ShadowingPracticePage() {
       {apiFeedback ? (
         <>
           <Box mb="4" p="3" borderRadius="2xl" bg="rgba(232,244,255,0.72)" border="1px solid" borderColor="#BAE6FD">
-            <Text fontWeight="700" color={COLORS.text}>{apiFeedback.status === 'nearCorrect' ? 'Đạt rồi, Poo góp ý nhẹ nha' : apiFeedback.coachMessage}</Text>
+            <Text fontWeight="700" color={COLORS.text}>{apiFeedback.status === 'nearCorrect' ? 'Ổn rồi đó, Poo góp ý nhẹ nha' : apiFeedback.coachMessage}</Text>
             {apiFeedback.status === 'nearCorrect' ? <Text mt="1" fontSize="sm" color={COLORS.text} fontWeight="800">{apiFeedback.coachMessage}</Text> : null}
             <Text mt="1" fontSize="sm" color={COLORS.muted} fontWeight="700">Chỉ cần nói câu ngắn, đúng ý, rõ nhịp. Không cần nói hoàn hảo.</Text>
             <Text mt="1" fontSize="sm" color={COLORS.muted} fontWeight="700">Mức rõ của câu: {apiFeedback.score}/100 · Trạng thái: {apiFeedback.status} · Poo nghe chắc chưa: {apiFeedback.confidence}</Text>
@@ -924,8 +924,8 @@ export function ShadowingPracticePage() {
             </Box>
           </SimpleGrid>
           <HStack mt="4" gap="2" wrap="wrap">
-            <Button data-testid="shadowing-record-again-button" leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.microNormal} alt="Micro luyện nói" w="22px" h="22px" />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Nói lại lần nữa</Button>
-            <Button data-testid="shadowing-next-sentence-button" leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.nextWave} alt="Sóng chuyển câu" w="22px" h="22px" />} borderRadius="full" bg={COLORS.deepBlue} color="white" _hover={{ bg: COLORS.oceanBlue }} onClick={goToNextSentence} isDisabled={!apiFeedback.allowContinue || selectedSentenceIndex >= transcriptLength - 1}>Câu tiếp theo</Button>
+            <Button data-testid="shadowing-record-again-button" leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.microNormal} alt="Micro luyện nói" w="22px" h="22px" />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Nói lại nhẹ một lần nha</Button>
+            <Button data-testid="shadowing-next-sentence-button" leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.nextWave} alt="Sóng chuyển câu" w="22px" h="22px" />} borderRadius="full" bg={COLORS.deepBlue} color="white" _hover={{ bg: COLORS.oceanBlue }} onClick={goToNextSentence} isDisabled={!apiFeedback.allowContinue || selectedSentenceIndex >= transcriptLength - 1}>Bơi sang câu tiếp</Button>
           </HStack>
         </>
       ) : apiError ? (
@@ -949,7 +949,7 @@ export function ShadowingPracticePage() {
                 if (fallback.allowContinue) markSentenceCompleted(selectedSentence?.id);
                 saveAttempt(fallback);
               }} isDisabled={!localTranscript.trim()}>Nhờ Poo nghe thử</Button>
-              <Button data-testid="shadowing-record-retry-button" leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.microNormal} alt="Micro luyện nói" w="22px" h="22px" />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Nói lại lần nữa</Button>
+              <Button data-testid="shadowing-record-retry-button" leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.microNormal} alt="Micro luyện nói" w="22px" h="22px" />} borderRadius="full" variant="outline" colorScheme="blue" onClick={retryRecording}>Nói lại nhẹ một lần nha</Button>
             </HStack>
           </VStack>
         </Box>
@@ -1017,7 +1017,7 @@ export function ShadowingPracticePage() {
                     {selectedSentencePracticed ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgePracticed} alt="Đã luyện" loading="lazy" w="34px" h="34px" /> : null}
                     {selectedSentencePracticed ? <Chip tone="green">Đã luyện</Chip> : null}
                     {selectedSentenceDifficult ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgeHard} alt="Câu khó" loading="lazy" w="34px" h="34px" /> : null}
-                    {selectedSentenceDifficult ? <Chip tone="amber">Câu còn vấp</Chip> : null}
+                    {selectedSentenceDifficult ? <Chip tone="amber">Câu Poo ôm lại</Chip> : null}
                   </HStack>
                 </HStack>
 
@@ -1046,7 +1046,7 @@ export function ShadowingPracticePage() {
                   <Button className="shadowing-record-button" data-testid="shadowing-record-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Box as="img" className="pooPixelIcon" src={micPixelSrc} alt={isRecording ? 'Micro đang nghe' : apiFeedback ? 'Micro nghe thành công' : apiError ? 'Micro gặp lỗi' : 'Micro luyện nói'} w="24px" h="24px" />} borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} aria-label={isRecording ? 'Dừng thu âm' : 'Nói theo Poo'} aria-pressed={isRecording} onClick={handleRecordButtonActivate} onPointerUp={handleRecordButtonActivate} onTouchEnd={handleRecordButtonActivate} isDisabled={isProcessingRecording} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý cho bạn...'}>
                     {isRecording ? 'Dừng thu' : 'Nói theo Poo'}
                   </Button>
-                  <Button data-testid="shadowing-next-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.nextWave} alt="Sóng chuyển câu" w="24px" h="24px" />} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1 || isProcessingRecording}>Câu tiếp theo</Button>
+                  <Button data-testid="shadowing-next-button" size={{ base: 'sm', md: 'md' }} leftIcon={<Box as="img" className="pooPixelIcon" src={PIXEL_ASSETS.nextWave} alt="Sóng chuyển câu" w="24px" h="24px" />} borderRadius="full" variant="outline" colorScheme="blue" onClick={goToNextSentence} isDisabled={selectedSentenceIndex >= transcriptLength - 1 || isProcessingRecording}>Bơi sang câu tiếp</Button>
                 </HStack>
 
                 <Box as="img" className="pooPixelDecor" src={PIXEL_ASSETS.waveDivider} alt="" loading="lazy" mt="3" w="100%" maxH="18px" opacity="0.34" />
@@ -1093,8 +1093,8 @@ export function ShadowingPracticePage() {
 
             <SimpleGrid data-testid="shadowing-progress" ref={completionRef} columns={{ base: 1, md: 2 }} gap="3" display={{ base: 'none', md: 'grid' }}>
               <Box className="shadowing-custom-card" p="4" borderRadius="2xl" bg={allSentencesCompleted ? '#F0FDF4' : 'rgba(232,244,255,0.88)'} border="1px solid" borderColor={allSentencesCompleted ? '#BBF7D0' : '#BAE6FD'} role="status" aria-live="polite">
-                <HStack><Icon as={allSentencesCompleted ? CheckCircle2 : Sparkles} color={allSentencesCompleted ? COLORS.green : COLORS.oceanBlue} /><Text fontWeight="800" color={COLORS.text}>{allSentencesCompleted ? 'Hoàn thành lượt nói đuổi' : 'Nhịp luyện hôm nay'}</Text></HStack>
-                <Text mt="2" color={COLORS.muted} fontSize="sm" fontWeight="700">Câu {selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}. Đã luyện {completedCount}/{transcriptLength}. Câu còn vấp {difficultCount}. Poo giữ lại nhịp luyện theo từng bài.</Text>
+                <HStack><Icon as={allSentencesCompleted ? CheckCircle2 : Sparkles} color={allSentencesCompleted ? COLORS.green : COLORS.oceanBlue} /><Text fontWeight="800" color={COLORS.text}>{allSentencesCompleted ? 'Xong một chặng nói đuổi' : 'Nhịp luyện hôm nay'}</Text></HStack>
+                <Text mt="2" color={COLORS.muted} fontSize="sm" fontWeight="700">Câu {selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}. Đã luyện {completedCount}/{transcriptLength}. Câu Poo ôm lại {difficultCount}. Poo giữ lại nhịp luyện theo từng bài.</Text>
               </Box>
               <Box className="shadowing-weak-card" p="4" borderRadius="2xl" bg="#FFFBEB" border="1px solid" borderColor="#FDE68A">
                 <Text fontWeight="800" color={COLORS.text}>Câu nên luyện tiếp</Text>
@@ -1150,7 +1150,7 @@ export function ShadowingPracticePage() {
                             {done ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgePracticed} alt="Đã luyện" loading="lazy" w="32px" h="32px" /> : null}
                             {done ? <Chip tone="green">Đã luyện</Chip> : null}
                             {difficult ? <Box as="img" className="pooPixelBadge" src={PIXEL_ASSETS.badgeHard} alt="Câu khó" loading="lazy" w="32px" h="32px" /> : null}
-                            {difficult ? <Chip tone="amber">Câu còn vấp</Chip> : null}
+                            {difficult ? <Chip tone="amber">Câu Poo ôm lại</Chip> : null}
                           </HStack>
                           <Text fontWeight="700" color={COLORS.text} lineHeight="1.45">{sentence.text}</Text>
                           <Text fontSize="sm" color={COLORS.muted} lineHeight="1.55">{sentence.vi}</Text>
@@ -1197,7 +1197,7 @@ export function ShadowingPracticePage() {
 
         <Box display={{ base: 'block', md: 'none' }} position="fixed" left="0" right="0" bottom="0" zIndex="20" px="3" pt="3" pb="calc(var(--penglish-mobile-safe-bottom) + 12px)" bg="linear-gradient(180deg, rgba(248,252,255,0), rgba(248,252,255,0.96) 34%, rgba(248,252,255,1))">
           <Button data-testid="shadowing-mobile-main-button" w="100%" h="52px" borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} onClick={apiFeedback || selectedSentencePracticed ? goToNextSentence : handleRecordButtonActivate} isDisabled={isProcessingRecording || ((apiFeedback || selectedSentencePracticed) && selectedSentenceIndex >= transcriptLength - 1)} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý'}>
-            {apiFeedback || selectedSentencePracticed ? 'Câu tiếp theo' : isRecording ? 'Dừng thu' : 'Nghe một lần rồi nói lại nha'}
+            {apiFeedback || selectedSentencePracticed ? 'Bơi sang câu tiếp' : isRecording ? 'Dừng thu' : 'Nghe một lần rồi nói lại nha'}
           </Button>
         </Box>
       </Box>

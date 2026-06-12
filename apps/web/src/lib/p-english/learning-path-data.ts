@@ -1,6 +1,6 @@
 import { generatedUnifiedLearningPath, type UnifiedPracticeMode, type UnifiedSkillFocus } from '../../data/learning/generatedUnifiedLearningPath';
 
-export type LearningSkillType = 'Từ vựng' | 'Ngữ pháp' | 'Nghe' | 'Phản xạ' | 'Viết' | 'Đọc' | 'Ôn tập' | 'Shadowing' | 'Phát âm';
+export type LearningSkillType = 'từ vựngữ pháp' | 'Nghe' | 'Phản xạ' | 'Viết' | 'Đọc' | 'Ôn tập' | 'Shadowing' | 'phát âm';
 export type LearningUnitStatus = 'Chưa học' | 'Đang học' | 'Hoàn thành';
 
 export type LearningPathUnit = {
@@ -23,7 +23,7 @@ export type LearningPathUnit = {
 };
 
 const MODE_SKILL_LABELS: Partial<Record<UnifiedPracticeMode, LearningSkillType>> = {
-  flashcard: 'Từ vựng',
+  flashcard: 'từ vựng',
   quiz: 'Ôn tập',
   listen: 'Nghe',
   reflex: 'Phản xạ',
@@ -31,16 +31,16 @@ const MODE_SKILL_LABELS: Partial<Record<UnifiedPracticeMode, LearningSkillType>>
   match: 'Ôn tập',
   speed: 'Phản xạ',
   shadowing: 'Shadowing',
-  pronunciation: 'Phát âm',
+  pronunciation: 'phát âm',
 };
 
 const SKILL_CTA_LABELS: Record<UnifiedSkillFocus, string> = {
-  'Từ vựng': 'Luyện từ vựng',
-  'Ngữ pháp': 'Luyện ngữ pháp',
+  'từ vựng': 'Luyện từ vựng',
+  'ngữ pháp': 'Luyện ngữ pháp',
   Nghe: 'Luyện nghe',
   Đọc: 'Luyện đọc',
   Shadowing: 'Vào nói đuổi',
-  'Phát âm': 'Luyện phát âm',
+  'phát âm': 'Luyện phát âm',
   'Ôn tập': 'Ôn tập ngay',
 };
 

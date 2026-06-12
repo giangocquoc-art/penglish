@@ -35,7 +35,7 @@ function buildRhythmTips(missingWords: ShadowingFeedbackWord[], extraWords: Shad
 
   if (missingWords.length) tips.push('Bạn đang bỏ sót vài từ. Hãy nói chậm hơn và chạm nhẹ từng từ, đặc biệt là từ ngắn ở giữa câu.');
   if (extraWords.length) tips.push('Có thêm từ ngoài câu mẫu. Hãy đọc theo cụm ngắn rồi dừng rất nhẹ trước khi sang cụm tiếp theo.');
-  if (changedWords.length) tips.push('Một vài từ có vẻ bị nghe/nói lệch âm. Hãy nhìn cặp từ thay đổi và luyện lại âm đầu + âm cuối.');
+  if (changedWords.length) tips.push('Một vài từ vựnghe/nói lệch âm. Hãy nhìn cặp từ thay đổi và luyện lại âm đầu + âm cuối.');
   if (!tips.length) tips.push('Các từ chính đã khá khớp. Bước tiếp theo là giữ nhịp đều và nói mềm hơn, không cần chạy theo tốc độ.');
 
   return [...tips, ...DEFAULT_TIPS].slice(0, 4);

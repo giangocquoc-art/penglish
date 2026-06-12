@@ -1,6 +1,6 @@
 export type UnifiedCefrLevel = 'A1' | 'A2' | 'B1' | 'B2';
 
-export type UnifiedSkillFocus = 'Từ vựng' | 'Ngữ pháp' | 'Nghe' | 'Đọc' | 'Shadowing' | 'Phát âm' | 'Ôn tập';
+export type UnifiedSkillFocus = 'từ vựngữ pháp' | 'Nghe' | 'Đọc' | 'Shadowing' | 'phát âm' | 'Ôn tập';
 
 export type UnifiedPracticeMode =
   | 'flashcard'
@@ -46,7 +46,7 @@ export const generatedUnifiedLearningPath: UnifiedLearningUnit[] = [
     titleVi: 'A1 · Chào hỏi tự tin',
     subtitleVi: 'Bắt đầu bằng câu chào, giới thiệu tên và phản xạ rất ngắn.',
     level: 'A1',
-    skillFocus: 'Từ vựng',
+    skillFocus: 'từ vựng',
     estimatedTime: '15–20 phút',
     lessonIds: ['unit-1-greetings-introduction'],
     sourceIds: ['unit-1-greetings-introduction', 'cefr-a1-core'],
@@ -141,7 +141,7 @@ export const generatedUnifiedLearningPath: UnifiedLearningUnit[] = [
     titleVi: 'A1 · Nghe nhịp và phát âm rõ',
     subtitleVi: 'Shadowing câu chào, đặt đồ ăn đơn giản và luyện phát âm bằng trình duyệt.',
     level: 'A1',
-    skillFocus: 'Phát âm',
+    skillFocus: 'phát âm',
     estimatedTime: '30–40 phút',
     lessonIds: ['unit-1-greetings-introduction', 'reading-a1-asking-for-help'],
     sourceIds: ['shadow-a1-greeting-friend', 'shadow-a1-order-water-coffee', 'shadow-a1-asking-for-help', 'a1-hello', 'a1-good-morning', 'a1-thank-you', 'speech-a1-can-you-help-me'],
@@ -162,10 +162,10 @@ export const generatedUnifiedLearningPath: UnifiedLearningUnit[] = [
   },
   {
     id: 'path-a2-practical-vocabulary',
-    titleVi: 'A2 · Từ vựng tình huống thực tế',
+    titleVi: 'A2 · từ vựng tình huống thực tế',
     subtitleVi: 'Mở rộng từ cho chỉ đường, mua sắm, sở thích và kế hoạch gần.',
     level: 'A2',
-    skillFocus: 'Từ vựng',
+    skillFocus: 'từ vựng',
     estimatedTime: '40–55 phút',
     lessonIds: ['reading-a2-train-trip', 'reading-a2-shopping-list', 'reading-a2-health-note', 'reading-a2-library-card', 'reading-a2-phone-reminder', 'reading-a2-at-the-clinic'],
     sourceIds: ['cefr-a2-core', 'reading-a2-train-trip', 'reading-a2-shopping-list', 'reading-a2-health-note', 'reading-a2-library-card', 'reading-a2-sick-note', 'reading-a2-phone-reminder', 'reading-a2-weekend-market', 'reading-a2-at-the-clinic'],
@@ -176,7 +176,7 @@ export const generatedUnifiedLearningPath: UnifiedLearningUnit[] = [
     unlockedByUnitId: 'path-a1-shadow-pronounce',
     contentMaturity: 'expanded',
     maturityLabelVi: 'Expanded · CEFR vocab repaired',
-    maturityNoteVi: 'Từ vựng A2 đã qua repair chất lượng và được nối thêm các bài đọc tình huống như đi tàu, mua sắm, sức khỏe, thư viện và phòng khám.',
+    maturityNotừ vựng A2 đã qua repair chất lượng và được nối thêm các bài đọc tình huống như đi tàu, mua sắm, sức khỏe, từ vựng khám.',
     sourceModuleReference: {
       module: 'generated-vocabulary',
       ids: ['cefr-a2-core'],
@@ -189,14 +189,14 @@ export const generatedUnifiedLearningPath: UnifiedLearningUnit[] = [
     titleVi: 'A2 · Mẫu ngữ pháp dùng hằng ngày',
     subtitleVi: 'Lượng từ, verb-s và giới từ in/on/at trong câu ngắn.',
     level: 'A2',
-    skillFocus: 'Ngữ pháp',
+    skillFocus: 'ngữ pháp',
     estimatedTime: '55–70 phút',
     lessonIds: ['grammar-a2-quantifiers-many-much', 'grammar-a2-third-person-singular', 'grammar-a2-prepositions-in-on-at'],
     sourceIds: ['grammar-a2-quantifiers-many-much', 'grammar-a2-each-every', 'grammar-a2-some-any', 'grammar-a2-third-person-singular', 'grammar-a2-prepositions-in-on-at'],
     primaryMode: 'type',
     recommendedPracticeModes: ['quiz', 'type', 'flashcard', 'speed'],
     whaleCoachLine: 'Mỗi lỗi ngữ pháp là một tín hiệu chỉ đường, không phải điểm dừng.',
-    confidenceGoal: 'Điền đúng từ ngữ pháp A2 trong câu quen thuộc.',
+    confidenceGoal: 'Điền đúngữ pháp A2 trong câu quen thuộc.',
     unlockedByUnitId: 'path-a2-practical-vocabulary',
     contentMaturity: 'expanded',
     maturityLabelVi: 'Expanded · grammar pattern set',
@@ -258,10 +258,10 @@ export const generatedUnifiedLearningPath: UnifiedLearningUnit[] = [
   },
   {
     id: 'path-b1-grammar-speaking',
-    titleVi: 'B1 · Ngữ pháp cho ý kiến rõ hơn',
+    titleVi: 'B1 · ngữ pháp cho ý kiến rõ hơn',
     subtitleVi: 'Động từ bất quy tắc, phrasal verbs, modal verbs, present perfect và phát âm câu dài hơn.',
     level: 'B1',
-    skillFocus: 'Ngữ pháp',
+    skillFocus: 'ngữ pháp',
     estimatedTime: '70–85 phút',
     lessonIds: ['grammar-b1-irregular-verbs', 'grammar-b1-phrasal-verbs', 'grammar-b1-modal-verbs', 'grammar-b1-present-perfect-experience'],
     sourceIds: ['grammar-b1-irregular-verbs', 'grammar-b1-phrasal-verbs', 'grammar-b1-modal-verbs', 'grammar-b1-present-perfect-experience', 'b1-study-habit', 'b1-teamwork', 'b1-let-me-summarize-the-main-point-first-exp-045', 'b1-i-would-like-to-clarify-the-deadline-before-we-sta-exp-046'],
@@ -333,7 +333,7 @@ export const generatedUnifiedLearningPath: UnifiedLearningUnit[] = [
     titleVi: 'B2 · Nói rõ quan điểm',
     subtitleVi: 'Luyện phát âm câu dài hơn về chiến lược học, phản hồi, nghề nghiệp, thói quen số và lời khuyên có sắc thái.',
     level: 'B2',
-    skillFocus: 'Phát âm',
+    skillFocus: 'phát âm',
     estimatedTime: '60–75 phút',
     lessonIds: ['reading-b2-digital-habits', 'reading-b2-feedback-rubric', 'grammar-b2-conditionals-realistic-advice'],
     sourceIds: ['shadow-b2-learning-strategy', 'shadow-b2-digital-habits-opinion', 'shadow-b2-career-goals', 'shadow-b2-balanced-technology-view', 'shadow-b2-learning-from-feedback', 'shadow-b2-problem-solving-meeting', 'shadow-b2-evaluating-a-learning-tool', 'b2-learning-strategy', 'b2-career-goals', 'b2-digital-habits', 'grammar-b2-conditionals-realistic-advice', 'reading-b2-evaluating-a-learning-tool', 'b2-if-i-were-responsible-for-the-plan-i-would-define-exp-064', 'b2-it-might-be-better-to-acknowledge-the-limitatio-exp-065', 'b2-a-more-sustainable-solution-would-balance-cost-qua-exp-066', 'b2-although-the-proposal-is-ambitious-its-benefits-r-exp-067'],

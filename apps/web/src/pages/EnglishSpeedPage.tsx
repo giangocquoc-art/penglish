@@ -31,7 +31,7 @@ const COLORS = {
 type SpeechLevelFilter = SpeechCefrLevel | 'all';
 type SpeedMode = 'reading' | 'listening' | 'speaking';
 
-const SPEED_MODES: Array<{ id: SpeedMode; title: string; vi: string; icon: typeof Headphones; goal: string }> = [
+const SPEED_MODES: Array<{ id: SpeedMode; title: stừ vựng; icon: typeof Headphones; goal: string }> = [
   { id: 'reading', title: 'Đọc cùng Poo', vi: 'Đọc cùng Poo', icon: Waves, goal: 'Đọc câu rõ và đều, không cần vội.' },
   { id: 'listening', title: 'Nghe nhịp câu', vi: 'Nghe nhịp câu', icon: Headphones, goal: 'Nghe mẫu chậm rồi bắt nhịp cùng Poo.' },
   { id: 'speaking', title: 'Nói rõ và đều', vi: 'Nói rõ và đều', icon: Mic2, goal: 'Nói thử, nghe lại và giữ câu thật rõ.' },
@@ -330,7 +330,7 @@ export function EnglishSpeedPage() {
                 <Text mt={{ base: '2', md: '3' }} fontSize={{ base: 'lg', md: '2xl' }} fontWeight="700" color={COLORS.text}>{prompt?.titleVi}</Text>
                 <Text mt="1" color={COLORS.muted} fontWeight="700" fontSize={{ base: 'sm', md: 'md' }} noOfLines={{ base: 1, md: undefined }}>{prompt?.vietnameseMeaning}</Text>
               </Box>
-              <Select aria-label="Chọn cấp độ luyện phát âm" maxW={{ base: '100%', sm: '210px' }} value={level} onChange={(event) => setLevel(event.target.value as SpeechLevelFilter)} bg="white" borderColor={COLORS.border} borderRadius="2xl" h="46px">
+              <Select aria-label="Chọn cấp độ luyện phát âmaxW={{ base: '100%', sm: '210px' }} value={level} onChange={(event) => setLevel(event.target.value as SpeechLevelFilter)} bg="white" borderColor={COLORS.border} borderRadius="2xl" h="46px">
                 {levels.map((item) => <option key={item} value={item}>{LEVEL_LABELS[item]}</option>)}
               </Select>
             </HStack>

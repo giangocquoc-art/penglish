@@ -180,7 +180,7 @@ export const pooExampleGreetingLesson: PooLesson = {
       mistakeVi: 'Dịch từng chữ “Tên tôi Nam” thành câu thiếu động từ.',
       wrongEn: 'My name Nam.',
       correctEn: 'My name is Nam.',
-      explanationVi: 'Tiếng Anh cần động từ “is” trong mẫu “My name is ...”.',
+      explanatiếng Anh cần động từ “is” trong mẫu “My name is ...”.',
     },
   ],
   review: {

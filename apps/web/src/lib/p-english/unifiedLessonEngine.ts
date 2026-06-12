@@ -181,7 +181,7 @@ function countSourceIds(unit: UnifiedLearningUnit, prefix: string) {
 }
 
 function getDepthLabel(depthScore: number) {
-  if (depthScore >= 86) return 'Nội dung phong phú · đủ nhiều kỹ năng';
+  if (depthScore >= 86) return 'Nội dungữ pháphú · đủ nhiều kỹ năng';
   if (depthScore >= 68) return 'Nội dung tốt · còn thiếu 1-2 kỹ năng';
   if (depthScore >= 46) return 'Nội dung nền · cần thêm bước nối';
   return 'Nội dung còn mỏng · cần bổ sung';
@@ -192,7 +192,7 @@ function getRecommendedDataAction(missingSkills: UnifiedSkillDepthKey[]) {
   if (missingSkills.includes('speaking')) return 'Thêm câu luyện nói để người học nói ngay sau bài.';
   if (missingSkills.includes('shadowing')) return 'Thêm bài nói đuổi cùng chủ đề để luyện nhịp câu.';
   if (missingSkills.includes('listening')) return 'Thêm câu nghe hoặc hội thoại cho bài này.';
-  if (missingSkills.includes('grammar')) return 'Bổ sung mẫu ngữ pháp trọng tâm để bài rõ hơn.';
+  if (missingSkills.includes('grammar')) return 'Bổ sungữ pháp trọng tâm để bài rõ hơn.';
   return 'Nội dung đã khá đầy đủ; ưu tiên kiểm tra trải nghiệm học.';
 }
 
@@ -224,7 +224,7 @@ function getPracticeModeLabelVi(mode: UnifiedPracticeMode) {
   if (mode === 'match') return 'Ghép cặp';
   if (mode === 'speed') return 'Tốc độ/phát âm';
   if (mode === 'shadowing') return 'Nói đuổi';
-  return 'Phát âm';
+  return 'phát âm';
 }
 
 function getPracticeModeSkill(mode: UnifiedPracticeMode): UnifiedSkillDepthKey {
@@ -251,7 +251,7 @@ function getPracticeModeItemCount(lesson: EnglishLesson, mode: UnifiedPracticeMo
 function getPracticeModeGuidance(mode: UnifiedPracticeMode, itemCount: number, isReady: boolean) {
   if (!isReady) return `Phần ${getPracticeModeLabelVi(mode)} chưa đủ nội dung. Bạn có thể chuyển sang phần luyện đang sẵn sàng trước.`;
   if (mode === 'flashcard') return `Có ${itemCount} thẻ/từ để làm nóng trước khi kiểm tra nhanh.`;
-  if (mode === 'quiz') return `Có ${itemCount} câu kiểm tra để đo hiểu bài và phát hiện điểm yếu.`;
+  if (mode === 'quiz') return `Có ${itemCount} câu kiểm tra để đo hiểu bài và phát âm yếu.`;
   if (mode === 'listen') return `Có ${itemCount} câu nghe/hội thoại để luyện nhận diện trong ngữ cảnh.`;
   if (mode === 'reflex') return `Có ${itemCount} câu phản xạ để tập nói nhanh hơn.`;
   if (mode === 'type') return `Có ${itemCount} câu gõ giúp bạn nhớ chắc mẫu câu.`;
@@ -282,7 +282,7 @@ function createLessonDepthLayers(lesson: EnglishLesson): UnifiedLessonDepthLayer
     { key: 'context', labelVi: 'Ngữ cảnh', itemCount: contextCount, score: toLayerScore(contextCount, 4), evidenceVi: `${contextCount} hội thoại/tình huống`, actionVi: 'Thêm tình huống thật để nối từ vựng với hành động.', isStrong: false },
     { key: 'audio', labelVi: 'Âm thanh', itemCount: audioCount, score: toLayerScore(audioCount, 8), evidenceVi: `${audioCount} câu nghe/phát âm`, actionVi: 'Thêm câu nghe hoặc ghi chú phát âm cho nhịp nói.', isStrong: false },
     { key: 'output', labelVi: 'Luyện nói/viết', itemCount: outputCount, score: toLayerScore(outputCount, 8, lesson.finalMiniChallenge ? 8 : 0), evidenceVi: `${outputCount} câu nói/viết`, actionVi: 'Thêm câu nói hoặc câu gõ để người học dùng được kiến thức.', isStrong: false },
-    { key: 'assessment', labelVi: 'Kiểm tra', itemCount: assessmentCount, score: toLayerScore(assessmentCount, 8), evidenceVi: `${assessmentCount} câu kiểm tra/ghép cặp`, actionVi: 'Thêm câu kiểm tra để phát hiện điểm yếu.', isStrong: false },
+    { key: 'assessment', labelVi: 'Kiểm tra', itemCount: assessmentCount, score: toLayerScore(assessmentCount, 8), evidenceVi: `${assessmentCount} câu kiểm tra/ghép cặp`, actionVi: 'Thêm câu kiểm tra để phát âm yếu.', isStrong: false },
     { key: 'review', labelVi: 'Ôn lại', itemCount: reviewCount, score: toLayerScore(reviewCount, 12, lesson.reviewRules.newWordReviewAfterMinutes > 0 ? 8 : 0), evidenceVi: `${reviewCount} tiêu chí ôn`, actionVi: 'Gắn tiêu chí hoàn thành và lịch ôn rõ hơn.', isStrong: false },
     { key: 'mistake', labelVi: 'Lỗi hay sai', itemCount: mistakeCount, score: toLayerScore(mistakeCount, 3), evidenceVi: `${mistakeCount} lỗi/ghi chú tránh sai`, actionVi: 'Thêm lỗi thường gặp để Poo sửa chủ động.', isStrong: false },
     { key: 'multimodal', labelVi: 'Nhiều phần luyện', itemCount: multimodalCount, score: toLayerScore(multimodalCount, 4), evidenceVi: `${multimodalCount} bài nói đuổi/tốc độ/trò luyện`, actionVi: 'Nối bài nói đuổi, tốc độ hoặc trò luyện để bài sâu hơn.', isStrong: false },
@@ -530,7 +530,7 @@ export function getUnifiedPracticeContentDepth(lessonId: string, selectedMode?: 
     readyModeCount: readyModeDepths.length,
     totalPracticeItems: modeDepths.reduce((sum, modeDepth) => sum + modeDepth.itemCount, 0),
     readinessSummaryVi: `${readyModeDepths.length}/${modeDepths.length} phần luyện đã sẵn sàng · ${modeDepths.reduce((sum, modeDepth) => sum + modeDepth.itemCount, 0)} câu/thẻ luyện`,
-    recommendedFlowVi: recommendedFlow.length > 0 ? recommendedFlow.join(' → ') : 'Đọc bài học trước, sau đó ôn thẻ từ hoặc làm kiểm tra nhanh.',
+    recommendedFlowVi: recommendedFlow.length > 0 ? recommendedFlow.join(' → ') : 'Đọc bài học trước, sau đó ôn thẻ từ hoặc lộ trình.',
   };
 }
 
@@ -554,7 +554,7 @@ export function getUnifiedContentDepthSnapshot(): UnifiedContentDepthSnapshot {
     .map(([skill, count]) => ({ skill: skill as UnifiedSkillDepthKey, count }))
     .filter((item) => item.count > 0)
     .sort((a, b) => b.count - a.count);
-  const nextDataActionVi = weakestUnits[0]?.recommendedDataActionVi ?? 'Lộ trình đã khá đầy đủ; ưu tiên kiểm tra trải nghiệm và cá nhân hóa phần Hôm nay học gì?.';
+  const nextDataActionVi = weakestUnits[0]?.recommendedDataActionVi ?? 'lộ trình đã khá đầy đủ; ưu tiên kiểm tra trải nghiệm và cá nhân hóa phần Hôm nay học gì?.';
 
   return {
     averageDepthScore: unitDepths.length > 0 ? Math.round(totalDepthScore / unitDepths.length) : 0,
@@ -573,7 +573,7 @@ export function getUnifiedContentDepthSnapshot(): UnifiedContentDepthSnapshot {
 export function getUnifiedSkillCoverage(): UnifiedSkillCoverage {
   return generatedUnifiedLearningPath.reduce<UnifiedSkillCoverage>(
     (coverage, unit) => ({ ...coverage, [unit.skillFocus]: coverage[unit.skillFocus] + 1 }),
-    { 'Từ vựng': 0, 'Ngữ pháp': 0, Nghe: 0, Đọc: 0, Shadowing: 0, 'Phát âm': 0, 'Ôn tập': 0 },
+    { 'từ vựng': 0, 'ngữ pháp': 0, Nghe: 0, Đọc: 0, Shadowing: 0, 'phát âm': 0, 'Ôn tập': 0 },
   );
 }
 
@@ -602,7 +602,7 @@ export function getUnifiedDashboardSnapshot(): UnifiedDashboardSnapshot {
     currentLevelLabel: LEVEL_LABELS[currentLevel],
     nextUnit,
     nextLessonPath: nextEntry?.primaryRoute ?? '/learning-path',
-    nextLessonTitle: nextUnit?.titleVi ?? 'Ôn lại lộ trình đang mở',
+    nextLessonTitle: nextUnit?.titleVi ?? 'Ôn lộ trình đang mở',
     confidencePath: nextUnit?.confidenceGoal ?? 'Giữ nhịp học đều và ôn lại phần yếu.',
     whaleCoachLine: learningLoop.dueReviewCount > 0
       ? `Poo đã gom ${learningLoop.dueReviewCount} mục cần ôn thật từ câu khó và từ yếu. Ôn ngắn trước khi học bài mới nhé.`

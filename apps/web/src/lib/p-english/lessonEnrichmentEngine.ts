@@ -41,7 +41,7 @@ function matchReasonFor(score: number, profile: LessonEnhancementProfile) {
   if (score >= 55) return 'Khớp theo chặng học và kỹ năng trọng tâm.';
   if (profile.focus === 'grammar-patterns') return 'Gợi ý theo mẫu câu và ngữ pháp đang học.';
   if (profile.focus === 'reading-flow') return 'Gợi ý theo kỹ năng đọc hiểu và tìm ý chính.';
-  if (profile.focus === 'review-memory') return 'Gợi ý theo nhu cầu ôn tập và củng cố trí nhớ.';
+  if (profile.focus === 'review-memory') return 'Gợi ý theo nhu cầu ôn từ vựng cố trí nhớ.';
   return 'Gợi ý theo cấp độ và kỹ năng gần nhất.';
 }
 
@@ -68,7 +68,7 @@ export function getLessonEnhancementProfileByLessonId(lessonId: string) {
 export function deriveLessonEnhancementFallback(lesson: EnglishLesson): ResolvedLessonEnhancement {
   const cefr = inferCefrHint(lesson);
   const hasReading = lesson.skillTags.includes('Đọc');
-  const hasGrammar = lesson.skillTags.includes('Ngữ pháp') || lesson.grammarNotes.length > 0;
+  const hasGrammar = lesson.skillTags.includes('ngữ pháp') || lesson.grammarNotes.length > 0;
   const focus: LessonEnhancementProfile['focus'] = hasReading ? 'reading-flow' : hasGrammar ? 'grammar-patterns' : 'vocabulary-confidence';
 
   return {
@@ -83,7 +83,7 @@ export function deriveLessonEnhancementFallback(lesson: EnglishLesson): Resolved
       ? 'Đọc ý chính trước, tìm từ khóa trong câu hỏi, rồi quay lại đoạn có bằng chứng để trả lời.'
       : hasGrammar
         ? 'Xem mẫu câu như một khung dùng được ngay: đọc ví dụ, đổi vài từ, rồi luyện gõ lại câu hoàn chỉnh.'
-        : 'Bắt đầu bằng từ/cụm quan trọng, làm kiểm tra nhanh, rồi chuyển sang phản xạ để nhớ bằng ngữ cảnh.',
+        : 'Bắt đầu bằng từ/cụm quan trọng, lộ trình, rồi chuyển sang phản xạ để nhớ bằng ngữ cảnh.',
     whaleCoachLineVi: hasReading
       ? 'Cá voi P khuyên bạn đọc lướt một lượt, sau đó mới trả lời từng câu bằng bằng chứng trong bài.'
       : hasGrammar

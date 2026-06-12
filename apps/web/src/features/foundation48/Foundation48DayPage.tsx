@@ -235,7 +235,7 @@ export function Foundation48DayPage() {
             </HStack>
           ) : (
             <Button data-testid="foundation48-complete-day" leftIcon={<Icon as={Home} />} colorScheme="blue" borderRadius="full" onClick={completeDay}>
-              Hoàn thành & về trang chủ
+              Hoàn từ vựng chủ
             </Button>
           )}
         </Flex>
@@ -275,7 +275,7 @@ export function Foundation48DayPage() {
         {!completed ? (
           <Flex data-testid="foundation48-day-neighbor-actions" mt="5" justify="space-between" gap="3" direction={{ base: 'column', sm: 'row' }}>
             {previousDay ? <Button as={Link} to={getFoundation48DayPath(previousDay)} leftIcon={<Icon as={ArrowLeft} />} variant="outline" borderColor={COLORS.border} color={COLORS.blue} borderRadius="full">Ngày {previousDay}</Button> : <Box />}
-            {nextDay ? <Button as={Link} to={getFoundation48DayPath(nextDay)} rightIcon={<Icon as={ArrowRight} />} variant="outline" borderColor={COLORS.border} color={COLORS.blue} borderRadius="full">Ngày {nextDay}</Button> : <Button as={Link} to={FOUNDATION48_BASE_PATH} variant="outline" borderColor={COLORS.border} color={COLORS.blue} borderRadius="full">Về lộ trình</Button>}
+            {nextDay ? <Button as={Link} to={getFoundation48DayPath(nextDay)} rightIcon={<Icon as={ArrowRight} />} variant="outline" borderColor={COLORS.border} color={COLORS.blue} borderRadius="full">Ngày {nextDay}</Button> : <Button as={Link} to={FOUNDATION48_BASE_PATH} variant="outline" borderColor={COLORS.border} color={COLORS.blue} borderRadius="fulộ trình</Button>}
           </Flex>
         ) : null}
       </Box>
@@ -439,7 +439,7 @@ function MeaningRevealCard({ step, day }: { step: Foundation48LessonStep; day: F
   return (
     <Box border="1px solid" borderColor={revealed ? '#BBF7D0' : COLORS.border} bg="linear-gradient(135deg, rgba(255,255,255,0.96), rgba(239,246,255,0.86))" borderRadius="3xl" p={{ base: '3.5', md: '5' }} data-testid="foundation48-meaning-card">
       <VStack align="stretch" gap="3.5">
-        <Text color={COLORS.blue} fontWeight="950" fontSize="sm">Tiếng Anh</Text>
+        <Text color={COLORS.blue} fontWeight="950" fontSize="sm">tiếng Anh</Text>
         <Text color={COLORS.text} fontWeight="950" fontSize={{ base: 'xl', md: '3xl' }} lineHeight="1.25">{english}</Text>
         {!revealed ? (
           <Button alignSelf="start" leftIcon={<Icon as={Sparkles} />} bg={COLORS.blue} color="white" _hover={{ bg: '#185BB2' }} borderRadius="full" onClick={() => setRevealed(true)} data-testid="foundation48-meaning-reveal">Xem nghĩa</Button>
@@ -813,7 +813,7 @@ function CompletePrompt({ day }: { day: Foundation48Day }) {
           <Text color={COLORS.green} fontWeight="950" fontSize="sm" mb="2">Bạn đã học</Text>
           <SimpleGrid columns={3} gap={{ base: '2', md: '2.5' }}>
             <SummaryPill label="Luyện nói" value={`${sentenceCount} câu luyện nói`} compact />
-            <SummaryPill label="Từ vựng" value={`${wordCount} từ đã ôn`} compact />
+            <SummaryPill label="từ vựng" value={`${wordCount} từ đã ôn`} compact />
             <SummaryPill label="Kiểm tra" value={quizCount ? `${quizCount} câu` : 'Đã xem'} compact />
           </SimpleGrid>
         </Box>
@@ -1002,7 +1002,7 @@ function buildFoundation48Steps(day: Foundation48Day, resolvedDeepLesson?: Found
     const vocabularyBullets = deepLesson.vocabulary.map((item) => `${item.term} — ${item.meaningVi}. Ví dụ: ${item.example}`);
 
     const steps: Foundation48LessonStep[] = [
-      { id: 'intro', type: 'intro', title: deepLesson.learnerTitle, subtitle: 'Bài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và kiểm tra nhanh.', body: deepLesson.goalVi, bullets: [`${deepLesson.vocabulary.length} Từ vựng`, `${deepLesson.patterns.length} Mẫu câu`, `${deepLesson.listening.length} Nghe`, `${deepLesson.speaking.length} Nói lại`, `${deepLesson.quiz.length} Thử sức nhẹ`] },
+      { id: 'intro', type: 'intro', title: deepLesson.learnerTitle, subtitle: 'Bài học thật cho người mới: từ vựng, mẫu câu, nghe, nói và kiểm tra nhanh.', body: deepLesson.goalVi, bullets: [`${deepLesson.vocabulary.lengtừ vựng`, `${deepLesson.patterns.length} Mẫu câu`, `${deepLesson.listening.length} Nghe`, `${deepLesson.speaking.length} Nói lại`, `${deepLesson.quiz.length} Thử sức nhẹ`] },
       { id: 'explain', type: 'explain', title: deepLesson.grammarPoint.title, subtitle: 'Poo giải thích bằng tiếng Việt trước khi luyện.', body: deepLesson.grammarPoint.explanationVi, bullets: deepLesson.grammarPoint.examples },
       { id: 'patterns', type: 'example', title: 'Mẫu câu cần nhớ', subtitle: 'Đọc mẫu chậm, chú ý trật tự từ.', bullets: patternBullets },
       { id: 'vocabulary', type: 'practice', title: 'Từ/cụm dùng ngay', subtitle: `${deepLesson.vocabulary.length} từ và cụm chính của ngày ${day.dayNumber}.`, bullets: vocabularyBullets },

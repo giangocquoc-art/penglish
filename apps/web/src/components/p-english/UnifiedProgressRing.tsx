@@ -52,7 +52,7 @@ export function UnifiedProgressRing({
       >
         <Flex w={{ base: '100px', md: '112px' }} h={{ base: '100px', md: '112px' }} borderRadius="full" bg="white" align="center" justify="center" direction="column" boxShadow="inset 0 0 0 1px rgba(186,230,253,.8)">
           <Text fontSize={{ base: '3xl', md: '4xl' }} lineHeight="1" fontWeight="950" color={COLORS.text}>{safePercentage}%</Text>
-          <Text fontSize="xs" fontWeight="900" color={COLORS.blue}>lộ trình</Text>
+          <Text fontSize="xs" fontWeight="900" color={COLORS.blộ trình</Text>
         </Flex>
       </Flex>
       <VStack align="stretch" gap="3" flex="1" w="100%">

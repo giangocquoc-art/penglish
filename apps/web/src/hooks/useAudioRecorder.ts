@@ -14,7 +14,7 @@ export type UseAudioRecorderResult = {
 
 function getPreferredMimeType() {
   if (typeof window === 'undefined' || !('MediaRecorder' in window)) return undefined;
-  const candidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+  const candidates = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/wav'];
   return candidates.find((type) => MediaRecorder.isTypeSupported(type));
 }
 

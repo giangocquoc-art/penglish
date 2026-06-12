@@ -29,8 +29,8 @@ const MODE_LABELS: Record<LessonProgressMode, string> = {
 };
 
 const SKILL_LABELS: Record<PracticeSkillArea, string> = {
-  vocabulary: 'Từ vựng',
-  grammar: 'Ngữ pháp',
+  vocabulary: 'từ vựng',
+  grammar: 'ngữ pháp',
   reading: 'Đọc',
   listening: 'Nghe',
   speaking: 'Nói',
@@ -133,7 +133,7 @@ export function RecentPracticeMemoryCard({ fallbackPath = '/learning-path' }: { 
             </Text>
             {topSkill ? (
               <Text mt="2" color={COLORS.deepBlue} fontSize="sm" fontWeight="900">
-                Kỹ năng gần nhất: {SKILL_LABELS[topSkill[0]]} · trung bình {topSkill[1].averagePercentage}%
+                Kỹ năng gần nhất: {SKILL_LABELS[topSkilộ trình {topSkill[1].averagePercentage}%
               </Text>
             ) : null}
           </Box>

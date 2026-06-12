@@ -79,7 +79,7 @@ const level1Seeds: ShadowingSeed[] = [
 ];
 
 const level2Seeds: ShadowingSeed[] = [
-  ['I am happy to see you today.', 'Tôi rất vui được gặp bạn hôm nay.', 'linking', 'Nối “happy to” nhẹ và xuống giọng ở “today”.', ['greeting', 'daily']],
+  ['I am happy to see you today.', 'Tôi rất vui được gặp bạn hôm nay.', 'linking', 'Nối “happy từ vựng giọng ở “today”.', ['greeting', 'daily']],
   ['Can you help me with this?', 'Bạn giúp tôi việc này được không?', 'linking', 'Nối “help me” và “with this” thành hai cụm ngắn.', ['help', 'daily']],
   ['Please say that one more time.', 'Làm ơn nói lại điều đó một lần nữa.', 'difficult sound for Vietnamese learners', 'Tập âm /ð/ trong “that”, không đọc thành /d/.', ['classroom', 'repeat']],
   ['I do not understand this word.', 'Tôi không hiểu từ này.', 'word stress', 'Nhấn âm ba trong “understand”: un-der-STAND.', ['learning', 'vocabulary']],
@@ -90,7 +90,7 @@ const level2Seeds: ShadowingSeed[] = [
   ['My family lives in Da Nang.', 'Gia đình tôi sống ở Đà Nẵng.', 'ending sound', 'Giữ âm /z/ cuối trong “lives”.', ['family', 'hometown']],
   ['My brother is very funny.', 'Anh/em trai tôi rất vui tính.', 'word stress', 'Nhấn âm đầu trong “brother” và “funny”.', ['family', 'description']],
   ['She works at a coffee shop.', 'Cô ấy làm ở một quán cà phê.', 'ending sound', 'Giữ cụm cuối /ks/ trong “works”.', ['job', 'daily']],
-  ['He studies English after school.', 'Anh ấy học tiếng Anh sau giờ học.', 'ending sound', 'Giữ âm cuối /z/ trong “studies”.', ['school', 'learning']],
+  ['He studies English after school.', 'Anhọc tiếng Anh sau giờ học.', 'ending sound', 'Giữ âm cuối /z/ trong “studies”.', ['school', 'learning']],
   ['We play football on Sunday.', 'Chúng tôi chơi bóng đá vào Chủ nhật.', 'word stress', 'Nhấn âm đầu trong “football” và “Sunday”.', ['hobby', 'sports']],
   ['I like music and movies.', 'Tôi thích âm nhạc và phim.', 'ending sound', 'Giữ âm /s/ cuối trong “movies”.', ['hobby', 'music']],
   ['Do you want some water?', 'Bạn có muốn một ít nước không?', 'intonation', 'Lên giọng nhẹ cuối câu hỏi Yes/No.', ['drink', 'question']],

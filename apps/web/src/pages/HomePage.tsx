@@ -60,7 +60,7 @@ function getDailyFoundation48Target() {
     || currentProgress?.started
     || (currentProgress?.completedSteps?.length || 0) > 0,
   );
-  const status = completedToday || currentProgress?.completed ? 'Hoàn thành' : currentProgress?.started || (currentProgress?.completedSteps?.length || 0) > 0 ? 'Đang học' : 'Chưa bắt đầu';
+  const status = completedToday || currentProgress?.completed ? 'Xong một chặng nhỏ' : currentProgress?.started || (currentProgress?.completedSteps?.length || 0) > 0 ? 'Đang bơi' : 'Chưa lặn học';
   return {
     dayNumber: currentDay,
     path: getFoundation48DayPath(currentDay),
@@ -151,15 +151,15 @@ export function HomePage() {
 
   const dailyTarget = useMemo(() => getDailyFoundation48Target(), [progressVersion]);
   const todayProgress = useMemo(() => Math.min(100, Math.round((rewardState.completedToday.length / DAILY_GOAL_COUNT) * 100)), [rewardState.completedToday.length]);
-  const todayStatus = dailyTarget.status === 'Hoàn thành' || dailyTarget.completedToday || rewardState.completedToday.length > 0 ? 'Hoàn thành' : dailyTarget.status;
+  const todayStatus = dailyTarget.status === 'Xong một chặng nhỏ' || dailyTarget.completedToday || rewardState.completedToday.length > 0 ? 'Xong một chặng nhỏ' : dailyTarget.status;
   const bubbles = useMemo(() => getUnifiedBubbles(rewardState), [rewardState]);
   const waterStreak = useMemo(() => getWaterStreak(rewardState), [rewardState]);
 
   const dailyTasks: DailyTask[] = useMemo(() => [
     {
-      title: dailyTarget.hasResumeProgress ? 'Học tiếp nhé' : 'Bắt đầu nhẹ nha',
+      title: dailyTarget.hasResumeProgress ? 'Bơi tiếp nha' : 'Bắt đầu nhẹ nha',
       subtitle: `${dailyTarget.label} · ${dailyTarget.duration}`,
-      cta: dailyTarget.hasResumeProgress ? 'Học tiếp' : 'Bắt đầu học',
+      cta: dailyTarget.hasResumeProgress ? 'Bơi tiếp' : 'Bắt đầu học',
       to: dailyTarget.path || FOUNDATION48_BASE_PATH,
       icon: Compass,
       accent: 'blue',
@@ -193,7 +193,7 @@ export function HomePage() {
       testId: 'home-task-video-lab',
     },
     {
-      title: 'Từ vựng cần nhớ',
+      titừ vựng cần nhớ',
       subtitle: learningSummary.vocabularyDueCount > 0 ? `${learningSummary.vocabularyDueCount} từ cần ôn.` : 'Ôn vài từ thôi nè.',
       cta: 'Ôn từ',
       to: FLASHCARD_PATH,
@@ -269,11 +269,11 @@ export function HomePage() {
   }, [reducedMotion, progressVersion]);
 
   const primaryIntro = dailyTarget.hasResumeProgress ? 'Poo đã giữ bài cho bạn nè.' : 'Mình bắt đầu từ bài đầu tiên nha?';
-  const primaryCtaLabel = dailyTarget.hasResumeProgress ? 'Học tiếp' : 'Bắt đầu học';
+  const primaryCtaLabel = dailyTarget.hasResumeProgress ? 'Bơi tiếp' : 'Bắt đầu học';
 
   return (
     <OceanPageShell data-testid="home-page" variant="dashboard" overlayStrength="medium" ref={dashboardRef} px={{ base: '3', md: '5', xl: '6' }} py={{ base: '2', lg: '5' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 16px)', md: '10', lg: '8' }} maxW="1180px" mx="auto" overflowX="hidden">
-      <Box as="h1" position="absolute" left="-9999px" w="1px" h="1px" overflow="hidden">Trang chủ</Box>
+      <Box as="h1" position="absolute" left="-9999px" w="1px" h="1px" overflow="hidden">Bến học của Poo</Box>
 
       <GlassPanel className="home-dashboard-card home-main-learning-card" data-testid="home-daily-hero" p={{ base: '4', md: '6' }} mb={{ base: '3', md: '4' }} bg="rgba(255,255,255,0.68)" borderColor="rgba(186,230,253,0.70)" position="relative" overflow="hidden">
         <Box position="absolute" inset="0" bg="radial-gradient(circle at 92% 8%, rgba(91,188,235,0.14), transparent 24%), radial-gradient(circle at 8% 94%, rgba(255,255,255,0.68), transparent 24%)" pointerEvents="none" />
@@ -288,20 +288,20 @@ export function HomePage() {
                   {primaryIntro}
                 </Text>
               </Box>
-              <Tag borderRadius="full" bg={todayStatus === 'Hoàn thành' ? 'rgba(220,252,231,0.82)' : OCEAN_TOKENS.softAqua} color={todayStatus === 'Hoàn thành' ? '#15803D' : OCEAN_TOKENS.deepBlue} flexShrink={0}>
+              <Tag borderRadius="full" bg={todayStatus === 'Xong một chặng nhỏ' ? 'rgba(220,252,231,0.82)' : OCEAN_TOKENS.softAqua} color={todayStatus === 'Xong một chặng nhỏ' ? '#15803D' : OCEAN_TOKENS.deepBlue} flexShrink={0}>
                 <TagLabel>{todayStatus}</TagLabel>
               </Tag>
             </HStack>
 
             <Box bg="rgba(248,252,255,0.78)" border="1px solid" borderColor="rgba(186,230,253,0.72)" borderRadius="2xl" p={{ base: '3', md: '4' }} minW="0">
-              <Text color={OCEAN_TOKENS.deepBlue} fontSize="xs" fontWeight="950" letterSpacing="1.2px" textTransform="uppercase">{dailyTarget.hasResumeProgress ? 'Học tiếp nhé' : 'Bài đầu tiên'}</Text>
+              <Text color={OCEAN_TOKENS.deepBlue} fontSize="xs" fontWeight="950" letterSpacing="1.2px" textTransform="uppercase">{dailyTarget.hasResumeProgress ? 'Bơi tiếp nha' : 'Bài đầu tiên'}</Text>
               <Text mt="1" color={OCEAN_TOKENS.text} fontWeight="950" fontSize={{ base: 'lg', md: '2xl' }} lineHeight="1.15" noOfLines={1}>{dailyTarget.label}</Text>
               <HStack mt="2.5" gap="2" wrap="wrap" color={OCEAN_TOKENS.muted} fontWeight="850" fontSize={{ base: 'xs', md: 'sm' }}>
                 <Text>{dailyTarget.duration}</Text>
                 <Text aria-hidden="true">•</Text>
                 <Text>{dailyTarget.completedDays}/48 ngày</Text>
               </HStack>
-              <Box mt="3" h="9px" borderRadius="full" bg="rgba(232,244,255,0.84)" overflow="hidden" role="progressbar" aria-valuenow={todayProgress} aria-valuemin={0} aria-valuemax={100} aria-label="Tiến độ hôm nay" ref={pulseRef}>
+              <Box mt="3" h="9px" borderRadius="full" bg="rgba(232,244,255,0.84)" overflow="hidden" role="progressbar" aria-valuenow={todayProgress} aria-valuemin={0} aria-valuemax={100} aria-label="Dấu chân hôm nay" ref={pulseRef}>
                 <Box h="100%" w={`${Math.max(todayProgress, dailyTarget.completedToday ? 100 : 8)}%`} borderRadius="full" bg={todayProgress >= 100 || dailyTarget.completedToday ? '#16A34A' : OCEAN_TOKENS.oceanBlue} />
               </Box>
             </Box>
@@ -347,11 +347,11 @@ export function HomePage() {
               <MiniProgressPill label="Chuỗi nước" value={waterStreak.label} tone="blue" />
               <MiniProgressPill label="Bọt biển" value={`${bubbles.current}/${bubbles.max}`} tone="orange" />
               <MiniProgressPill label="Từ cần ôn" value={learningSummary.vocabularyDueCount > 0 ? `${learningSummary.vocabularyDueCount}` : '0'} tone={learningSummary.vocabularyDueCount > 0 ? 'orange' : 'blue'} />
-              <MiniProgressPill label="Trạng thái" value={todayStatus} tone={todayStatus === 'Hoàn thành' ? 'green' : 'blue'} />
+              <MiniProgressPill label="Dấu chân hôm nay" value={todayStatus} tone={todayStatus === 'Xong một chặng nhỏ' ? 'green' : 'blue'} />
             </SimpleGrid>
             <HStack mt="3" gap="2" wrap="wrap">
               <Button as={Link} to="/learning-path" size="sm" borderRadius="full" variant="outline" borderColor={OCEAN_TOKENS.border} color={OCEAN_TOKENS.deepBlue} leftIcon={<Icon as={Waves} />}>
-                Lộ trình
+                lộ trình
               </Button>
               <Button as={Link} to={VIDEO_LAB_PATH} size="sm" borderRadius="full" variant="ghost" color={OCEAN_TOKENS.deepBlue} leftIcon={<Icon as={Video} />}>
                 Tạo bài
