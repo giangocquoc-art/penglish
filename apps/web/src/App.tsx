@@ -1,4 +1,4 @@
-import { lazy, Suspense, type ReactNode } from 'react';
+﻿import { lazy, Suspense, type ReactNode } from 'react';
 import { Link as RouterLink, Navigate, matchPath, useLocation } from 'react-router-dom';
 import { Sidebar as ChakraSidebar } from './components/Sidebar';
 import { Topbar as ChakraTopbar, Shell as ChakraShell } from './components/Topbar';
@@ -8,6 +8,7 @@ import { REVIEW_SEO_PATHS } from './data/reviewSeoPages';
 import { SEO_PAGE_PATHS } from './data/seoPagesData';
 import { LESSON_SEO_PATHS } from './data/lessonSeoPages';
 import { GlobalEasterEggs } from './components/easter-eggs/GlobalEasterEggs';
+import { usePooDecoyGuard } from './hooks/usePooDecoyGuard';
 import { AuthProvider, useAuth } from './features/auth/AuthProvider';
 import { avatarFromUser, displayNameFromUser } from './lib/p-english/userSession';
 
@@ -64,7 +65,7 @@ function useUserFromAuth(): User | null {
     coin: 0,
     streak: 0,
     vip: false,
-    bio: 'Poo sẽ lưu tiến độ học của bạn an toàn.',
+    bio: 'Poo sáº½ lÆ°u tiáº¿n Ä‘á»™ há»c cá»§a báº¡n an toÃ n.',
   };
 }
 
@@ -81,12 +82,12 @@ function RouteLoadingFallback() {
         boxShadow="0 12px 30px rgba(31,111,214,0.07)"
         textAlign="center"
       >
-        <Text fontSize="4xl" lineHeight="1" aria-hidden="true">🐳</Text>
+        <Text fontSize="4xl" lineHeight="1" aria-hidden="true">ðŸ³</Text>
         <Text color="#102A43" fontWeight="950" fontSize={{ base: 'lg', md: 'xl' }}>
-          Poo đang chuẩn bị bài học...
+          Poo Ä‘ang chuáº©n bá»‹ bÃ i há»c...
         </Text>
         <Text color="#52667A" fontWeight="800" fontSize="sm">
-          Chờ xíu thôi nè.
+          Chá» xÃ­u thÃ´i nÃ¨.
         </Text>
       </VStack>
     </Center>
@@ -110,21 +111,21 @@ function NotFoundPage() {
       >
         <Box aria-hidden="true" position="absolute" inset="0" bg="radial-gradient(circle at 16% 18%, rgba(255,255,255,0.86), transparent 28%), radial-gradient(circle at 86% 14%, rgba(91,188,235,0.22), transparent 24%), radial-gradient(circle at 50% 100%, rgba(31,111,214,0.14), transparent 34%)" />
         <VStack position="relative" gap={{ base: '4', md: '5' }}>
-          <Text fontSize={{ base: '5xl', md: '6xl' }} lineHeight="1" aria-hidden="true">🐳</Text>
+          <Text fontSize={{ base: '5xl', md: '6xl' }} lineHeight="1" aria-hidden="true">ðŸ³</Text>
           <VStack gap="2">
             <Text as="h1" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="950" color="#102A43" lineHeight="1.08">
-              404 — Bài học này bơi lạc rồi 🐳
+              404 â€” BÃ i há»c nÃ y bÆ¡i láº¡c rá»“i ðŸ³
             </Text>
             <Text color="#52667A" fontSize={{ base: 'md', md: 'lg' }} fontWeight="700" lineHeight="1.75" maxW="560px">
-              Có thể Poo vừa bơi nhầm dòng hải lưu, hoặc trang này đang được refactor để học mượt hơn.
+              CÃ³ thá»ƒ Poo vá»«a bÆ¡i nháº§m dÃ²ng háº£i lÆ°u, hoáº·c trang nÃ y Ä‘ang Ä‘Æ°á»£c refactor Ä‘á»ƒ há»c mÆ°á»£t hÆ¡n.
             </Text>
           </VStack>
           <HStack gap="3" wrap="wrap" justify="center" w="100%">
             <Button as={RouterLink} to="/home" borderRadius="full" bg="white" color="#1F6FD6" border="1px solid #BAE6FD" _hover={{ bg: '#F8FCFF' }}>
-              Về trang chủ
+              Vá» trang chá»§
             </Button>
             <Button as={RouterLink} to="/learning-path" borderRadius="full" bg="#1F6FD6" color="white" _hover={{ bg: '#185BB2' }}>
-              Quay lại lộ trình học
+              Quay láº¡i lá»™ trÃ¬nh há»c
             </Button>
           </HStack>
         </VStack>
@@ -137,13 +138,13 @@ function AuthGoogleSafePage() {
   const auth = useAuth();
   return (
     <VStack align="start" gap="4" p={{ base: '5', md: '7' }} m={{ base: '4', md: '8' }} borderRadius="3xl" bg="rgba(255,255,255,0.88)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 18px 46px rgba(31, 111, 214, 0.10)">
-      <Text fontSize="sm" fontWeight="700" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">Vào lớp học cùng Poo</Text>
-      <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color="#0F172A" lineHeight="1.12">Đăng nhập Google</Text>
+      <Text fontSize="sm" fontWeight="700" color="#1F6FD6" textTransform="uppercase" letterSpacing="0.12em">VÃ o lá»›p há»c cÃ¹ng Poo</Text>
+      <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color="#0F172A" lineHeight="1.12">ÄÄƒng nháº­p Google</Text>
       <Text color="#475569" fontWeight="650" lineHeight="1.7">
-        {auth.authUnavailable ? 'Poo chưa mở được cổng đăng nhập. Bạn thử lại sau một chút nhé.' : 'Đăng nhập bằng Google để Poo lưu tiến độ và đưa bạn vào lớp học.'}
+        {auth.authUnavailable ? 'Poo chÆ°a má»Ÿ Ä‘Æ°á»£c cá»•ng Ä‘Äƒng nháº­p. Báº¡n thá»­ láº¡i sau má»™t chÃºt nhÃ©.' : 'ÄÄƒng nháº­p báº±ng Google Ä‘á»ƒ Poo lÆ°u tiáº¿n Ä‘á»™ vÃ  Ä‘Æ°a báº¡n vÃ o lá»›p há»c.'}
       </Text>
       <Button onClick={() => void auth.signInWithGoogle()} bg="#1F6FD6" color="white" borderRadius="full" px="6" _hover={{ bg: '#185BB2' }}>
-        Đăng nhập bằng Google
+        ÄÄƒng nháº­p báº±ng Google
       </Button>
     </VStack>
   );
@@ -246,6 +247,8 @@ function AppRoutes() {
 }
 
 export default function App() {
+  usePooDecoyGuard();
+
   return (
     <AuthProvider>
       <AppRoutes />
@@ -253,4 +256,5 @@ export default function App() {
     </AuthProvider>
   );
 }
+
 
