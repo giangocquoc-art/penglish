@@ -17,6 +17,10 @@ type SeoLandingContent = {
   links: Array<{ label: string; to: string }>;
   ctaLabel: string;
   ctaTo: string;
+  ctaTitle?: string;
+  ctaBody?: string;
+  secondaryCtaLabel?: string;
+  secondaryCtaTo?: string;
 };
 
 export const SEO_LANDING_PATHS = [
@@ -136,11 +140,11 @@ const LANDINGS: Record<string, SeoLandingContent> = {
       { heading: 'Tiến độ được giữ nhẹ nhàng', body: 'Mỗi lần hoàn thành bài, Poo ghi nhận bước tiến của bạn. Với người chưa đăng nhập, tiến độ có thể được giữ trên thiết bị để bạn học thử thoải mái. Khi đăng nhập, hành trình có thể được lưu tốt hơn. Tinh thần của PooEnglish là học đều, không tạo áp lực thành tích quá nặng. Một ngày chỉ cần hoàn thành một nút nhỏ cũng là một lần bạn nói với não rằng tiếng Anh vẫn đang hiện diện trong cuộc sống của mình.' },
     ],
     faqs: [
-      commonFaqs.beginner,
-      commonFaqs.daily,
+      { question: 'Lộ trình này dành cho ai?', answer: 'Lộ trình phù hợp với người mất gốc, người học lại từ đầu hoặc người đã học lẻ tẻ nhưng chưa biết nên nối các kỹ năng theo thứ tự nào.' },
+      { question: 'Mỗi ngày đi một nút học có đủ không?', answer: 'Đủ để tạo thói quen. Poo ưu tiên một bước rõ ràng mỗi ngày hơn là mở quá nhiều tài liệu rồi bỏ dở giữa chừng.' },
       { question: 'Lộ trình có bắt buộc đi đúng thứ tự không?', answer: 'Poo khuyến khích đi theo thứ tự nếu bạn mới bắt đầu, nhưng bạn vẫn có thể ghé các trang shadowing, từ vựng hoặc luyện nghe khi muốn đổi nhịp.' },
       { question: 'Lộ trình có phù hợp học trên điện thoại không?', answer: 'Có. Các bài được chia nhỏ để bạn có thể học trên điện thoại trong giờ nghỉ, trước khi ngủ hoặc bất cứ lúc nào có vài phút rảnh.' },
-      { question: 'Tôi có thể học không đăng nhập không?', answer: 'Có. PooEnglish không ép đăng nhập để xem lộ trình. Đăng nhập chỉ là lựa chọn khi bạn muốn giữ hành trình lâu dài hơn.' },
+      { question: 'Khi bị kẹt ở một kỹ năng thì làm gì?', answer: 'Hãy quay lại nút học liên quan: nghe yếu thì luyện nghe chậm, quên từ thì mở sổ từ, ngại nói thì chọn vài câu shadowing ngắn.' },
     ],
     links: [
       { label: 'Học tiếng Anh', to: '/hoc-tieng-anh' },
@@ -149,6 +153,10 @@ const LANDINGS: Record<string, SeoLandingContent> = {
     ],
     ctaLabel: 'Mở bản đồ học',
     ctaTo: '/learning-path',
+    ctaTitle: 'Để Poo chỉ đường học hôm nay',
+    ctaBody: 'Nếu bạn đang lạc giữa quá nhiều tài liệu, hãy mở bản đồ học. Poo sẽ gom các chặng từ vựng, nghe, nói và ôn tập thành từng bước nhỏ để bạn biết mình nên bơi tiếp ở đâu.',
+    secondaryCtaLabel: 'Xem khóa 48 ngày',
+    secondaryCtaTo: '/48-ngay-lay-goc',
   },
   '/shadowing-tieng-anh': {
     path: '/shadowing-tieng-anh',
@@ -164,7 +172,7 @@ const LANDINGS: Record<string, SeoLandingContent> = {
     faqs: [
       { question: 'Shadowing có phù hợp cho người mới không?', answer: 'Có, nếu câu đủ ngắn và tốc độ vừa phải. PooEnglish ưu tiên đoạn dễ theo để người mới tập nhịp trước khi thử câu dài hơn.' },
       { question: 'Tôi phát âm chưa tốt thì có nên shadowing không?', answer: 'Nên. Shadowing chính là cách giúp bạn làm quen âm và nhịp. Bạn không cần đúng ngay; hãy nghe lại và nói lại từng chút.' },
-      commonFaqs.daily,
+      { question: 'Mỗi buổi shadowing nên luyện bao nhiêu câu?', answer: 'Người mới chỉ cần 3–5 câu ngắn. Quan trọng là nghe kỹ, hiểu nghĩa, nói lại vài lần và lưu câu khó để quay lại.' },
       { question: 'Shadowing khác luyện nghe thông thường thế nào?', answer: 'Luyện nghe tập trung vào hiểu. Shadowing thêm bước nói theo, nên giúp tai, miệng và phản xạ phối hợp tốt hơn.' },
       { question: 'Nên học thêm gì cùng shadowing?', answer: 'Bạn nên kết hợp từ vựng, luyện nghe và ngữ pháp mẫu câu để hiểu câu mình đang nói và dùng lại được trong tình huống khác.' },
     ],
@@ -175,6 +183,10 @@ const LANDINGS: Record<string, SeoLandingContent> = {
     ],
     ctaLabel: 'Thử nói đuổi với Poo',
     ctaTo: '/shadowing',
+    ctaTitle: 'Nói thử một câu ngắn cùng Poo',
+    ctaBody: 'Chọn một câu thật ngắn, nghe mẫu rồi nói theo. Poo không cần bạn phát âm hoàn hảo ngay; chỉ cần hôm nay miệng bớt ngại hơn hôm qua một chút.',
+    secondaryCtaLabel: 'Nghe chậm trước đã',
+    secondaryCtaTo: '/luyen-nghe-tieng-anh',
   },
   '/tu-vung-tieng-anh': {
     path: '/tu-vung-tieng-anh',
@@ -191,7 +203,7 @@ const LANDINGS: Record<string, SeoLandingContent> = {
       { question: 'PooEnglish có sổ từ vựng không?', answer: 'Có. Bạn có thể học và ôn các từ, câu hoặc phần cần nhớ trong khu vực từ vựng và ôn tập của PooEnglish.' },
       { question: 'Nên học bao nhiêu từ mỗi ngày?', answer: 'Nếu mới bắt đầu, 5–10 từ kèm câu ví dụ là đủ tốt. Điều quan trọng là ôn lại và dùng được, không phải ghi thật nhiều.' },
       { question: 'Học từ theo chủ đề có tốt không?', answer: 'Có. Chủ đề giúp não nhóm thông tin lại, nhưng Poo vẫn khuyên đặt từ vào câu để hiểu cách dùng tự nhiên hơn.' },
-      commonFaqs.login,
+      { question: 'Làm sao biết từ nào cần ôn lại?', answer: 'Sổ từ nên ưu tiên từ mới, từ hay quên, câu từng nói sai và từ đến hạn ôn hôm nay thay vì chỉ hiển thị một danh sách dài.' },
       { question: 'Từ vựng có liên quan đến shadowing không?', answer: 'Có. Khi hiểu từ trong câu shadowing, bạn sẽ nghe và nói tự tin hơn, thay vì chỉ bắt chước âm thanh.' },
     ],
     links: [
@@ -201,6 +213,10 @@ const LANDINGS: Record<string, SeoLandingContent> = {
     ],
     ctaLabel: 'Mở sổ từ cùng Poo',
     ctaTo: '/words',
+    ctaTitle: 'Nhặt vài vỏ sò từ vựng hôm nay',
+    ctaBody: 'Mở sổ từ vựng, chọn vài từ gần đời sống và đặt chúng vào câu. Poo sẽ giúp bạn gặp lại từ đúng lúc để không còn học xong rồi trôi mất.',
+    secondaryCtaLabel: 'Học mẫu câu liên quan',
+    secondaryCtaTo: '/ngu-phap-tieng-anh',
   },
   '/luyen-nghe-tieng-anh': {
     path: '/luyen-nghe-tieng-anh',
@@ -216,7 +232,7 @@ const LANDINGS: Record<string, SeoLandingContent> = {
     faqs: [
       { question: 'Luyện nghe tiếng Anh nên bắt đầu từ đâu?', answer: 'Hãy bắt đầu bằng câu ngắn, chủ đề quen và có từ vựng nền. Sau đó nghe lại, nhắc theo và ghi chú câu khó.' },
       { question: 'Không nghe kịp thì có sao không?', answer: 'Không sao. Nghe không kịp là dấu hiệu cần giảm tốc, chia nhỏ câu hoặc học trước từ khóa. PooEnglish được thiết kế cho nhịp đó.' },
-      commonFaqs.daily,
+      { question: 'Một buổi luyện nghe ngắn nên làm gì?', answer: 'Bạn có thể nghe ý chính, bắt 2–3 từ khóa, xem transcript khi cần, rồi chọn một câu để nói lại cùng Poo.' },
       { question: 'Có nên vừa nghe vừa nhìn chữ không?', answer: 'Có thể. Người mới có thể nhìn chữ để hiểu trước, sau đó nghe lại không nhìn để tai tập nhận diện âm.' },
       { question: 'Luyện nghe có giúp nói tốt hơn không?', answer: 'Có, đặc biệt khi bạn kết hợp nghe với shadowing. Tai quen nhịp sẽ giúp miệng nói tự nhiên hơn.' },
     ],
@@ -227,6 +243,10 @@ const LANDINGS: Record<string, SeoLandingContent> = {
     ],
     ctaLabel: 'Vào luyện nghe nói',
     ctaTo: '/shadowing',
+    ctaTitle: 'Nghe một đoạn ngắn để tai quen sóng',
+    ctaBody: 'Đừng bắt tai bơi xa ngay. Hãy nghe một câu rõ, bắt từ khóa rồi nói lại nhẹ nhàng. Poo sẽ ở cạnh để biến tiếng Anh thành âm thanh quen thuộc hơn.',
+    secondaryCtaLabel: 'Thử shadowing sau khi nghe',
+    secondaryCtaTo: '/shadowing-tieng-anh',
   },
   '/ngu-phap-tieng-anh': {
     path: '/ngu-phap-tieng-anh',
@@ -242,7 +262,7 @@ const LANDINGS: Record<string, SeoLandingContent> = {
     faqs: [
       { question: 'Có cần học ngữ pháp trước khi luyện nói không?', answer: 'Không cần học hết trước. Bạn có thể học một mẫu câu nhỏ rồi luyện nói ngay. Dùng được mẫu nào chắc mẫu đó.' },
       { question: 'PooEnglish giải thích ngữ pháp theo cách nào?', answer: 'Poo ưu tiên ví dụ, tình huống và bài luyện ngắn. Mục tiêu là hiểu để dùng, không phải ghi nhớ thuật ngữ thật dài.' },
-      commonFaqs.beginner,
+      { question: 'Người mất gốc nên học ngữ pháp nào trước?', answer: 'Nên bắt đầu bằng mẫu câu giới thiệu bản thân, to be, have, like, want to, câu hỏi đơn giản và cách nói thói quen hằng ngày.' },
       { question: 'Sai ngữ pháp nhiều có nên tiếp tục nói không?', answer: 'Có. Nói giúp bạn phát hiện chỗ cần sửa. Poo khuyến khích sửa nhẹ từng lỗi thay vì chờ đúng hoàn toàn mới bắt đầu.' },
       { question: 'Ngữ pháp có liên quan đến từ vựng không?', answer: 'Có. Từ vựng cần mẫu câu để dùng đúng, còn ngữ pháp cần từ vựng để tạo câu có nghĩa.' },
     ],
@@ -253,6 +273,10 @@ const LANDINGS: Record<string, SeoLandingContent> = {
     ],
     ctaLabel: 'Học mẫu câu cùng Poo',
     ctaTo: '/learning-path',
+    ctaTitle: 'Gỡ rối một mẫu câu nhỏ trước',
+    ctaBody: 'Bạn không cần học hết ngữ pháp trong một lần. Hãy chọn một mẫu câu đời thường, xem ví dụ và luyện dùng ngay để cấu trúc trở thành chiếc phao dễ nhớ.',
+    secondaryCtaLabel: 'Ôn từ để đặt câu',
+    secondaryCtaTo: '/tu-vung-tieng-anh',
   },
   '/48-ngay-lay-goc': {
     path: '/48-ngay-lay-goc',
@@ -266,10 +290,10 @@ const LANDINGS: Record<string, SeoLandingContent> = {
       { heading: 'Kết nối với lộ trình lớn của PooEnglish', body: 'Khóa 48 ngày không đứng riêng. Sau mỗi chặng, bạn có thể đi tiếp vào lộ trình học, shadowing, luyện nghe, từ vựng hoặc ôn tập. Những gì bạn học trong khóa là nền để bơi xa hơn. Poo muốn bạn kết thúc 48 ngày với cảm giác tiếng Anh đã có chỗ đứng trong lịch sinh hoạt, và bạn biết mình nên học tiếp theo hướng nào.' },
     ],
     faqs: [
-      commonFaqs.beginner,
+      { question: 'Khóa 48 ngày phù hợp với người mất gốc không?', answer: 'Có. Khóa bắt đầu từ câu rất căn bản, từ gần đời sống và bài luyện ngắn để người học lại không bị ngợp.' },
       { question: 'Nếu không hoàn thành đúng 48 ngày thì sao?', answer: 'Không sao. Bạn có thể học chậm hơn. PooEnglish coi việc quay lại tiếp tục là một phần bình thường của hành trình.' },
       { question: 'Khóa này tập trung kỹ năng nào?', answer: 'Khóa tập trung nền tổng hợp: từ vựng, mẫu câu, nghe, nói, ngữ pháp căn bản và thói quen ôn tập.' },
-      commonFaqs.login,
+      { question: 'Mỗi ngày trong khóa có những phần gì?', answer: 'Mỗi ngày nên có mục tiêu nhỏ, từ vựng chính, mẫu câu, hội thoại, nghe chậm, shadowing, quiz, lỗi hay sai và phần ôn lại.' },
       { question: 'Sau 48 ngày nên học gì tiếp?', answer: 'Bạn có thể tiếp tục lộ trình học, luyện shadowing, mở sổ từ vựng hoặc luyện nghe nói theo nhu cầu yếu nhất của mình.' },
     ],
     links: [
@@ -279,6 +303,10 @@ const LANDINGS: Record<string, SeoLandingContent> = {
     ],
     ctaLabel: 'Bắt đầu ngày 1',
     ctaTo: '/luyen-tieng-anh/48-ngay-lay-goc',
+    ctaTitle: 'Bắt đầu lại từ ngày 1, thật chậm cũng được',
+    ctaBody: 'Ngày đầu tiên chỉ cần một vài câu chào hỏi, vài từ quen và một lượt nghe nói ngắn. Poo sẽ dẫn bạn từng ngày để nền tiếng Anh có chỗ bám lại.',
+    secondaryCtaLabel: 'Xem bản đồ lộ trình',
+    secondaryCtaTo: '/lo-trinh-hoc-tieng-anh',
   },
   '/gioi-thieu': {
     path: '/gioi-thieu',
@@ -549,8 +577,8 @@ export function SeoLandingPage() {
                 <Button as={RouterLink} to={content.ctaTo} borderRadius="full" bg={OCEAN_TOKENS.deepBlue} color="white" size="lg" rightIcon={<Icon as={ChevronRight} />} _hover={{ bg: OCEAN_TOKENS.oceanBlue }}>
                   {content.ctaLabel}
                 </Button>
-                <Button as={RouterLink} to="/gioi-thieu" borderRadius="full" bg="white" color={OCEAN_TOKENS.deepBlue} size="lg" border="1px solid" borderColor={OCEAN_TOKENS.borderStrong} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
-                  Tìm hiểu PooEnglish
+                <Button as={RouterLink} to={content.secondaryCtaTo ?? '/gioi-thieu'} borderRadius="full" bg="white" color={OCEAN_TOKENS.deepBlue} size="lg" border="1px solid" borderColor={OCEAN_TOKENS.borderStrong} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
+                  {content.secondaryCtaLabel ?? 'Tìm hiểu PooEnglish'}
                 </Button>
               </HStack>
             </VStack>
@@ -599,9 +627,9 @@ export function SeoLandingPage() {
 
           <Box textAlign="center" bg="linear-gradient(135deg, rgba(31,111,214,0.95), rgba(91,188,235,0.9))" color="white" borderRadius="3xl" p={{ base: '5', md: '7' }} boxShadow="0 24px 70px rgba(31,111,214,0.22)">
             <Icon as={BookOpen} boxSize="8" mb="3" />
-            <Text as="h2" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" mb="3">Sẵn sàng bơi một bước nhỏ hôm nay?</Text>
+            <Text as="h2" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" mb="3">{content.ctaTitle ?? 'Sẵn sàng bơi một bước nhỏ hôm nay?'}</Text>
             <Text maxW="720px" mx="auto" lineHeight="1.8" fontWeight="700" opacity="0.94" mb="5">
-              Poo không cần bạn học hoàn hảo. Poo chỉ cần bạn mở bài, thử một câu, nhặt một từ và quay lại vào ngày mai. Những bước nhỏ sẽ làm đại dương tiếng Anh bớt rộng hơn.
+              {content.ctaBody ?? 'Poo không cần bạn học hoàn hảo. Poo chỉ cần bạn mở bài, thử một câu, nhặt một từ và quay lại vào ngày mai. Những bước nhỏ sẽ làm đại dương tiếng Anh bớt rộng hơn.'}
             </Text>
             <Button as={RouterLink} to={content.ctaTo} borderRadius="full" bg="white" color={OCEAN_TOKENS.deepBlue} size="lg" _hover={{ bg: '#E8F4FF' }}>
               {content.ctaLabel}

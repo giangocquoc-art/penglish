@@ -6,14 +6,12 @@ import { foundation48SourceIndex } from './foundation48SourceIndex';
 export const FOUNDATION48_BASE_PATH = '/luyen-tieng-anh/48-ngay-lay-goc';
 
 export const foundation48Stages = [
-  { id: 1, title: 'Tập nói “là / ở / thì” bằng câu ngắn', days: [1, 2, 3, 4] },
-  { id: 2, title: 'Kể việc mình làm mỗi ngày', days: [5, 6, 7, 8] },
-  { id: 3, title: 'Nhận mặt từ và thời gian', days: [9, 10, 11, 12, 13, 14, 15, 16, 17] },
-  { id: 4, title: 'Nói rõ hơn và hỏi tự nhiên hơn', days: [18, 19, 20, 21] },
-  { id: 5, title: 'Ghép ý và nói “nếu… thì…”', days: [22, 23, 24, 25, 26, 27, 28] },
-  { id: 6, title: 'Luyện nghe nền tảng', days: [29, 30, 31, 32, 33, 34] },
-  { id: 7, title: 'Ôn câu quen và nói tự nhiên hơn', days: [35, 36, 37, 38] },
-  { id: 8, title: 'Nghe chuyện đời sống và khép lại 48 ngày', days: [39, 40, 41, 42, 43, 44, 45, 46, 47, 48] },
+  { id: 1, title: 'Chặng 1: Sinh tồn cơ bản', days: [1, 2, 3, 4, 5, 6, 7, 8] },
+  { id: 2, title: 'Chặng 2: Bản thân và gia đình', days: [9, 10, 11, 12, 13, 14, 15, 16] },
+  { id: 3, title: 'Chặng 3: Trường học và công việc', days: [17, 18, 19, 20, 21, 22, 23, 24] },
+  { id: 4, title: 'Chặng 4: Ăn uống, mua sắm, di chuyển', days: [25, 26, 27, 28, 29, 30, 31, 32] },
+  { id: 5, title: 'Chặng 5: Quá khứ và kế hoạch', days: [33, 34, 35, 36, 37, 38, 39, 40] },
+  { id: 6, title: 'Chặng 6: Giao tiếp thật', days: [41, 42, 43, 44, 45, 46, 47, 48] },
 ] as const;
 
 const foundation48DisplayTitles: Record<number, string> = {

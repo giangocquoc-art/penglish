@@ -8,9 +8,11 @@ import { useAuth } from '../auth/AuthProvider';
 import { syncLocalFoundation48ProgressToCloud } from './foundation48CloudProgress';
 import { Foundation48AudioPlayer } from './Foundation48AudioPlayer';
 import { FOUNDATION48_BASE_PATH, foundation48Days, getFoundation48Day, getFoundation48DayPath } from './foundation48Data';
+import type { PooLesson, PooQuizItem } from '../../data/lessons/pooLessonTypes';
 import type { Foundation48DeepLesson } from './foundation48DeepLessons';
 import { getFoundation48CachedDeepLesson, getFoundation48DeepLesson, preloadFoundation48DeepLesson } from './foundation48DeepLessonResolver';
 import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48DayProgress, markFoundation48Completed, markFoundation48Started, markFoundation48StepCompleted, recordFoundation48ChallengeResult } from './foundation48Progress';
+import { getFoundation48PrimaryLesson } from './foundation48PrimaryPath';
 import type { Foundation48Challenge, Foundation48Day, Foundation48LessonStep } from './foundation48Types';
 import { getLearningHeartsState, isLearningLocked, LEARNING_HEARTS_UPDATED_EVENT, loseHeart, OUT_OF_BUBBLES_MESSAGE, type LearningHeartsState } from '../../lib/p-english/learning-hearts';
 
@@ -408,6 +410,18 @@ function ListenFirstActivity({ step, day }: { step: Foundation48LessonStep; day:
           <ChecklistPill done={listened} label="Đã nghe câu mẫu" />
           <Button leftIcon={<Icon as={readAlong ? CheckCircle2 : Play} />} justifyContent="flex-start" borderRadius="2xl" border="1px solid" borderColor={readAlong ? '#BBF7D0' : COLORS.border} bg={readAlong ? '#ECFDF5' : 'white'} color={readAlong ? COLORS.green : COLORS.text} minH="46px" onClick={() => setReadAlong((value) => !value)} data-testid="foundation48-listen-readalong">Đã đọc thầm theo</Button>
         </SimpleGrid>
+        {step.bullets?.length ? (
+          <Box border="1px solid" borderColor="rgba(186,230,253,0.72)" bg="rgba(255,255,255,0.82)" borderRadius="2xl" p="3" data-testid="foundation48-dialogue-lines">
+            <Text color={COLORS.blue} fontWeight="950" fontSize="sm" mb="2">Lời thoại dễ đọc</Text>
+            <VStack align="stretch" gap="2">
+              {step.bullets.slice(0, 6).map((line, index) => (
+                <Text key={`${line}-${index}`} color={COLORS.text} fontWeight="850" lineHeight="1.55" fontSize={{ base: 'sm', md: 'md' }}>
+                  {line}
+                </Text>
+              ))}
+            </VStack>
+          </Box>
+        ) : null}
       </VStack>
     </Box>
   );
@@ -767,9 +781,10 @@ function SpeakButton({ text, label, slow }: { text: string; label: string; slow?
 function CompletePrompt({ day }: { day: Foundation48Day }) {
   const nextDay = day.dayNumber < foundation48Days.length ? day.dayNumber + 1 : null;
   const deepLesson = getFoundation48CachedDeepLesson(day.dayNumber);
-  const sentenceCount = deepLesson?.speaking.length || 5;
-  const wordCount = deepLesson?.vocabulary.length || Math.min(6, day.summary.keyPoints.length || day.summary.practice.length || 4);
-  const quizCount = deepLesson?.quiz.length || 1;
+  const primaryLesson = getFoundation48PrimaryLesson(day.dayNumber);
+  const sentenceCount = primaryLesson?.shadowing[0]?.lines.length || deepLesson?.speaking.length || 5;
+  const wordCount = primaryLesson?.vocabulary.length || deepLesson?.vocabulary.length || Math.min(6, day.summary.keyPoints.length || day.summary.practice.length || 4);
+  const quizCount = primaryLesson?.quiz.length || deepLesson?.quiz.length || 1;
 
   return (
     <Box border="1px solid" borderColor="#BBF7D0" bg="linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 62%, #EFF6FF 100%)" borderRadius="3xl" p={{ base: '4', md: '5' }} data-testid="foundation48-complete-reward">
@@ -933,6 +948,9 @@ function normalizeAnswer(value: string) {
 }
 
 function buildFoundation48Steps(day: Foundation48Day, resolvedDeepLesson?: Foundation48DeepLesson): Foundation48LessonStep[] {
+  const primaryLesson = getFoundation48PrimaryLesson(day.dayNumber);
+  if (primaryLesson) return buildPooLessonFoundation48Steps(day, primaryLesson);
+
   const deepLesson = resolvedDeepLesson ?? getFoundation48CachedDeepLesson(day.dayNumber);
 
   if (deepLesson?.readiness === 'complete') {
@@ -1020,6 +1038,124 @@ function buildFoundation48Steps(day: Foundation48Day, resolvedDeepLesson?: Found
 
   steps.push({ id: 'complete', type: 'complete', title: 'Tổng kết và ôn lại', subtitle: 'Giỏi lắm! Poo sẽ giữ từ mới và các câu cần ôn cho ngày mai.' });
   return steps;
+}
+
+function buildPooLessonFoundation48Steps(day: Foundation48Day, lesson: PooLesson): Foundation48LessonStep[] {
+  const mainPattern = lesson.patterns[0];
+  const mainDialogue = lesson.dialogue[0];
+  const mainShadowing = lesson.shadowing[0];
+  const patternBullets = lesson.patterns.flatMap((item) => [
+    `${item.pattern} — ${item.meaningVi}`,
+    ...item.examples.slice(0, 2).map((example) => `${example.en} — ${example.vi}`),
+  ]).slice(0, 5);
+  const vocabularyBullets = lesson.vocabulary.slice(0, 6).map((item) => `${item.term} — ${item.meaningVi}. Ví dụ: ${item.exampleEn}`);
+  const dialogueLines = mainDialogue?.lines.slice(0, 6).map((line) => `${line.speaker}: ${line.en} — ${line.vi}`) || [];
+  const shadowingLines = mainShadowing?.lines.slice(0, 4).map((line) => `${line.en} — ${line.pronunciationTipVi || line.vi}`) || [];
+  const challenges = buildPooLessonChallenges(day, lesson.quiz);
+
+  const steps: Foundation48LessonStep[] = [
+    {
+      id: 'intro',
+      type: 'intro',
+      title: lesson.titleVi || lesson.title,
+      subtitle: 'Hôm nay học một gói nhỏ: biết mục tiêu, luyện câu mẫu, đọc hội thoại, shadowing rồi quiz nhẹ.',
+      body: `Hôm nay học gì: ${lesson.learningGoalVi}\n\nHọc xong làm được gì: bạn dùng được câu ngắn trong tình huống thật của ngày ${day.dayNumber}.`,
+      bullets: [`${lesson.vocabulary.length} Từ`, `${lesson.patterns.length} Mẫu`, `${mainDialogue ? '1 Hội thoại' : '0 Hội thoại'}`, `${mainShadowing?.lines.length || 0} Shadowing`, `${lesson.quiz.length} Quiz`],
+    },
+    {
+      id: 'explain',
+      type: 'explain',
+      title: mainPattern?.pattern || 'Mẫu câu chính',
+      subtitle: mainPattern?.meaningVi || 'Poo giải thích ngắn trước khi luyện.',
+      body: mainPattern?.explanationVi || lesson.learningGoalVi,
+      bullets: mainPattern?.examples.slice(0, 3).map((example) => `${example.en} — ${example.vi}`) || [],
+    },
+    { id: 'patterns', type: 'example', title: 'Mẫu câu cần nhớ', subtitle: 'Chỉ vài mẫu chính, đọc chậm và hiểu ý trước.', bullets: patternBullets },
+    { id: 'vocabulary', type: 'practice', title: 'Từ/cụm dùng ngay', subtitle: 'Tối đa 6 từ trên màn hình để không bị ngợp.', bullets: vocabularyBullets },
+  ];
+
+  if (mainDialogue) {
+    steps.push({
+      id: 'dialogue',
+      type: 'listening',
+      title: mainDialogue.titleVi,
+      subtitle: mainDialogue.situationVi,
+      body: mainDialogue.lines.map((line) => line.en).join(' '),
+      bullets: dialogueLines,
+    });
+  }
+
+  if (mainShadowing) {
+    steps.push({
+      id: 'shadowing',
+      type: 'speaking',
+      title: mainShadowing.titleVi,
+      subtitle: 'Nghe từng câu, nói lại chậm. Mỗi thẻ chỉ có một câu chính.',
+      bullets: shadowingLines,
+    });
+  }
+
+  challenges.forEach((challenge, index) => {
+    steps.push({ id: challenge.id, type: challenge.type === 'speaking-repeat' ? 'speaking' : 'challenge', title: challengeTitle(challenge, index), subtitle: challengeSubtitle(challenge), challenge });
+  });
+
+  steps.push({ id: 'complete', type: 'complete', title: 'Tổng kết và ôn lại', subtitle: 'Poo giữ lại từ mới, câu shadowing và quiz để bạn ôn sau 1 / 3 / 7 ngày.' });
+  return steps;
+}
+
+function buildPooLessonChallenges(day: Foundation48Day, quizItems: PooQuizItem[]): Foundation48Challenge[] {
+  return quizItems.slice(0, 4).map((item, index): Foundation48Challenge => {
+    const answer = Array.isArray(item.correctAnswer) ? item.correctAnswer[0] : item.correctAnswer;
+    const baseId = `day-${day.dayNumber}-poo-quiz-${index}`;
+
+    if (item.type === 'short-answer') {
+      return {
+        id: baseId,
+        type: 'speaking-repeat',
+        prompt: item.promptVi,
+        target: item.promptEn || answer,
+        answer,
+        hint: 'Nói câu ngắn, rõ nhịp. Không cần nói nhanh.',
+        explanation: item.explanationVi,
+      };
+    }
+
+    if (item.type === 'sentence-order') {
+      return {
+        id: baseId,
+        type: 'sentence-order',
+        prompt: item.promptVi,
+        target: item.promptEn || answer,
+        answer,
+        tokens: shuffleTokens(answer.split(/\s+/), day.dayNumber + index),
+        hint: 'Bấm từ theo đúng thứ tự câu.',
+        explanation: item.explanationVi,
+      };
+    }
+
+    if (item.type === 'fill-blank') {
+      return {
+        id: baseId,
+        type: 'fill-blank',
+        prompt: item.promptVi,
+        target: item.promptEn || answer,
+        answer,
+        hint: 'Nhập đúng từ/cụm còn thiếu.',
+        explanation: item.explanationVi,
+      };
+    }
+
+    return {
+      id: baseId,
+      type: 'multiple-choice',
+      prompt: item.promptVi,
+      target: item.promptEn || answer,
+      answer,
+      options: uniqueOptions([answer, ...(item.choices || [])]),
+      hint: 'Chọn đáp án đúng nhất theo dữ liệu bài hôm nay.',
+      explanation: item.explanationVi,
+    };
+  });
 }
 
 function buildFoundation48Challenges(day: Foundation48Day): Foundation48Challenge[] {

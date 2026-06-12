@@ -305,8 +305,8 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/lo-trinh-hoc-tieng-anh' || pathname === '/learning-path',
     metadata: {
-      title: 'Lộ trình học tiếng Anh — PooEnglish',
-      description: 'Lộ trình học tiếng Anh trên PooEnglish chia từng bước nhỏ: từ vựng, nghe, nói, ngữ pháp, ôn tập và checkpoint để người học đi đều mỗi ngày.',
+      title: 'Lộ trình học tiếng Anh cho người mất gốc — PooEnglish',
+      description: 'Bản đồ học tiếng Anh từng bước cùng cá voi Poo: biết hôm nay học gì, ôn gì, luyện nghe nói ra sao và đi tiếp thế nào mà không bị lạc tài liệu.',
       canonicalPath: pathnameToCanonical('/lo-trinh-hoc-tieng-anh'),
       structuredData: [breadcrumbSchema('/lo-trinh-hoc-tieng-anh', 'Lộ trình học tiếng Anh')],
     },
@@ -314,8 +314,8 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/shadowing-tieng-anh',
     metadata: {
-      title: 'Shadowing tiếng Anh cùng Poo — Luyện nói đuổi dễ thương',
-      description: 'Shadowing tiếng Anh cùng PooEnglish giúp bạn nghe mẫu, nói lại từng câu, giữ nhịp tự nhiên và luyện phát âm tiếng Anh bớt áp lực.',
+      title: 'Shadowing tiếng Anh cho người mới — Nói đuổi cùng Poo',
+      description: 'Luyện shadowing tiếng Anh bằng câu ngắn: nghe mẫu, bắt nhịp, nói theo và lặp lại nhẹ nhàng để người Việt bớt ngại phát âm.',
       canonicalPath: '/shadowing-tieng-anh',
       structuredData: [breadcrumbSchema('/shadowing-tieng-anh', 'Shadowing tiếng Anh'), courseSchema('/shadowing-tieng-anh', 'Shadowing tiếng Anh cùng Poo', 'Khóa luyện nói đuổi tiếng Anh theo từng câu ngắn, phù hợp người học muốn cải thiện phát âm và phản xạ.')],
     },
@@ -323,8 +323,8 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/tu-vung-tieng-anh',
     metadata: {
-      title: 'Từ vựng tiếng Anh — Học từ mới nhẹ nhàng cùng PooEnglish',
-      description: 'Học từ vựng tiếng Anh theo chủ đề, ví dụ dễ hiểu, ôn lại câu khó và xây sổ tay từ vựng cá nhân cùng cá voi Poo.',
+      title: 'Từ vựng tiếng Anh dễ nhớ — Học trong câu cùng Poo',
+      description: 'Học từ vựng tiếng Anh bằng ngữ cảnh, ví dụ đời thường và sổ ôn cá nhân để biết từ nào mới, từ nào hay quên, từ nào đã thuộc.',
       canonicalPath: '/tu-vung-tieng-anh',
       structuredData: [breadcrumbSchema('/tu-vung-tieng-anh', 'Từ vựng tiếng Anh')],
     },
@@ -332,8 +332,8 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/luyen-nghe-tieng-anh',
     metadata: {
-      title: 'Luyện nghe tiếng Anh — Nghe chậm, hiểu chắc cùng Poo',
-      description: 'Luyện nghe tiếng Anh trên PooEnglish bằng đoạn ngắn, câu quen thuộc, shadowing và nhịp ôn tập giúp tai quen tiếng Anh tự nhiên.',
+      title: 'Luyện nghe tiếng Anh cho người mới — Nghe chậm cùng Poo',
+      description: 'Bắt đầu luyện nghe tiếng Anh bằng câu ngắn, từ quen, transcript đúng lúc và shadowing nhẹ để tai quen âm mà không bị ngợp.',
       canonicalPath: '/luyen-nghe-tieng-anh',
       structuredData: [breadcrumbSchema('/luyen-nghe-tieng-anh', 'Luyện nghe tiếng Anh'), courseSchema('/luyen-nghe-tieng-anh', 'Luyện nghe tiếng Anh cùng Poo', 'Chương trình luyện nghe tiếng Anh bằng bài ngắn, từ vựng quen thuộc và hoạt động nghe nói lặp lại.')],
     },
@@ -341,8 +341,8 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/ngu-phap-tieng-anh',
     metadata: {
-      title: 'Ngữ pháp tiếng Anh — Hiểu mẫu câu dễ hơn cùng PooEnglish',
-      description: 'Ngữ pháp tiếng Anh được PooEnglish giải thích bằng mẫu câu đời thường, ví dụ rõ ràng và bài luyện nhỏ để nhớ lâu hơn.',
+      title: 'Ngữ pháp tiếng Anh cơ bản — Hiểu mẫu câu cùng Poo',
+      description: 'Học ngữ pháp tiếng Anh qua mẫu câu đời thường, ví dụ tiếng Việt dễ hiểu và bài luyện nhỏ để người mất gốc dám dùng ngay.',
       canonicalPath: '/ngu-phap-tieng-anh',
       structuredData: [breadcrumbSchema('/ngu-phap-tieng-anh', 'Ngữ pháp tiếng Anh')],
     },
@@ -350,8 +350,8 @@ const ROUTE_METADATA: Array<{ test: (pathname: string) => boolean; metadata: Rou
   {
     test: (pathname) => pathname === '/48-ngay-lay-goc' || pathname.startsWith('/luyen-tieng-anh/48-ngay-lay-goc'),
     metadata: {
-      title: '48 ngày lấy gốc tiếng Anh — PooEnglish',
-      description: 'Khóa 48 ngày lấy gốc tiếng Anh cùng PooEnglish giúp người mới bắt đầu xây lại từ vựng, mẫu câu, nghe, nói và thói quen học mỗi ngày.',
+      title: '48 ngày lấy gốc tiếng Anh cho người mất gốc — PooEnglish',
+      description: 'Khóa 48 ngày lấy gốc cùng cá voi Poo: mỗi ngày học một gói nhỏ gồm từ vựng, mẫu câu, nghe chậm, shadowing, quiz và ôn lại.',
       canonicalPath: '/48-ngay-lay-goc',
       structuredData: [breadcrumbSchema('/48-ngay-lay-goc', '48 ngày lấy gốc'), courseSchema('/48-ngay-lay-goc', '48 ngày lấy gốc tiếng Anh cùng Poo', 'Khóa học nền tảng 48 ngày cho người mất gốc hoặc muốn bắt đầu lại tiếng Anh bằng bài học nhỏ mỗi ngày.')],
     },
