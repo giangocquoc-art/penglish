@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.10",
+    "@types/react-window": "^1.8.8",
     "csv-parse": "^6.2.1",
     "fast-glob": "^3.3.3",
     "playwright": "^1.60.0",
@@ -37,6 +38,7 @@
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "gsap": "^3.15.0",
+    "react-window": "^2.2.7",
     "youtube-caption-extractor": "^1.10.2",
     "youtube-transcript-api-js": "^3.0.3",
     "youtube-transcript-plus": "^2.0.0"
