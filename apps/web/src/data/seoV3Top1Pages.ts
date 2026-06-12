@@ -4305,3 +4305,9 @@ export const seoV3Top1Pages: SeoV3Top1Page[] = [
 ];
 
 export const seoV3Top1PageBySlug = Object.fromEntries(seoV3Top1Pages.map((page) => [page.slug, page]));
+
+export const SEO_V3_TOP1_PATHS = seoV3Top1Pages.map((page) => page.route);
+
+export function getSeoV3Top1PageByPath(pathname: string) {
+  return seoV3Top1Pages.find((page) => page.route === pathname) ?? null;
+}
