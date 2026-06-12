@@ -10,7 +10,6 @@ import { LESSON_SEO_PATHS } from './data/lessonSeoPages';
 import { GlobalEasterEggs } from './components/easter-eggs/GlobalEasterEggs';
 import { AuthProvider, useAuth } from './features/auth/AuthProvider';
 import { avatarFromUser, displayNameFromUser } from './lib/p-english/userSession';
-import { AuthLoadingScreen } from './features/auth/AuthLoadingScreen';
 
 const NewVocabPage = lazy(() => import('./pages/VocabPage').then((module) => ({ default: module.VocabPage })));
 const NewLoginPage = lazy(() => import('./pages/LoginPage').then((module) => ({ default: module.LoginPage })));
@@ -70,7 +69,28 @@ function useUserFromAuth(): User | null {
 }
 
 function RouteLoadingFallback() {
-  return <AuthLoadingScreen />;
+  return (
+    <Center minH="calc(100vh - 160px)" px="4" data-testid="route-loading-fallback">
+      <VStack
+        gap="3"
+        w="min(360px, 100%)"
+        p={{ base: '5', md: '6' }}
+        borderRadius="3xl"
+        bg="linear-gradient(145deg, rgba(255,255,255,0.88), rgba(221,245,255,0.72))"
+        border="1px solid rgba(186,230,253,0.78)"
+        boxShadow="0 12px 30px rgba(31,111,214,0.07)"
+        textAlign="center"
+      >
+        <Text fontSize="4xl" lineHeight="1" aria-hidden="true">🐳</Text>
+        <Text color="#102A43" fontWeight="950" fontSize={{ base: 'lg', md: 'xl' }}>
+          Poo đang chuẩn bị bài học...
+        </Text>
+        <Text color="#52667A" fontWeight="800" fontSize="sm">
+          Chờ xíu thôi nè.
+        </Text>
+      </VStack>
+    </Center>
+  );
 }
 
 function NotFoundPage() {

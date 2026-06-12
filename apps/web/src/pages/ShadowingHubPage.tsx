@@ -144,8 +144,7 @@ export function ShadowingHubPage() {
           </Flex>
         </Flex>
 
-        <SimpleGrid columns={{ base: 1, lg: 2 }} gap={{ base: '3', md: '4' }} mb={{ base: '3', md: '5' }}>
-          <GlassPanel data-testid="shadowing-hub-continue" p={{ base: '3.5', md: '5' }} bg="rgba(255,255,255,0.76)" borderColor={COLORS.border} borderRadius="3xl" position="relative" overflow="hidden">
+        <GlassPanel data-testid="shadowing-hub-continue" p={{ base: '3.5', md: '5' }} bg="rgba(255,255,255,0.76)" borderColor={COLORS.border} borderRadius="3xl" position="relative" overflow="hidden" mb={{ base: '3', md: '4' }}>
             <Box as="img" src={PIXEL_ASSETS.waveDivider} alt="" className="pooPixelDecor" position="absolute" bottom="12px" right="18px" w="160px" opacity="0.22" />
             <VStack align="stretch" gap="3" position="relative">
               <HStack justify="space-between" gap="3" align="start">
@@ -158,11 +157,14 @@ export function ShadowingHubPage() {
               <Text color={COLORS.muted} fontSize="sm" fontWeight="750" lineHeight="1.6">Đã luyện {recentLesson.practicedCount}/{recentLesson.sentenceCount} câu · Câu khó {recentLesson.difficultCount}.</Text>
               <HStack gap="2" wrap="wrap">
                 <Button as={Link} to={lessonPath(recentLesson.id)} borderRadius="full" bg={COLORS.deepBlue} color="white" rightIcon={<Icon as={ArrowRight} />} _hover={{ bg: COLORS.oceanBlue }}>Luyện tiếp</Button>
-                <Button as={Link} to="/video-lab" borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor={COLORS.border} leftIcon={<Icon as={Video} />} _hover={{ bg: COLORS.softBlue }}>Tạo bài Shadowing từ video</Button>
               </HStack>
             </VStack>
-          </GlassPanel>
+        </GlassPanel>
 
+        <Box as="details" className="shadowing-hub-more" data-testid="shadowing-hub-more-options">
+          <Box as="summary" cursor="pointer" textAlign="center" color={COLORS.deepBlue} fontWeight="950" mb="3" listStyleType="none">Tùy chọn</Box>
+
+          <SimpleGrid columns={{ base: 1, lg: 2 }} gap={{ base: '3', md: '4' }} mb={{ base: '3', md: '5' }}>
           <GlassPanel data-testid="shadowing-hub-suggestions" p={{ base: '3.5', md: '5' }} bg="rgba(255,255,255,0.76)" borderColor={COLORS.border} borderRadius="3xl">
             <HStack justify="space-between" mb="3" gap="3">
               <Box minW="0">
@@ -176,6 +178,10 @@ export function ShadowingHubPage() {
             </SimpleGrid>
           </GlassPanel>
         </SimpleGrid>
+
+        <HStack justify="center" mb={{ base: '3', md: '4' }}>
+          <Button as={Link} to="/video-lab" borderRadius="full" variant="outline" color={COLORS.deepBlue} borderColor={COLORS.border} leftIcon={<Icon as={Video} />}>Tạo bài từ video</Button>
+        </HStack>
 
         <SimpleGrid columns={{ base: 1, xl: 3 }} gap={{ base: '3', md: '4' }} mb={{ base: '3', md: '5' }}>
           <GlassPanel p="4" bg="rgba(255,255,255,0.70)" borderColor={COLORS.border} borderRadius="3xl" data-testid="shadowing-hub-levels">
@@ -238,6 +244,7 @@ export function ShadowingHubPage() {
             )}
           </GlassPanel>
         </SimpleGrid>
+        </Box>
       </Box>
     </OceanPageShell>
   );

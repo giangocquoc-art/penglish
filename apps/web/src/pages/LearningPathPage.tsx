@@ -1,11 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
   Box,
   Button,
   Flex,
@@ -16,11 +11,11 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { ArrowRight, CheckCircle2, Circle, LockKeyhole, Map, Play, Sparkles, Waves } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Circle, LockKeyhole, Play, Sparkles } from 'lucide-react';
 import { OceanMascot } from '../components/p-english/OceanMascot';
 import { OceanPageShell } from '../components/p-english/OceanPageShell';
 import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48Progress, getFoundation48ProgressSummary } from '../features/foundation48/foundation48Progress';
-import { foundation48Days, foundation48Stages, getFoundation48DayPath } from '../features/foundation48/foundation48Data';
+import { foundation48Days, getFoundation48DayPath } from '../features/foundation48/foundation48Data';
 import type { Foundation48Day, Foundation48ProgressDay } from '../features/foundation48/foundation48Types';
 import { DAILY_REWARDS_UPDATED_EVENT, getDailyRewardState, getUnifiedBubbles, getWaterStreak, type UnifiedBubbleStreak, type UnifiedWaterStreak } from '../lib/p-english/daily-rewards';
 
@@ -97,8 +92,6 @@ export function LearningPathPage() {
   const waterStreak = useMemo(() => getWaterStreak(getDailyRewardState()), [progressVersion]);
   const availableThroughDay = Math.max(1, currentDayNumber, progress.lastDayOpened || 1);
   const currentDay = foundation48Days.find((day) => day.dayNumber === currentDayNumber) ?? foundation48Days[0];
-  const currentStageIndex = Math.max(0, foundation48Stages.findIndex((stage) => stage.days.includes(currentDayNumber as never)));
-  const visibleStages = showFullRoadmap ? foundation48Stages : foundation48Stages.slice(currentStageIndex, Math.min(foundation48Stages.length, currentStageIndex + 2));
   const roadmapDays = useMemo<RoadmapDay[]>(() => foundation48Days.map((day) => {
     const dayProgress = progress.days[day.dayNumber];
     const completed = Boolean(dayProgress?.completed);
@@ -134,93 +127,38 @@ export function LearningPathPage() {
     };
   }, []);
 
+  const visibleRoadmapDays = showFullRoadmap ? roadmapDays : roadmapDays.filter((item) => Math.abs(item.day.dayNumber - currentDayNumber) <= 4 || item.status === 'completed').slice(0, Math.max(9, currentDayNumber + 4));
+
   return (
-    <OceanPageShell data-testid="foundation48-learning-path-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5', xl: '6' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 156px)', lg: '8' }} overflowX="hidden">
-      <Box maxW="1180px" mx="auto" minW="0">
+    <OceanPageShell data-testid="foundation48-learning-path-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5', xl: '6' }} pt={{ base: '2', md: '0' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 96px)', lg: '8' }} overflowX="hidden">
+      <Box maxW="920px" mx="auto" minW="0">
         <RoadmapHero completed={summary.completed} total={summary.totalDays} waterStreak={waterStreak} currentDay={currentDay} percent={summary.percent} />
 
         <CompactStatusBar completed={summary.completed} total={summary.totalDays} waterStreak={waterStreak} bubbles={bubbles} currentDay={currentDay.dayNumber} />
 
-        <StageRail currentDayNumber={currentDayNumber} />
-
-        <Box display={{ base: 'block', md: 'none' }} data-testid="foundation48-roadmap-mobile-accordion">
-          <Accordion allowMultiple defaultIndex={[visibleStages.findIndex((stage) => stage.days.includes(currentDayNumber as never))].filter((index) => index >= 0)}>
-            {visibleStages.map((stage) => {
-              const stageDays = roadmapDays.filter((item) => stage.days.includes(item.day.dayNumber as never));
-              const stageCompleted = stageDays.filter((item) => item.status === 'completed').length;
-              const hasCurrentDay = stage.days.includes(currentDayNumber as never);
-              return (
-                <AccordionItem key={stage.id} border="0" mb="3" data-testid={`foundation48-stage-accordion-${stage.id}`}>
-                  <Box className="penglish-glass-card" border="1px solid" borderColor={hasCurrentDay ? '#7DD3FC' : 'rgba(186,230,253,0.82)'} bg={hasCurrentDay ? 'rgba(239,246,255,0.78)' : 'rgba(255,255,255,0.66)'} borderRadius="3xl" overflow="hidden" data-testid={`foundation48-stage-${stage.id}`}>
-                    <AccordionButton px="3" py="3.5" _hover={{ bg: 'rgba(239,246,255,0.72)' }} data-testid={`foundation48-stage-accordion-button-${stage.id}`}>
-                      <Flex w="100%" justify="space-between" align="center" gap="3">
-                        <HStack gap="3" align="center" minW="0">
-                          <Flex w="42px" h="42px" borderRadius="2xl" bg="linear-gradient(135deg, #EFF6FF, #DDF5FF)" color={COLORS.blue} align="center" justify="center" flexShrink={0}>
-                            <Icon as={Waves} boxSize="5" />
-                          </Flex>
-                          <Box minW="0" textAlign="left">
-                            <Text color={COLORS.blue} fontSize="xs" fontWeight="950" letterSpacing="0.12em" textTransform="uppercase">{getStageLevel(stage.id).level}</Text>
-                            <Text color={COLORS.text} fontWeight="950" lineHeight="1.2" noOfLines={2}>{stage.title}</Text>
-                            <Text color={COLORS.muted} fontWeight="800" fontSize="xs">Ngày {stage.days[0]}–{stage.days[stage.days.length - 1]}</Text>
-                          </Box>
-                        </HStack>
-                        <HStack gap="2" flexShrink={0}>
-                          <Tag borderRadius="full" bg={stageCompleted === stageDays.length ? COLORS.greenSoft : '#EFF6FF'} color={stageCompleted === stageDays.length ? COLORS.green : COLORS.blue} fontWeight="950">
-                            {stageCompleted}/{stageDays.length}
-                          </Tag>
-                          <AccordionIcon color={COLORS.blue} />
-                        </HStack>
-                      </Flex>
-                    </AccordionButton>
-                    <AccordionPanel px="3" pt="0" pb="3.5" data-testid={`foundation48-stage-accordion-panel-${stage.id}`}>
-                      <VStack align="stretch" gap="2.5">
-                        {stageDays.map((item) => <DayRoadmapCard key={item.day.dayNumber} item={item} />)}
-                      </VStack>
-                    </AccordionPanel>
-                  </Box>
-                </AccordionItem>
-              );
-            })}
-          </Accordion>
-        </Box>
-
-        <VStack align="stretch" gap={{ base: '3', md: '4' }} display={{ base: 'none', md: 'flex' }} data-testid="foundation48-roadmap-grid">
-          {visibleStages.map((stage) => {
-            const stageDays = roadmapDays.filter((item) => stage.days.includes(item.day.dayNumber as never));
-            const stageCompleted = stageDays.filter((item) => item.status === 'completed').length;
-            const hasCurrentDay = stage.days.includes(currentDayNumber as never);
-            return (
-              <Box key={stage.id} className="penglish-glass-card" border="1px solid" borderColor={hasCurrentDay ? '#7DD3FC' : 'rgba(186,230,253,0.82)'} bg="rgba(255,255,255,0.66)" borderRadius="3xl" p={{ base: '3', md: '4' }} data-testid={`foundation48-stage-${stage.id}`}>
-                <Flex justify="space-between" align={{ base: 'start', md: 'center' }} gap="3" mb="3" direction={{ base: 'column', sm: 'row' }}>
-                  <HStack gap="3" align="center" minW="0">
-                    <Flex w="42px" h="42px" borderRadius="2xl" bg="linear-gradient(135deg, #EFF6FF, #DDF5FF)" color={COLORS.blue} align="center" justify="center" flexShrink={0}>
-                      <Icon as={Waves} boxSize="5" />
-                    </Flex>
-                    <Box minW="0">
-                      <Text color={COLORS.blue} fontSize="xs" fontWeight="950" letterSpacing="0.12em" textTransform="uppercase">{getStageLevel(stage.id).level}</Text>
-                      <Text color={COLORS.text} fontWeight="950" lineHeight="1.2">{stage.title}</Text>
-                      <Text color={COLORS.muted} fontWeight="800" fontSize="xs">Ngày {stage.days[0]}–{stage.days[stage.days.length - 1]}</Text>
-                    </Box>
-                  </HStack>
-                  <Tag borderRadius="full" bg={stageCompleted === stageDays.length ? COLORS.greenSoft : '#EFF6FF'} color={stageCompleted === stageDays.length ? COLORS.green : COLORS.blue} fontWeight="950">
-                    {stageCompleted}/{stageDays.length} ngày
-                  </Tag>
-                </Flex>
-                <SimpleGrid columns={{ base: 1, sm: 2, lg: 3, xl: 4 }} gap={{ base: '2.5', md: '3' }}>
-                  {stageDays.map((item) => <DayRoadmapCard key={item.day.dayNumber} item={item} />)}
-                </SimpleGrid>
-              </Box>
-            );
-          })}
+        <VStack align="stretch" gap="0" data-testid="foundation48-roadmap-grid" className="foundation48-simple-path">
+          {visibleRoadmapDays.map((item, index) => (
+            <PathNode key={item.day.dayNumber} item={item} isLast={index === visibleRoadmapDays.length - 1} />
+          ))}
         </VStack>
 
-        {!showFullRoadmap ? (
-          <Flex justify="center" mt={{ base: '3', md: '4' }}>
-            <Button variant="outline" borderColor={COLORS.border} bg="rgba(255,255,255,0.76)" color={COLORS.blue} borderRadius="full" px="6" minH="46px" onClick={() => setShowFullRoadmap(true)} data-testid="foundation48-show-full-roadmap">
-              Xem toàn bộ lộ trình
+        <HStack justify="center" mt={{ base: '3', md: '4' }} gap="2" wrap="wrap">
+          {currentDayNumber > 1 ? (
+            <Button as={Link} to={getFoundation48DayPath(currentDayNumber - 1)} variant="outline" borderColor={COLORS.border} bg="rgba(255,255,255,0.72)" color={COLORS.blue} borderRadius="full" px="5" data-testid="foundation48-prev-day">
+              Bài trước
             </Button>
-          </Flex>
-        ) : null}
+          ) : null}
+          {currentDayNumber < foundation48Days.length ? (
+            <Button as={Link} to={getFoundation48DayPath(currentDayNumber + 1)} variant="ghost" color={COLORS.blue} borderRadius="full" px="5" data-testid="foundation48-next-day">
+              Bài tiếp theo
+            </Button>
+          ) : null}
+          {!showFullRoadmap ? (
+            <Button variant="outline" borderColor={COLORS.border} bg="rgba(255,255,255,0.72)" color={COLORS.blue} borderRadius="full" px="5" onClick={() => setShowFullRoadmap(true)} data-testid="foundation48-show-full-roadmap">
+              Xem thêm
+            </Button>
+          ) : null}
+        </HStack>
       </Box>
     </OceanPageShell>
   );
@@ -230,36 +168,32 @@ function RoadmapHero({ completed, total, waterStreak, currentDay, percent }: { c
   const ctaLabel = completed === 0 && currentDay.dayNumber === 1 ? 'Bắt đầu ngày 1' : 'Tiếp tục học';
 
   return (
-    <Box className="penglish-glass-card" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#7DD3FC" borderRadius="3xl" p={{ base: '5', md: '7' }} mb={{ base: '3', md: '4' }} overflow="hidden" position="relative" boxShadow="0 24px 64px rgba(31,111,214,0.13)" backdropFilter="blur(14px) saturate(1.1)" data-testid="foundation48-roadmap-hero">
-      <Box position="absolute" inset="0" bg="radial-gradient(circle at 88% 12%, rgba(91,188,235,0.18), transparent 28%), radial-gradient(circle at 8% 100%, rgba(34,197,94,0.12), transparent 28%)" pointerEvents="none" />
-      <Flex position="relative" align={{ base: 'stretch', md: 'center' }} justify="space-between" direction={{ base: 'column', md: 'row' }} gap={{ base: '5', md: '8' }}>
-        <VStack align="start" gap={{ base: '3.5', md: '5' }} flex="1" minW="0">
-          <HStack wrap="wrap" gap="2">
-            <Tag borderRadius="full" bg="#EFF6FF" color={COLORS.blue} fontWeight="950">{completed}/{total} ngày</Tag>
-            <Tag className={`bubble-streak-badge${waterStreak.isFull ? ' is-full' : ''}`} borderRadius="full" bg="#EFF6FF" color={COLORS.blue} fontWeight="950">{waterStreak.displayLabel}</Tag>
-          </HStack>
+    <Box className="penglish-glass-card" bg="rgba(255,255,255,0.72)" border="1px solid" borderColor="rgba(125,211,252,0.72)" borderRadius="3xl" p={{ base: '4', md: '6' }} mb={{ base: '3', md: '4' }} overflow="hidden" position="relative" boxShadow="0 14px 34px rgba(31,111,214,0.08)" backdropFilter={{ base: 'none', md: 'blur(10px) saturate(1.04)' }} data-testid="foundation48-roadmap-hero">
+      <Box position="absolute" inset="0" bg="radial-gradient(circle at 90% 10%, rgba(91,188,235,0.14), transparent 24%)" pointerEvents="none" />
+      <Flex position="relative" align={{ base: 'stretch', md: 'center' }} justify="space-between" direction={{ base: 'column', md: 'row' }} gap={{ base: '4', md: '6' }}>
+        <VStack align="start" gap={{ base: '3', md: '4' }} flex="1" minW="0">
           <Box minW="0">
-            <Text as="h1" color={COLORS.text} fontWeight="950" lineHeight="1.05" fontSize={{ base: '3xl', md: '5xl' }} data-testid="foundation48-roadmap-title">
-              48 ngày lấy gốc tiếng Anh
+            <Text as="h1" color={COLORS.text} fontWeight="950" lineHeight="1.05" fontSize={{ base: '2xl', md: '4xl' }} data-testid="foundation48-roadmap-title">
+              Lộ trình học
             </Text>
-            <Text mt="3" color={COLORS.muted} fontSize={{ base: 'md', md: 'lg' }} fontWeight="750" lineHeight="1.5" maxW="560px">
-              Mỗi ngày 10 phút: nghe, nói, ôn lại cùng Poo.
+            <Text mt="2" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="850" noOfLines={1}>
+              Học tiếp nhé
             </Text>
           </Box>
           <Flex gap="3" wrap="wrap" w="100%" direction={{ base: 'column', sm: 'row' }} align={{ base: 'stretch', sm: 'center' }}>
-            <Button as={Link} to={getFoundation48DayPath(currentDay.dayNumber)} bg={COLORS.blue} color="white" leftIcon={<Icon as={Play} />} rightIcon={<Icon as={ArrowRight} />} borderRadius="full" minH="54px" px="7" fontSize="md" _hover={{ bg: COLORS.deepBlue }} data-testid="foundation48-roadmap-current-cta">
+            <Button as={Link} to={getFoundation48DayPath(currentDay.dayNumber)} bg={COLORS.blue} color="white" leftIcon={<Icon as={Play} />} rightIcon={<Icon as={ArrowRight} />} borderRadius="full" minH="52px" px="7" fontSize="md" _hover={{ bg: COLORS.deepBlue }} data-testid="foundation48-roadmap-current-cta">
               {ctaLabel}
             </Button>
             <Box flex="1" minW={{ base: '100%', sm: '220px' }} alignSelf="center">
               <Text color={COLORS.muted} fontWeight="900" fontSize="xs" mb="1">{completed}/{total} ngày · {percent}%</Text>
-              <Box h="9px" borderRadius="full" bg="#E2E8F0" overflow="hidden" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100} aria-label={`Tiến độ Foundation48 ${percent}%`}>
+              <Box h="8px" borderRadius="full" bg="#E2E8F0" overflow="hidden" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100} aria-label={`Tiến độ Foundation48 ${percent}%`}>
                 <Box h="100%" w={`${Math.max(3, percent)}%`} bg="linear-gradient(90deg, #2F9EEB, #22C55E)" />
               </Box>
             </Box>
           </Flex>
         </VStack>
-        <Box alignSelf={{ base: 'center', md: 'auto' }} pointerEvents="none">
-          <OceanMascot mascot="poo" pose="coach" size="hero" decorative motion="float" />
+        <Box display={{ base: 'none', md: 'block' }} alignSelf={{ base: 'center', md: 'auto' }} pointerEvents="none">
+          <OceanMascot mascot="poo" pose="coach" size="md" decorative motion="float" />
         </Box>
       </Flex>
     </Box>
@@ -280,29 +214,46 @@ function CompactStatusBar({ completed, total, waterStreak, bubbles, currentDay }
   );
 }
 
-function StageRail({ currentDayNumber }: { currentDayNumber: number }) {
+function PathNode({ item, isLast }: { item: RoadmapDay; isLast: boolean }) {
+  const { day, status } = item;
+  const clickable = status !== 'locked';
+  const tone = status === 'completed'
+    ? { border: '#BBF7D0', bg: 'rgba(240,253,244,0.86)', dot: COLORS.green, icon: CheckCircle2, color: COLORS.green }
+    : status === 'current'
+      ? { border: '#7DD3FC', bg: 'rgba(239,246,255,0.92)', dot: COLORS.blue, icon: Sparkles, color: COLORS.blue }
+      : status === 'available'
+        ? { border: '#BAE6FD', bg: 'rgba(255,255,255,0.80)', dot: COLORS.blue, icon: Circle, color: COLORS.blue }
+        : { border: '#E2E8F0', bg: 'rgba(248,250,252,0.62)', dot: COLORS.locked, icon: LockKeyhole, color: COLORS.locked };
+
+  const content = (
+    <HStack align="stretch" gap="3" data-testid={`foundation48-path-node-${day.dayNumber}`}>
+      <VStack gap="0" flexShrink={0} pt="1">
+        <Flex w={{ base: '38px', md: '42px' }} h={{ base: '38px', md: '42px' }} borderRadius="full" align="center" justify="center" bg={tone.dot} color="white" fontWeight="950" boxShadow={status === 'current' ? '0 10px 24px rgba(37,99,235,0.18)' : 'none'}>
+          {status === 'locked' ? <Icon as={LockKeyhole} boxSize="4" /> : day.dayNumber}
+        </Flex>
+        {!isLast ? <Box w="2px" flex="1" minH="18px" bg={status === 'completed' ? '#86EFAC' : '#BAE6FD'} /> : null}
+      </VStack>
+      <Box flex="1" minW="0" border="1px solid" borderColor={tone.border} bg={tone.bg} borderRadius="2xl" p={{ base: '3', md: '3.5' }} mb={isLast ? '0' : '2.5'}>
+        <Flex justify="space-between" align="center" gap="3">
+          <Box minW="0">
+            <Text color={COLORS.text} fontWeight="950" fontSize={{ base: 'sm', md: 'md' }} lineHeight="1.2" noOfLines={1}>Bài {day.dayNumber}: {getShortTopic(day)}</Text>
+            <Text mt="1" color={COLORS.muted} fontWeight="850" fontSize="xs" noOfLines={1}>{getDaySkillLabel(day)}</Text>
+          </Box>
+          <Tag flexShrink={0} borderRadius="full" bg="rgba(255,255,255,0.78)" color={tone.color} fontWeight="950" fontSize="2xs" px="2">
+            {getStatusLabel(status)}
+          </Tag>
+        </Flex>
+      </Box>
+    </HStack>
+  );
+
+  if (!clickable) {
+    return <Box aria-disabled="true">{content}</Box>;
+  }
+
   return (
-    <Box className="penglish-glass-card" border="1px solid" borderColor="rgba(186,230,253,0.72)" bg="rgba(255,255,255,0.58)" borderRadius="3xl" p={{ base: '3', md: '4' }} mb={{ base: '3', md: '4' }} data-testid="foundation48-stage-rail">
-      <HStack justify="space-between" align="center" gap="3" mb="3">
-        <Box minW="0">
-          <Text color={COLORS.text} fontWeight="950">Hành trình của bạn</Text>
-          <Text color={COLORS.muted} fontWeight="750" fontSize="sm">Poo chỉ mở vừa đủ để bạn học nhẹ mỗi ngày.</Text>
-        </Box>
-        <Icon as={Map} color={COLORS.blue} boxSize="5" />
-      </HStack>
-      <Flex gap="2.5" overflowX="auto" pb="1" sx={{ scrollbarWidth: 'thin' }}>
-        {foundation48Stages.map((stage) => {
-          const active = stage.days.includes(currentDayNumber as never);
-          const passed = stage.days[stage.days.length - 1] < currentDayNumber;
-          return (
-            <Box key={stage.id} minW={{ base: '156px', md: '0' }} flex={{ base: '0 0 auto', md: 1 }} border="1px solid" borderColor={active ? '#7DD3FC' : passed ? '#BBF7D0' : COLORS.border} bg={active ? '#EFF6FF' : passed ? COLORS.greenSoft : 'rgba(255,255,255,0.72)'} borderRadius="2xl" p="3">
-              <Text color={active ? COLORS.blue : passed ? COLORS.green : COLORS.muted} fontWeight="950" fontSize="xs">{getStageLevel(stage.id).level}</Text>
-              <Text color={COLORS.text} fontWeight="900" fontSize="sm" noOfLines={2}>{stage.title}</Text>
-              <Text color={COLORS.muted} fontWeight="800" fontSize="xs">Ngày {stage.days[0]}–{stage.days[stage.days.length - 1]}</Text>
-            </Box>
-          );
-        })}
-      </Flex>
+    <Box as={Link} to={getFoundation48DayPath(day.dayNumber)} display="block" _hover={{ textDecoration: 'none' }} aria-label={`Mở bài ${day.dayNumber}: ${getShortTopic(day)}`}>
+      {content}
     </Box>
   );
 }

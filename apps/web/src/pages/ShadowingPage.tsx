@@ -958,9 +958,9 @@ export function ShadowingPracticePage() {
               <Chip tone="amber">Poo góp ý</Chip>
             </HStack>
             <Text as="h1" fontSize={{ base: 'xl', md: '4xl' }} fontWeight="800" color={COLORS.text} lineHeight="1.08">Nói đuổi cùng Poo</Text>
-            <Text mt={{ base: '1.5', md: '3' }} color={COLORS.muted} maxW="800px" fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" lineHeight={{ base: '1.4', md: '1.7' }} noOfLines={{ base: 3, md: undefined }}>Không cần nói hoàn hảo. Mục tiêu là nghe rõ hơn và nói tự nhiên hơn mỗi ngày: nghe mẫu, nói lại, rồi để Poo chỉ ra chỗ cần luyện thêm.</Text>
+            <Text mt={{ base: '1.5', md: '3' }} color={COLORS.muted} maxW="800px" fontSize={{ base: 'sm', md: 'md' }} fontWeight="800" lineHeight={{ base: '1.35', md: '1.5' }} noOfLines={1}>Nghe một lần rồi nói lại nha</Text>
             {invalidLessonMessage ? <Text mt="2" color="#B45309" fontSize="sm" fontWeight="850" role="status">{invalidLessonMessage}</Text> : null}
-            <HStack mt="4" gap="2" wrap="wrap">
+            <HStack mt="4" gap="2" wrap="wrap" display={{ base: 'none', sm: 'flex' }}>
               <Button as={Link} to="/shadowing" size="sm" borderRadius="full" bg="white" color={COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD" _hover={{ bg: COLORS.softBlue }}>Về Shadowing</Button>
             </HStack>
             <HStack mt="3" gap="2" wrap="wrap" display={{ base: 'none', md: 'flex' }}>
@@ -1004,11 +1004,24 @@ export function ShadowingPracticePage() {
                   </HStack>
                 </HStack>
 
-                <Text mt="3" fontSize={{ base: 'xl', md: '3xl' }} color={COLORS.text} fontWeight="900" lineHeight="1.18">{selectedSentence?.text ?? 'Chọn một câu trong lời thoại để bắt đầu.'}</Text>
-                {selectedSentence?.vi ? <Text mt="1.5" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" lineHeight="1.45">{selectedSentence.vi}</Text> : null}
-                {selectedSentence?.focusNotes?.length ? <Text mt="2" color={COLORS.deepBlue} fontSize="sm" fontWeight="800" lineHeight="1.4" noOfLines={{ base: 2, md: undefined }}>Poo nhắc: {selectedSentence.focusNotes.slice(0, 2).join(' · ')}</Text> : null}
+                <HStack mt="3" gap="2" wrap="wrap" data-testid="shadowing-three-steps">
+                  {[
+                    { label: 'Bước 1', text: 'Nghe mẫu', active: !apiFeedback && !isRecording },
+                    { label: 'Bước 2', text: 'Nói lại', active: isRecording || isProcessingRecording },
+                    { label: 'Bước 3', text: 'Poo góp ý', active: Boolean(apiFeedback || apiError) },
+                  ].map((step) => (
+                    <Box key={step.text} flex="1" minW="86px" bg={step.active ? COLORS.deepBlue : 'rgba(255,255,255,0.74)'} color={step.active ? 'white' : COLORS.deepBlue} border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" px="3" py="2">
+                      <Text fontSize="2xs" fontWeight="900">{step.label}</Text>
+                      <Text fontSize="xs" fontWeight="900" noOfLines={1}>{step.text}</Text>
+                    </Box>
+                  ))}
+                </HStack>
 
-                <HStack mt="3" gap="2" wrap="wrap">
+                <Text mt="3" fontSize={{ base: 'xl', md: '3xl' }} color={COLORS.text} fontWeight="900" lineHeight="1.18">{selectedSentence?.text ?? 'Chọn một câu trong lời thoại để bắt đầu.'}</Text>
+                {selectedSentence?.vi ? <Text mt="1.5" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="700" lineHeight="1.45" noOfLines={1}>{selectedSentence.vi}</Text> : null}
+                {selectedSentence?.focusNotes?.length ? <Text mt="2" color={COLORS.deepBlue} fontSize="sm" fontWeight="800" lineHeight="1.4" noOfLines={1}>Poo nhắc: {selectedSentence.focusNotes.slice(0, 1).join(' · ')}</Text> : null}
+
+                <HStack mt="3" gap="2" wrap="wrap" display={{ base: 'none', md: 'flex' }}>
                   {[0.75, 1, 1.25].map((value) => (
                     <Button key={value} size="sm" borderRadius="full" colorScheme={speed === value ? 'blue' : 'gray'} aria-pressed={speed === value} onClick={() => setSpeed(value)} isDisabled={isProcessingRecording}>{value}x</Button>
                   ))}
@@ -1061,7 +1074,7 @@ export function ShadowingPracticePage() {
 
             {(apiFeedback || apiError || isProcessingRecording) ? feedbackPanel : null}
 
-            <SimpleGrid data-testid="shadowing-progress" ref={completionRef} columns={{ base: 1, md: 2 }} gap="3">
+            <SimpleGrid data-testid="shadowing-progress" ref={completionRef} columns={{ base: 1, md: 2 }} gap="3" display={{ base: 'none', md: 'grid' }}>
               <Box className="shadowing-custom-card" p="4" borderRadius="2xl" bg={allSentencesCompleted ? '#F0FDF4' : 'rgba(232,244,255,0.88)'} border="1px solid" borderColor={allSentencesCompleted ? '#BBF7D0' : '#BAE6FD'} role="status" aria-live="polite">
                 <HStack><Icon as={allSentencesCompleted ? CheckCircle2 : Sparkles} color={allSentencesCompleted ? COLORS.green : COLORS.oceanBlue} /><Text fontWeight="800" color={COLORS.text}>{allSentencesCompleted ? 'Hoàn thành lượt nói đuổi' : 'Nhịp luyện hôm nay'}</Text></HStack>
                 <Text mt="2" color={COLORS.muted} fontSize="sm" fontWeight="700">Câu {selectedSentenceIndex >= 0 ? selectedSentenceIndex + 1 : 0}/{transcriptLength}. Đã luyện {completedCount}/{transcriptLength}. Câu còn vấp {difficultCount}. Poo giữ lại nhịp luyện theo từng bài.</Text>
@@ -1075,8 +1088,8 @@ export function ShadowingPracticePage() {
           </VStack>
 
           <VStack align="stretch" gap={{ base: '3', md: '4' }} minW="0" w={{ base: '100%', lg: '340px' }} flexShrink={0} position={{ lg: 'sticky' }} top={{ lg: '96px' }} maxH={{ lg: 'calc(100vh - 120px)' }} overflowY={{ lg: 'auto' }} pb={{ base: '96px', lg: '2' }} pr={{ lg: '1' }}>
-            <Box data-testid="shadowing-lesson-picker" as="details" open={typeof window !== 'undefined' ? window.innerWidth >= 1024 : true} className="shadowing-custom-card penglish-glass-card" p="4" borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 12px 30px rgba(16, 42, 67, 0.05)" backdropFilter="blur(14px) saturate(1.1)">
-              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}>Danh sách bài luyện</Box>
+            <Box data-testid="shadowing-lesson-picker" as="details" open={typeof window !== 'undefined' ? window.innerWidth >= 1024 : false} className="shadowing-custom-card penglish-glass-card" p="4" borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" boxShadow="0 12px 30px rgba(16, 42, 67, 0.05)" backdropFilter={{ base: 'none', md: 'blur(10px) saturate(1.04)' }}>
+              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}>Tùy chọn</Box>
               <HStack justify="space-between" mb="3" align="start" gap="3">
                 <Box>
                   <Text fontWeight="700" color={COLORS.text}>Chọn bài nói đuổi</Text>
@@ -1099,8 +1112,8 @@ export function ShadowingPracticePage() {
               </VStack>
             </Box>
 
-            <Box data-testid="shadowing-transcript-panel" as="details" open={typeof window !== 'undefined' ? window.innerWidth >= 1024 : true} className="shadowing-transcript-panel penglish-glass-card" p="4" borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" minW="0" willChange="transform, opacity" boxShadow="0 14px 34px rgba(31, 111, 214, 0.06)" backdropFilter="blur(14px) saturate(1.1)">
-              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}>Lời thoại</Box>
+            <Box data-testid="shadowing-transcript-panel" as="details" open={typeof window !== 'undefined' ? window.innerWidth >= 1024 : false} className="shadowing-transcript-panel penglish-glass-card" p="4" borderRadius="3xl" bg="rgba(255,255,255,0.78)" border="1px solid" borderColor="#BAE6FD" minW="0" willChange="transform, opacity" boxShadow="0 10px 24px rgba(31, 111, 214, 0.05)" backdropFilter={{ base: 'none', md: 'blur(10px) saturate(1.04)' }}>
+              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}>Xem lời thoại</Box>
               <HStack mb="3" justify="space-between" align="start" gap="3">
                 <HStack><Icon as={Volume2} color={COLORS.oceanBlue} /><Text as="h2" fontWeight="700" color={COLORS.text}>Lời thoại</Text></HStack>
                 <Chip tone="blue">{transcriptLength} câu</Chip>
@@ -1164,6 +1177,12 @@ export function ShadowingPracticePage() {
             </Box>
           </VStack>
         </Flex>
+
+        <Box display={{ base: 'block', md: 'none' }} position="fixed" left="0" right="0" bottom="0" zIndex="20" px="3" pt="3" pb="calc(var(--penglish-mobile-safe-bottom) + 12px)" bg="linear-gradient(180deg, rgba(248,252,255,0), rgba(248,252,255,0.96) 34%, rgba(248,252,255,1))">
+          <Button data-testid="shadowing-mobile-main-button" w="100%" h="52px" borderRadius="full" bg={isRecording ? '#EF4444' : COLORS.deepBlue} color="white" _hover={{ bg: isRecording ? '#DC2626' : COLORS.oceanBlue }} onClick={apiFeedback || selectedSentencePracticed ? goToNextSentence : handleRecordButtonActivate} isDisabled={isProcessingRecording || ((apiFeedback || selectedSentencePracticed) && selectedSentenceIndex >= transcriptLength - 1)} isLoading={isProcessingRecording} loadingText={processingMessage || 'Poo đang góp ý'}>
+            {apiFeedback || selectedSentencePracticed ? 'Câu tiếp theo' : isRecording ? 'Dừng thu' : 'Nghe một lần rồi nói lại nha'}
+          </Button>
+        </Box>
       </Box>
     </OceanPageShell>
   );

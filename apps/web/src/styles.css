@@ -210,7 +210,45 @@ button, input, select, textarea { font: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   .poo-ocean-companion__swimmer,
-  .poo-ocean-companion__swimmer img {
+  .poo-ocean-companion__swimmer img,
+  [data-testid="vocab-mobile-root"] *,
+  [data-testid="vocab-mobile-root"] *::before,
+  [data-testid="vocab-mobile-root"] *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+[data-testid="vocab-mobile-root"] .penglish-glass-card {
+  box-shadow: 0 10px 24px rgba(31, 111, 214, 0.055) !important;
+  backdrop-filter: blur(6px) saturate(1.02) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.02) !important;
+}
+
+[data-testid="vocab-mobile-root"] .vocab-word-card {
+  contain: layout paint style;
+  transform: translateZ(0);
+  will-change: auto;
+}
+
+[data-testid="vocab-mobile-root"] .vocab-desktop-table tr {
+  content-visibility: auto;
+  contain-intrinsic-size: 92px;
+}
+
+@media (max-width: 767px) {
+  [data-testid="vocab-mobile-root"] .penglish-glass-card {
+    box-shadow: 0 4px 14px rgba(31, 111, 214, 0.045) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  [data-testid="vocab-mobile-root"] .poo-ocean-companion__swimmer,
+  [data-testid="vocab-mobile-root"] .poo-ocean-companion__swimmer img,
+  [data-testid="vocab-mobile-root"] .bubble-streak-badge,
+  [data-testid="vocab-mobile-root"] .bubble-streak-badge::after,
+  [data-testid="vocab-mobile-root"] .bubble-streak-progress-fill {
     animation: none !important;
     transition: none !important;
   }
@@ -656,6 +694,68 @@ body[data-theme="dark"] .carousel-strip::-webkit-scrollbar-thumb {
 .diff-bar-4 > div { background: #f97316; }
 .diff-bar-5 > div { background: #ef4444; }
 .progress.orange > div { background: #f97316; }
+
+/* ===== Mobile-first learning simplification ===== */
+.home-more-details > summary,
+.vocab-notebook-details > summary,
+.shadowing-hub-more > summary {
+  list-style: none;
+}
+
+.home-more-details > summary::-webkit-details-marker,
+.vocab-notebook-details > summary::-webkit-details-marker,
+.shadowing-hub-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  [data-testid="home-page"] .home-dashboard-card,
+  [data-testid="foundation48-learning-path-page"] .penglish-glass-card,
+  [data-testid="lesson-mobile-root"] .penglish-glass-card,
+  [data-testid="vocab-mobile-root"] .penglish-glass-card,
+  [data-testid="shadowing-mobile-root"] .penglish-glass-card,
+  [data-testid="shadowing-hub-page"] .penglish-glass-card,
+  [data-testid="shadowing-hub-page"] .ocean-glass-panel {
+    box-shadow: 0 8px 18px rgba(31, 111, 214, 0.045) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  [data-testid="home-page"] .pooPixelDecor,
+  [data-testid="vocab-mobile-root"] .pooPixelDecor,
+  [data-testid="shadowing-mobile-root"] .pooPixelDecor,
+  [data-testid="shadowing-hub-page"] .pooPixelDecor,
+  [data-testid="shadowing-mobile-root"] .shadowing-ocean-bubble,
+  [data-testid="shadowing-hub-page"] .shadowing-ocean-bubble {
+    opacity: 0.12 !important;
+    animation: none !important;
+  }
+
+  .home-compact-shortcuts,
+  .foundation48-simple-path,
+  .vocab-notebook-details,
+  .shadowing-hub-more {
+    margin-inline: auto;
+    max-width: 520px;
+  }
+
+  [data-testid="lesson-mobile-root"] [data-testid="lesson-step-card"],
+  [data-testid="shadowing-mobile-root"] [data-testid="shadowing-current-sentence"] {
+    border-width: 1px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pooPixelMascot,
+  .pooPixelDecor,
+  .shadowing-ocean-bubble,
+  .home-dashboard-card,
+  .shadowing-practice-card,
+  .vocab-word-card {
+    animation: none !important;
+    transition: none !important;
+  }
+}
 
 @media (max-width: 1100px) {
   .quick-grid { grid-template-columns: repeat(2, 1fr); }

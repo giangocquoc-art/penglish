@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Badge,
   Box,
@@ -29,6 +29,7 @@ import { Link } from 'react-router-dom';
 import {
   clearWordReviewStatus,
   getAllVocabularyItems,
+  getNextReviewDate,
   isVocabularyDueToday,
   saveWordReviewStatus,
   VOCABULARY_REVIEW_UPDATED_EVENT,
@@ -80,6 +81,8 @@ const STATUS_COLORS: Record<VocabularyReviewStatus, string> = {
   review: 'orange',
   difficult: 'red',
 };
+
+const MOBILE_WORD_BATCH_SIZE = 24;
 
 function speakEnglish(text: string) {
   if (typeof window === 'undefined' || !window.speechSynthesis || !text.trim()) return;
@@ -243,37 +246,39 @@ function vocabularyReviewHubUrl(item: VocabularyReviewItem) {
   return `/vocabularies?${params.toString()}`;
 }
 
-function WordActions({ item, onChanged }: { item: VocabularyReviewItem; onChanged: () => void }) {
+type WordActionHandlers = {
+  onStatusChange: (wordId: string, status: VocabularyReviewStatus) => void;
+  onClearStatus: (wordId: string) => void;
+  onSpeakWord: (text: string) => void;
+};
+
+const WordActions = memo(function WordActions({ item, onStatusChange, onClearStatus, onSpeakWord }: { item: VocabularyReviewItem } & WordActionHandlers) {
   const reviewUrl = vocabularyReviewHubUrl(item);
-  const markStatus = (status: VocabularyReviewStatus) => {
-    saveWordReviewStatus(item.wordId, status);
-    onChanged();
-  };
   return (
     <HStack data-testid={`vocab-status-chips-${item.wordId}`} wrap="wrap" gap="2">
-      <IconButton data-testid={`vocab-speak-${item.wordId}`} aria-label={`Nghe ${item.term}`} icon={<Icon as={Volume2} />} size="sm" borderRadius="full" variant="outline" onClick={() => speakEnglish(item.term)} />
+      <IconButton data-testid={`vocab-speak-${item.wordId}`} aria-label={`Nghe ${item.term}`} icon={<Icon as={Volume2} />} size="sm" borderRadius="full" variant="outline" onClick={() => onSpeakWord(item.term)} />
       <Button data-testid={`vocab-review-link-${item.wordId}`} as={Link} to={reviewUrl} size="sm" borderRadius="full" leftIcon={<Icon as={BookOpen} />} variant="outline">
         Ôn lại
       </Button>
-      <Button data-testid={`vocab-mark-known-${item.wordId}`} size="sm" borderRadius="full" leftIcon={<Icon as={CheckCircle} />} bg="#DCFCE7" color="#166534" onClick={() => markStatus('known')}>
+      <Button data-testid={`vocab-mark-known-${item.wordId}`} size="sm" borderRadius="full" leftIcon={<Icon as={CheckCircle} />} bg="#DCFCE7" color="#166534" onClick={() => onStatusChange(item.wordId, 'known')}>
         Đã nhớ
       </Button>
-      <Button data-testid={`vocab-mark-review-${item.wordId}`} size="sm" borderRadius="full" leftIcon={<Icon as={RotateCcw} />} bg="#FFF7ED" color="#9A3412" onClick={() => markStatus('review')}>
+      <Button data-testid={`vocab-mark-review-${item.wordId}`} size="sm" borderRadius="full" leftIcon={<Icon as={RotateCcw} />} bg="#FFF7ED" color="#9A3412" onClick={() => onStatusChange(item.wordId, 'review')}>
         Cần ôn
       </Button>
-      <Button data-testid={`vocab-mark-difficult-${item.wordId}`} size="sm" borderRadius="full" bg="#FEE2E2" color="#991B1B" onClick={() => markStatus('difficult')}>
+      <Button data-testid={`vocab-mark-difficult-${item.wordId}`} size="sm" borderRadius="full" bg="#FEE2E2" color="#991B1B" onClick={() => onStatusChange(item.wordId, 'difficult')}>
         Hay sai
       </Button>
-      <Button data-testid={`vocab-clear-status-${item.wordId}`} size="sm" borderRadius="full" variant="ghost" color={COLORS.muted} onClick={() => { clearWordReviewStatus(item.wordId); onChanged(); }}>
+      <Button data-testid={`vocab-clear-status-${item.wordId}`} size="sm" borderRadius="full" variant="ghost" color={COLORS.muted} onClick={() => onClearStatus(item.wordId)}>
         Xóa khỏi sổ
       </Button>
     </HStack>
   );
-}
+});
 
-function WordCard({ item, onChanged }: { item: VocabularyReviewItem; onChanged: () => void }) {
+const WordCard = memo(function WordCard({ item, onStatusChange, onClearStatus, onSpeakWord }: { item: VocabularyReviewItem } & WordActionHandlers) {
   return (
-    <Box data-testid="vocab-mobile-card" className="penglish-glass-card" bg="rgba(255,255,255,0.78)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '4', md: '5' }} boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" minW="0" overflow="hidden">
+    <Box data-testid="vocab-mobile-card" className="penglish-glass-card vocab-word-card" bg="rgba(255,255,255,0.90)" backdropFilter={{ base: 'none', md: 'blur(6px) saturate(1.02)' }} border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3.5', md: '5' }} boxShadow={{ base: '0 4px 14px rgba(31, 111, 214, 0.05)', md: '0 10px 24px rgba(31, 111, 214, 0.06)' }} minW="0" overflow="hidden" style={{ contentVisibility: 'auto', containIntrinsicSize: '420px' }}>
       <Flex justify="space-between" gap="3" align="start">
         <Box minW="0">
           <Text fontSize="2xl" fontWeight="700" color={COLORS.text}>{item.term}</Text>
@@ -316,13 +321,13 @@ function WordCard({ item, onChanged }: { item: VocabularyReviewItem; onChanged: 
         Nhìn cảnh, đọc nghĩa tiếng Việt, sau đó nghe lại từ trước khi chọn trạng thái ôn.
       </Text>
       <Box mt="4">
-        <WordActions item={item} onChanged={onChanged} />
+        <WordActions item={item} onStatusChange={onStatusChange} onClearStatus={onClearStatus} onSpeakWord={onSpeakWord} />
       </Box>
     </Box>
   );
-}
+});
 
-function LearnedWordCard({ word, onChanged }: { word: LearningLoopWordRecord; onChanged: () => void }) {
+const LearnedWordCard = memo(function LearnedWordCard({ word, onChanged, onSpeakWord }: { word: LearningLoopWordRecord; onChanged: () => void; onSpeakWord: (text: string) => void }) {
   return (
     <Box bg="rgba(255,255,255,0.88)" border="1px solid" borderColor={word.weakCount > 0 || word.mastery <= 1 ? '#FED7AA' : '#BAE6FD'} borderRadius="2xl" p="3" minW="0">
       <HStack justify="space-between" align="start" gap="3">
@@ -355,7 +360,7 @@ function LearnedWordCard({ word, onChanged }: { word: LearningLoopWordRecord; on
           <Text mt="1" color={COLORS.muted} fontSize="xs" fontWeight="700">Lần ôn gần nhất: {formatDateTime(word.lastReviewedAt ?? word.learnedAt)}</Text>
         </Box>
         <HStack gap="1.5" flexShrink={0}>
-          <IconButton aria-label={`Nghe ${word.term}`} icon={<Icon as={Volume2} />} size="xs" borderRadius="full" variant="outline" onClick={() => speakEnglish(word.term)} />
+          <IconButton aria-label={`Nghe ${word.term}`} icon={<Icon as={Volume2} />} size="xs" borderRadius="full" variant="outline" onClick={() => onSpeakWord(word.term)} />
           <Button as={Link} to={getLearningLoopWordReviewPath(word)} size="xs" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }}>
             Ôn lại
           </Button>
@@ -366,7 +371,7 @@ function LearnedWordCard({ word, onChanged }: { word: LearningLoopWordRecord; on
       </HStack>
     </Box>
   );
-}
+});
 
 export function VocabPage() {
   const readVocabulary = () => {
@@ -378,15 +383,19 @@ export function VocabPage() {
   };
   const [vocabularyState, setVocabularyState] = useState(readVocabulary);
   const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get('q') ?? '');
+  const deferredQuery = useDeferredValue(query);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [lessonFilter, setLessonFilter] = useState(() => new URLSearchParams(window.location.search).get('group') ?? 'all');
+  const [mobileVisibleCount, setMobileVisibleCount] = useState(MOBILE_WORD_BATCH_SIZE);
+  const pendingReviewUpdatesRef = useRef(new Map<string, VocabularyReviewStatus>());
+  const saveTimerRef = useRef<number | null>(null);
   const items = vocabularyState.items;
   const [learningLoopSnapshot, setLearningLoopSnapshot] = useState(() => getLearningLoopSnapshot());
 
-  const refresh = () => {
+  const refresh = useCallback(() => {
     setVocabularyState(readVocabulary());
     setLearningLoopSnapshot(getLearningLoopSnapshot());
-  };
+  }, []);
 
   useEffect(() => {
     refresh();
@@ -401,6 +410,63 @@ export function VocabPage() {
       window.removeEventListener('storage', refresh);
       window.removeEventListener('focus', refresh);
     };
+  }, []);
+
+  useEffect(() => {
+    setMobileVisibleCount(MOBILE_WORD_BATCH_SIZE);
+  }, [deferredQuery, lessonFilter, statusFilter]);
+
+  const flushPendingReviewUpdates = useCallback(() => {
+    if (saveTimerRef.current) {
+      window.clearTimeout(saveTimerRef.current);
+      saveTimerRef.current = null;
+    }
+    const pending = Array.from(pendingReviewUpdatesRef.current.entries());
+    pendingReviewUpdatesRef.current.clear();
+    pending.forEach(([wordId, status]) => {
+      if (status === 'new') clearWordReviewStatus(wordId);
+      else saveWordReviewStatus(wordId, status);
+    });
+    if (pending.length) refresh();
+  }, [refresh]);
+
+  const scheduleReviewSave = useCallback((wordId: string, status: VocabularyReviewStatus) => {
+    pendingReviewUpdatesRef.current.set(wordId, status);
+    if (saveTimerRef.current) window.clearTimeout(saveTimerRef.current);
+    saveTimerRef.current = window.setTimeout(flushPendingReviewUpdates, 650);
+  }, [flushPendingReviewUpdates]);
+
+  useEffect(() => {
+    return () => flushPendingReviewUpdates();
+  }, [flushPendingReviewUpdates]);
+
+  const updateWordStatusOptimistically = useCallback((wordId: string, status: VocabularyReviewStatus) => {
+    const now = new Date().toISOString();
+    setVocabularyState((current) => ({
+      ...current,
+      items: current.items.map((item) => {
+        if (item.wordId !== wordId) return item;
+        const reviewCount = status === 'new' ? 0 : item.reviewCount + 1;
+        return {
+          ...item,
+          status,
+          reviewCount,
+          correctCount: status === 'known' ? Math.max(1, reviewCount) : reviewCount,
+          wrongCount: status === 'difficult' ? item.wrongCount + 1 : item.wrongCount,
+          lastReviewedAt: status === 'new' ? item.lastReviewedAt : now,
+          nextReviewAt: getNextReviewDate(status),
+        };
+      }),
+    }));
+    scheduleReviewSave(wordId, status);
+  }, [scheduleReviewSave]);
+
+  const clearWordStatusOptimistically = useCallback((wordId: string) => {
+    updateWordStatusOptimistically(wordId, 'new');
+  }, [updateWordStatusOptimistically]);
+
+  const speakWord = useCallback((text: string) => {
+    speakEnglish(text);
   }, []);
 
   const learnedWords = learningLoopSnapshot.learnedWords;
@@ -442,20 +508,30 @@ export function VocabPage() {
   const todayReviewItems = useMemo(() => items.filter((item) => isVocabularyDueToday(item)), [items]);
   const nextReviewItem = todayReviewItems[0];
 
+  const learnedWordTerms = useMemo(() => new Set(learnedWords.map((word) => normalize(word.term))), [learnedWords]);
+  const weakWordTerms = useMemo(() => new Set(weakWords.map((word) => normalize(word.term))), [weakWords]);
+  const favoriteWordTerms = useMemo(() => new Set(favoriteWords.map((word) => normalize(word.term))), [favoriteWords]);
+
   const filtered = useMemo(() => {
     return items.filter((item) => {
       if (lessonFilter !== 'all' && item.lessonId !== lessonFilter) return false;
-      if (statusFilter === 'learned' && !learnedWords.some((word) => normalize(word.term) === normalize(item.term))) return false;
-      if (statusFilter === 'weak' && !weakWords.some((word) => normalize(word.term) === normalize(item.term))) return false;
-      if (statusFilter === 'favorite' && !favoriteWords.some((word) => normalize(word.term) === normalize(item.term))) return false;
+      const normalizedTerm = normalize(item.term);
+      if (statusFilter === 'learned' && !learnedWordTerms.has(normalizedTerm)) return false;
+      if (statusFilter === 'weak' && !weakWordTerms.has(normalizedTerm)) return false;
+      if (statusFilter === 'favorite' && !favoriteWordTerms.has(normalizedTerm)) return false;
       if (statusFilter === 'review' && !isVocabularyDueToday(item)) return false;
       if (statusFilter === 'difficult' && !(item.status === 'difficult' || item.wrongCount > 0)) return false;
       if (statusFilter === 'known' && item.status !== 'known') return false;
-      return matchesSearch(item, query);
+      return matchesSearch(item, deferredQuery);
     });
-  }, [favoriteWords, items, learnedWords, lessonFilter, query, statusFilter, weakWords]);
+  }, [deferredQuery, favoriteWordTerms, items, learnedWordTerms, lessonFilter, statusFilter, weakWordTerms]);
 
-  const filterCount = (filter: StatusFilter) => {
+  const visibleMobileWords = useMemo(() => filtered.slice(0, mobileVisibleCount), [filtered, mobileVisibleCount]);
+  const visibleDesktopWords = useMemo(() => filtered.slice(0, 160), [filtered]);
+  const canLoadMoreMobileWords = visibleMobileWords.length < filtered.length;
+  const desktopHiddenCount = Math.max(0, filtered.length - visibleDesktopWords.length);
+
+  const filterCount = useCallback((filter: StatusFilter) => {
     if (filter === 'all') return items.length;
     if (filter === 'learned') return learnedWords.length;
     if (filter === 'weak') return weakWords.length;
@@ -463,9 +539,9 @@ export function VocabPage() {
     if (filter === 'review') return items.filter((item) => isVocabularyDueToday(item)).length;
     if (filter === 'difficult') return Math.max(items.filter((item) => item.status === 'difficult' || item.wrongCount > 0).length, weakWords.length);
     return items.filter((item) => item.status === filter).length;
-  };
+  }, [favoriteWords.length, items, learnedWords.length, weakWords.length]);
 
-  const commonA1SearchBridge = filtered.length === 0 ? findCommonA1SearchBridge(query) : undefined;
+  const commonA1SearchBridge = filtered.length === 0 ? findCommonA1SearchBridge(deferredQuery) : undefined;
   const hasActiveFilters = Boolean(query.trim()) || statusFilter !== 'all' || lessonFilter !== 'all';
   const starterPackOptions = learningGroupOptions.slice(0, 3);
 
@@ -488,47 +564,28 @@ export function VocabPage() {
       <Box maxW="1480px" mx="auto" minW="0">
         <Box as="h1" position="absolute" left="-9999px">Sổ học của tôi</Box>
 
-        <Box className="penglish-glass-card" bg="rgba(255,255,255,0.78)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3', md: '7' }} mb={{ base: '3', md: '6' }} boxShadow="0 14px 34px rgba(37, 99, 235, 0.07)" position="relative" overflow="hidden">
-          <Flex justify="space-between" align={{ base: 'start', lg: 'center' }} direction={{ base: 'column', lg: 'row' }} gap={{ base: '3', md: '5' }}>
-            <Box>
-              <HStack wrap="wrap" mb={{ base: '2', md: '3' }} display={{ base: 'none', sm: 'flex' }}>
-                <Tag borderRadius="full" bg="#FEF3C7" color={COLORS.text}><TagLabel>⭐ Sổ học của tôi</TagLabel></Tag>
-                <Tag borderRadius="full" bg="#DCFCE7" color="#166534"><TagLabel>Poo giữ từ và câu cần ôn</TagLabel></Tag>
-              </HStack>
-              <Text as="h2" fontSize={{ base: 'xl', md: '5xl' }} lineHeight="1.05" fontWeight="800" color={COLORS.text}>Sổ học của tôi</Text>
-              <Text mt={{ base: '2', md: '3' }} maxW="760px" color={COLORS.muted} fontWeight="700" lineHeight="1.55" fontSize={{ base: 'sm', md: 'md' }} noOfLines={{ base: 2, md: undefined }}>
-                Một nơi để Poo giữ từ vựng đã học, câu cần ôn, câu nói đuổi khó, mẫu câu hay dùng và bài nên học lại sau mỗi buổi học.
-              </Text>
-              <HStack mt={{ base: '3', md: '5' }} wrap="wrap" gap={{ base: '2', md: '3' }} display={{ base: 'none', sm: 'flex' }}>
-                <Button borderRadius="full" bg={COLORS.primary} color="white" leftIcon={<Icon as={BookOpen} />} onClick={() => { setLessonFilter('all'); setStatusFilter('all'); setQuery(''); }} _hover={{ bg: '#1D4ED8' }}>
-                  Xem sổ học
-                </Button>
-                <Button borderRadius="full" bg="#FFF7ED" color="#9A3412" leftIcon={<Icon as={RotateCcw} />} onClick={() => { setStatusFilter('review'); setLessonFilter('all'); setQuery(''); }}>
-                  Ôn hôm nay
-                </Button>
-                <Button as={Link} to="/practice?lessonId=unit-1-greetings-introduction&mode=flashcard" borderRadius="full" variant="outline" leftIcon={<Icon as={BookOpen} />}>
-                  Ôn lại
-                </Button>
-                <Button as={Link} to="/practice?lessonId=unit-1-greetings-introduction&mode=match" borderRadius="full" variant="outline" leftIcon={<Icon as={Target} />}>
-                  Ghép cặp
-                </Button>
+        <Box className="penglish-glass-card vocab-review-first-card" bg="rgba(255,255,255,0.82)" backdropFilter={{ base: 'none', md: 'blur(8px) saturate(1.04)' }} border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '4', md: '6' }} mb={{ base: '3', md: '4' }} boxShadow="0 10px 24px rgba(37, 99, 235, 0.06)" position="relative" overflow="hidden">
+          <Flex justify="space-between" align={{ base: 'stretch', md: 'center' }} direction={{ base: 'column', md: 'row' }} gap={{ base: '3', md: '5' }}>
+            <Box minW="0">
+              <Text as="h2" fontSize={{ base: '2xl', md: '4xl' }} lineHeight="1.08" fontWeight="850" color={COLORS.text}>Hôm nay ôn 10 từ nhé?</Text>
+              <Text mt="2" color={COLORS.muted} fontWeight="800" fontSize={{ base: 'sm', md: 'md' }} noOfLines={1}>Ôn 10 từ thôi nè</Text>
+              <HStack mt="3" gap="2" wrap="wrap" color={COLORS.muted} fontWeight="800" fontSize="sm">
+                <Text>{stats.progressPercent}% đã nhớ</Text>
+                <Text>·</Text>
+                <Text>{stats.today || Math.min(10, stats.total)} từ sẵn sàng</Text>
               </HStack>
             </Box>
-            <VStack minW={{ base: '100%', lg: '360px' }} align={{ base: 'stretch', lg: 'center' }} gap="3" display={{ base: 'none', sm: 'flex' }}>
-              <HStack justify={{ base: 'center', lg: 'flex-end' }} gap="4" pointerEvents="none" display={{ base: 'none', sm: 'flex' }}>
-                <OceanMascot mascot="saoNhi" pose="sparkle" size="md" decorative motion="celebrate" />
-                <OceanMascot mascot="mucMo" pose="teacher" size="md" decorative motion="float" />
-              </HStack>
-              <Box w="100%">
-                <Text fontWeight="700" color={COLORS.text} mb="2">Tiến độ thuộc từ</Text>
-                <Progress value={stats.progressPercent} colorScheme="green" bg="white" borderRadius="full" h="12px" />
-                <Text mt="2" color={COLORS.muted} fontWeight="700">
-                  {stats.progressPercent}% · {stats.known}/{stats.total} từ đã nhớ
-                </Text>
-              </Box>
-            </VStack>
+            <Button as={Link} to="/practice?lessonId=unit-1-greetings-introduction&mode=flashcard" borderRadius="full" bg={COLORS.primary} color="white" size={{ base: 'md', md: 'lg' }} leftIcon={<Icon as={BookOpen} />} _hover={{ bg: '#1D4ED8' }}>
+              Bắt đầu ôn
+            </Button>
           </Flex>
+          <Progress mt="4" value={stats.progressPercent} colorScheme="green" bg="#E2E8F0" borderRadius="full" h="8px" />
         </Box>
+
+        <Box as="details" className="vocab-notebook-details" data-testid="vocab-notebook-details">
+          <Box as="summary" cursor="pointer" textAlign="center" color={COLORS.primary} fontWeight="900" mb="3" listStyleType="none">
+            Mở sổ tay
+          </Box>
 
         <SimpleGrid columns={{ base: 1, md: 5 }} gap="2.5" mb={{ base: '3', md: '5' }} data-testid="vocab-notebook-tabs">
           {[
@@ -608,10 +665,10 @@ export function VocabPage() {
             </Box>
             {nextReviewItem ? (
               <HStack wrap="wrap" gap="2" flexShrink={0} data-testid="vocab-next-review-card">
-                <Button size="sm" borderRadius="full" bg="#DCFCE7" color="#166534" onClick={() => { saveWordReviewStatus(nextReviewItem.wordId, 'known'); refresh(); }}>Đã nhớ</Button>
-                <Button size="sm" borderRadius="full" bg="#FFF7ED" color="#9A3412" onClick={() => { saveWordReviewStatus(nextReviewItem.wordId, 'review'); refresh(); }}>Cần ôn</Button>
-                <Button size="sm" borderRadius="full" bg="#FEE2E2" color="#991B1B" onClick={() => { saveWordReviewStatus(nextReviewItem.wordId, 'difficult'); refresh(); }}>Hay sai</Button>
-                <IconButton aria-label={`Nghe ${nextReviewItem.term}`} icon={<Icon as={Volume2} />} size="sm" borderRadius="full" variant="outline" onClick={() => speakEnglish(nextReviewItem.term)} />
+                <Button size="sm" borderRadius="full" bg="#DCFCE7" color="#166534" onClick={() => updateWordStatusOptimistically(nextReviewItem.wordId, 'known')}>Đã nhớ</Button>
+                <Button size="sm" borderRadius="full" bg="#FFF7ED" color="#9A3412" onClick={() => updateWordStatusOptimistically(nextReviewItem.wordId, 'review')}>Cần ôn</Button>
+                <Button size="sm" borderRadius="full" bg="#FEE2E2" color="#991B1B" onClick={() => updateWordStatusOptimistically(nextReviewItem.wordId, 'difficult')}>Hay sai</Button>
+                <IconButton aria-label={`Nghe ${nextReviewItem.term}`} icon={<Icon as={Volume2} />} size="sm" borderRadius="full" variant="outline" onClick={() => speakWord(nextReviewItem.term)} />
               </HStack>
             ) : null}
           </Flex>
@@ -648,7 +705,7 @@ export function VocabPage() {
             </HStack>
             <SimpleGrid columns={{ base: 1, md: 2, xl: 3 }} gap="3">
               {(statusFilter === 'weak' ? weakWords : statusFilter === 'favorite' ? favoriteWords : learnedWords).slice(0, 9).map((word) => (
-                <LearnedWordCard key={word.id} word={word} onChanged={refresh} />
+                <LearnedWordCard key={word.id} word={word} onChanged={refresh} onSpeakWord={speakWord} />
               ))}
             </SimpleGrid>
           </Box>
@@ -710,10 +767,33 @@ export function VocabPage() {
         ) : (
           <>
             <SimpleGrid display={{ base: 'grid', lg: 'none' }} columns={1} gap="3" minW="0">
-              {filtered.map((item) => <WordCard key={item.wordId} item={item} onChanged={refresh} />)}
+              {visibleMobileWords.map((item) => (
+                <WordCard
+                  key={item.wordId}
+                  item={item}
+                  onStatusChange={updateWordStatusOptimistically}
+                  onClearStatus={clearWordStatusOptimistically}
+                  onSpeakWord={speakWord}
+                />
+              ))}
             </SimpleGrid>
+            {canLoadMoreMobileWords ? (
+              <Flex display={{ base: 'flex', lg: 'none' }} justify="center" mt="4">
+                <Button borderRadius="full" colorScheme="blue" onClick={() => setMobileVisibleCount((count) => count + MOBILE_WORD_BATCH_SIZE)}>
+                  Xem thêm {Math.min(MOBILE_WORD_BATCH_SIZE, filtered.length - visibleMobileWords.length)} từ
+                </Button>
+              </Flex>
+            ) : null}
 
-            <Box className="penglish-glass-card" display={{ base: 'none', lg: 'block' }} bg="rgba(255,255,255,0.78)" backdropFilter="blur(14px) saturate(1.1)" borderRadius="3xl" border="1px solid" borderColor="#BAE6FD" boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" overflowX="auto" overflowY="hidden">
+            {desktopHiddenCount > 0 ? (
+              <Box display={{ base: 'none', lg: 'block' }} mb="3" bg="#EFF6FF" border="1px solid" borderColor="#BAE6FD" borderRadius="2xl" p="3">
+                <Text color={COLORS.muted} fontWeight="700">
+                  Poo đang hiển thị {visibleDesktopWords.length}/{filtered.length} từ đầu để bảng desktop phản hồi nhanh hơn. Hãy tìm kiếm hoặc lọc nhóm để xem từ cụ thể.
+                </Text>
+              </Box>
+            ) : null}
+
+            <Box className="penglish-glass-card vocab-desktop-table" display={{ base: 'none', lg: 'block' }} bg="rgba(255,255,255,0.84)" backdropFilter="blur(6px) saturate(1.02)" borderRadius="3xl" border="1px solid" borderColor="#BAE6FD" boxShadow="0 10px 24px rgba(31, 111, 214, 0.055)" overflowX="auto" overflowY="hidden">
               <Table size="md">
                 <Thead bg="#EFF6FF">
                   <Tr>
@@ -725,7 +805,7 @@ export function VocabPage() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {filtered.map((item) => (
+                  {visibleDesktopWords.map((item) => (
                     <Tr key={item.wordId} _hover={{ bg: '#F8FAFC' }}>
                       <Td verticalAlign="top" maxW="260px">
                         <Text fontWeight="700" color={COLORS.text}>{item.term}</Text>
@@ -752,7 +832,7 @@ export function VocabPage() {
                         <Text mt="1" color={COLORS.muted} fontSize="sm">Ôn {item.reviewCount} · Sai {item.wrongCount}</Text>
                       </Td>
                       <Td verticalAlign="top" minW="360px">
-                        <WordActions item={item} onChanged={refresh} />
+                        <WordActions item={item} onStatusChange={updateWordStatusOptimistically} onClearStatus={clearWordStatusOptimistically} onSpeakWord={speakWord} />
                       </Td>
                     </Tr>
                   ))}
@@ -772,6 +852,7 @@ export function VocabPage() {
               </Text>
             </Box>
           </HStack>
+        </Box>
         </Box>
       </Box>
     </OceanPageShell>
