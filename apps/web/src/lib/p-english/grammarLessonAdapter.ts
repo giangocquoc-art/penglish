@@ -1,6 +1,6 @@
 import { generatedGrammarLessonSources } from '../../data/grammar/generatedGrammarLessons';
 import type { GeneratedGrammarExercise, GeneratedGrammarLevel, GeneratedGrammarLessonSource } from '../../data/grammar/grammarTypes';
-import type { EnglishLesson, LessonLevel, QuizQuestion, SentenceOrderingTask, FillBlankTask, MiniDialogue, PronunciationNote, ListeningPracticeItem, SpeakingReflexPrompt, EnglishSpeedPrompt, ShadowingScript } from './lesson-content-data';
+import type { EnglishLesson, LessonLevel, QuizQuestion, SentenceOrderingTask, FillBlankTask, MiniDialogue, PronunciationNote, ListeningPracticeItem, SpeakingReflexPrompt, EnglishSpeedPrompt, ShadowingScript, VocabularyItem } from './lesson-content-data';
 
 function mapLevel(level: GeneratedGrammarLevel): LessonLevel {
   switch (level) {
@@ -49,13 +49,50 @@ function toSentenceOrderingTask(exercise: GeneratedGrammarExercise): SentenceOrd
   };
 }
 
+function buildGrammarVocabulary(source: GeneratedGrammarLessonSource): VocabularyItem[] {
+  const examples = source.examples.length > 0 ? source.examples : [{ text: source.sourcePatternTitle, meaningVi: source.vietnameseExplanation }];
+  const patternTerm = source.sourcePatternTitle.replace(/\s+/g, ' ').trim();
+  const patternVocabulary: VocabularyItem = {
+    id: `${source.id}-vocab-pattern`,
+    term: patternTerm,
+    meaningVi: source.sourcePatternSummary || source.vietnameseExplanation,
+    partOfSpeechOrType: 'grammar chunk',
+    example: examples[0]?.text ?? patternTerm,
+    exampleMeaningVi: examples[0]?.meaningVi ?? source.vietnameseExplanation,
+    cefrLevel: source.level,
+    visualCategory: 'grammar-ocean-pattern',
+    animatedSceneHint: 'Poo cá voi kéo mẫu câu thành từng cụm nhỏ trên mặt biển để người học không phải dịch từng chữ.',
+    usefulInSituation: `Dùng khi luyện mẫu ${source.titleVi}.`,
+    confusionNoteVi: 'Đây là mẫu/cụm ngữ pháp để nhận diện nhanh trong câu, không phải từ vựng đơn lẻ.',
+    difficulty: source.level === 'A1' || source.level === 'A2' ? 'easy' : 'medium',
+    tags: ['grammar', source.level, source.source.sourcePatternId, 'pattern'],
+  };
+  const exampleVocabulary = examples.slice(0, 3).map((example, index): VocabularyItem => ({
+    id: `${source.id}-vocab-chunk-${index + 1}`,
+    term: example.text,
+    meaningVi: example.meaningVi,
+    partOfSpeechOrType: 'sentence chunk',
+    example: example.text,
+    exampleMeaningVi: example.meaningVi,
+    cefrLevel: source.level,
+    visualCategory: 'grammar-example-shell',
+    animatedSceneHint: 'Poo cá voi thổi bong bóng quanh câu mẫu để người học đọc theo cụm.',
+    usefulInSituation: source.titleVi,
+    confusionNoteVi: `Hãy nghe/đọc cả cụm theo mẫu “${patternTerm}”, không tách từng từ khi phản xạ.`,
+    difficulty: source.level === 'A1' || source.level === 'A2' ? 'easy' : 'medium',
+    tags: ['grammar', source.level, source.source.sourcePatternId, 'chunk'],
+  }));
+
+  return [patternVocabulary, ...exampleVocabulary];
+}
+
 function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
   miniDialogues: MiniDialogue[];
   pronunciationNotes: PronunciationNote[];
   listeningPractice: ListeningPracticeItem[];
   speakingReflexPrompts: SpeakingReflexPrompt[];
   englishSpeedPrompts: EnglishSpeedPrompt[];
-  shadowingScript?: ShadowingScript;
+  shadowingScript: ShadowingScript;
 } {
   const [firstExample, secondExample, thirdExample, fourthExample, fifthExample] = source.examples;
   const dialogueFirst = firstExample ?? { text: 'I can use this grammar today.', meaningVi: 'Tôi có thể dùng mẫu ngữ pháp này hôm nay.' };
@@ -66,6 +103,7 @@ function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
   const patternLabel = source.sourcePatternTitle.replace(/\s+/g, ' ').trim();
   const isCoreA2 = source.level === 'A2';
   const bridgeExamples = source.examples.length > 0 ? source.examples : [dialogueFirst, dialogueSecond, listeningExample];
+  const shadowingExamples = bridgeExamples.slice(0, source.level === 'A1' ? 3 : 4);
   const listeningExamples = isCoreA2 ? [listeningExample, transferExample] : [listeningExample];
   const reflexExamples = isCoreA2 ? bridgeExamples.slice(0, 4) : bridgeExamples.slice(0, 2);
 
@@ -145,17 +183,15 @@ function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
           hint: `Nói nhanh theo cụm “${patternLabel}”, không dịch từng từ.`,
         }))
       : [],
-    shadowingScript: isCoreA2
-      ? {
-          id: `${source.id}-shadow-bridge`,
-          title: `A2 nói đuổi · ${source.titleEn}`,
-          lines: bridgeExamples.slice(0, 4).map((example, index) => ({
-            id: `${source.id}-shadow-line-${index + 1}`,
-            text: example.text,
-            meaningVi: example.meaningVi,
-          })),
-        }
-      : undefined,
+    shadowingScript: {
+      id: `${source.id}-shadow-bridge`,
+      title: `Poo nói đuổi ngữ pháp · ${source.titleEn}`,
+      lines: shadowingExamples.map((example, index) => ({
+        id: `${source.id}-shadow-line-${index + 1}`,
+        text: example.text,
+        meaningVi: example.meaningVi,
+      })),
+    },
   };
 }
 
@@ -164,13 +200,14 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
   const fillBlankTasks = source.exercises.map(toFillBlankTask).filter((task): task is FillBlankTask => Boolean(task));
   const sentenceOrderingTasks = source.exercises.map(toSentenceOrderingTask).filter((task): task is SentenceOrderingTask => Boolean(task));
   const bridge = buildGrammarBridge(source);
-  const exampleFlashcards = source.examples.slice(0, 3).map((example, index) => ({
-    id: `${source.id}-grammar-card-${index + 1}`,
-    front: example.text,
-    back: example.meaningVi,
-    example: example.text,
-    exampleMeaningVi: example.meaningVi,
-    tags: ['grammar', source.level, source.source.sourcePatternId],
+  const grammarVocabulary = buildGrammarVocabulary(source);
+  const exampleFlashcards = grammarVocabulary.map((item) => ({
+    id: `flashcard-${item.id}`,
+    front: item.term,
+    back: item.meaningVi,
+    example: item.example,
+    exampleMeaningVi: item.exampleMeaningVi,
+    tags: item.tags,
   }));
 
   return {
@@ -189,7 +226,7 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
       'Chọn hoặc gõ đáp án đúng trong câu ngắn.',
       'Tự sửa lỗi bằng gợi ý tiếng Việt sau mỗi câu.',
     ],
-    vocabulary: [],
+    vocabulary: grammarVocabulary,
     sentencePatterns: [
       {
         id: `${source.id}-pattern`,

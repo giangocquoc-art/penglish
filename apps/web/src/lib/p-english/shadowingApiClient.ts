@@ -1,6 +1,7 @@
 import { normalizeSpeechTextForComparison } from './speechTextNormalizer';
 
 export type ShadowingApiConfidence = 'high' | 'medium' | 'low';
+export type ShadowingApiStatus = 'correct' | 'nearCorrect' | 'retry';
 
 export type ShadowingApiSuccess = {
   ok: true;
@@ -18,6 +19,9 @@ export type ShadowingApiSuccess = {
   rhythmTips: string[];
   nextDrill: string;
   coachMessage: string;
+  status: ShadowingApiStatus;
+  passed: boolean;
+  allowContinue: boolean;
 };
 
 export type ShadowingApiFailure = {
@@ -84,20 +88,41 @@ function buildWordDiff(targetText: string, transcript: string) {
   };
 }
 
+function normalizeStatus(value: unknown, score: number, confidence: ShadowingApiConfidence): ShadowingApiStatus {
+  if (value === 'correct' || value === 'nearCorrect' || value === 'retry') return value;
+  if (score >= 88 && confidence !== 'low') return 'correct';
+  if (score >= 62) return 'nearCorrect';
+  return 'retry';
+}
+
+function isPooBooNearCorrect(targetText: string, transcript: string) {
+  const target = normalizeSpeechTextForComparison(targetText);
+  const attempt = normalizeSpeechTextForComparison(transcript);
+  return /\bpoo\b/.test(target) && /\bboo\b/.test(attempt);
+}
+
 function normalizeSuccess(payload: Record<string, unknown>, targetText: string, transcriptOverride = ''): ShadowingApiSuccess {
   const record = nestedRecord(payload, ['feedback', 'result', 'data']);
   const transcript = String(record.transcript ?? payload.transcript ?? transcriptOverride).trim();
   const wordDiff = buildWordDiff(targetText, transcript);
+  const score = Math.max(0, Math.min(100, Number(record.score ?? payload.score ?? 0) || 0));
+  const confidence = normalizeConfidence(record.confidence ?? payload.confidence);
+  const status = isPooBooNearCorrect(targetText, transcript) ? 'nearCorrect' : normalizeStatus(record.status ?? payload.status, score, confidence);
+  const passed = status === 'correct' || status === 'nearCorrect';
+  const allowContinue = passed;
   const goodTips = normalizeStringArray(record.good);
   const fixTips = normalizeStringArray(record.fix);
   const pronunciationTips = normalizeStringArray(record.pronunciationTips);
   const rhythmTips = normalizeStringArray(record.rhythmTips);
+  const coachMessage = isPooBooNearCorrect(targetText, transcript)
+    ? "Đạt rồi đó! Poo nghe hơi giống 'boo' một chút, lần sau thử bật nhẹ âm /p/ nha."
+    : String(record.coachMessage ?? record.summary ?? '').trim() || (passed ? 'Đạt rồi, Poo góp ý nhẹ nha. Nói câu ngắn, đúng ý, rõ nhịp là đủ.' : 'Poo đã nghe bản ghi. Hãy luyện lại một lượt thật chậm và rõ.');
 
   return {
     ok: true,
     source: 'gemini',
-    score: Math.max(0, Math.min(100, Number(record.score ?? payload.score ?? 0) || 0)),
-    confidence: normalizeConfidence(record.confidence ?? payload.confidence),
+    score,
+    confidence,
     transcript,
     normalizedTranscript: String(record.normalizedTranscript ?? '').trim() || wordDiff.normalizedTranscript,
     normalizedTarget: String(record.normalizedTarget ?? '').trim() || wordDiff.normalizedTarget,
@@ -107,8 +132,11 @@ function normalizeSuccess(payload: Record<string, unknown>, targetText: string, 
     changedWords: normalizeStringArray(record.changedWords ?? record.misheardWords),
     pronunciationTips: pronunciationTips.length ? pronunciationTips : (fixTips.length ? fixTips : ['Nói chậm hơn và làm rõ âm cuối của từ chính.']),
     rhythmTips: rhythmTips.length ? rhythmTips : (goodTips.length ? goodTips : ['Đọc theo cụm ngắn, nghỉ nhẹ giữa các cụm.']),
-    nextDrill: String(record.nextDrill ?? record.retryText ?? '').trim() || 'Luyện lại câu này thêm một lần nhé.',
-    coachMessage: String(record.coachMessage ?? record.summary ?? '').trim() || 'Poo đã nghe bản ghi. Hãy luyện lại một lượt thật chậm và rõ.',
+    nextDrill: String(record.nextDrill ?? record.retryText ?? '').trim() || (passed ? 'Nếu muốn mượt hơn, nghe mẫu một lần rồi nói lại nhẹ nhàng.' : 'Luyện lại câu này thêm một lần nhé.'),
+    coachMessage,
+    status,
+    passed,
+    allowContinue,
   };
 }
 

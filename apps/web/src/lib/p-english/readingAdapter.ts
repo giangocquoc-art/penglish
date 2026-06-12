@@ -1,6 +1,6 @@
 import { generatedReadingLessonSources } from '../../data/reading/generatedReadingLessons';
 import type { GeneratedReadingCefrLevel, GeneratedReadingLessonSource } from '../../data/reading/readingTypes';
-import type { EnglishLesson, FillBlankTask, LessonLevel, QuizQuestion, SentenceOrderingTask, VocabularyItem } from './lesson-content-data';
+import type { EnglishLesson, FillBlankTask, LessonLevel, ListeningPracticeItem, MiniDialogue, PronunciationNote, QuizQuestion, SentenceOrderingTask, ShadowingScript, SpeakingReflexPrompt, VocabularyItem } from './lesson-content-data';
 
 function mapLevel(level: GeneratedReadingCefrLevel): LessonLevel {
   switch (level) {
@@ -92,12 +92,94 @@ function toVocabulary(source: GeneratedReadingLessonSource): VocabularyItem[] {
   }));
 }
 
+function firstPassageSentence(source: GeneratedReadingLessonSource): string {
+  return source.passage.split(/(?<=[.!?])\s+/).find((sentence) => sentence.trim().length > 0)?.trim() ?? source.passage;
+}
+
+function buildReadingBridge(source: GeneratedReadingLessonSource, vocabulary: VocabularyItem[]): {
+  miniDialogues: MiniDialogue[];
+  pronunciationNotes: PronunciationNote[];
+  listeningPractice: ListeningPracticeItem[];
+  speakingReflexPrompts: SpeakingReflexPrompt[];
+  shadowingScript: ShadowingScript;
+} {
+  const primaryExample = source.sentenceFocus.examples[0] ?? { text: firstPassageSentence(source), meaningVi: source.vietnameseSetup };
+  const secondExample = source.sentenceFocus.examples[1] ?? primaryExample;
+  const mainWord = vocabulary[0];
+  const listeningExamples = [primaryExample, secondExample].filter((example, index, examples) => examples.findIndex((item) => item.text === example.text) === index);
+  const shadowLines = [primaryExample, secondExample, ...source.sentenceFocus.examples.slice(2, 4)].filter((example, index, examples) => examples.findIndex((item) => item.text === example.text) === index);
+  const dialogueFocus = mainWord ? `${mainWord.term} = ${mainWord.meaningVi}` : source.sentenceFocus.pattern;
+
+  return {
+    miniDialogues: [
+      {
+        id: `${source.id}-reading-dialogue`,
+        title: 'Poo đọc cùng bạn: bắt ý chính trước',
+        lines: [
+          { speaker: 'A', text: 'What is this text about?' },
+          { speaker: 'B', text: primaryExample.text },
+          { speaker: 'A', text: 'Which word should I remember?' },
+          { speaker: 'B', text: mainWord ? mainWord.term : source.sentenceFocus.pattern },
+        ],
+        vietnameseTranslation: [
+          'A: Đoạn này nói về điều gì vậy?',
+          `B: ${primaryExample.meaningVi}`,
+          'A: Mình nên nhớ từ/cụm nào?',
+          `B: ${dialogueFocus}`,
+        ],
+        focusPhrases: [primaryExample.text, mainWord?.term ?? source.sentenceFocus.pattern, 'What is this text about?'],
+        suggestedShadowingInstruction: 'Đọc hội thoại một lượt như Poo đang bơi chậm, sau đó lặp từng câu 2–3 lần để nhớ ý chính trước khi làm quiz.',
+      },
+    ],
+    pronunciationNotes: [
+      {
+        id: `${source.id}-pron-reading-chunks`,
+        noteVi: 'Khi đọc đoạn ngắn, hãy chia câu thành 2–3 cụm hơi thở nhỏ. Poo ưu tiên đọc rõ từ khóa hơn là đọc thật nhanh.',
+        examples: listeningExamples.map((example) => example.text),
+      },
+    ],
+    listeningPractice: listeningExamples.map((example, index) => ({
+      id: `${source.id}-listening-reading-${index + 1}`,
+      text: example.text,
+      question: index === 0 ? 'Câu vừa nghe gần với ý nào nhất?' : 'Bạn nghe thấy câu trọng tâm nào trong bài đọc?',
+      options: [example.meaningVi, primaryExample.meaningVi, source.vietnameseSetup]
+        .filter((option, optionIndex, options) => option && options.indexOf(option) === optionIndex)
+        .slice(0, 3),
+      answer: example.meaningVi,
+      explanationVi: `Câu tiếng Anh “${example.text}” tương ứng với ý: ${example.meaningVi}`,
+      speechSynthesis: {
+        lang: 'en-US',
+        rate: source.level === 'A1' || source.level === 'A2' ? 0.84 : 0.9,
+        repeatRecommended: source.level === 'A1' || source.level === 'A2' ? 3 : 2,
+      },
+    })),
+    speakingReflexPrompts: source.sentenceFocus.examples.slice(0, 3).map((example, index) => ({
+      id: `${source.id}-reflex-reading-${index + 1}`,
+      promptVi: `Poo nhờ bạn nói lại ý này: ${example.meaningVi}`,
+      expectedEnglish: example.text,
+      acceptableAnswers: [example.text],
+      hint: `Bám mẫu đọc: ${source.sentenceFocus.pattern}`,
+      difficulty: source.level === 'A1' || source.level === 'A2' ? 'easy' : 'medium',
+    })),
+    shadowingScript: {
+      id: `${source.id}-shadow-reading`,
+      title: `Poo nói đuổi đoạn đọc · ${source.titleEn}`,
+      lines: (shadowLines.length > 0 ? shadowLines : [primaryExample]).map((example, index) => ({
+        id: `${source.id}-shadow-reading-${index + 1}`,
+        text: example.text,
+        meaningVi: example.meaningVi,
+      })),
+    },
+  };
+}
+
 function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson {
   const quizQuestions = toQuizQuestion(source);
   const fillBlankTasks = toFillBlankTasks(source);
   const sentenceOrderingTasks = toSentenceOrderingTasks(source);
   const vocabulary = toVocabulary(source);
   const totalQuestionCount = quizQuestions.length + fillBlankTasks.length + sentenceOrderingTasks.length;
+  const bridge = buildReadingBridge(source, vocabulary);
 
   return {
     id: source.id,
@@ -108,13 +190,14 @@ function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson
     subtitle: source.vietnameseSetup,
     level: mapLevel(source.level),
     estimatedTime: estimatedTimeFor(source.level),
-    skillTags: ['Đọc', 'Từ vựng', 'Viết', 'Ôn tập'],
+    skillTags: ['Đọc', 'Từ vựng', 'Viết', 'Nghe', 'Nói', 'Ôn tập'],
     learningObjectives: [
       'Đọc lấy ý chính trước khi nhìn đáp án.',
       'Tìm thông tin cụ thể trong đoạn đọc ngắn.',
       'Hoàn thành câu điền từ dựa trên ngữ cảnh.',
       'Sắp xếp một câu tiếng Anh tự nhiên theo nghĩa tiếng Việt.',
       'Ghi nhớ một vài từ/cụm hữu ích trong đoạn đọc.',
+      'Nghe và nói đuổi 2–4 câu trọng tâm để biến bài đọc thành phản xạ nhẹ.',
     ],
     vocabulary,
     sentencePatterns: [
@@ -125,7 +208,7 @@ function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson
         examples: source.sentenceFocus.examples,
       },
     ],
-    miniDialogues: [],
+    miniDialogues: bridge.miniDialogues,
     grammarNotes: [
       {
         id: `${source.id}-passage`,
@@ -140,9 +223,9 @@ function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson
         examples: source.comprehensionQuestions.map((question) => question.questionEn),
       },
     ],
-    pronunciationNotes: [],
-    listeningPractice: [],
-    speakingReflexPrompts: [],
+    pronunciationNotes: bridge.pronunciationNotes,
+    listeningPractice: bridge.listeningPractice,
+    speakingReflexPrompts: bridge.speakingReflexPrompts,
     flashcards: vocabulary.map((item) => ({
       id: `flashcard-${item.id}`,
       front: item.term,
@@ -154,6 +237,7 @@ function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson
     quizQuestions,
     sentenceOrderingTasks,
     fillBlankTasks,
+    shadowingScript: bridge.shadowingScript,
     commonMistakes: [
       {
         id: `${source.id}-mistake-translate-all`,
@@ -202,9 +286,9 @@ function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson
       flashcardsReviewed: vocabulary.length,
       minimumQuizCorrect: Math.max(2, totalQuestionCount - 1),
       totalQuizQuestions: totalQuestionCount,
-      minimumReflexPromptsCompleted: 0,
-      totalReflexPrompts: 0,
-      minimumListeningOrDialogueRepeats: 0,
+      minimumReflexPromptsCompleted: Math.min(2, bridge.speakingReflexPrompts.length),
+      totalReflexPrompts: bridge.speakingReflexPrompts.length,
+      minimumListeningOrDialogueRepeats: Math.min(2, bridge.listeningPractice.length + bridge.miniDialogues.length),
     },
   };
 }

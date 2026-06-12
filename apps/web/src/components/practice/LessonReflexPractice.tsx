@@ -458,7 +458,7 @@ export function LessonReflexPractice({ lesson, onWhaleMoodChange }: { lesson: En
                   <HStack align="start" gap="3">
                     <Icon as={currentState.isCorrect ? CheckCircle2 : XCircle} color={currentState.isCorrect ? COLORS.green : '#EA580C'} />
                     <Box w="100%">
-                      <Text fontWeight="900" color={COLORS.text}>{currentState.isCorrect ? 'Phản xạ tốt!' : 'Gần đúng rồi, xem lại cụm mẫu.'}</Text>
+                      <Text fontWeight="900" color={COLORS.text}>{currentState.isCorrect ? 'Phản xạ tốt!' : 'Đạt rồi, Poo góp ý nhẹ nha'}</Text>
                       {!currentState.isCorrect ? <Text mt="2" color={COLORS.muted}>Bạn vừa nói/gõ: <Text as="span" fontWeight="900" color={COLORS.text}>{currentState.answer || '—'}</Text></Text> : null}
                       <Text mt="2" color={COLORS.muted}>Câu Poo gợi ý: <Text as="span" fontWeight="900" color={COLORS.text}>{currentPrompt.expectedEnglish}</Text></Text>
                       {!currentState.isCorrect ? (

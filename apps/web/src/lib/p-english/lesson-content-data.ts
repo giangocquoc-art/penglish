@@ -707,6 +707,17 @@ export const pEnglishLessons: EnglishLesson[] = [
       exampleMeaningVi: item.exampleMeaningVi,
       tags: item.tags,
     })),
+    shadowingScript: {
+      id: 'unit-1-greetings-shadow',
+      title: 'Poo nói đuổi: chào hỏi trên bãi biển',
+      lines: [
+        { id: 'unit-1-greetings-shadow-1', text: 'Hi, I’m Nam.', meaningVi: 'Chào, mình là Nam.' },
+        { id: 'unit-1-greetings-shadow-2', text: 'What’s your name?', meaningVi: 'Bạn tên gì?' },
+        { id: 'unit-1-greetings-shadow-3', text: 'My name is Linh.', meaningVi: 'Tên mình là Linh.' },
+        { id: 'unit-1-greetings-shadow-4', text: 'Nice to meet you.', meaningVi: 'Rất vui được gặp bạn.' },
+        { id: 'unit-1-greetings-shadow-5', text: 'I’m from Vietnam.', meaningVi: 'Mình đến từ Việt Nam.' },
+      ],
+    },
     quizQuestions: [
       {
         id: 'quiz-1-whats-your-name-meaning',
@@ -1030,6 +1041,17 @@ export const pEnglishLessons: EnglishLesson[] = [
       { id: 'u2-reflex-do-you-have-brother', promptVi: 'Giúp Poo hỏi: ‘Bạn có anh/em trai không?’', expectedEnglish: 'Do you have a brother?', acceptableAnswers: ['Do you have a brother?'], hint: 'Dùng cụm Do you have...', difficulty: 'medium' },
     ],
     flashcards: unit2Vocabulary.map((item) => ({ id: `flashcard-${item.id}`, front: item.term, back: item.meaningVi, example: item.example, exampleMeaningVi: item.exampleMeaningVi, tags: item.tags })),
+    shadowingScript: {
+      id: 'unit-2-family-friends-shadow',
+      title: 'Poo nói đuổi: giới thiệu gia đình và bạn bè',
+      lines: [
+        { id: 'unit-2-family-friends-shadow-1', text: 'This is my family.', meaningVi: 'Đây là gia đình của tôi.' },
+        { id: 'unit-2-family-friends-shadow-2', text: 'Who is this?', meaningVi: 'Đây là ai?' },
+        { id: 'unit-2-family-friends-shadow-3', text: 'This is my friend, Mai.', meaningVi: 'Đây là bạn của tôi, Mai.' },
+        { id: 'unit-2-family-friends-shadow-4', text: 'Her name is Hoa.', meaningVi: 'Tên của cô ấy là Hoa.' },
+        { id: 'unit-2-family-friends-shadow-5', text: 'My friend is funny and friendly.', meaningVi: 'Bạn tôi vui tính và thân thiện.' },
+      ],
+    },
     quizQuestions: [
       { id: 'u2-quiz-family-meaning', type: 'multiple-choice', question: '“family” nghĩa là gì?', options: ['gia đình', 'bạn cùng lớp', 'giáo viên', 'tạm biệt'], answer: 'gia đình', explanationVi: '“family” là danh từ chỉ gia đình.' },
       { id: 'u2-quiz-this-is-my-mother', type: 'multiple-choice', question: 'Câu nào nghĩa là “Đây là mẹ của tôi”?', options: ['This is my mother.', 'Her name is mother.', 'My mother this is.', 'Who is this mother?'], answer: 'This is my mother.', explanationVi: 'Mẫu giới thiệu đúng là This is my + người.' },
@@ -1135,6 +1157,17 @@ export const pEnglishLessons: EnglishLesson[] = [
       { id: 'u3-reflex-favorite-subject', promptVi: 'Poo thử thách nhẹ: nói ‘Môn học yêu thích của tôi là tiếng Anh.’', expectedEnglish: 'My favorite subject is English.', acceptableAnswers: ['My favorite subject is English.', 'English is my favorite subject.'], hint: 'My favorite subject is...', difficulty: 'medium' },
     ],
     flashcards: unit3Vocabulary.map((item) => ({ id: `flashcard-${item.id}`, front: item.term, back: item.meaningVi, example: item.example, exampleMeaningVi: item.exampleMeaningVi, tags: item.tags })),
+    shadowingScript: {
+      id: 'unit-3-school-classroom-shadow',
+      title: 'Poo nói đuổi: lớp học và đồ dùng',
+      lines: [
+        { id: 'unit-3-school-classroom-shadow-1', text: 'This is my classroom.', meaningVi: 'Đây là lớp học của tôi.' },
+        { id: 'unit-3-school-classroom-shadow-2', text: 'I have English on Monday.', meaningVi: 'Tôi có môn tiếng Anh vào thứ Hai.' },
+        { id: 'unit-3-school-classroom-shadow-3', text: 'Can I borrow your pencil?', meaningVi: 'Mình mượn bút chì của bạn được không?' },
+        { id: 'unit-3-school-classroom-shadow-4', text: 'Can you help me with this question?', meaningVi: 'Bạn có thể giúp mình câu hỏi này không?' },
+        { id: 'unit-3-school-classroom-shadow-5', text: 'I need to do my homework.', meaningVi: 'Tôi cần làm bài tập về nhà.' },
+      ],
+    },
     quizQuestions: [
       { id: 'u3-quiz-classroom-meaning', type: 'multiple-choice', question: '“classroom” nghĩa là gì?', options: ['lớp học', 'thư viện', 'bài kiểm tra', 'đồng phục'], answer: 'lớp học', explanationVi: 'Đúng rồi, classroom là nơi mình học cùng thầy cô và bạn bè.' },
       { id: 'u3-quiz-teacher-meaning', type: 'multiple-choice', question: '“teacher” nghĩa là gì?', options: ['giáo viên', 'học sinh', 'hiệu trưởng', 'bạn cùng lớp'], answer: 'giáo viên', explanationVi: 'teacher là giáo viên.' },

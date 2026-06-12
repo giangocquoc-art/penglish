@@ -645,13 +645,26 @@ function ChallengeCard({ dayNumber, challenge, onReadyChange, onContinue }: { da
       return;
     }
 
-    const correct = normalizeAnswer(value) === normalizeAnswer(challenge.answer);
-    const wrongMessage = challenge.type === 'sentence-order' ? 'Thử đặt chủ ngữ trước nhé.' : 'Gần đúng rồi, xem lại gợi ý nhé.';
+    const normalizedValue = normalizeAnswer(value);
+    const normalizedTarget = normalizeAnswer(challenge.answer);
+    const targetWords = normalizedTarget.split(' ').filter(Boolean);
+    const attemptWords = normalizedValue.split(' ').filter(Boolean);
+    const attemptSet = new Set(attemptWords);
+    const matchedCount = targetWords.filter((word) => attemptSet.has(word)).length;
+    const speakingSimilarity = targetWords.length ? matchedCount / Math.max(targetWords.length, attemptWords.length || 1) : 0;
+    const isPooBooNearCorrect = /\bpoo\b/.test(normalizedTarget) && /\bboo\b/.test(normalizedValue);
+    const exactCorrect = normalizedValue === normalizedTarget;
+    const nearCorrectSpeaking = challenge.type === 'speaking-repeat' && (isPooBooNearCorrect || speakingSimilarity >= 0.62);
+    const correct = exactCorrect || nearCorrectSpeaking;
+    const wrongMessage = challenge.type === 'sentence-order' ? 'Thử đặt chủ ngữ trước nhé.' : 'Poo chưa nghe rõ ý chính. Bạn thử lại chậm hơn, hoặc bấm “Tự đánh dấu đã nói”.';
     if (!correct) {
       const nextHearts = loseHeart('foundation48-challenge-wrong');
       setHeartsState(nextHearts);
     }
-    setFeedback({ correct, message: correct ? 'Đúng rồi!' : wrongMessage });
+    const nearCorrectMessage = isPooBooNearCorrect
+      ? "Đạt rồi đó! Poo nghe hơi giống 'boo' một chút, lần sau thử bật nhẹ âm /p/ nha."
+      : 'Đạt rồi, Poo góp ý nhẹ nha. Chỉ cần nói câu ngắn, đúng ý, rõ nhịp. Không cần nói hoàn hảo.';
+    setFeedback({ correct, message: exactCorrect ? 'Đúng rồi!' : nearCorrectSpeaking ? nearCorrectMessage : wrongMessage });
     recordFoundation48ChallengeResult(dayNumber, challenge, correct, value || '(chưa trả lời)');
     onReadyChange(correct);
   }

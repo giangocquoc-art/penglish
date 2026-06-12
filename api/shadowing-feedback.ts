@@ -1,10 +1,15 @@
 type ShadowingApiConfidence = 'high' | 'medium' | 'low';
 
+type ShadowingApiStatus = 'correct' | 'nearCorrect' | 'retry';
+
 type ApiResponse = {
   ok: boolean;
   source?: 'gemini';
   score?: number;
   confidence?: ShadowingApiConfidence;
+  status?: ShadowingApiStatus;
+  passed?: boolean;
+  allowContinue?: boolean;
   transcript?: string;
   normalizedTranscript?: string;
   normalizedTarget?: string;
@@ -199,22 +204,43 @@ function scoreNormalizedWords(normalizedTarget: string, normalizedTranscript: st
   };
 }
 
+function normalizeStatus(value: unknown, score: number, confidence: ShadowingApiConfidence, targetText: string, transcript: string): ShadowingApiStatus {
+  if (value === 'correct' || value === 'nearCorrect' || value === 'retry') return value;
+  const normalizedTarget = normalizeSpeechTextForComparison(targetText);
+  const normalizedTranscript = normalizeSpeechTextForComparison(transcript);
+  if (/\bpoo\b/.test(normalizedTarget) && /\bboo\b/.test(normalizedTranscript)) return 'nearCorrect';
+  if (!normalizedTranscript || confidence === 'low' && score < 62) return 'retry';
+  if (score >= 88 && confidence !== 'low') return 'correct';
+  if (score >= 62) return 'nearCorrect';
+  return 'retry';
+}
+
 function normalizeGeminiPayload(payload: Record<string, unknown>, targetText: string): ApiResponse {
   const confidence = payload.confidence === 'high' || payload.confidence === 'medium' || payload.confidence === 'low' ? payload.confidence : 'low';
   const transcript = safeString(payload.transcript);
   const normalizedTranscript = normalizeSpeechTextForComparison(safeString(payload.normalizedTranscript, transcript));
   const normalizedTarget = normalizeSpeechTextForComparison(safeString(payload.normalizedTarget, targetText));
   const localWords = scoreNormalizedWords(normalizedTarget, normalizedTranscript);
+  const score = Math.max(0, Math.min(100, Number(payload.score ?? localWords.score) || 0));
+  const status = normalizeStatus(payload.status, score, confidence, targetText, transcript);
+  const passed = status === 'correct' || status === 'nearCorrect';
+  const allowContinue = passed;
   const changedWords = normalizeList(payload.changedWords ?? payload.misheardWords);
   const numberEquivalenceTip = normalizedTranscript && normalizedTarget && (targetText !== normalizedTarget || transcript !== normalizedTranscript)
     ? ['Poo đã hiểu dạng số và dạng chữ là tương đương trong câu này.']
     : [];
+  const pooBooMessage = /\bpoo\b/.test(normalizedTarget) && /\bboo\b/.test(normalizedTranscript)
+    ? "Đạt rồi đó! Poo nghe hơi giống 'boo' một chút, lần sau thử bật nhẹ âm /p/ nha."
+    : '';
 
   return {
     ok: true,
     source: 'gemini',
-    score: Math.max(0, Math.min(100, Number(payload.score ?? localWords.score) || 0)),
+    score,
     confidence,
+    status,
+    passed,
+    allowContinue,
     transcript,
     normalizedTranscript,
     normalizedTarget,
@@ -224,8 +250,8 @@ function normalizeGeminiPayload(payload: Record<string, unknown>, targetText: st
     changedWords: changedWords.length ? changedWords : [],
     pronunciationTips: [...numberEquivalenceTip, ...normalizeList(payload.pronunciationTips)].slice(0, 12),
     rhythmTips: normalizeList(payload.rhythmTips),
-    nextDrill: safeString(payload.nextDrill, 'Đọc chậm câu mẫu, ghi âm lại một lần, rồi nghe xem âm cuối đã rõ hơn chưa.'),
-    coachMessage: safeString(payload.coachMessage, transcript ? 'Poo đã nghe bản ghi. Hãy luyện chậm và rõ từng cụm ngắn.' : 'Poo nghe chưa rõ. Bạn thử nói chậm hơn, tách cụm rõ hơn, rồi ghi âm lại nhé.'),
+    nextDrill: safeString(payload.nextDrill, allowContinue ? 'Nếu muốn mượt hơn, nghe mẫu một lần rồi nói lại nhẹ nhàng.' : 'Đọc chậm câu mẫu, ghi âm lại một lần, rồi nghe xem âm cuối đã rõ hơn chưa.'),
+    coachMessage: pooBooMessage || safeString(payload.coachMessage, allowContinue ? 'Đạt rồi, Poo góp ý nhẹ nha. Chỉ cần nói câu ngắn, đúng ý, rõ nhịp. Không cần nói hoàn hảo.' : 'Poo nghe chưa rõ. Bạn thử nói chậm hơn, tách cụm rõ hơn, rồi ghi âm lại nhé.'),
   };
 }
 
@@ -308,8 +334,12 @@ function buildPrompt(fields: Record<string, unknown>) {
 
   return [
     'Bạn là Poo, trợ lý Shadowing tiếng Anh cho người Việt mới học.',
-    'Hãy nghe audio người học và so sánh với targetText.',
+    'Hãy nghe audio người học và so sánh với targetText theo hướng luyện nói thân thiện, không phải kiểm tra phát âm tuyệt đối.',
     'Endpoint này phục vụ cả Shadowing và English Speed, nên phản hồi phải audio/API-first, tập trung vào phát âm, nhịp đọc và độ rõ.',
+    'Phân loại status: correct = rất sát câu mẫu; nearCorrect = gần đúng, hiểu được ý, sai nhẹ vài từ/âm; retry = sai quá nhiều, quá thiếu, khác ý chính hoặc không nghe rõ.',
+    'correct và nearCorrect đều phải có passed=true và allowContinue=true. retry mới có passed=false và allowContinue=false.',
+    'Không dùng requiredWords để chặn ở chế độ shadowing/phát âm; nếu có từ khóa thì chỉ dùng làm góp ý nhẹ.',
+    'Ví dụ target "Hello. Hi, Poo. Thank you." và transcript "hello hi boo thank you" phải là nearCorrect, passed=true, allowContinue=true, góp ý âm /p/ nhẹ nhàng.',
     'Quan trọng: dạng số và dạng chữ là tương đương. Ví dụ six = 6, twenty one = 21, Unit one = Unit 1.',
     'Nếu audio không rõ, không được bịa transcript hoàn hảo; confidence phải là low và coachMessage cần hướng dẫn thu lại nhẹ nhàng.',
     'Phản hồi bằng tiếng Việt, thân thiện, ngắn gọn, không chê bai.',
@@ -327,7 +357,7 @@ function buildPrompt(fields: Record<string, unknown>) {
     `Vietnamese hint: ${translation}`,
     '',
     'JSON shape bắt buộc:',
-    '{"ok":true,"source":"gemini","score":0,"confidence":"high|medium|low","transcript":"","normalizedTranscript":"","normalizedTarget":"","matchedWords":[],"missingWords":[],"extraWords":[],"changedWords":[],"pronunciationTips":[],"rhythmTips":[],"nextDrill":"","coachMessage":""}',
+    '{"ok":true,"source":"gemini","score":0,"confidence":"high|medium|low","status":"correct|nearCorrect|retry","passed":true,"allowContinue":true,"transcript":"","normalizedTranscript":"","normalizedTarget":"","matchedWords":[],"missingWords":[],"extraWords":[],"changedWords":[],"pronunciationTips":[],"rhythmTips":[],"nextDrill":"","coachMessage":""}',
   ].join('\n');
 }
 
