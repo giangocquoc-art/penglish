@@ -60,7 +60,7 @@ const stage6InteractiveMeta: Record<number, { learnerTitle: string; readiness: '
 const stage7InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
   35: { learnerTitle: 'Nói về chính mình bằng câu rõ', readiness: 'complete' },
   36: { learnerTitle: 'Giữ thời gian trong câu cho khớp', readiness: 'complete' },
-  37: { learnertiếng Anh giao tiếp 1', readiness: 'complete' },
+  37: { learnerTitle: 'Tiếng Anh giao tiếp 1', readiness: 'complete' },
   38: { learnerTitle: 'Nối hai ý đi cùng nhau', readiness: 'complete' },
 };
 
@@ -71,7 +71,7 @@ const stage8InteractiveMeta: Record<number, { learnerTitle: string; readiness: '
   42: { learnerTitle: 'Luyện nghe về thể thao', readiness: 'complete' },
   43: { learnerTitle: 'Luyện nghe về nghề nghiệp', readiness: 'complete' },
   44: { learnerTitle: 'Luyện nghe về công nghệ', readiness: 'complete' },
-  45: { learnertiếng Anh giao tiếp 2', readiness: 'complete' },
+  45: { learnerTitle: 'Tiếng Anh giao tiếp 2', readiness: 'complete' },
   46: { learnerTitle: 'Nghe và ghi từ khóa ngắn', readiness: 'complete' },
   47: { learnerTitle: 'Nói lại cùng ý bằng câu dễ hơn', readiness: 'complete' },
   48: { learnerTitle: 'Tự tin giới thiệu bản thân và thuyết trình bằng tiếng Anh', readiness: 'complete' },
@@ -125,7 +125,7 @@ const polishedLessons: Record<number, Foundation48PolishedLesson> = {
   },
   6: {
     goal: 'Tạo câu phủ định với động từ thường bằng do not/don’t và does not/doesn’t.',
-    explanation: 'Khi phủ định động từ thường ở hiện tại, dùng trợ động từ do/does + notừ vựng từ chính từ vựnguyên mẫu. He/she/it dùng does not, không thêm s cho động từ chính.',
+    explanation: 'Khi phủ định động từ thường ở hiện tại, dùng trợ động từ do/does + not, và động từ chính trở về dạng nguyên mẫu. He/she/it dùng does not, không thêm s cho động từ chính.',
     formulas: ['I/You/We/They + do not/don’t + verb', 'He/She/It + does not/doesn’t + verb', 'Do not add -s after doesn’t'],
     examples: ['I do not like coffee.', 'She does not play tennis.', 'They don’t live here.', 'He doesn’t go to school on Sunday.'],
     practiceQuestions: ['Chuyển phủ định: She likes apples.', 'Sửa lỗi: He doesn’t likes tea.', 'Viết 4 câu phủ định về thói quen.', 'Điền don’t/doesn’t.'],
@@ -133,8 +133,8 @@ const polishedLessons: Record<number, Foundation48PolishedLesson> = {
     finalTask: 'Viết một đoạn “Things I don’t do every day” gồm 6 câu.',
   },
   7: {
-    goal: 'Đặtừ vựng từ thường bằng Do/Does.',
-    explanation: 'Câu hỏi hiện từ vựng từ thường cần trợ động từ Do hoặc Does đứng đầu câu. Khi dùng Does cho he/she/it, động từ chính không thêm s/es.',
+    goal: 'Đặt câu hỏi với động từ thường bằng Do/Does.',
+    explanation: 'Câu hỏi hiện tại đơn với động từ thường cần trợ động từ Do hoặc Does đứng đầu câu. Khi dùng Does cho he/she/it, động từ chính không thêm s/es.',
     formulas: ['Do + I/you/we/they + verb?', 'Does + he/she/it + verb?', 'Yes, subject + do/does.', 'No, subject + don’t/doesn’t.'],
     examples: ['Do you study English?', 'Does she like music?', 'Do they live here?', 'Does he play football? No, he doesn’t.'],
     practiceQuestions: ['Đổi sang câu hỏi: She likes tea.', 'Trả lời ngắn: Do you read books?', 'Sửa lỗi: Does he plays tennis?', 'Viết 5 câu hỏi về thói quen.'],
@@ -143,7 +143,7 @@ const polishedLessons: Record<number, Foundation48PolishedLesson> = {
   },
   8: {
     goal: 'Tổng hợp hiện tại đơn: khẳng định, phủ định, nghi vấn và dấu hiệu tần suất.',
-    explanation: 'Hiện tại đơn dùng cho thói quen, lộ trình, sự thật hiển nhiên và trạng thái lặp lại. Cần kiểm soát chủ ngữ he/she/it, trợ động từ do/does và trạng từ tần suất.',
+    explanation: 'Hiện tại đơn dùng cho thói quen, lịch trình, sự thật hiển nhiên và trạng thái lặp lại. Cần kiểm soát chủ ngữ he/she/it, trợ động từ do/does và trạng từ tần suất.',
     formulas: ['Subject + verb/verb-s', 'Subject + don’t/doesn’t + verb', 'Do/Does + subject + verb?', 'always/usually/often/sometimes/never + verb phrase'],
     examples: ['I always get up early.', 'She usually has breakfast at seven.', 'He doesn’t like cartoons.', 'Do you often go to the park?'],
     practiceQuestions: ['Viết 5 câu có trạng từ tần suất.', 'Chuyển sang phủ định: He watches cartoons.', 'Đặt câu hỏi: They play tennis.', 'Sửa lỗi: She don’t like milk.'],

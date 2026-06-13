@@ -349,7 +349,7 @@ export const pooA0A1Dialogues: PooA0A1Dialogue[] = [
     ],
     shadowingSentences: ['What do you want for breakfast?', 'I want bread and eggs.', 'Yes, please.'],
     quiz: [{ questionVi: 'Câu nào lịch sự khi đồng ý nhận đồ ăn/uống?', choices: ['Yes, please.', 'No want.', 'Give me.'], correctAnswer: 'Yes, please.', explanationVi: '“Yes, please” là cách đồng ý lịch sự.' }],
-    commonMistakesVi: ['Không nói cụt “Give me milộ trình huống lịch sự.', '“Breakfast” không viết thành “break fast” khi là danh từ bữa sáng.'],
+    commonMistakesVi: ['Không nói cụt “Give me milk” trong tình huống lịch sự.', '“Breakfast” không viết thành “break fast” khi là danh từ bữa sáng.'],
     tags: ['food', 'breakfast'],
     attachment: attach([25], 'Phù hợp Day 25 về đồ ăn.'),
   },
@@ -393,7 +393,7 @@ export const pooA0A1Dialogues: PooA0A1Dialogue[] = [
       { speaker: 'Mia', en: 'Iced, please.', vi: 'Đá, làm ơn.' },
     ],
     vocabulary: [
-      { term: 'coffee', meaningữ phápleEn: 'A coffee, please.', exampleVi: 'Một cà phê, làm ơn.' },
+      { term: 'coffee', meaningVi: 'cà phê', exampleEn: 'A coffee, please.', exampleVi: 'Một cà phê, làm ơn.' },
       { term: 'small', meaningVi: 'nhỏ', exampleEn: 'A small coffee, please.', exampleVi: 'Một cà phê nhỏ, làm ơn.' },
       { term: 'iced', meaningVi: 'có đá', exampleEn: 'Iced, please.', exampleVi: 'Có đá, làm ơn.' },
     ],
@@ -498,7 +498,7 @@ export const pooA0A1Dialogues: PooA0A1Dialogue[] = [
       { speaker: 'Nam', en: 'How do I get to the bank?', vi: 'Tôi đến ngân hàng như thế nào?' },
       { speaker: 'Officer', en: 'Go straight and turn left.', vi: 'Đi thẳng và rẽ trái.' },
       { speaker: 'Nam', en: 'Is it on the left?', vi: 'Nó ở bên trái phải không?' },
-      { speaker: 'Officer', en: 'Yes, itừ vựng vậy.' },
+      { speaker: 'Officer', en: 'Yes, it is.', vi: 'Đúng vậy.' },
     ],
     vocabulary: [
       { term: 'go straight', meaningVi: 'đi thẳng', exampleEn: 'Go straight.', exampleVi: 'Đi thẳng.' },
@@ -592,7 +592,7 @@ export const pooA0A1Dialogues: PooA0A1Dialogue[] = [
     ],
     shadowingSentences: ['Can you help me?', 'What is the problem?', 'I do not understand this question.'],
     quiz: [{ questionVi: 'Câu nào dùng để nhờ giúp đỡ?', choices: ['Can you help me?', 'How old are you?', 'I like music.'], correctAnswer: 'Can you help me?', explanationVi: '“Can you help me?” là mẫu nhờ giúp đỡ rất thông dụng.' }],
-    commonMistakesVi: ['Không nói “You helộ trình huống lịch sự; nói “Can you help me?”', '“Understand” không từ vựngữ “I”.'],
+    commonMistakesVi: ['Không nói “You help me?” trong tình huống lịch sự; nói “Can you help me?”', '“Understand” không thêm “s” với chủ ngữ “I”.'],
     tags: ['help', 'classroom', 'homework'],
     attachment: attach([20], 'Phù hợp Day 20 về nhờ giúp đỡ.'),
   },
@@ -600,7 +600,7 @@ export const pooA0A1Dialogues: PooA0A1Dialogue[] = [
     id: 'a0-dialogue-021-thank-you-sorry',
     title: 'Thank You and Sorry',
     level: 'A0',
-    situationVi: 'Cảm ơn và xin lộ trình huống đơn giản.',
+    situationVi: 'Cảm ơn và xin lỗi trong tình huống đơn giản.',
     characters: ['Anna', 'Tom'],
     lines: [
       { speaker: 'Anna', en: 'Here is your bag.', vi: 'Túi của bạn đây.' },
@@ -646,7 +646,7 @@ export const pooA0A1Dialogues: PooA0A1Dialogue[] = [
     ],
     shadowingSentences: ['Are you ready to order?', 'I would like noodles.', 'Tea, please.'],
     quiz: [{ questionVi: 'Mẫu nào lịch sự khi gọi món?', choices: ['I would like noodles.', 'I noodles.', 'Give noodles.'], correctAnswer: 'I would like noodles.', explanationVi: '“I would like...” là mẫu lịch sự khi gọi món.' }],
-    commonMistakesVi: ['Không nói “I want noodlộ trìnhà hàng nếu muốn lịch sự hơn; dùng “I would like noodles.”', '“Noodles” thường dùng số nhiều.'],
+    commonMistakesVi: ['Không nói “I want noodles” trong nhà hàng nếu muốn lịch sự hơn; dùng “I would like noodles.”', '“Noodles” thường dùng số nhiều.'],
     tags: ['food', 'restaurant', 'ordering'],
     attachment: attach([25], 'Mở rộng Day 25 về gọi đồ ăn.'),
   },
@@ -659,7 +659,7 @@ export const pooA0A1Dialogues: PooA0A1Dialogue[] = [
     lines: [
       { speaker: 'Customer', en: 'Can I pay by card?', vi: 'Tôi trả bằng thẻ được không?' },
       { speaker: 'Cashier', en: 'Yes, you can.', vi: 'Được.' },
-      { speaker: 'Customer', en: 'How much is itừ vựng bao nhiêu tiền?' },
+      { speaker: 'Customer', en: 'How much is it?', vi: 'Tổng bao nhiêu tiền?' },
       { speaker: 'Cashier', en: 'It is five dollars.', vi: 'Năm đô.' },
     ],
     vocabulary: [
@@ -848,7 +848,7 @@ export const pooA0A1Dialogues: PooA0A1Dialogue[] = [
     lines: [
       { speaker: 'Sara', en: 'Can we meet today?', vi: 'Hôm nay chúng ta gặp nhau được không?' },
       { speaker: 'Minh', en: 'Yes. What time?', vi: 'Được. Mấy giờ?' },
-      { speaker: 'Sara', en: 'Can we meet at từ vựng ta gặp lúc 3 giờ được không?' },
+      { speaker: 'Sara', en: 'Can we meet at three?', vi: 'Chúng ta gặp lúc 3 giờ được không?' },
       { speaker: 'Minh', en: 'Yes, see you then.', vi: 'Được, gặp bạn lúc đó.' },
     ],
     vocabulary: [

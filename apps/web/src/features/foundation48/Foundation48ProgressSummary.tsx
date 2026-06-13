@@ -38,7 +38,7 @@ export function Foundation48ProgressSummary({
       <SimpleGrid columns={{ base: 2, lg: 5 }} gap="2.5">
         <Metric icon={CheckCircle2} label="Hoàn thành" value={`${progress.completed}/48`} />
         <Metric icon={Compass} label="Chặng hiện tại" value={currentStageTitle} />
-        <Metric icon={PlayCircle} label="từ vựngày ${nextDay}`} />
+        <Metric icon={PlayCircle} label="Tiếp tục" value={`Ngày ${nextDay}`} />
         <Metric icon={Waves} label="Chuỗi nước" value={waterStreak.label} />
         <Metric icon={RotateCcw} label="Cần ôn" value={`${progress.mistakesDue || 0} lỗi`} />
       </SimpleGrid>

@@ -74,7 +74,7 @@ export const foundation48SourceIndex = [
   {
     "dayNumber": 3,
     "dayFolder": "day-03-cau-hoi-who-va-that-voi-dong-tu-to-be",
-    "title": "Câu hỏi Who và Whatừ vựng từ to be",
+    "title": "Câu hỏi Who và What với động từ to be",
     "pdfCount": 3,
     "mp3Count": 0,
     "mp4Count": 0,
@@ -1523,7 +1523,7 @@ export const foundation48SourceIndex = [
   {
     "dayNumber": 37,
     "dayFolder": "day-37-tieng-anh-giao-tiep-1",
-    "tiếng Anh giao tiếp 1",
+    "title": "Tiếng Anh giao tiếp 1",
     "pdfCount": 3,
     "mp3Count": 4,
     "mp4Count": 0,
@@ -2019,7 +2019,7 @@ export const foundation48SourceIndex = [
   {
     "dayNumber": 45,
     "dayFolder": "day-45-tieng-anh-giao-tiep-2",
-    "tiếng Anh giao tiếp 2",
+    "title": "Tiếng Anh giao tiếp 2",
     "pdfCount": 3,
     "mp3Count": 0,
     "mp4Count": 0,

@@ -56,7 +56,7 @@ const GAMES: GameDef[] = [
   { id: 'quiz', name: 'Thử sức nhẹ', desc: 'Chọn đáp án để Poo xem bạn nhớ từ đến đâu.', icon: HelpCircle, time: '4–6 phút', reward: 5 },
   { id: 'listen', name: 'Luyện nghe', desc: 'Nghe phát âm và nhận diện từ trong ngữ cảnh.', icon: Headphones, time: '5–7 phút', reward: 10 },
   { id: 'type', name: 'Gõ câu', desc: 'Luyện chính tả bằng cách nhập lại đáp án.', icon: PenTool, time: '5–8 phút', reward: 10 },
-  { id: 'match', name: 'Ghép cặp', desc: 'Ghép từ vựnghĩa để củng cố phản xạ.', icon: Target, time: '3–5 phút', reward: 5 },
+  { id: 'match', name: 'Ghép cặp', desc: 'Ghép từ với nghĩa để củng cố phản xạ.', icon: Target, time: '3–5 phút', reward: 5 },
   { id: 'speed', name: 'Luyện tốc độ', desc: 'Trả lời nhanh để tăng tốc độ nhận diện từ.', icon: Zap, time: '2–4 phút', reward: 10 },
 ];
 
@@ -415,7 +415,8 @@ export function PracticePage() {
 
   useEffect(() => {
     const backendSyncEnabled = Boolean(import.meta.env.VITE_API_URL) || localStorage.getItem('pshare-enable-backend-sync') === '1';
-    if (lessonId || !backendSyncEnabled) return;
+    const token = localStorage.getItem('accessToken');
+    if (lessonId || !token || !backendSyncEnabled) return;
 
     get<any>('/categories').then((r: any) => {
       const arr = Array.isArray(r) ? r : r?.data ?? [];
@@ -763,43 +764,71 @@ export function PracticePage() {
         <Button leftIcon={<Icon as={ArrowLeft} />} variant="ghost" mb="6" onClick={() => setPicked(null)}>
           Quay lại
         </Button>
-        <Box
-          bg="rgba(255,255,255,0.72)"
+        <VStack
+          bgGradient="linear(135deg, #DDF5FF 0%, #F8FCFF 58%, #FFFFFF 100%)"
           border="1px solid"
           borderColor="#BAE6FD"
-          borderRadius="3xl"
-          boxShadow="0 18px 42px rgba(47, 158, 235, 0.10)"
-          p={{ base: '6', md: '8' }}
+          borderRadius="2xl"
+          boxShadow="0 18px 42px rgba(47, 158, 235, 0.12)"
+          p={{ base: '8', md: '10' }}
+          minH="320px"
+          gap="4"
+          justify="center"
           position="relative"
           overflow="hidden"
-          data-testid="practice-selected-mode-panel"
+          sx={{
+            '@keyframes practiceLoadingBubbleDrift': {
+              '0%, 100%': { transform: 'translate3d(0, 0, 0)', opacity: 0.5 },
+              '50%': { transform: 'translate3d(0, -16px, 0)', opacity: 0.95 },
+            },
+            '.practice-loading-bubble': {
+              animation: 'practiceLoadingBubbleDrift 6.4s ease-in-out infinite',
+            },
+            '@media (prefers-reduced-motion: reduce)': {
+              '.practice-loading-bubble': { animation: 'none !important' },
+            },
+          }}
         >
-          <Flex position="relative" direction={{ base: 'column', md: 'row' }} gap="5" align={{ base: 'stretch', md: 'center' }} justify="space-between">
-            <VStack align="start" gap="3" flex="1" minW="0">
-              {game && (
-                <Flex w="60px" h="60px" borderRadius="2xl" bg="rgba(232,244,255,0.82)" border="1px solid" borderColor="rgba(47, 158, 235, 0.20)" align="center" justify="center" color={PRACTICE_COLORS.deepBlue}>
-                  <Icon as={game.icon} boxSize="7" />
-                </Flex>
-              )}
-              <Box minW="0">
-                <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="800" color={PRACTICE_COLORS.deepBlue}>{game?.name ?? 'Luyện tập cùng Poo'}</Text>
-                <Text color="#52667A" fontSize="sm" mt="2">
-                  {displayReadyCount} từ sẵn sàng • {filters.count} câu • {LEVEL_OPTS.find((l) => l.value === filters.level)?.label}
-                </Text>
-              </Box>
-              <Text color="#2F9EEB" fontSize="sm" fontWeight="700">
-                Poo giữ màn hình gọn lại: thanh bơi trên cùng sẽ báo khi có phần cần chuẩn bị.
-              </Text>
-            </VStack>
-            <Box flexShrink={0} alignSelf={{ base: 'center', md: 'auto' }} opacity="0.82" pointerEvents="none" aria-hidden="true">
-              {picked === 'quiz' || picked === 'match' ? (
-                <OceanMascot mascot="cuaQuiz" pose="quiz" size="lg" decorative motion="float" />
-              ) : (
-                <OceanMascot mascot="poo" pose="idle" size="lg" decorative motion="float" />
-              )}
-            </Box>
-          </Flex>
-        </Box>
+          <Box position="absolute" inset="0" pointerEvents="none" aria-hidden="true">
+            <Box position="absolute" right={{ base: '34px', md: '220px' }} top={{ base: '34px', md: '48px' }} w="12px" h="12px" borderRadius="full" bg="rgba(91, 188, 235, 0.30)" boxShadow="0 0 0 1px rgba(47,158,235,0.16)" className="practice-loading-bubble" />
+            <Box position="absolute" right={{ base: '18px', md: '176px' }} bottom={{ base: '44px', md: '62px' }} w="9px" h="9px" borderRadius="full" bg="rgba(221, 245, 255, 0.78)" boxShadow="0 0 0 1px rgba(47,158,235,0.14)" className="practice-loading-bubble" sx={{ animationDelay: '-1.4s' }} />
+            <Box position="absolute" left={{ base: '24px', md: '92px' }} bottom={{ base: '28px', md: '46px' }} w="7px" h="7px" borderRadius="full" bg="rgba(91, 188, 235, 0.22)" boxShadow="0 0 0 1px rgba(47,158,235,0.12)" className="practice-loading-bubble" sx={{ animationDelay: '-2.2s' }} />
+          </Box>
+          <Box
+            position="absolute"
+            right={{ base: '-112px', md: '-34px' }}
+            top={{ base: '-2px', md: '0px' }}
+            transform={{ base: 'scale(0.82)', md: 'scale(1.06)' }}
+            opacity={{ base: 0.48, md: 0.58 }}
+            pointerEvents="none"
+            aria-hidden="true"
+          >
+            {picked === 'quiz' || picked === 'match' ? (
+              <OceanMascot mascot="cuaQuiz" pose="quiz" size="hero" decorative motion="float" />
+            ) : (
+              <OceanMascot mascot="poo" pose="idle" size="hero" decorative motion="float" />
+            )}
+          </Box>
+          <VStack position="relative" zIndex={1} gap="4" textAlign="center" pr={{ base: 0, md: '170px' }} maxW={{ base: '100%', md: '620px' }}>
+            {game && (
+              <Flex w="64px" h="64px" borderRadius="2xl" bg="rgba(255, 255, 255, 0.76)" border="1px solid" borderColor="rgba(47, 158, 235, 0.20)" align="center" justify="center" color={PRACTICE_COLORS.deepBlue} boxShadow="0 12px 24px rgba(47, 158, 235, 0.10)">
+                <Icon as={game.icon} boxSize="8" />
+              </Flex>
+            )}
+            <Text fontSize="2xl" fontWeight="700" color={PRACTICE_COLORS.deepBlue}>Đang khởi động {game?.name ?? ''}...</Text>
+            <Text color="#52667A" fontSize="sm">
+              {displayReadyCount} từ sẵn sàng • {filters.count} câu • {LEVEL_OPTS.find((l) => l.value === filters.level)?.label}
+            </Text>
+            <HStack gap="1.5" color="#2F9EEB" fontSize="xs" fontWeight="700" opacity="0.9" wrap="wrap" justify="center">
+              <Box w="7px" h="7px" borderRadius="full" bg="#5BBCEB" />
+              <Text>Đang gom bong bóng câu hỏi</Text>
+              <Box w="7px" h="7px" borderRadius="full" bg="#AEE7FF" />
+            </HStack>
+            <Text color="#2F9EEB" fontSize="xs" fontWeight="700" opacity="0.82">
+              {picked === 'quiz' || picked === 'match' ? 'Cua nhỏ đang gom đáp án theo nhịp học của bạn' : 'Poo đang bơi theo nhịp học của bạn'}
+            </Text>
+          </VStack>
+        </VStack>
       </OceanPageShell>
     );
   }
@@ -922,7 +951,7 @@ export function PracticePage() {
                 <SimpleGrid columns={{ base: 1, sm: 3 }} gap="3">
                   {[
                     { icon: AlertTriangle, title: 'Câu hay nhầm', subtitle: hasRealMistakes ? 'Poo giữ lại câu cần sửa.' : 'Ôn nhẹ câu A1 nền tảng.', count: `${pooReviewItems.length}`, cta: 'Sửa câu' },
-                    { icon: BookOpen, title: 'Từ cần nhớ', subtitle: weakWords.length > 0 ? 'Có từ nên gặp lại hôm nay.' : 'Gắn từ vựngắn.', count: `${Math.max(2, weakWords.length)}`, cta: 'Ôn từ' },
+                    { icon: BookOpen, title: 'Từ cần nhớ', subtitle: weakWords.length > 0 ? 'Có từ nên gặp lại hôm nay.' : 'Gắn từ với câu ngắn.', count: `${Math.max(2, weakWords.length)}`, cta: 'Ôn từ' },
                     { icon: Headphones, title: 'Nghe lại câu cũ', subtitle: 'Nghe trong đầu rồi đọc chậm.', count: '1', cta: 'Nghe lại' },
                   ].map((card) => (
                     <Box key={card.title} bg="rgba(255,255,255,0.82)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '3.5', md: '4' }} minW="0" data-testid="practice-poo-daily-card">

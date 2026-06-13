@@ -43,15 +43,15 @@ const stage6Seeds: Record<number, DaySeed> = {
   },
   32: {
     title: 'Luyện nghe ngày tháng',
-    goal: 'Hôm nay bạn luyện nghe thứ, từ vựngày trong các câu rất ngắn.',
-    grammarTitle: 'Nghe từ vựng',
+    goal: 'Hôm nay bạn luyện nghe thứ, tháng và ngày trong các câu rất ngắn.',
+    grammarTitle: 'Nghe thứ, ngày và tháng',
     grammar: 'Khi nghe ngày tháng, hãy bắt từ chỉ thứ trước, rồi tháng hoặc số ngày. Người mới chỉ cần nhận ra Monday, Friday, June, March fifth và next Friday.',
     vocabulary: [['Monday','thứ Hai','Today is Monday.'],['Friday','thứ Sáu','See you next Friday.'],['June','tháng Sáu','My birthday is in June.'],['March fifth','ngày 5 tháng 3','The test is on March fifth.'],['today','hôm nay','Today is Monday.'],['birthday','sinh nhật','My birthday is in June.']],
     patterns: [['Today is + day','nói hôm nay là thứ mấy',['Today is Monday.','Today is Friday.']],['My birthday is in + month','nói tháng sinh nhật',['My birthday is in June.','My birthday is in March.']],['Event is on + date','nói ngày sự kiện',['The test is on March fifth.','The meeting is on Friday.']]],
-    sentences: [['Today is Monday.','Hôm nay là thứ Hai.'],['My birthday is in June.','Sinh nhậtừ vựng Sáu.'],['The test is on March fifth.','Bài kiểm từ vựngày 5 tháng 3.'],['See you next Friday.','Hẹn gặp bạn thứ Sáu tới.'],['The class is on Tuesday.','Lớp học vào thứ Ba.']],
+    sentences: [['Today is Monday.','Hôm nay là thứ Hai.'],['My birthday is in June.','Sinh nhật của tôi vào tháng Sáu.'],['The test is on March fifth.','Bài kiểm tra vào ngày 5 tháng 3.'],['See you next Friday.','Hẹn gặp bạn thứ Sáu tới.'],['The class is on Tuesday.','Lớp học vào thứ Ba.']],
     fills: [['Nghe và điền: Today is ___.','Today is Monday.','Monday'],['Nghe và điền: My birthday is in ___.','My birthday is in June.','June'],['Nghe và điền: See you next ___.','See you next Friday.','Friday']],
     orders: [['Sắp xếp câu: Today / is / Monday','Today is Monday.'],['Sắp xếp câu: My / birthday / is / in / June','My birthday is in June.']],
-    choices: [['Bạn nghe thứ nào?','Monday',['Monday','Friday','June','March']],['My birthday is in June nghĩa là gì?','Sinh nhậtừ vựng Sáu.',['Sinh nhậtừ vựng Sáu.','Hôm nay là thứ Hai.','Tôi đi học thứ Sáu.','Bài kiểm tra lúc sáu giờ.']],['Cụm nào nghĩa là “thứ Sáu tới”?','next Friday',['next Friday','last Monday','in June','March fifth']]],
+    choices: [['Bạn nghe thứ nào?','Monday',['Monday','Friday','June','March']],['My birthday is in June nghĩa là gì?','Sinh nhật của tôi vào tháng Sáu.',['Sinh nhật của tôi vào tháng Sáu.','Hôm nay là thứ Hai.','Tôi đi học thứ Sáu.','Bài kiểm tra lúc sáu giờ.']],['Cụm nào nghĩa là “thứ Sáu tới”?','next Friday',['next Friday','last Monday','in June','March fifth']]],
     finalPrompt: 'Tự nói hôm nay là thứ mấy và sinh nhật của bạn ở tháng nào.',
   },
   33: {
@@ -78,7 +78,7 @@ const stage6Seeds: Record<number, DaySeed> = {
     fills: [['Nghe và điền: It costs five ___.','It costs five dollars.','dollars'],['Nghe và điền: The ticket is twenty thousand ___.','The ticket is twenty thousand dong.','dong'],['Nghe và điền: It is seventy-five ___.','It is seventy-five cents.','cents']],
     orders: [['Sắp xếp câu: It / costs / five / dollars','It costs five dollars.'],['Sắp xếp câu: The / ticket / is / twenty / thousand / dong','The ticket is twenty thousand dong.']],
     choices: [['Bạn nghe giá nào?','five dollars',['five dollars','five cents','fifteen dollars','fifty dollars']],['Twenty thousand dong nghĩa là gì?','hai mươi nghìn đồng',['hai mươi nghìn đồng','hai đô la','bảy mươi lăm xu','mười nghìn đồng']],['Câu nào đúng?','The ticket is twenty thousand dong.',['The ticket is twenty thousand dong.','The ticket twenty dong thousand.','Ticket is dollars five.','The dong is ticket.']]],
-    finalPrompt: 'Tự nói 4 giá tiền đơn giản với dollars, centừ vựng.',
+    finalPrompt: 'Tự nói 4 giá tiền đơn giản với dollars, cents và dong.',
   },
 };
 

@@ -2,7 +2,7 @@ import { generatedGrammarLessons } from './grammarLessonAdapter';
 import { generatedReadingLessons } from './readingAdapter';
 
 export type LessonLevel = 'Beginner / A1' | 'Elementary / A2' | 'Intermediate / B1' | 'Upper-intermediate / B2' | 'Advanced / C1';
-export type Skilltừ vựng' | 'Phản xạ' | 'Nghe' | 'Nói' | 'Ôn tập' | 'ngữ pháp' | 'Đọc' | 'Viết';
+export type SkillTag = 'Từ vựng' | 'Phản xạ' | 'Nghe' | 'Nói' | 'Ôn tập' | 'Ngữ pháp' | 'Đọc' | 'Viết';
 export type LessonDifficulty = 'easy' | 'medium' | 'hard';
 export type QuizQuestionType = 'multiple-choice' | 'fill-blank' | 'sentence-order' | 'match-meaning';
 
@@ -432,7 +432,7 @@ const unit2Vocabulary: VocabularyItem[] = [
   { id: 'u2-parents', term: 'parents', pronunciation: '/ˈperənts/', meaningVi: 'bố mẹ', partOfSpeechOrType: 'plural noun', example: 'My parents are here.', exampleMeaningVi: 'Bố mẹ tôi ở đây.', difficulty: 'easy', tags: ['family', 'plural'] },
   { id: 'u2-brother', term: 'brother', pronunciation: '/ˈbrʌðər/', meaningVi: 'anh/em trai', partOfSpeechOrType: 'noun', example: 'This is my brother.', exampleMeaningVi: 'Đây là anh/em trai của tôi.', difficulty: 'easy', tags: ['family', 'person'] },
   { id: 'u2-sister', term: 'sister', pronunciation: '/ˈsɪstər/', meaningVi: 'chị/em gái', partOfSpeechOrType: 'noun', example: 'This is my sister.', exampleMeaningVi: 'Đây là chị/em gái của tôi.', difficulty: 'easy', tags: ['family', 'person'] },
-  { id: 'u2-baby-brother', term: 'baby brother', pronunciation: '/ˈbeɪbi ˈbrʌðər/', meaningVi: 'em trai nhỏ', partOfSpeechOrType: 'noun chunk', example: 'He is my baby brother.', exampleMeaningVi: 'Em ấy lộ trìnhỏ của tôi.', difficulty: 'easy', tags: ['family', 'chunk'] },
+  { id: 'u2-baby-brother', term: 'baby brother', pronunciation: '/ˈbeɪbi ˈbrʌðər/', meaningVi: 'em trai nhỏ', partOfSpeechOrType: 'noun chunk', example: 'He is my baby brother.', exampleMeaningVi: 'Em ấy là em trai nhỏ của tôi.', difficulty: 'easy', tags: ['family', 'chunk'] },
   { id: 'u2-baby-sister', term: 'baby sister', pronunciation: '/ˈbeɪbi ˈsɪstər/', meaningVi: 'em gái nhỏ', partOfSpeechOrType: 'noun chunk', example: 'She is my baby sister.', exampleMeaningVi: 'Em ấy là em gái nhỏ của tôi.', difficulty: 'easy', tags: ['family', 'chunk'] },
   { id: 'u2-grandfather-grandpa', term: 'grandfather / grandpa', pronunciation: '/ˈɡrænfɑːðər/ /ˈɡrænpɑː/', meaningVi: 'ông', partOfSpeechOrType: 'noun', example: 'My grandpa is old.', exampleMeaningVi: 'Ông tôi lớn tuổi.', difficulty: 'easy', tags: ['family', 'person'] },
   { id: 'u2-grandmother-grandma', term: 'grandmother / grandma', pronunciation: '/ˈɡrænmʌðər/ /ˈɡrænmɑː/', meaningVi: 'bà', partOfSpeechOrType: 'noun', example: 'My grandma is kind.', exampleMeaningVi: 'Bà tôi tốt bụng.', difficulty: 'easy', tags: ['family', 'person'] },
@@ -459,7 +459,7 @@ const unit3Vocabulary: VocabularyItem[] = [
   { id: 'u3-notebook', term: 'notebook', pronunciation: '/ˈnoʊtbʊk/', meaningVi: 'vở', partOfSpeechOrType: 'noun', example: 'Where is your notebook?', exampleMeaningVi: 'Vở của bạn ở đâu?', difficulty: 'easy', tags: ['classroom', 'item'] },
   { id: 'u3-pencil', term: 'pencil', pronunciation: '/ˈpensəl/', meaningVi: 'bút chì', partOfSpeechOrType: 'noun', example: 'Can I borrow your pencil?', exampleMeaningVi: 'Mình mượn bút chì của bạn được không?', difficulty: 'easy', tags: ['classroom', 'item'] },
   { id: 'u3-homework', term: 'homework', pronunciation: '/ˈhoʊmwɜːrk/', meaningVi: 'bài tập về nhà', partOfSpeechOrType: 'noun', example: 'I need to do my homework.', exampleMeaningVi: 'Tôi cần làm bài tập về nhà.', difficulty: 'easy', tags: ['study', 'task'] },
-  { id: 'u3-subject', term: 'subject', pronunciation: '/ˈsʌbdʒekt/', meaningVi: 'môn học', partOfSpeechOrType: 'noun', example: 'English is my favorite subject.', exampleMeaningVi: 'tiếng Anh là môn học yêu thích của tôi.', difficulty: 'medium', tags: ['school', 'subject'] },
+  { id: 'u3-subject', term: 'subject', pronunciation: '/ˈsʌbdʒekt/', meaningVi: 'môn học', partOfSpeechOrType: 'noun', example: 'English is my favorite subject.', exampleMeaningVi: 'Tiếng Anh là môn học yêu thích của tôi.', difficulty: 'medium', tags: ['school', 'subject'] },
   { id: 'u3-lesson', term: 'lesson', pronunciation: '/ˈlesən/', meaningVi: 'bài học/tiết học', partOfSpeechOrType: 'noun', example: 'The lesson starts at eight.', exampleMeaningVi: 'Tiết học bắt đầu lúc tám giờ.', difficulty: 'easy', tags: ['school', 'time'] },
   { id: 'u3-test', term: 'test', pronunciation: '/test/', meaningVi: 'bài kiểm tra', partOfSpeechOrType: 'noun', example: 'We have a test today.', exampleMeaningVi: 'Hôm nay chúng tôi có bài kiểm tra.', difficulty: 'easy', tags: ['school', 'task'] },
   { id: 'u3-question', term: 'question', pronunciation: '/ˈkwestʃən/', meaningVi: 'câu hỏi', partOfSpeechOrType: 'noun', example: 'I have a question.', exampleMeaningVi: 'Tôi có một câu hỏi.', difficulty: 'easy', tags: ['classroom', 'communication'] },
@@ -471,8 +471,8 @@ const unit3Vocabulary: VocabularyItem[] = [
   { id: 'u3-classmate', term: 'classmate', pronunciation: '/ˈklæsmeɪt/', meaningVi: 'bạn cùng lớp', partOfSpeechOrType: 'noun', example: 'My classmate helps me.', exampleMeaningVi: 'Bạn cùng lớp giúp tôi.', difficulty: 'easy', tags: ['school', 'person'] },
   { id: 'u3-break-time', term: 'break time', pronunciation: '/breɪk taɪm/', meaningVi: 'giờ ra chơi/giờ nghỉ', partOfSpeechOrType: 'noun chunk', example: 'We play at break time.', exampleMeaningVi: 'Chúng tôi chơi vào giờ ra chơi.', difficulty: 'easy', tags: ['school', 'time'] },
   { id: 'u3-school-bag', term: 'school bag', pronunciation: '/skuːl bæɡ/', meaningVi: 'cặp sách', partOfSpeechOrType: 'noun chunk', example: 'My school bag is blue.', exampleMeaningVi: 'Cặp sách của tôi màu xanh.', difficulty: 'easy', tags: ['school', 'item'] },
-  { id: 'u3-uniform', term: 'uniform', pronunciation: '/ˈjuːnɪfɔːrm/', meaningVi: 'đồngữ phápartOfSpeechOrType: 'noun', example: 'I wear a uniform to school.', exampleMeaningVi: 'Tôi mặc đồng phục đến trường.', difficulty: 'medium', tags: ['school', 'clothes'] },
-  { id: 'u3-principal', term: 'principal', pronunciation: '/ˈprɪnsəpəl/', meaningVi: 'hiệu trưởng', partOfSpeechOrType: 'noun', example: 'The principal is in the office.', exampleMeaningVi: 'Hiệu trưởng ở từ vựng.', difficulty: 'medium', tags: ['school', 'person'] },
+  { id: 'u3-uniform', term: 'uniform', pronunciation: '/ˈjuːnɪfɔːrm/', meaningVi: 'đồng phục', partOfSpeechOrType: 'noun', example: 'I wear a uniform to school.', exampleMeaningVi: 'Tôi mặc đồng phục đến trường.', difficulty: 'medium', tags: ['school', 'clothes'] },
+  { id: 'u3-principal', term: 'principal', pronunciation: '/ˈprɪnsəpəl/', meaningVi: 'hiệu trưởng', partOfSpeechOrType: 'noun', example: 'The principal is in the office.', exampleMeaningVi: 'Hiệu trưởng ở trong văn phòng.', difficulty: 'medium', tags: ['school', 'person'] },
   { id: 'u3-english', term: 'English', pronunciation: '/ˈɪŋɡlɪʃ/', meaningVi: 'môn tiếng Anh', partOfSpeechOrType: 'noun', example: 'I have English on Monday.', exampleMeaningVi: 'Tôi có môn tiếng Anh vào thứ Hai.', difficulty: 'easy', tags: ['subject', 'core'] },
   { id: 'u3-math', term: 'math', pronunciation: '/mæθ/', meaningVi: 'môn toán', partOfSpeechOrType: 'noun', example: 'Math is on Tuesday.', exampleMeaningVi: 'Môn toán vào thứ Ba.', difficulty: 'easy', tags: ['subject', 'core'] },
 ];
@@ -493,11 +493,11 @@ const a1ClassmateVocabulary: VocabularyItem[] = [
 const a1DrinkVocabulary: VocabularyItem[] = [
   { id: 'a1-drink-menu', term: 'menu', pronunciation: '/ˈmenjuː/', meaningVi: 'thực đơn', partOfSpeechOrType: 'noun', example: 'Can I see the menu?', exampleMeaningVi: 'Mình xem thực đơn được không?', cefrLevel: 'A1', difficulty: 'easy', tags: ['cafe', 'ordering'] },
   { id: 'a1-drink-water', term: 'water', pronunciation: '/ˈwɔːtər/', meaningVi: 'nước lọc', partOfSpeechOrType: 'noun', example: 'I would like water.', exampleMeaningVi: 'Tôi muốn nước lọc.', cefrLevel: 'A1', difficulty: 'easy', tags: ['drink'] },
-  { id: 'a1-drink-coffee', term: 'coffee', pronunciation: '/ˈkɔːfi/', meaningữ phápartOfSpeechOrType: 'noun', example: 'One coffee, please.', exampleMeaningVi: 'Cho mình một ly cà phê nhé.', cefrLevel: 'A1', difficulty: 'easy', tags: ['drink'] },
+  { id: 'a1-drink-coffee', term: 'coffee', pronunciation: '/ˈkɔːfi/', meaningVi: 'cà phê', partOfSpeechOrType: 'noun', example: 'One coffee, please.', exampleMeaningVi: 'Cho mình một ly cà phê nhé.', cefrLevel: 'A1', difficulty: 'easy', tags: ['drink'] },
   { id: 'a1-drink-tea', term: 'tea', pronunciation: '/tiː/', meaningVi: 'trà', partOfSpeechOrType: 'noun', example: 'I like tea.', exampleMeaningVi: 'Tôi thích trà.', cefrLevel: 'A1', difficulty: 'easy', tags: ['drink'] },
   { id: 'a1-drink-juice', term: 'orange juice', pronunciation: '/ˈɔːrɪndʒ dʒuːs/', meaningVi: 'nước cam', partOfSpeechOrType: 'noun chunk', example: 'Orange juice, please.', exampleMeaningVi: 'Cho mình nước cam nhé.', cefrLevel: 'A1', difficulty: 'easy', tags: ['drink', 'chunk'] },
   { id: 'a1-drink-small', term: 'small', pronunciation: '/smɔːl/', meaningVi: 'nhỏ', partOfSpeechOrType: 'adjective', example: 'A small coffee, please.', exampleMeaningVi: 'Cho mình một ly cà phê nhỏ nhé.', cefrLevel: 'A1', difficulty: 'easy', tags: ['size'] },
-  { id: 'a1-drink-large', term: 'large', pronunciation: '/lɑːrdʒ/', meaningVi: 'lớn', partOfSpeechOrType: 'adjective', example: 'A large tea, please.', exampleMeaningVi: 'Cho mình một lộ trìnhé.', cefrLevel: 'A1', difficulty: 'easy', tags: ['size'] },
+  { id: 'a1-drink-large', term: 'large', pronunciation: '/lɑːrdʒ/', meaningVi: 'lớn', partOfSpeechOrType: 'adjective', example: 'A large tea, please.', exampleMeaningVi: 'Cho mình một ly trà lớn nhé.', cefrLevel: 'A1', difficulty: 'easy', tags: ['size'] },
   { id: 'a1-drink-cold', term: 'cold', pronunciation: '/koʊld/', meaningVi: 'lạnh', partOfSpeechOrType: 'adjective', example: 'Cold water, please.', exampleMeaningVi: 'Cho mình nước lạnh nhé.', cefrLevel: 'A1', difficulty: 'easy', tags: ['description'] },
   { id: 'a1-drink-how-much', term: 'how much is it?', pronunciation: '/haʊ mʌtʃ ɪz ɪt/', meaningVi: 'món này bao nhiêu tiền vậy?', partOfSpeechOrType: 'question chunk', example: 'How much is it?', exampleMeaningVi: 'Món này bao nhiêu tiền vậy?', cefrLevel: 'A1', difficulty: 'medium', tags: ['price', 'question'] },
   { id: 'a1-drink-here-you-are', term: 'here you are', pronunciation: '/hɪr juː ɑːr/', meaningVi: 'của bạn đây', partOfSpeechOrType: 'service chunk', example: 'Here you are.', exampleMeaningVi: 'Của bạn đây.', cefrLevel: 'A1', difficulty: 'easy', tags: ['service', 'chunk'] },
@@ -513,7 +513,7 @@ export const pEnglishLessons: EnglishLesson[] = [
     subtitle: 'Học cách chào hỏi, nói tên, hỏi tên và giới thiệu bản thân thật ngắn bằng tiếng Anh.',
     level: 'Beginner / A1',
     estimatedTime: '15–20 phút',
-    skillTags: ['từ vựng', 'Phản xạ', 'Nghe', 'Nói', 'Ôn tập'],
+    skillTags: ['Từ vựng', 'Phản xạ', 'Nghe', 'Nói', 'Ôn tập'],
     learningObjectives: [
       'Chào hỏi người khác trong tình huống đơn giản.',
       'Nói tên của mình bằng tiếng Anh.',
@@ -637,7 +637,7 @@ export const pEnglishLessons: EnglishLesson[] = [
       {
         id: 'grammar-my-name-is',
         title: 'My name is...',
-        explanationVi: '“My name is...” là một câu đầy đủ, an từ vựng cho người mới bắt đầu.',
+        explanationVi: '“My name is...” là một câu đầy đủ, an toàn và dễ dùng cho người mới bắt đầu.',
         examples: ['My name is Lan.', 'My name is Minh.'],
       },
       {
@@ -834,7 +834,7 @@ export const pEnglishLessons: EnglishLesson[] = [
     subtitle: 'Luyện nghe tình huống gặp bạn mới trong lớp, hỏi chỗ ngồi, làm việc theo cặp và chào tạm biệt.',
     level: 'Beginner / A1',
     estimatedTime: '15–20 phút',
-    skillTags: ['Nghe', 'từ vựng', 'Phản xạ', 'Nói', 'Ôn tập'],
+    skillTags: ['Nghe', 'Từ vựng', 'Phản xạ', 'Nói', 'Ôn tập'],
     learningObjectives: [
       'Nghe và nhận diện các cụm A1 trong lớp học như “Is this seat free?” và “pair work”.',
       'Hiểu ý chính của hội thoại ngắn khi gặp bạn mới.',
@@ -910,7 +910,7 @@ export const pEnglishLessons: EnglishLesson[] = [
       { id: 'a1-classmate-speed-sit', promptVi: 'Bạn có thể ngồi ở đây.', expectedEnglish: 'You can sit here.', hint: 'You can...' },
     ],
     shadowingScript: { id: 'a1-classmate-shadow', title: 'Nói đuổi: bạn mới trong lớp', lines: [{ id: 'a1-classmate-shadow-1', text: 'Hi, I am new here.', meaningVi: 'Chào, mình mới ở đây.' }, { id: 'a1-classmate-shadow-2', text: 'Is this seat free?', meaningVi: 'Chỗ này còn trống không?' }, { id: 'a1-classmate-shadow-3', text: 'Yes, you can sit here.', meaningVi: 'Có, bạn có thể ngồi ở đây.' }] },
-    commonMistakes: [{ id: 'a1-classmate-mistake-seat-sit', mistake: 'Nhầm seat và sit khi nghe.', correction: 'seat = chỗ ngồi; sit = ngồi.', explanationVi: 'Hãy nghe âm dài /iː/ trong “seatừ vựngắn trong “sit”.' }],
+    commonMistakes: [{ id: 'a1-classmate-mistake-seat-sit', mistake: 'Nhầm seat và sit khi nghe.', correction: 'seat = chỗ ngồi; sit = ngồi.', explanationVi: 'Hãy nghe âm dài /iː/ trong “seat” và âm ngắn trong “sit”.' }],
     realLifeSituations: [{ id: 'a1-classmate-situation-class', title: 'Ngày đầu vào lớp', scenarioVi: 'Bạn vào lớp mới và cần hỏi chỗ ngồi còn trống.', usefulPhrases: ['I am new here.', 'Is this seat free?', 'You can sit here.'] }],
     gameMissions: [{ id: 'a1-classmate-mission-listen', title: 'Bắt 5 từ khóa lớp học', instructionVi: 'Nghe mỗi câu ít nhất 2 lần và ghi nhớ từ khóa chính trước khi xem lời thoại.', successCriteria: 'Trả lời đúng ít nhất 4/5 câu nghe.' }],
     whaleCoachLines: ['Nghe từ khóa trước, xem lời thoại sau.', 'Nếu nghe nhầm seat/sit, hãy bấm Nghe chậm một lần nữa.'],
@@ -927,12 +927,12 @@ export const pEnglishLessons: EnglishLesson[] = [
     subtitle: 'Luyện nghe tình huống gọi đồ uống ở quán nước bằng câu ngắn, lịch sự và dễ dùng.',
     level: 'Beginner / A1',
     estimatedTime: '15–20 phút',
-    skillTags: ['Nghe', 'từ vựng', 'Phản xạ', 'Nói', 'Ôn tập'],
+    skillTags: ['Nghe', 'Từ vựng', 'Phản xạ', 'Nói', 'Ôn tập'],
     learningObjectives: ['Nghe và nhận diện tên đồ uống A1.', 'Hiểu câu gọi món ngắn như “One small coffee, please.”', 'Hỏi giá bằng cụm “How much is it?”.', 'Luyện phản xạ gọi đồ uống lịch sự.', 'Xem lời thoại sau khi trả lời để tự sửa lỗi nghe.'],
     vocabulary: a1DrinkVocabulary,
     sentencePatterns: [
       { id: 'a1-drink-pattern-order', pattern: 'One + drink, please.', vietnameseExplanation: 'Mẫu gọi đồ uống ngắn và lịch sự.', examples: [{ text: 'One coffee, please.', meaningVi: 'Cho mình một ly cà phê nhé.' }, { text: 'One orange juice, please.', meaningVi: 'Cho mình một ly nước cam nhé.' }] },
-      { id: 'a1-drink-pattern-size', pattern: 'A small / large + drink, please.', vietnameseExplanation: 'Thêm kích cỡ trước tên đồ uống.', examples: [{ text: 'A small coffee, please.', meaningVi: 'Cho mình một ly cà phê nhỏ nhé.' }, { text: 'A large tea, please.', meaningVi: 'Cho mình một lộ trìnhé.' }] },
+      { id: 'a1-drink-pattern-size', pattern: 'A small / large + drink, please.', vietnameseExplanation: 'Thêm kích cỡ trước tên đồ uống.', examples: [{ text: 'A small coffee, please.', meaningVi: 'Cho mình một ly cà phê nhỏ nhé.' }, { text: 'A large tea, please.', meaningVi: 'Cho mình một ly trà lớn nhé.' }] },
       { id: 'a1-drink-pattern-price', pattern: 'How much is it?', vietnameseExplanation: 'Câu hỏi giá rất hữu ích ở A1.', examples: [{ text: 'How much is it?', meaningVi: 'Món này bao nhiêu tiền vậy?' }] },
     ],
     miniDialogues: [
@@ -984,21 +984,21 @@ export const pEnglishLessons: EnglishLesson[] = [
     subtitle: 'Học cách giới thiệu người thân, bạn bè, hỏi quan hệ và mô tả người quen bằng câu A1 ngắn.',
     level: 'Beginner / A1',
     estimatedTime: '35–45 phút',
-    skillTags: ['từ vựng', 'Phản xạ', 'Nghe', 'Nói', 'ngữ pháp', 'Ôn tập'],
+    skillTags: ['Từ vựng', 'Phản xạ', 'Nghe', 'Nói', 'Ngữ pháp', 'Ôn tập'],
     learningObjectives: [
       'Gọi tên các thành viên gia đình cơ bản như father, mother, brother, sister và parents.',
       'Giới thiệu người thân hoặc bạn bè bằng mẫu “This is my...”.',
       'Hỏi và trả lời quan hệ bằng “Who is this?” và “This is my sister.”',
       'Hỏi tên người thân/bạn bè bằng cụm “What is your brother’s name?”.',
       'Mô tả người thân/bạn bè bằng tính từ A1 như kind, funny, friendly và tall.',
-      'Nhận biếtừ vựng đơn giản my, your, his, her trong cụm cố định.',
+      'Nhận biết và dùng đơn giản my, your, his, her trong cụm cố định.',
       'Nói tuổi đơn giản bằng “years old”.',
       'Nối Bài 1 với câu giới thiệu người đi cùng: “Hi, I’m Lan. This is my friend, Mai.”',
     ],
     vocabulary: unit2Vocabulary,
     sentencePatterns: [
       { id: 'u2-pattern-this-is-my', pattern: 'This is my + person.', vietnameseExplanation: 'Dùng để giới thiệu một người thân hoặc bạn bè. Người mới chỉ cần thay person bằng mother, brother, friend...', examples: [{ text: 'This is my mother.', meaningVi: 'Đây là mẹ của tôi.' }, { text: 'This is my brother.', meaningVi: 'Đây là anh/em trai của tôi.' }, { text: 'This is my friend, Mai.', meaningVi: 'Đây là bạn tôi, Mai.' }] },
-      { id: 'u2-pattern-who-is-this', pattern: 'A: Who is this? / B: This is my + person.', vietnameseExplanation: 'Dùng khi hỏi “Đây lộ trình hoặc khi giới thiệu người đứng gần mình.', examples: [{ speaker: 'A', text: 'Who is this?', meaningVi: 'Đây là ai?' }, { speaker: 'B', text: 'This is my sister.', meaningVi: 'Đây là chị/em gái của tôi.' }] },
+      { id: 'u2-pattern-who-is-this', pattern: 'A: Who is this? / B: This is my + person.', vietnameseExplanation: 'Dùng khi hỏi “Đây là ai?” trong ảnh hoặc khi giới thiệu người đứng gần mình.', examples: [{ speaker: 'A', text: 'Who is this?', meaningVi: 'Đây là ai?' }, { speaker: 'B', text: 'This is my sister.', meaningVi: 'Đây là chị/em gái của tôi.' }] },
       { id: 'u2-pattern-his-her-name', pattern: 'His name is + name. / Her name is + name.', vietnameseExplanation: 'Học his/her như cụm nói tên của nam/nữ, không cần phân tích ngữ pháp sâu ở Bài 2.', examples: [{ text: 'His name is Nam.', meaningVi: 'Tên của anh ấy là Nam.' }, { text: 'Her name is Linh.', meaningVi: 'Tên của cô ấy là Linh.' }] },
       { id: 'u2-pattern-person-name', pattern: 'What is your + person’s + name? / My + person’s + name is + name.', vietnameseExplanation: 'Dùng possessive ’s như một cụm cố định để hỏi và trả lời tên người thân.', examples: [{ text: 'What is your brother’s name?', meaningVi: 'Tên anh/em trai bạn là gì?' }, { text: 'My brother’s name is Minh.', meaningVi: 'Tên anh/em trai tôi là Minh.' }] },
       { id: 'u2-pattern-description', pattern: 'My + person + is + adjective.', vietnameseExplanation: 'Dùng để mô tả rất ngắn về tính cách hoặc ngoại hình cơ bản.', examples: [{ text: 'My mom is kind.', meaningVi: 'Mẹ tôi tốt bụng.' }, { text: 'My friend is funny.', meaningVi: 'Bạn tôi vui tính.' }, { text: 'My brother is tall.', meaningVi: 'Anh/em trai tôi cao.' }] },
@@ -1014,7 +1014,7 @@ export const pEnglishLessons: EnglishLesson[] = [
       { id: 'u2-grammar-this-is', title: 'This is...', explanationVi: 'Dùng “This is...” để giới thiệu một người ở gần hoặc trong ảnh. Bài 2 chưa cần phân biệt sâu this/that.', examples: ['This is my father.', 'This is my friend.'] },
       { id: 'u2-grammar-possessive-adjectives', title: 'my / your / his / her', explanationVi: 'Đây là các từ sở hữu cơ bản: my mother = mẹ của tôi, your sister = chị/em gái của bạn, his name = tên của anh ấy, her name = tên của cô ấy.', examples: ['my mother', 'your sister', 'his name', 'her name'] },
       { id: 'u2-grammar-simple-be', title: 'be: is / are', explanationVi: 'Bài 2 tập trung vào “This is...”, “He is...”, “She is...”. “They are my parents” chỉ cần nhận biết ở mức cơ bản.', examples: ['This is my mom.', 'He is funny.', 'She is kind.', 'They are my parents.'] },
-      { id: 'u2-grammar-possessive-s', title: 'Possessive ’s', explanationVi: 'Học như một cụm: “My brother’s name is Minh.” Không mở rộng sangữ pháp ở bài này.', examples: ['My brother’s name is Minh.', 'My sister’s name is Hoa.'] },
+      { id: 'u2-grammar-possessive-s', title: 'Possessive ’s', explanationVi: 'Học như một cụm: “My brother’s name is Minh.” Không mở rộng sang sở hữu phức tạp ở bài này.', examples: ['My brother’s name is Minh.', 'My sister’s name is Hoa.'] },
       { id: 'u2-grammar-do-you-have', title: 'Do you have...?', explanationVi: 'Dạy nhận biết và trả lời ngắn. “Do you have a brother?” nghĩa là “Bạn có anh/em trai không?”.', examples: ['Do you have a brother? — Yes, I do.', 'Do you have a sister? — No, I don’t.'] },
     ],
     pronunciationNotes: [
@@ -1102,11 +1102,11 @@ export const pEnglishLessons: EnglishLesson[] = [
     subtitle: 'Học từ vựng lớp học, môn học, đồ dùng học tập và các câu hỏi thường gặp ở trường.',
     level: 'Beginner / A1',
     estimatedTime: '35–45 phút',
-    skillTags: ['từ vựng', 'Phản xạ', 'Nghe', 'Nói', 'Đọc', 'Viết', 'Ôn tập'],
+    skillTags: ['Từ vựng', 'Phản xạ', 'Nghe', 'Nói', 'Đọc', 'Viết', 'Ôn tập'],
     learningObjectives: [
-      'Gọi tên ít nhất 20 từ vựng học và lớp học.',
+      'Gọi tên ít nhất 20 từ/cụm về trường học và lớp học.',
       'Nói được câu đơn giản như “This is my classroom.” và “I have English on Monday.”',
-      'Hỏi và từ vựng học tập như notebook, pencil, school bag.',
+      'Hỏi và trả lời về đồ dùng học tập như notebook, pencil, school bag.',
       'Nói về bài tập về nhà, bài kiểm tra và câu hỏi trong lớp.',
       'Mượn đồ dùng lớp học bằng câu lịch sự “Can I borrow your pencil?”.',
       'Nghe và nhận diện các câu A1 ngắn trong ngữ cảnh trường học.',

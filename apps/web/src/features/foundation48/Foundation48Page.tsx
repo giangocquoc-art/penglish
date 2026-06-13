@@ -44,7 +44,7 @@ export function Foundation48Page() {
                 48 ngày lấy gốc
               </Text>
               <Text mt="1" color={COLORS.muted} fontSize={{ base: 'sm', md: 'md' }} fontWeight="800" lineHeight="1.45">
-                Khóa nền tảng cho người mới: mỗi ngày khoảng 12 phút, đi từ vựng Từ mới → Mẫu câu → Lời thoại → Câu luyện → Thử sức nhẹ.
+                Khóa nền tảng cho người mới: mỗi ngày khoảng 12 phút, đi theo vòng Từ mới → Mẫu câu → Lời thoại → Câu luyện → Thử sức nhẹ.
               </Text>
             </Box>
             <Box display={{ base: 'none', md: 'block' }} pr="1" w="92px" flexShrink={0}>

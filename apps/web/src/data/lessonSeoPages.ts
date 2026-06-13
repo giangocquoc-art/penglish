@@ -36,10 +36,10 @@ function buildLessonSeoPage(alias: (typeof LESSON_SEO_ALIASES)[number]): LessonS
     requestedSlug: alias.slug,
     lessonId: lesson.id,
     title: `${lesson.unitTitle} - Bài học tiếng Anh PooEnglish`,
-    description: `Học ${lesson.titleVi.toLowerCase()} bằng từ vựng, mẫu câu, luyện nghe, nói phản xạ và quiz nhỏ trên PooEngữ pháp người mới bắt đầu.`,
+    description: `Học ${lesson.titleVi.toLowerCase()} bằng từ vựng, mẫu câu, luyện nghe, nói phản xạ và quiz nhỏ trên PooEnglish. Phù hợp người mới bắt đầu.`,
     h1: `${lesson.unitTitle}: ${lesson.titleVi}`,
     quickAnswerHeading: `Bài ${lesson.titleVi.toLowerCase()} học gì?`,
-    quickAnswer: `Bài ${lesson.titleVi.toLowerCase()} giúp người mới học các từ và câu căn bản như ${vocabularyPreview}. Người học được đọc nghĩa từ vựnghe câu mẫu, luyện nói phản xạ và kiểm tra nhẹ để dùng bài trong tình huống thật.`,
+    quickAnswer: `Bài ${lesson.titleVi.toLowerCase()} giúp người mới học các từ và câu căn bản như ${vocabularyPreview}. Người học được đọc nghĩa tiếng Việt, nghe câu mẫu, luyện nói phản xạ và kiểm tra nhẹ để dùng bài trong tình huống thật.`,
     quickBullets: [
       `Trình độ: ${lesson.level}`,
       `Thời lượng gợi ý: ${lesson.estimatedTime}`,
@@ -54,7 +54,7 @@ function buildLessonSeoPage(alias: (typeof LESSON_SEO_ALIASES)[number]): LessonS
         ],
       },
       {
-        heading: 'từ vựng và mẫu câu trong bài',
+        heading: 'Từ vựng và mẫu câu trong bài',
         paragraphs: [
           `Một số từ và cụm tiêu biểu gồm: ${vocabularyPreview}. Những từ này được đặt trong câu ví dụ để bạn hiểu nghĩa, phát âm và tình huống dùng.`,
           `Bài học cũng có các mẫu câu như ${lesson.sentencePatterns.slice(0, 3).map((pattern) => pattern.pattern).join(', ')}. Hãy học mẫu câu như một khung dùng được, sau đó thay từ để tạo câu của riêng bạn.`,
@@ -64,7 +64,7 @@ function buildLessonSeoPage(alias: (typeof LESSON_SEO_ALIASES)[number]): LessonS
         heading: 'Cách học bài này trong PooEnglish',
         paragraphs: [
           'Bạn nên đọc mục tiêu trước, học vài từ chính, nghe câu mẫu, nói lại chậm, rồi làm quiz nhỏ. Nếu câu nào còn khó, hãy lưu từ hoặc cụm vào sổ từ vựng để ôn lại.',
-          'Sau bài học, bạn có thể mở shadowing để luyện nhịp nói hoặc quay về lộ trình học để biết bài kế tiếp. Poo khuyên học chậm nhưng chắc, đặc biệtừ vựngười mất gốc.',
+          'Sau bài học, bạn có thể mở shadowing để luyện nhịp nói hoặc quay về lộ trình học để biết bài kế tiếp. Poo khuyên học chậm nhưng chắc, đặc biệt với người mất gốc.',
         ],
       },
     ],
@@ -73,13 +73,13 @@ function buildLessonSeoPage(alias: (typeof LESSON_SEO_ALIASES)[number]): LessonS
       { question: 'Có cần đăng nhập để xem bài học không?', answer: 'Trang SEO bài học có thể đọc công khai. Khi vào app học tương tác, đăng nhập giúp lưu tiến độ tốt hơn nhưng không phải rào cản để tìm hiểu nội dung.' },
       { question: 'Nên học bài này trong bao lâu?', answer: `Bạn có thể dành khoảng ${lesson.estimatedTime}, sau đó quay lại ôn từ và nói lại câu khó vào ngày hôm sau.` },
       { question: 'Bài này có luyện nghe nói không?', answer: 'Có. Dữ liệu bài học gồm luyện nghe, nói phản xạ và có thể nối sang shadowing để luyện nhịp câu tự nhiên hơn.' },
-      { question: 'Sau bài này nên học gì tiếp?', answer: 'Bạn nên quay lộ trình học để đi tiếp theo thứ tự, hoặc mở sổ từ vựng để ôn những từ còn chưa chắc.' },
+      { question: 'Sau bài này nên học gì tiếp?', answer: 'Bạn nên quay lại lộ trình học để đi tiếp theo thứ tự, hoặc mở sổ từ vựng để ôn những từ còn chưa chắc.' },
     ],
     relatedLinks: [
       { label: 'Vào lộ trình học', to: '/learning-path' },
       { label: 'Luyện shadowing', to: '/shadowing' },
       { label: 'Ôn từ vựng', to: '/words' },
-      { label: 'học tiếng Anh cho người mất gốc', to: '/hoc-tieng-anh-cho-nguoi-mat-goc' },
+      { label: 'Học tiếng Anh cho người mất gốc', to: '/hoc-tieng-anh-cho-nguoi-mat-goc' },
     ],
     lastmod: '2026-06-11',
     priority: '0.82',

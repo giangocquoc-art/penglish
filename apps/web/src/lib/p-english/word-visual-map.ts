@@ -65,7 +65,7 @@ export const WORD_CATEGORY_SCENES: Record<WordVisualCategory, WordVisualScene> =
     emoji: '✏️',
     accentColor: '#2563EB',
     softColor: '#DBEAFE',
-    hint: 'Bàn học, bútừ vựng giúp nhớ đồ vật trong lớp.',
+    hint: 'Bàn học, bút và bảng giúp nhớ đồ vật trong lớp.',
     pronunciationHintVi: DEFAULT_PRONUNCIATION_HINT,
   },
   'daily-routine': {
@@ -173,7 +173,7 @@ export const WORD_CATEGORY_SCENES: Record<WordVisualCategory, WordVisualScene> =
     emoji: '✨',
     accentColor: '#2F9EEB',
     softColor: '#E8F4FF',
-    hint: 'Một cảnh đơn giản giúp nối từ từ vựnghĩa tiếng Việt.',
+    hint: 'Một cảnh đơn giản giúp nối từ tiếng Anh với nghĩa tiếng Việt.',
     pronunciationHintVi: DEFAULT_PRONUNCIATION_HINT,
   },
 };

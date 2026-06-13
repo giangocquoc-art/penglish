@@ -95,7 +95,7 @@ function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
   shadowingScript: ShadowingScript;
 } {
   const [firstExample, secondExample, thirdExample, fourthExample, fifthExample] = source.examples;
-  const dialogueFirst = firstExample ?? { text: 'I can use this grammar today.', meaningVi: 'Tôi có thể dùngữ pháp này hôm nay.' };
+  const dialogueFirst = firstExample ?? { text: 'I can use this grammar today.', meaningVi: 'Tôi có thể dùng mẫu ngữ pháp này hôm nay.' };
   const dialogueSecond = secondExample ?? dialogueFirst;
   const listeningExample = thirdExample ?? dialogueSecond;
   const transferExample = fourthExample ?? listeningExample;
@@ -155,7 +155,7 @@ function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
     listeningPractice: listeningExamples.map((example, index) => ({
       id: `${source.id}-listening-bridge-${index + 1}`,
       text: example.text,
-      question: index === 0 ? `Bạn nghe thấy câu nào dùng mẫu “${patternLabel}”?` : 'Câu vừa ngữ pháp với nghĩa tiếng Việt nào?',
+      question: index === 0 ? `Bạn nghe thấy câu nào dùng mẫu “${patternLabel}”?` : 'Câu vừa nghe phù hợp với nghĩa tiếng Việt nào?',
       options: [example.text, dialogueFirst.text === example.text ? dialogueSecond.text : dialogueFirst.text, 'I will review this sentence slowly.']
         .filter((option, optionIndex, options) => option && options.indexOf(option) === optionIndex)
         .slice(0, 3),
@@ -213,13 +213,13 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
   return {
     id: source.id,
     unitId: source.unitId,
-    unitTitle: `ngữ pháp · ${source.level}`,
+    unitTitle: `Ngữ pháp · ${source.level}`,
     titleVi: source.titleVi,
     titleEn: source.titleEn,
     subtitle: source.subtitleVi,
     level: mapLevel(source.level),
     estimatedTime: source.estimatedTime,
-    skillTags: ['ngữ pháp', 'Ôn tập', 'Viết', 'Nghe', 'Nói'],
+    skillTags: ['Ngữ pháp', 'Ôn tập', 'Viết', 'Nghe', 'Nói'],
     learningObjectives: [
       `Hiểu mẫu: ${source.titleVi}.`,
       'Nhận diện vị trí bị che trong câu luyện.',
@@ -258,14 +258,14 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
         id: `${source.id}-mistake`,
         mistake: 'Dịch từng từ rồi chọn đáp án theo tiếng Việt.',
         correction: 'Nhìn loại từ và vị trí trong câu trước, sau đó chọn theo mẫu tiếng Anh.',
-        explanationVi: 'Các bài ngữ pháp đi theo mẫu câu, nên bạn cần nhận diện cấu từ vựnghĩa từng từ.',
+        explanationVi: 'Các bài ngữ pháp đi theo mẫu câu, nên bạn cần nhận diện cấu trúc thay vì đoán nghĩa từng từ.',
       },
     ],
     realLifeSituations: [
       {
         id: `${source.id}-situation`,
         title: 'Dùng trong câu ngắn hằng ngày',
-        scenarioVi: 'Gặp mẫu này trong bài đọc, tin nhắn, lớp học hoặc khi từ vựngắn.',
+        scenarioVi: 'Gặp mẫu này trong bài đọc, tin nhắn, lớp học hoặc khi tự viết câu ngắn.',
         usefulPhrases: source.examples.map((example) => example.text),
       },
     ],
@@ -285,7 +285,7 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
     finalMiniChallenge: {
       id: `${source.id}-challenge`,
       title: 'Tự tạo một câu mới',
-      instructionVi: 'Viết một câu rất ngắn dùng đúngữ pháp vừa học.',
+      instructionVi: 'Viết một câu rất ngắn dùng đúng mẫu ngữ pháp vừa học.',
       targetOutput: source.examples.slice(0, 2).map((example) => example.text),
     },
     reviewRules: {
@@ -293,7 +293,7 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
       ifWrong: 'Nếu trả lời sai, đọc lại giải thích và làm lại câu điền chỗ trống ngay trong phiên học.',
       ifCorrectTwice: 'Nếu đúng 2 lần, chuyển sang câu cùng mẫu nhưng ngữ cảnh khác.',
       ifCorrectThreeTimesAcrossSessions: 'Nếu đúng qua nhiều phiên, đánh dấu mẫu ngữ pháp là đã quen.',
-      priorityRule: 'Ưu tiên mẫu có lỗi sai gần nhấtừ vựng cấp CEFR.',
+      priorityRule: 'Ưu tiên mẫu có lỗi sai gần nhất và mẫu cùng cấp CEFR.',
     },
     completionCriteria: {
       flashcardsReviewed: exampleFlashcards.length,

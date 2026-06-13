@@ -75,7 +75,7 @@ function CategoryGrid({ items }: { items: Category[] }) {
       <EmptyState
         icon={BookOpen}
         title="Chưa có bộ từ vựng nào"
-        description="từ vựng đầu tiên để bắt đầu hành trình học."
+        description="Tạo bộ từ vựng đầu tiên để bắt đầu hành trình học."
         actionLabel="Tạo bộ từ"
         onAction={() => { /* todo */ }}
         tint="green"

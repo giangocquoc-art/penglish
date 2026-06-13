@@ -26,7 +26,7 @@ export const oceanMascots = {
       rest: preferredPosePath('poo', 'poo-pose-06'),
       coach: preferredPosePath('poo', 'poo-pose-02'),
     },
-    alt: 'Poo, linh vậtừ vựnglish',
+    alt: 'Poo, linh vật cá voi P-English',
   },
   mucMo: {
     folder: '/ocean/mascots/muc-mo/',

@@ -77,7 +77,7 @@ function getCoachLine(mode: LessonProgressMode, percentage: number) {
 function getReviewTip(mode: LessonProgressMode, weakCount: number) {
   if (weakCount <= 0) return 'Không có mục yếu trong lượt này. Bạn có thể chuyển sang bước tiếp theo.';
   if (mode === 'flashcard') return `Có ${weakCount} thẻ cần ôn. Hãy ôn lại ngay khi trí nhớ còn nóng.`;
-  if (mode === 'type') return `Có ${weakCount} câu cần gõ lộ trìnháy, thứ tự từ và cụm cố định.`;
+  if (mode === 'type') return `Có ${weakCount} câu cần gõ lại. Tập trung dấu nháy, thứ tự từ và cụm cố định.`;
   if (mode === 'quiz') return `Có ${weakCount} câu cần xem lại. Đọc giải thích trước khi làm lại.`;
   return `Có ${weakCount} mục cần củng cố. Lượt ôn ngắn tiếp theo sẽ hiệu quả hơn học thêm nội dung mới.`;
 }
@@ -102,7 +102,7 @@ export function getPracticeSessionFeedback(input: PracticeSessionFeedbackInput):
     coachLineVi: getCoachLine(input.mode, percentage),
     confidenceSignalVi,
     reviewTipVi: getReviewTip(input.mode, weakCount),
-    nextActionVi: weakCount > 0 ? 'Ưu tiên ôn mục yếu trước, sau đó mới chuyển sangữ pháp theo.' : `Bước tiếp theo hợp lý: ${MODE_LABELS[nextMode]}.`,
+    nextActionVi: weakCount > 0 ? 'Ưu tiên ôn mục yếu trước, sau đó mới chuyển sang phần tiếp theo.' : `Bước tiếp theo hợp lý: ${MODE_LABELS[nextMode]}.`,
     nextMode,
     nextUrl: `/practice?lessonId=${input.lesson.id}&mode=${nextMode}`,
     skillArea,

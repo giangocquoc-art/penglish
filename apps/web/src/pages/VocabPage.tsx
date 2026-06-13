@@ -61,10 +61,10 @@ type StatusFilter = 'all' | 'review' | 'difficult' | 'known' | 'learned' | 'weak
 const STATUS_FILTERS: Array<{ value: StatusFilter; label: string }> = [
   { value: 'all', label: 'Tất cả' },
   { value: 'learned', label: 'Đã học' },
-  { value: 'weak', label: 'Từ cần ôm lại' },
+  { value: 'weak', label: 'Từ yếu' },
   { value: 'favorite', label: 'Yêu thích' },
   { value: 'review', label: 'Cần ôn' },
-  { value: 'difficult', label: 'Chưa khớp lắm' },
+  { value: 'difficult', label: 'Hay sai' },
   { value: 'known', label: 'Đã nhớ' },
 ];
 
@@ -72,7 +72,7 @@ const STATUS_LABELS: Record<VocabularyReviewStatus, string> = {
   new: 'Từ mới',
   known: 'Đã nhớ',
   review: 'Cần ôn',
-  difficult: 'Chưa khớp lắm',
+  difficult: 'Hay sai',
 };
 
 const STATUS_COLORS: Record<VocabularyReviewStatus, string> = {
@@ -96,7 +96,7 @@ function speakEnglish(text: string) {
 function getLearningLoopSourceLabel(word: LearningLoopWordRecord) {
   if (word.source === 'foundation48') return `48 ngày lấy gốc · ${word.sourceId.replace('day-', 'Ngày ')}`;
   if (word.source === 'interactive-lesson') return 'Bài học tương tác';
-  if (word.source === 'shadowing') return 'Nói đuổi cùng Poo';
+  if (word.source === 'shadowing') return 'Nói đuổi';
   if (word.source === 'english-speed') return 'Đọc nhanh cùng Poo';
   if (word.source === 'practice') return 'Luyện tập';
   return 'Sổ từ vựng';
@@ -227,7 +227,7 @@ function vocabularySceneHint(item: VocabularyReviewItem) {
 }
 
 function vocabularyPronunciationHint(item: VocabularyReviewItem) {
-  return item.pronunciation ? `phát âm: ${item.pronunciation}` : 'Nghe mẫu, đọc chậm, rồi nói lại rõ ràng.';
+  return item.pronunciation ? `Phát âm: ${item.pronunciation}` : 'Nghe mẫu, đọc chậm, rồi nói lại rõ ràng.';
 }
 
 function StatCard({ label, value, tone = 'blue' }: { label: string; value: string | number; tone?: 'blue' | 'green' | 'orange' | 'red' }) {
@@ -378,7 +378,7 @@ export function VocabPage() {
     try {
       return { items: getAllVocabularyItems(), error: '' };
     } catch (error) {
-      return { items: [] as VocabularyReviewItem[], error: error instanceof Error ? error.message : 'Poo chưa mở được kho báu từ vựng của bạn.' };
+      return { items: [] as VocabularyReviewItem[], error: error instanceof Error ? error.message : 'Poo chưa mở được sổ từ vựng của bạn.' };
     }
   };
   const [vocabularyState, setVocabularyState] = useState(readVocabulary);
@@ -549,11 +549,11 @@ export function VocabPage() {
     return (
       <OceanPageShell data-testid="vocab-mobile-root" variant="vocab" overlayStrength="strong" minH="calc(100vh - 72px)" px={{ base: '3', md: '6' }} py={{ base: '2', md: '5' }} pb={{ base: 'var(--penglish-mobile-safe-bottom)', lg: '12' }} overflowX="hidden">
         <Box maxW="760px" mx="auto" className="penglish-glass-card" bg="rgba(255,255,255,0.88)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '5', md: '8' }} boxShadow="0 14px 34px rgba(31, 111, 214, 0.07)" role="alert">
-          <Tag borderRadius="full" bg="#FEF3C7" color="#9A3412" mb="4"><TagLabel>Poo vấp một con sóng nhỏ</TagLabel></Tag>
-          <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color={COLORS.text}>Poo chưa mở được kho báu từ vựng</Text>
+          <Tag borderRadius="full" bg="#FEF3C7" color="#9A3412" mb="4"><TagLabel>Cần tải lại sổ từ</TagLabel></Tag>
+          <Text as="h1" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="700" color={COLORS.text}>Poo chưa mở được sổ từ vựng</Text>
           <Text mt="3" color={COLORS.muted} fontWeight="700">Bạn thử mở lại sổ từ nhé. Nếu vẫn chưa được, Poo sẽ giữ nguyên nhân để kiểm tra.</Text>
           <Text mt="3" color="#9A3412" fontSize="sm" fontWeight="700">{vocabularyState.error}</Text>
-          <Button mt="6" borderRadius="full" bg={COLORS.primary} color="white" onClick={refresh}>Mở lại nhẹ nha</Button>
+          <Button mt="6" borderRadius="full" bg={COLORS.primary} color="white" onClick={refresh}>Thử lại</Button>
         </Box>
       </OceanPageShell>
     );
@@ -562,7 +562,7 @@ export function VocabPage() {
   return (
     <OceanPageShell data-testid="vocab-mobile-root" variant="vocab" overlayStrength="strong" minH="calc(100vh - 72px)" px={{ base: '3', md: '6' }} py={{ base: '2', md: '5' }} pb={{ base: 'var(--penglish-mobile-safe-bottom)', lg: '12' }} overflowX="hidden">
       <Box maxW="1480px" mx="auto" minW="0">
-        <Box as="h1" position="absolute" left="-9999px">Kho báu từ vựng</Box>
+        <Box as="h1" position="absolute" left="-9999px">Sổ học của tôi</Box>
 
         <Box className="penglish-glass-card vocab-review-first-card" bg="rgba(255,255,255,0.82)" backdropFilter={{ base: 'none', md: 'blur(8px) saturate(1.04)' }} border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p={{ base: '4', md: '6' }} mb={{ base: '3', md: '4' }} boxShadow="0 10px 24px rgba(37, 99, 235, 0.06)" position="relative" overflow="hidden">
           <Flex justify="space-between" align={{ base: 'stretch', md: 'center' }} direction={{ base: 'column', md: 'row' }} gap={{ base: '3', md: '5' }}>
@@ -570,13 +570,13 @@ export function VocabPage() {
               <Text as="h2" fontSize={{ base: '2xl', md: '4xl' }} lineHeight="1.08" fontWeight="850" color={COLORS.text}>Hôm nay ôn 10 từ nhé?</Text>
               <Text mt="2" color={COLORS.muted} fontWeight="800" fontSize={{ base: 'sm', md: 'md' }} noOfLines={1}>Ôn 10 từ thôi nè</Text>
               <HStack mt="3" gap="2" wrap="wrap" color={COLORS.muted} fontWeight="800" fontSize="sm">
-                <Text>{stats.progressPercent}% kho báu đã giữ</Text>
+                <Text>{stats.progressPercent}% đã nhớ</Text>
                 <Text>·</Text>
                 <Text>{stats.today || Math.min(10, stats.total)} từ sẵn sàng</Text>
               </HStack>
             </Box>
             <Button as={Link} to="/practice?lessonId=unit-1-greetings-introduction&mode=flashcard" borderRadius="full" bg={COLORS.primary} color="white" size={{ base: 'md', md: 'lg' }} leftIcon={<Icon as={BookOpen} />} _hover={{ bg: '#1D4ED8' }}>
-              Lặn ôn cùng Poo
+              Bắt đầu ôn
             </Button>
           </Flex>
           <Progress mt="4" value={stats.progressPercent} colorScheme="green" bg="#E2E8F0" borderRadius="full" h="8px" />
@@ -589,7 +589,7 @@ export function VocabPage() {
 
         <SimpleGrid columns={{ base: 1, md: 5 }} gap="2.5" mb={{ base: '3', md: '5' }} data-testid="vocab-notebook-tabs">
           {[
-            { label: 'từ vựng đã lưu', value: learnedWords.length || stats.total, icon: BookOpen, tone: '#EFF6FF' },
+            { label: 'Từ vựng đã lưu', value: learnedWords.length || stats.total, icon: BookOpen, tone: '#EFF6FF' },
             { label: 'Câu cần ôn', value: stats.difficult, icon: AlertCircle, tone: '#FFF7ED' },
             { label: 'Câu nói đuổi khó', value: 'Nói đuổi', icon: Mic2, tone: '#F0F9FF' },
             { label: 'Mẫu câu hay dùng', value: 'A1/A2', icon: MessageCircle, tone: '#F0FDF4' },
@@ -676,7 +676,7 @@ export function VocabPage() {
 
         <SimpleGrid columns={{ base: 2, lg: 5 }} gap={{ base: '2', md: '4' }} mb={{ base: '3', md: '6' }} display={{ base: 'none', sm: 'grid' }}>
           <StatCard label="Tổng từ" value={stats.total} />
-          <StatCard label="Đã học" value={learnedWords.length > 0 ? learnedWords.length : 'Chưa lặn học'} tone="green" />
+          <StatCard label="Đã học" value={learnedWords.length > 0 ? learnedWords.length : 'Chưa bắt đầu'} tone="green" />
           <StatCard label="Ôn hôm nay" value={stats.today > 0 ? stats.today : 'Sẵn sàng'} tone="orange" />
           <StatCard label="Từ yếu" value={stats.difficult > 0 ? stats.difficult : 'Poo sẽ lưu'} tone="red" />
           <StatCard label="Yêu thích" value={favoriteWords.length > 0 ? favoriteWords.length : 'Chọn ⭐'} />
@@ -690,7 +690,7 @@ export function VocabPage() {
                   <Icon as={Layers} boxSize="5" />
                 </Flex>
                 <Box>
-                  <Text fontWeight="700" color={COLORS.từ vựng đã lưu từ bài học thật</Text>
+                  <Text fontWeight="700" color={COLORS.text}>Từ vựng đã lưu từ bài học thật</Text>
                   <Text mt="1" color={COLORS.muted} fontWeight="700" fontSize="sm">Poo gom từ từ 48 ngày lấy gốc, Nói đuổi và bài học tương tác, kèm nguồn bài, lần ôn gần nhất, trạng thái và hành động Ôn lại/Xóa khỏi sổ.</Text>
                 </Box>
               </HStack>
@@ -719,7 +719,7 @@ export function VocabPage() {
                 <Text mt="1" color={COLORS.muted} fontWeight="700" fontSize="sm">Chọn A1/A2/B1 để xem từ theo chủ đề. Bắt đầu từ A1 nếu bạn chưa học bài nào.</Text>
               </Box>
               <Button as={Link} to="/practice?lessonId=unit-1-greetings-introduction&mode=flashcard" size="sm" borderRadius="full" bg={COLORS.primary} color="white" _hover={{ bg: '#1D4ED8' }}>
-                Lặn ôn cùng Poo
+                Ôn ngay
               </Button>
             </HStack>
             <SimpleGrid columns={{ base: 1, md: 3 }} gap="3">
@@ -829,7 +829,7 @@ export function VocabPage() {
                           <Icon as={Clock3} />
                           <Text>{formatDateTime(item.nextReviewAt)}</Text>
                         </HStack>
-                        <Text mt="1" color={COLORS.muted} fontSize="sm">Ôn {item.reviewCount} · Chưa khớp {item.wrongCount}</Text>
+                        <Text mt="1" color={COLORS.muted} fontSize="sm">Ôn {item.reviewCount} · Sai {item.wrongCount}</Text>
                       </Td>
                       <Td verticalAlign="top" minW="360px">
                         <WordActions item={item} onStatusChange={updateWordStatusOptimistically} onClearStatus={clearWordStatusOptimistically} onSpeakWord={speakWord} />

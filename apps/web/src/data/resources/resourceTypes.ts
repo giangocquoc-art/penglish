@@ -1,4 +1,4 @@
-export type EnglishResourceCategory = 'từ vựngữ pháp' | 'Đọc' | 'Nghe' | 'Shadowing' | 'phát âm' | 'Tự học miễn phí';
+export type EnglishResourceCategory = 'Từ vựng' | 'Ngữ pháp' | 'Đọc' | 'Nghe' | 'Shadowing' | 'Phát âm' | 'Tự học miễn phí';
 
 export type EnglishResourceCefrLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'All';
 

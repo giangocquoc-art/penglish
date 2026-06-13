@@ -89,10 +89,10 @@ export function LoginPage() {
                 Vào lớp học cùng Poo
               </Text>
               <Text as="h1" fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }} fontWeight="800" lineHeight="1.05" letterSpacing="-0.03em" textShadow="0 18px 46px rgba(8, 47, 73, 0.28)">
-                Đăng nhập để học cùng Poo
+                Vào lớp học PooEnglish
               </Text>
               <Text fontSize={{ base: 'md', md: 'xl' }} fontWeight="600" color="rgba(240, 249, 255, 0.88)" lineHeight="1.65">
-                Poo giữ chuỗi học, bọt biển và hành trình học mỗi ngày.
+                Bạn có thể vào học ngay. Đăng nhập Google chỉ giúp Poo lưu tiến độ lên tài khoản.
               </Text>
             </VStack>
           </VStack>
@@ -102,7 +102,7 @@ export function LoginPage() {
             className="login-ocean-card"
             bg="linear-gradient(145deg, rgba(255,255,255,0.86), rgba(240,249,255,0.72))"
             border="1px solid rgba(255,255,255,0.76)"
-            backdropFilter="blur(12px) saturate(1.08)"
+            backdropFilter="blur(28px) saturate(1.25)"
             borderRadius={{ base: '30px', md: '36px' }}
             boxShadow="0 32px 90px rgba(8, 47, 73, 0.24), inset 0 1px 0 rgba(255,255,255,0.72)"
             p={{ base: '5', sm: '6', md: '8' }}
@@ -122,10 +122,10 @@ export function LoginPage() {
                     <BrandLogo variant="compact" size="lg" />
                   </Box>
                   <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight={cardHeadingWeight} color="#082F49" letterSpacing="-0.02em">
-                    Đăng nhập để học cùng Poo
+                    Vào lớp học PooEnglish
                   </Text>
                   <Text color="#475569" fontSize="sm" fontWeight={softEmphasisWeight} lineHeight="1.7" maxW="340px">
-                    Poo giữ chuỗi học, bọt biển và hành trình học mỗi ngày.
+                    Bạn có thể học ngay ở chế độ khách, hoặc đăng nhập để lưu tiến độ lên tài khoản.
                   </Text>
                 </VStack>
 
@@ -134,8 +134,8 @@ export function LoginPage() {
                     <Box bg="rgba(255,247,237,0.88)" border="1px solid #FED7AA" borderRadius="2xl" p="4" data-testid="login-in-app-browser-warning">
                       <VStack align="stretch" gap="3">
                         <Text color="#9A3412" fontWeight="800" lineHeight="1.65">
-                          Bạn đang mở PooEnglộ trình duyệt của ứng dụng khác.<br />
-                          Poo cần mở cổng Googlộ trình duyệt quen thuộc của bạn.<br />
+                          Bạn đang mở PooEnglish bên trong trình duyệt của ứng dụng khác.<br />
+                          Poo cần mở cổng Google ở trình duyệt quen thuộc của bạn.<br />
                           Bạn bấm dấu ba chấm ở góc trên bên phải rồi chọn Mở bằng Chrome/Safari nhé.
                         </Text>
                         <VStack align="stretch" gap="2.5">
@@ -143,7 +143,7 @@ export function LoginPage() {
                             {copiedLoginLink ? 'Đã sao chép link' : 'Sao chép link đăng nhập'}
                           </Button>
                           <Button leftIcon={<Icon as={ExternalLink} />} onClick={openExternalBrowser} borderRadius="2xl" minH="50px" bg="linear-gradient(135deg, #0EA5E9, #1F6FD6)" color="white" fontWeight="800" data-testid="login-open-browser">
-                            Mở bằng trình duyệt nhé
+                            Thử mở bằng trình duyệt
                           </Button>
                         </VStack>
                       </VStack>
@@ -166,7 +166,7 @@ export function LoginPage() {
                       _hover={{ transform: 'translateY(-1px)', boxShadow: '0 22px 50px rgba(14, 165, 233, 0.36)' }}
                       _active={{ transform: 'translateY(0)' }}
                     >
-                      Đăng nhập với Google
+                      Vào học bằng Google
                     </Button>
                   )}
                 </VStack>
@@ -183,7 +183,7 @@ export function LoginPage() {
                     <Icon as={Sparkles} boxSize="3" />
                     <Text>Nhẹ nhàng</Text>
                   </HStack>
-                  <Text fontSize="xs" px="3" py="1.5" bg="rgba(240,253,244,0.74)" color="#166534" border="1px solid #BBF7D0" borderRadius="full" fontWeight="700">Poo giữ hành trình học</Text>
+                  <Text fontSize="xs" px="3" py="1.5" bg="rgba(240,253,244,0.74)" color="#166534" border="1px solid #BBF7D0" borderRadius="full" fontWeight="700">Lưu tiến độ an toàn</Text>
                 </HStack>
               </VStack>
             </Box>

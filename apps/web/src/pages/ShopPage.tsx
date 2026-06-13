@@ -277,7 +277,7 @@ function OceanShopEmptyState({ tab }: { tab: TabKey }) {
                 Cửa hàng cá voi đang chuẩn bị vật phẩm mới.
               </Text>
               <Text color="#52667A" lineHeight="1.7" maxW="640px">
-                Hoàn thành bài học để kiếm xu và mở khóa giao diện. Các vật phẩm bên dưới là bản xem trước, chưa phát âm có thể mua.
+                Hoàn thành bài học để kiếm xu và mở khóa giao diện. Các vật phẩm bên dưới là bản xem trước, chưa phải vật phẩm có thể mua.
               </Text>
             </VStack>
           </HStack>

@@ -18,7 +18,7 @@ export const cefrLearnerMilestones: CefrLearnerMilestone[] = [
     shortNoteVi: 'Hiểu câu rất ngắn, chào hỏi, giới thiệu bản thân và nói nhu cầu đơn giản.',
     learnerCanDoVi: 'Bạn có thể nhận ra từ quen thuộc, trả lời câu ngắn và bắt đầu nói về bản thân bằng mẫu câu an toàn.',
     transitionVi: 'Từ A1 lên A2: gom từ vựng theo tình huống hằng ngày, luyện nghe câu ngắn và gõ lại câu mẫu thật chắc.',
-    skillExpectationsVi: ['từ vựng lõi quanh bản thân, gia đình, lớp học', 'Nghe câu chậm và chọn ý chính', 'Nói/gõ câu mẫu ngắn không cần dịch từng chữ'],
+    skillExpectationsVi: ['Từ vựng lõi quanh bản thân, gia đình, lớp học', 'Nghe câu chậm và chọn ý chính', 'Nói/gõ câu mẫu ngắn không cần dịch từng chữ'],
   },
   {
     level: 'A2',
@@ -42,7 +42,7 @@ export const cefrLearnerMilestones: CefrLearnerMilestone[] = [
     level: 'B2',
     label: 'Độc lập và linh hoạt hơn',
     threshold: 82,
-    shortNoteVi: 'Hiểu ý chính của nội dungữ pháp vừa phải và diễn đạt quan điểm rõ ràng hơn.',
+    shortNoteVi: 'Hiểu ý chính của nội dung phức tạp vừa phải và diễn đạt quan điểm rõ ràng hơn.',
     learnerCanDoVi: 'Bạn có thể học độc lập hơn: đọc/nghe nguồn thật có chọn lọc, thảo luận ý kiến và tự sửa lỗi thường gặp.',
     transitionVi: 'Sau B2: duy trì thói quen đọc/nghe thật, tăng độ chính xác và chọn tài nguyên ngoài app theo mục tiêu cá nhân.',
     skillExpectationsVi: ['Xử lý bài đọc/nghe dài hơn theo mục tiêu', 'Nói có lập luận, ví dụ và chuyển ý', 'Dùng Resource Hub sau khi học bài trong P-English'],

@@ -1,4 +1,3 @@
-import { isSoftRateLimited } from '../security/softRateLimit';
 import { normalizeSpeechTextForComparison } from './speechTextNormalizer';
 
 export type ShadowingApiConfidence = 'high' | 'medium' | 'low';
@@ -27,7 +26,7 @@ export type ShadowingApiSuccess = {
 
 export type ShadowingApiFailure = {
   ok: false;
-  error: 'GEMINI_API_KEY_MISSING' | 'EMPTY_AUDIO' | 'NO_AUDIO' | 'NETWORK_ERROR' | 'INVALID_JSON' | 'API_ERROR' | 'RATE_LIMITED';
+  error: 'GEMINI_API_KEY_MISSING' | 'EMPTY_AUDIO' | 'NO_AUDIO' | 'NETWORK_ERROR' | 'INVALID_JSON' | 'API_ERROR';
   message: string;
   status?: number;
 };
@@ -150,10 +149,6 @@ async function readJsonResponse(response: Response): Promise<Record<string, unkn
 }
 
 export async function requestShadowingFeedback(input: ShadowingFeedbackRequest): Promise<ShadowingApiResult> {
-  if (isSoftRateLimited('shadowing-ai-analysis', { limit: 8, windowMs: 60_000 })) {
-    return { ok: false, error: 'RATE_LIMITED', message: 'Poo cần nghỉ vài giây trước khi phân tích tiếp nhé.' };
-  }
-
   if (!input.audio || input.audio.size <= 0) {
     return { ok: false, error: 'EMPTY_AUDIO', message: DEFAULT_ERROR_MESSAGE };
   }

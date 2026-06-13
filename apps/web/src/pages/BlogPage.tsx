@@ -40,7 +40,7 @@ function BlogList() {
                 Blog học tiếng Anh cùng PooEnglish
               </Text>
               <Text fontSize={{ base: 'md', md: 'xl' }} lineHeight="1.85" color={OCEAN_TOKENS.muted} fontWeight="700" maxW="860px">
-                Poo gom bài viết theo từng cụm chủ đề để Google, Bing, AI Search và người học đều hiểu rõ đường bơi: ôn tiếng Anh, mất gốc, shadowing, từ vựng, luyện ngữ pháp, lộ trình và học miễn phí.
+                Poo gom bài viết theo từng cụm chủ đề để Google, Bing, AI Search và người học đều hiểu rõ đường bơi: ôn tiếng Anh, mất gốc, shadowing, từ vựng, luyện nghe, ngữ pháp, lộ trình và học miễn phí.
               </Text>
               <HStack gap="3" wrap="wrap" justify={{ base: 'center', md: 'start' }}>
                 <Button as={RouterLink} to="/learning-path" borderRadius="full" bg={OCEAN_TOKENS.deepBlue} color="white" size="lg" rightIcon={<Icon as={ChevronRight} />} _hover={{ bg: OCEAN_TOKENS.oceanBlue }}>
@@ -75,7 +75,7 @@ function BlogList() {
                 <HStack justify="space-between" align="start" gap="3" wrap="wrap" mb="4">
                   <Box minW="0">
                     <Text as="h2" fontSize={{ base: '2xl', md: '3xl' }} fontWeight="950" color={OCEAN_TOKENS.text} lineHeight="1.2">{BLOG_TOPIC_LABELS[topic]}</Text>
-                    <Text color={OCEAN_TOKENS.muted} fontWeight="700" lineHeight="1.75">{posts.length} bài viết hỗ trợ, liên kếtừ vựng pillar của cụm.</Text>
+                    <Text color={OCEAN_TOKENS.muted} fontWeight="700" lineHeight="1.75">{posts.length} bài viết hỗ trợ, liên kết về trang pillar của cụm.</Text>
                   </Box>
                   <Button as={RouterLink} to={BLOG_TOPIC_PILLARS[topic]} borderRadius="full" bg="white" color={OCEAN_TOKENS.deepBlue} border="1px solid" borderColor={OCEAN_TOKENS.borderStrong} _hover={{ bg: OCEAN_TOKENS.softBlue }}>
                     Mở pillar page

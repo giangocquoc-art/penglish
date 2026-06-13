@@ -4,7 +4,7 @@ import type { DaySeed, Foundation48DeepLesson } from './foundation48DeepLessons'
 const stage5Seeds: Record<number, DaySeed> = {
   22: {
     title: 'Nói “có thể / nên / phải” bằng câu ngắn',
-    goal: 'Hôm nay Poo dẫn bạn nói “nên”, “phải”, “có từ vựngắn quen thuộc.',
+    goal: 'Hôm nay Poo dẫn bạn nói “nên”, “phải”, “có thể” bằng vài câu ngắn quen thuộc.',
     grammarTitle: 'Can, should, must, have to, may',
     grammar: 'Nói “có thể / nên / phải” bằng câu ngắn đứng trước động từ chính dạng nguyên mẫu. Dùng can để nói khả năng hoặc lời đề nghị, should để khuyên nhẹ, must/have to để nói điều cần làm, may/can để xin phép lịch sự. Không thêm s sau he/she/it khi dùng modal.',
     vocabulary: [
@@ -65,7 +65,7 @@ const stage5Seeds: Record<number, DaySeed> = {
     ],
     sentences: [
       ['I like tea, but I do not like coffee.', 'Tôi thích trà, nhưng tôi không thích cà phê.'],
-      ['I study English and listen every day.', 'Tôi học từ vựnghe mỗi ngày.'],
+      ['I study English and listen every day.', 'Tôi học tiếng Anh và nghe mỗi ngày.'],
       ['Do you want tea or coffee?', 'Bạn muốn trà hay cà phê?'],
       ['I am tired, so I go to bed.', 'Tôi mệt, vì vậy tôi đi ngủ.'],
       ['I study because I want to improve.', 'Tôi học vì tôi muốn tiến bộ.'],
@@ -149,7 +149,7 @@ const stage5Seeds: Record<number, DaySeed> = {
     ],
     sentences: [
       ['Although it is raining, I go to school.', 'Mặc dù trời đang mưa, tôi đi học.'],
-      ['I am tired, but I study English.', 'Tôi mệt, nhọc tiếng Anh.'],
+      ['I am tired, but I study English.', 'Tôi mệt, nhưng tôi học tiếng Anh.'],
       ['It is hard. However, I can try.', 'Nó khó. Tuy nhiên, tôi có thể thử.'],
       ['Even though I am busy, I call you.', 'Mặc dù tôi bận, tôi gọi bạn.'],
       ['The bag is small, but it is useful.', 'Cái túi nhỏ, nhưng nó hữu ích.'],
@@ -215,7 +215,7 @@ const stage5Seeds: Record<number, DaySeed> = {
     title: 'Câu điều kiện loại 2',
     goal: 'Hôm nay bạn học nói một điều tưởng tượng ở hiện tại bằng If + quá khứ đơn, would + động từ.',
     grammarTitle: 'If + past simple, would + verb',
-    grammar: 'Câu điều kiện loại 2 dùng cho tình huống tưởng tượng, khó xảy ra hoặc không thật ở hiện tại. Dùng if + quá khứ đơn và would + động từ nguyên mẫu. Với be, “were” thường dùng cho mọi chủ ngữ từ vựng chuẩn.',
+    grammar: 'Câu điều kiện loại 2 dùng cho tình huống tưởng tượng, khó xảy ra hoặc không thật ở hiện tại. Dùng if + quá khứ đơn và would + động từ nguyên mẫu. Với be, “were” thường dùng cho mọi chủ ngữ trong văn phong chuẩn.',
     vocabulary: [
       ['would', 'sẽ (trong tưởng tượng)', 'I would practice English.'],
       ['had more time', 'có nhiều thời gian hơn', 'If I had more time, I would practice English.'],

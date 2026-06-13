@@ -1,7 +1,6 @@
 import { getAllVocabularyItems } from './vocabulary-review';
 import { getCurrentSupabaseUser } from './userSession';
 import { supabase } from '../supabaseClient';
-import { isSoftRateLimited } from '../security/softRateLimit';
 
 export type DashboardSnapshot = {
   mode: 'guest' | 'supabase';
@@ -58,9 +57,6 @@ export type EnglishSpeedAttemptInput = {
 
 const LOCAL_DAILY_KEY = 'p-english:z4-4-local-daily-progress';
 const LOCAL_UPDATED_EVENT = 'p-english:local-progress-updated';
-const DAILY_ACTIVITY_LIMIT = { limit: 40, windowMs: 60_000 };
-const SAVE_PROGRESS_LIMIT = { limit: 30, windowMs: 60_000 };
-const ATTEMPT_LIMIT = { limit: 12, windowMs: 60_000 };
 
 function todayKey() {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh' }).format(new Date());
@@ -173,7 +169,6 @@ export async function getDashboardSnapshot(): Promise<DashboardSnapshot> {
 }
 
 export async function saveDailyProgressPatch(patch: DailyProgressPatch) {
-  if (isSoftRateLimited('mark-study-activity', DAILY_ACTIVITY_LIMIT)) return { mode: 'guest' as const, ok: false, rateLimited: true as const };
   const userId = await getSignedInUserId();
   if (supabase && userId) {
     const saved = await saveDailyProgressPatchSupabase(userId, patch);
@@ -196,7 +191,6 @@ export async function getLessonProgress(lessonId: string) {
 }
 
 export async function saveLessonProgress(lessonId: string, patch: UserLessonProgressPatch) {
-  if (isSoftRateLimited('save-lesson-progress', SAVE_PROGRESS_LIMIT)) return { mode: 'guest' as const, ok: false, rateLimited: true as const };
   const userId = await getSignedInUserId();
   if (!supabase || !userId) return { mode: 'guest' as const, ok: false };
 
@@ -224,7 +218,6 @@ export async function getVocabularyProgress() {
 }
 
 export async function saveVocabularyProgress(wordId: string, patch: UserVocabularyProgressPatch) {
-  if (isSoftRateLimited('save-vocabulary-progress', SAVE_PROGRESS_LIMIT)) return { mode: 'guest' as const, ok: false, rateLimited: true as const };
   const userId = await getSignedInUserId();
   if (!supabase || !userId) return { mode: 'guest' as const, ok: false };
 
@@ -247,7 +240,6 @@ export async function saveVocabularyProgress(wordId: string, patch: UserVocabula
 }
 
 export async function saveShadowingAttempt(attempt: ShadowingAttemptInput) {
-  if (isSoftRateLimited('save-shadowing-attempt', ATTEMPT_LIMIT)) return { mode: 'guest' as const, ok: false, rateLimited: true as const };
   await saveDailyProgressPatch({ shadowingSentences: 1, xp: 4 });
   const userId = await getSignedInUserId();
   if (!supabase || !userId) return { mode: 'guest' as const, ok: true };
@@ -266,7 +258,6 @@ export async function saveShadowingAttempt(attempt: ShadowingAttemptInput) {
 }
 
 export async function saveEnglishSpeedAttempt(attempt: EnglishSpeedAttemptInput) {
-  if (isSoftRateLimited('save-english-speed-attempt', ATTEMPT_LIMIT)) return { mode: 'guest' as const, ok: false, rateLimited: true as const };
   await saveDailyProgressPatch({ pronunciationAttempts: 1, xp: Math.max(1, Math.round((attempt.score ?? 0) / 20)) });
   const userId = await getSignedInUserId();
   if (!supabase || !userId) return { mode: 'guest' as const, ok: true };

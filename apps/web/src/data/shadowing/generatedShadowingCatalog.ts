@@ -25,7 +25,7 @@ const tipsByLevel: Record<ShadowingCefrLevel, string[]> = {
   B2: ['Chú ý nhịp nhấn của câu và ý chính.', 'Tập nối âm vừa phải, giữ âm cuối rõ.', 'Nghe lại lượt nói cùng lời thoại theo từng cụm.'],
 };
 
-function makeItem(input: Omit<GeneratedShadowingItem, 'transcript' | 'chunks' | 'repeatPlan' | 'learnerTipsVi' | 'whaleCoachLines' | 'source'> & { lines: Array<{ text: stừ vựng }> }): GeneratedShadowingItem {
+function makeItem(input: Omit<GeneratedShadowingItem, 'transcript' | 'chunks' | 'repeatPlan' | 'learnerTipsVi' | 'whaleCoachLines' | 'source'> & { lines: Array<{ text: string; vi: string }> }): GeneratedShadowingItem {
   const { lines, ...base } = input;
 
   return {
@@ -51,7 +51,7 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
     { text: 'Hi, Mai. How are you today?', vi: 'Chào Mai. Hôm nay bạn thế nào?' },
     { text: 'I am good, thank you.', vi: 'Tôi khỏe, cảm ơn bạn.' },
     { text: 'It is nice to see you.', vi: 'Rất vui được gặp bạn.' },
-    { text: 'Let us study togetừ vựng ta cùng học nhé.' },
+    { text: 'Let us study together.', vi: 'Chúng ta cùng học nhé.' },
   ] }),
   makeItem({ id: 'shadow-a1-order-water-coffee', titleVi: 'Gọi nước hoặc cà phê', titleEn: 'Ordering water or coffee', level: 'A1', topic: 'ordering water/coffee', descriptionVi: 'Tập câu gọi đồ uống đơn giản trong quán.', estimatedTime: '4 phút', referenceVideoTitle: 'Ordering Drinks in English - Cafe Conversation', referenceVideoUrl: 'https://www.youtube.com/watch?v=bgfdqVmVjfk', lines: [
     { text: 'Can I have a glass of water, please?', vi: 'Cho tôi một ly nước được không?' },
@@ -65,17 +65,17 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
     { text: 'I like English and music.', vi: 'Tôi thích tiếng Anh và âm nhạc.' },
     { text: 'My teacher is very kind.', vi: 'Giáo viên của tôi rất tốt.' },
   ] }),
-  makeItem({ id: 'shadow-a1-daily-routine', titleVi: 'Thói quen hằng ngày', titleEn: 'Daily routine', level: 'A1', topic: 'daily routine', descriptionVi: 'từ vựng việc đơn giản mỗi ngày.', estimatedTime: '4 phút', referenceVideoTitle: 'Daily Routine in English', referenceVideoUrl: 'https://www.youtube.com/watch?v=qD1pnquN_DM', lines: [
+  makeItem({ id: 'shadow-a1-daily-routine', titleVi: 'Thói quen hằng ngày', titleEn: 'Daily routine', level: 'A1', topic: 'daily routine', descriptionVi: 'Tập nói về những việc đơn giản mỗi ngày.', estimatedTime: '4 phút', referenceVideoTitle: 'Daily Routine in English', referenceVideoUrl: 'https://www.youtube.com/watch?v=qD1pnquN_DM', lines: [
     { text: 'I wake up at six o clock.', vi: 'Tôi thức dậy lúc sáu giờ.' },
     { text: 'I brush my teeth and eat breakfast.', vi: 'Tôi đánh răng và ăn sáng.' },
     { text: 'I learn five new words.', vi: 'Tôi học năm từ mới.' },
-    { text: 'I sleep early at nightừ vựngủ sớm vào buổi tối.' },
+    { text: 'I sleep early at night.', vi: 'Tôi ngủ sớm vào buổi tối.' },
   ] }),
   makeItem({ id: 'shadow-a2-asking-directions', titleVi: 'Hỏi đường', titleEn: 'Asking for directions', level: 'A2', topic: 'asking for directions', descriptionVi: 'Luyện hỏi và nghe chỉ đường bằng câu rõ ràng.', estimatedTime: '5 phút', referenceVideoTitle: 'Asking for Directions in English', referenceVideoUrl: 'https://www.youtube.com/watch?v=DPYJQSA-x50', lines: [
     { text: 'Excuse me, where is the bus station?', vi: 'Xin lỗi, trạm xe buýt ở đâu?' },
     { text: 'Go straight and turn left at the bank.', vi: 'Đi thẳng và rẽ trái ở ngân hàng.' },
     { text: 'Is it far from here?', vi: 'Nó có xa đây không?' },
-    { text: 'No, it takes about five minutừ vựng, mất khoảng năm phút.' },
+    { text: 'No, it takes about five minutes.', vi: 'Không, mất khoảng năm phút.' },
   ] }),
   makeItem({ id: 'shadow-a2-shopping-conversation', titleVi: 'Mua sắm đơn giản', titleEn: 'Shopping conversation', level: 'A2', topic: 'shopping conversation', descriptionVi: 'Tập nhịp câu khi hỏi giá và chọn món.', estimatedTime: '5 phút', referenceVideoTitle: 'Shopping Conversation in English', referenceVideoUrl: 'https://www.youtube.com/watch?v=Qp3VhdWJ40Y', lines: [
     { text: 'How much is this blue shirt?', vi: 'Chiếc áo xanh này giá bao nhiêu?' },
@@ -87,33 +87,33 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
     { text: 'This weekend, I will visit Da Nang.', vi: 'Cuối tuần này, tôi sẽ đến Đà Nẵng.' },
     { text: 'I want to see the beach in the morning.', vi: 'Tôi muốn ngắm biển vào buổi sáng.' },
     { text: 'Then I will try local food with my family.', vi: 'Sau đó tôi sẽ thử món địa phương với gia đình.' },
-    { text: 'I hope the weather is sunny.', vi: 'từ vựng thời tiết có nắng.' },
+    { text: 'I hope the weather is sunny.', vi: 'Tôi hy vọng thời tiết có nắng.' },
   ] }),
   makeItem({ id: 'shadow-a2-describing-hobbies', titleVi: 'Mô tả sở thích', titleEn: 'Describing hobbies', level: 'A2', topic: 'describing hobbies', descriptionVi: 'Tập nói thêm lý do cho sở thích cá nhân.', estimatedTime: '5 phút', referenceVideoTitle: 'Talking About Hobbies in English', referenceVideoUrl: 'https://www.youtube.com/watch?v=tgVtVoxzwDI', lines: [
-    { text: 'In my free time, I like drawing small pictures.', vi: 'Khi rảnh, từ vựng bức tranh nhỏ.' },
+    { text: 'In my free time, I like drawing small pictures.', vi: 'Khi rảnh, tôi thích vẽ những bức tranh nhỏ.' },
     { text: 'It helps me feel calm after school.', vi: 'Việc đó giúp tôi thấy bình tĩnh sau giờ học.' },
     { text: 'I also listen to English songs.', vi: 'Tôi cũng nghe các bài hát tiếng Anh.' },
     { text: 'The words are simple, so I can sing along.', vi: 'Từ ngữ đơn giản nên tôi có thể hát theo.' },
   ] }),
   makeItem({ id: 'shadow-b1-study-habit', titleVi: 'Giải thích thói quen học', titleEn: 'Study habit explanation', level: 'B1', topic: 'study habit explanation', descriptionVi: 'Luyện giải thích cách học và lợi ích bằng câu dài vừa phải.', estimatedTime: '6 phút', referenceVideoTitle: 'How to Talk About Study Habits in English', referenceVideoUrl: 'https://www.youtube.com/watch?v=3i1lNJPY-4Q', lines: [
-    { text: 'I study English for twenty minutes every morning before breakfast.', vi: 'Tôi học tiếng Anh hai mươi phát âmỗi sáng trước bữa ăn.' },
+    { text: 'I study English for twenty minutes every morning before breakfast.', vi: 'Tôi học tiếng Anh hai mươi phút mỗi sáng trước bữa ăn.' },
     { text: 'First, I review old words so I do not forget them.', vi: 'Đầu tiên, tôi ôn từ cũ để không quên.' },
     { text: 'After that, I listen to one short conversation and repeat the useful phrases.', vi: 'Sau đó, tôi nghe một đoạn hội thoại ngắn và lặp lại các cụm hữu ích.' },
     { text: 'This simple habit makes me more confident when I speak.', vi: 'Thói quen đơn giản này giúp tôi tự tin hơn khi nói.' },
   ] }),
   makeItem({ id: 'shadow-b1-part-time-interview', titleVi: 'Phỏng vấn việc làm thêm', titleEn: 'Part-time job interview', level: 'B1', topic: 'part-time job interview', descriptionVi: 'Tập trả lời phỏng vấn ngắn với giọng bình tĩnh.', estimatedTime: '6 phút', referenceVideoTitle: 'Job Interview English Practice', referenceVideoUrl: 'https://www.youtube.com/watch?v=HG68Ymazo18', lines: [
     { text: 'I am interested in this part-time job because I enjoy helping customers.', vi: 'Tôi quan tâm công việc bán thời gian này vì tôi thích hỗ trợ khách hàng.' },
-    { text: 'I can work in the evenings and on Saturday mornings.', vi: 'Tôi có thể làm buổi từ vựng thứ Bảy.' },
+    { text: 'I can work in the evenings and on Saturday mornings.', vi: 'Tôi có thể làm buổi tối và sáng thứ Bảy.' },
     { text: 'At school, I learned how to organize tasks and work with a team.', vi: 'Ở trường, tôi học cách sắp xếp công việc và làm việc nhóm.' },
     { text: 'I am ready to learn and follow the store rules carefully.', vi: 'Tôi sẵn sàng học hỏi và tuân thủ nội quy cửa hàng cẩn thận.' },
   ] }),
   makeItem({ id: 'shadow-b1-teamwork-discussion', titleVi: 'Thảo luận làm việc nhóm', titleEn: 'Teamwork discussion', level: 'B1', topic: 'teamwork discussion', descriptionVi: 'Luyện đưa ý kiến mềm mại trong nhóm.', estimatedTime: '6 phút', referenceVideoTitle: 'Teamwork Discussion English Phrases', referenceVideoUrl: 'https://www.youtube.com/watch?v=J9wMBy_9nWc', lines: [
-    { text: 'I think our team should divide the project into three small partừ vựnghĩ nhóm nên chia dự án thành ba phần nhỏ.' },
+    { text: 'I think our team should divide the project into three small parts.', vi: 'Tôi nghĩ nhóm nên chia dự án thành ba phần nhỏ.' },
     { text: 'Each person can choose one part and report progress every two days.', vi: 'Mỗi người chọn một phần và báo tiến độ hai ngày một lần.' },
     { text: 'If someone has a problem, we can help early instead of waiting.', vi: 'Nếu ai gặp vấn đề, chúng ta có thể giúp sớm thay vì chờ đợi.' },
-    { text: 'This plan will make our presentation clearer and less stressful.', vi: 'Kế hoạch này sẽ lộ trình bày rõ hơn và ít căng thẳng hơn.' },
+    { text: 'This plan will make our presentation clearer and less stressful.', vi: 'Kế hoạch này sẽ làm bài trình bày rõ hơn và ít căng thẳng hơn.' },
   ] }),
-  makeItem({ id: 'shadow-b2-learning-strategy', titleVi: 'Giải thích chiến lược học', titleEn: 'Explaining a learning strategy', level: 'B2', topic: 'explaining a learning strategy', descriptionVi: 'lộ trình bày chiến lược học với ý chính rõ ràng.', estimatedTime: '7 phút', referenceVideoTitle: 'Learning Strategies in English', referenceVideoUrl: 'https://www.youtube.com/watch?v=9nL1i4QBrxM', lines: [
+  makeItem({ id: 'shadow-b2-learning-strategy', titleVi: 'Giải thích chiến lược học', titleEn: 'Explaining a learning strategy', level: 'B2', topic: 'explaining a learning strategy', descriptionVi: 'Luyện trình bày chiến lược học với ý chính rõ ràng.', estimatedTime: '7 phút', referenceVideoTitle: 'Learning Strategies in English', referenceVideoUrl: 'https://www.youtube.com/watch?v=9nL1i4QBrxM', lines: [
     { text: 'My main strategy is to connect new vocabulary with situations I actually meet.', vi: 'Chiến lược chính của tôi là nối từ mới với tình huống tôi thật sự gặp.' },
     { text: 'Instead of memorizing a long list, I create a short sentence that sounds natural to me.', vi: 'Thay vì học thuộc danh sách dài, tôi tạo một câu ngắn nghe tự nhiên với mình.' },
     { text: 'Then I record myself and check whether the rhythm is clear enough.', vi: 'Sau đó tôi ghi âm và kiểm tra nhịp nói đã đủ rõ chưa.' },
@@ -123,25 +123,25 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
     { text: 'Digital tools can support learning, but they can also distract us very quickly.', vi: 'Công cụ số có thể hỗ trợ học tập, nhưng cũng làm ta xao nhãng rất nhanh.' },
     { text: 'For that reason, I set a clear purpose before opening any app.', vi: 'Vì lý do đó, tôi đặt mục đích rõ ràng trước khi mở bất kỳ ứng dụng nào.' },
     { text: 'If I only need ten minutes of listening practice, I stop when the timer ends.', vi: 'Nếu tôi chỉ cần mười phút luyện nghe, tôi dừng khi hết giờ.' },
-    { text: 'Small limits help me use technology without losing control of my attentừ vựng giới hạn nhỏ giúp tôi dùng công nghệ mà không mất kiểm soát sự chú ý.' },
+    { text: 'Small limits help me use technology without losing control of my attention.', vi: 'Những giới hạn nhỏ giúp tôi dùng công nghệ mà không mất kiểm soát sự chú ý.' },
   ] }),
   makeItem({ id: 'shadow-b2-career-goals', titleVi: 'Trao đổi mục tiêu nghề nghiệp', titleEn: 'Discussing career goals', level: 'B2', topic: 'discussing career goals', descriptionVi: 'Luyện nói về mục tiêu nghề nghiệp với lý do và kế hoạch.', estimatedTime: '7 phút', referenceVideoTitle: 'Career Goals English Conversation', referenceVideoUrl: 'https://www.youtube.com/watch?v=YjT4gSxTEGk', lines: [
-    { text: 'In the next few years, I want to build a career that combines communication and technology.', vi: 'Trong vài năm tới, tôi muốn xây dựng sự nghiệp kết hợp giao từ vựnghệ.' },
+    { text: 'In the next few years, I want to build a career that combines communication and technology.', vi: 'Trong vài năm tới, tôi muốn xây dựng sự nghiệp kết hợp giao tiếp và công nghệ.' },
     { text: 'I am improving my English because it helps me read better resources and work with more people.', vi: 'Tôi đang cải thiện tiếng Anh vì nó giúp tôi đọc tài liệu tốt hơn và làm việc với nhiều người hơn.' },
-    { text: 'My short-term goal is to present ideas clearly in meetings.', vi: 'Mục tiêu ngắn hạn của tôi lộ trình bày ý tưởng rõ ràng trong cuộc họp.' },
-    { text: 'Later, I hope to lead small projects with confidence and responsibility.', vi: 'Sau này, từ vựng dẫn dắt các dự án nhỏ với sự tự tin và trách nhiệm.' },
+    { text: 'My short-term goal is to present ideas clearly in meetings.', vi: 'Mục tiêu ngắn hạn của tôi là trình bày ý tưởng rõ ràng trong cuộc họp.' },
+    { text: 'Later, I hope to lead small projects with confidence and responsibility.', vi: 'Sau này, tôi hy vọng dẫn dắt các dự án nhỏ với sự tự tin và trách nhiệm.' },
   ] }),
   makeItem({ id: 'shadow-a1-morning-check-in', titleVi: 'Hỏi thăm buổi sáng', titleEn: 'Morning check-in', level: 'A1', topic: 'morning check-in', descriptionVi: 'Luyện hỏi thăm và trả lời ngắn trong buổi sáng.', estimatedTime: '4 phút', lines: [
     { text: 'Good morning, Linh.', vi: 'Chào buổi sáng, Linh.' },
     { text: 'Did you sleep well last night?', vi: 'Tối qua bạn ngủ ngon không?' },
     { text: 'Yes, I feel fresh today.', vi: 'Có, hôm nay tôi thấy tỉnh táo.' },
-    { text: 'Let us start with a small từ vựng ta bắt đầu bằng một việc nhỏ nhé.' },
+    { text: 'Let us start with a small task.', vi: 'Chúng ta bắt đầu bằng một việc nhỏ nhé.' },
   ] }),
   makeItem({ id: 'shadow-a1-family-photo', titleVi: 'Ảnh gia đình', titleEn: 'Family photo', level: 'A1', topic: 'family photo', descriptionVi: 'Luyện giới thiệu người thân bằng câu rất ngắn.', estimatedTime: '4 phút', lines: [
     { text: 'This is my family photo.', vi: 'Đây là ảnh gia đình tôi.' },
     { text: 'My mother is next to my father.', vi: 'Mẹ tôi đứng cạnh bố tôi.' },
     { text: 'My brother is very funny.', vi: 'Anh trai tôi rất vui tính.' },
-    { text: 'We smile together in the pictừ vựng tôi cùng cười trong bức ảnh.' },
+    { text: 'We smile together in the picture.', vi: 'Chúng tôi cùng cười trong bức ảnh.' },
   ] }),
   makeItem({ id: 'shadow-a1-classroom-items', titleVi: 'Đồ vật trong lớp', titleEn: 'Classroom items', level: 'A1', topic: 'classroom items', descriptionVi: 'Tập gọi tên đồ vật và vị trí trong lớp học.', estimatedTime: '4 phút', lines: [
     { text: 'There is a book on my desk.', vi: 'Có một quyển sách trên bàn của tôi.' },
@@ -151,7 +151,7 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
   ] }),
   makeItem({ id: 'shadow-a1-small-weather-talk', titleVi: 'Nói chuyện thời tiết ngắn', titleEn: 'Small weather talk', level: 'A1', topic: 'small weather talk', descriptionVi: 'Luyện câu thời tiết quen thuộc, rõ âm cuối.', estimatedTime: '4 phút', lines: [
     { text: 'It is sunny today.', vi: 'Hôm nay trời nắng.' },
-    { text: 'The sky is blue and clear.', vi: 'Bầu từ vựng đãng.' },
+    { text: 'The sky is blue and clear.', vi: 'Bầu trời xanh và quang đãng.' },
     { text: 'I want to walk outside.', vi: 'Tôi muốn đi bộ bên ngoài.' },
     { text: 'Please bring your small hat.', vi: 'Làm ơn mang chiếc mũ nhỏ của bạn.' },
   ] }),
@@ -188,13 +188,13 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
   makeItem({ id: 'shadow-a2-weekend-plan', titleVi: 'Kế hoạch cuối tuần', titleEn: 'Weekend plan', level: 'A2', topic: 'weekend plan', descriptionVi: 'Luyện nối hoạt động cuối tuần bằng câu đơn giản.', estimatedTime: '5 phút', lines: [
     { text: 'On Saturday morning, I will clean my room.', vi: 'Sáng thứ Bảy, tôi sẽ dọn phòng.' },
     { text: 'After lunch, I want to meet my cousin.', vi: 'Sau bữa trưa, tôi muốn gặp anh họ của tôi.' },
-    { text: 'We may watch a short movie togetừ vựng tôi có thể xem một bộ phim ngắn cùng nhau.' },
+    { text: 'We may watch a short movie together.', vi: 'Chúng tôi có thể xem một bộ phim ngắn cùng nhau.' },
     { text: 'On Sunday, I need to finish my homework.', vi: 'Chủ nhật, tôi cần hoàn thành bài tập về nhà.' },
   ] }),
   makeItem({ id: 'shadow-a2-at-the-pharmacy', titleVi: 'Ở nhà thuốc', titleEn: 'At the pharmacy', level: 'A2', topic: 'at the pharmacy', descriptionVi: 'Tập mô tả triệu chứng nhẹ và hỏi hướng dẫn.', estimatedTime: '5 phút', lines: [
     { text: 'Excuse me, I have a small headache.', vi: 'Xin lỗi, tôi hơi đau đầu.' },
     { text: 'Do you need medicine for today?', vi: 'Bạn cần thuốc cho hôm nay phải không?' },
-    { text: 'Yes, and I need clear instructừ vựng, và tôi cần hướng dẫn rõ ràng.' },
+    { text: 'Yes, and I need clear instructions.', vi: 'Vâng, và tôi cần hướng dẫn rõ ràng.' },
     { text: 'Please take it after food and drink water.', vi: 'Hãy uống sau khi ăn và uống nước.' },
   ] }),
   makeItem({ id: 'shadow-a2-bus-delay', titleVi: 'Xe buýt trễ', titleEn: 'Bus delay', level: 'A2', topic: 'bus delay', descriptionVi: 'Luyện báo tin trễ giờ bằng câu bình tĩnh.', estimatedTime: '5 phút', lines: [
@@ -241,13 +241,13 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
   ] }),
   makeItem({ id: 'shadow-b1-community-cleanup', titleVi: 'Dọn rác cộng đồng', titleEn: 'Community cleanup', level: 'B1', topic: 'community cleanup', descriptionVi: 'Luyện mô tả hoạt động cộng đồng và kết quả tích cực.', estimatedTime: '6 phút', lines: [
     { text: 'Last Sunday, our class joined a cleanup near the river.', vi: 'Chủ nhật trước, lớp chúng tôi tham gia dọn rác gần con sông.' },
-    { text: 'We collected plastic bottles and sorted them into differentừ vựng tôi nhặt chai nhựa và phân loại chúng vào các túi khác nhau.' },
+    { text: 'We collected plastic bottles and sorted them into different bags.', vi: 'Chúng tôi nhặt chai nhựa và phân loại chúng vào các túi khác nhau.' },
     { text: 'At first, the work felt tiring, but everyone kept encouraging each other.', vi: 'Lúc đầu công việc khá mệt, nhưng mọi người tiếp tục động viên nhau.' },
     { text: 'By the end, the path looked cleaner and safer for children.', vi: 'Cuối cùng, con đường trông sạch hơn và an toàn hơn cho trẻ em.' },
   ] }),
   makeItem({ id: 'shadow-b1-ocean-learning-reflection', titleVi: 'Suy ngẫm học cùng đại dương', titleEn: 'Ocean learning reflection', level: 'B1', topic: 'ocean learning reflection', descriptionVi: 'Tập kể lại trải nghiệm học Poo Ocean bằng nhịp tự nhiên.', estimatedTime: '6 phút', lines: [
     { text: 'When I practice with the whale coach, I feel less afraid of speaking.', vi: 'Khi luyện với huấn luyện viên cá voi, tôi bớt sợ nói hơn.' },
-    { text: 'The small waves remind me to repeat one sentence at a từ vựng con sóng nhỏ nhắc tôi lặp lại từng câu một.' },
+    { text: 'The small waves remind me to repeat one sentence at a time.', vi: 'Những con sóng nhỏ nhắc tôi lặp lại từng câu một.' },
     { text: 'If I make a mistake, I slow down and try the same chunk again.', vi: 'Nếu tôi vấp một chút, tôi nói chậm lại và thử lại cùng một cụm.' },
     { text: 'This routine helps me build confidence without feeling rushed.', vi: 'Thói quen này giúp tôi xây dựng tự tin mà không thấy bị vội.' },
   ] }),
@@ -257,7 +257,7 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
     { text: 'If the hallway is crowded, wait near the window for a moment.', vi: 'Nếu hành lang đông, hãy đợi gần cửa sổ một lát.' },
     { text: 'The class usually starts five minutes after the bell.', vi: 'Lớp thường bắt đầu năm phút sau tiếng chuông.' },
   ] }),
-  makeItem({ id: 'shadow-b1-comparing-two-options', titleVi: 'So sánh hai lựa chọn', titleEn: 'Comparing two options', level: 'B1', topic: 'comparing two options', descriptionVi: 'Tập so sánh ưu điểm và chọn phươngữ pháp.', estimatedTime: '6 phút', lines: [
+  makeItem({ id: 'shadow-b1-comparing-two-options', titleVi: 'So sánh hai lựa chọn', titleEn: 'Comparing two options', level: 'B1', topic: 'comparing two options', descriptionVi: 'Tập so sánh ưu điểm và chọn phương án phù hợp.', estimatedTime: '6 phút', lines: [
     { text: 'We can either meet online tonight or study together tomorrow morning.', vi: 'Chúng ta có thể gặp trực tuyến tối nay hoặc học cùng nhau sáng mai.' },
     { text: 'Meeting online is faster, but it may be harder to focus.', vi: 'Gặp trực tuyến nhanh hơn, nhưng có thể khó tập trung hơn.' },
     { text: 'Studying tomorrow gives us more time to prepare examples.', vi: 'Học ngày mai cho chúng ta thêm thời gian chuẩn bị ví dụ.' },
@@ -267,10 +267,10 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
     { text: 'I try to keep a simple health routine during busy weeks.', vi: 'Tôi cố giữ một thói quen sức khỏe đơn giản trong những tuần bận rộn.' },
     { text: 'In the morning, I drink water and stretch for five minutes.', vi: 'Buổi sáng, tôi uống nước và giãn cơ trong năm phút.' },
     { text: 'After studying for a long time, I stand up and rest my eyes.', vi: 'Sau khi học lâu, tôi đứng dậy và cho mắt nghỉ.' },
-    { text: 'These small habits help me stay focused and sleep betừ vựng thói quen nhỏ này giúp tôi từ vựngủ tốt hơn.' },
+    { text: 'These small habits help me stay focused and sleep better.', vi: 'Những thói quen nhỏ này giúp tôi tập trung và ngủ tốt hơn.' },
   ] }),
   makeItem({ id: 'shadow-b2-balanced-technology-view', titleVi: 'Quan điểm cân bằng về công nghệ', titleEn: 'Balanced technology view', level: 'B2', topic: 'balanced technology view', descriptionVi: 'Luyện nêu quan điểm có hai mặt và kết luận rõ ràng.', estimatedTime: '7 phút', lines: [
-    { text: 'Technology is most useful when it solves a real problem instead of creating a new habitừ vựng nghệ hữu ích nhất khi giải quyết vấn đề thật thay vì tạo thói quen mới.' },
+    { text: 'Technology is most useful when it solves a real problem instead of creating a new habit.', vi: 'Công nghệ hữu ích nhất khi giải quyết vấn đề thật thay vì tạo thói quen mới.' },
     { text: 'For learners, an app can provide structure, reminders, and quick feedback.', vi: 'Với người học, ứng dụng có thể cung cấp cấu trúc, nhắc nhở và phản hồi nhanh.' },
     { text: 'However, progress still depends on focused practice and honest self-review.', vi: 'Tuy nhiên, tiến bộ vẫn phụ thuộc vào luyện tập tập trung và tự đánh giá trung thực.' },
     { text: 'That balance is what turns a tool into a meaningful learning routine.', vi: 'Sự cân bằng đó biến một công cụ thành thói quen học tập có ý nghĩa.' },
@@ -281,7 +281,7 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
     { text: 'Our remaining risk is making sure every practice mode has enough reliable data.', vi: 'Điều còn cần chú ý là mỗi phần luyện phải có nội dung đủ chắc.' },
     { text: 'The next step is to review weak areas before we invite more learners to try it.', vi: 'Bước tiếp theo là xem lại các phần yếu trước khi mời thêm người học dùng thử.' },
   ] }),
-  makeItem({ id: 'shadow-b2-learning-from-feedback', titleVi: 'Học từ phản hồi', titleEn: 'Learning from feedback', level: 'B2', topic: 'learning from feedback', descriptionVi: 'Luyện nói về phản hồi với thái độ bình từ vựng.', estimatedTime: '7 phút', lines: [
+  makeItem({ id: 'shadow-b2-learning-from-feedback', titleVi: 'Học từ phản hồi', titleEn: 'Learning from feedback', level: 'B2', topic: 'learning from feedback', descriptionVi: 'Luyện nói về phản hồi với thái độ bình tĩnh và chủ động.', estimatedTime: '7 phút', lines: [
     { text: 'Good feedback is not always comfortable, but it gives us a clearer direction.', vi: 'Phản hồi tốt không phải lúc nào cũng dễ chịu, nhưng nó cho ta hướng đi rõ hơn.' },
     { text: 'When I receive comments on my speaking, I first look for repeated patterns.', vi: 'Khi nhận góp ý về phần nói, đầu tiên tôi tìm các mẫu lỗi lặp lại.' },
     { text: 'If several people notice the same issue, I turn it into a focused practice goal.', vi: 'Nếu nhiều người nhận ra cùng một vấn đề, tôi biến nó thành mục tiêu luyện tập tập trung.' },
@@ -291,9 +291,9 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
     { text: 'We chose a calm ocean theme because it makes practice feel less stressful.', vi: 'Chúng tôi chọn chủ đề đại dương dịu vì nó làm việc luyện tập bớt căng thẳng.' },
     { text: 'The whale coach gives friendly guidance without interrupting the main task.', vi: 'Huấn luyện viên cá voi đưa hướng dẫn thân thiện mà không làm gián đoạn nhiệm vụ chính.' },
     { text: 'Soft colors also help learners focus on the sentence they are repeating.', vi: 'Màu sắc nhẹ cũng giúp người học tập trung vào câu họ đang lặp lại.' },
-    { text: 'In this case, design supports attention as much as it supports emotừ vựng trường hợp này, thiết kế hỗ trợ sự chú ý cũng nhiều như hỗ trợ cảm xúc.' },
+    { text: 'In this case, design supports attention as much as it supports emotion.', vi: 'Trong trường hợp này, thiết kế hỗ trợ sự chú ý cũng nhiều như hỗ trợ cảm xúc.' },
   ] }),
-  makeItem({ id: 'shadow-b2-discussing-learning-equity', titleVi: 'Bàn về cơ hội học tập', titleEn: 'Discussing learning equity', level: 'B2', topic: 'discussing learning equity', descriptionVi: 'lộ trình bày ý kiến xã hội với ngôn ngữ rõ và cân bằng.', estimatedTime: '7 phút', lines: [
+  makeItem({ id: 'shadow-b2-discussing-learning-equity', titleVi: 'Bàn về cơ hội học tập', titleEn: 'Discussing learning equity', level: 'B2', topic: 'discussing learning equity', descriptionVi: 'Luyện trình bày ý kiến xã hội với ngôn ngữ rõ và cân bằng.', estimatedTime: '7 phút', lines: [
     { text: 'Learning opportunities should be practical, welcoming, and easy to start.', vi: 'Cơ hội học tập nên thực tế, thân thiện và dễ bắt đầu.' },
     { text: 'Many learners give up not because they lack ability, but because the path feels confusing.', vi: 'Nhiều người học bỏ cuộc không phải vì thiếu năng lực, mà vì lộ trình quá khó hiểu.' },
     { text: 'Clear guidance, gentle review, and accessible practice can reduce that barrier.', vi: 'Hướng dẫn rõ, ôn tập nhẹ và luyện tập dễ tiếp cận có thể giảm rào cản đó.' },
@@ -302,23 +302,23 @@ export const generatedShadowingCatalog: GeneratedShadowingItem[] = [
   makeItem({ id: 'shadow-b2-problem-solving-meeting', titleVi: 'Họp giải quyết vấn đề', titleEn: 'Problem-solving meeting', level: 'B2', topic: 'problem-solving meeting', descriptionVi: 'Luyện đề xuất giải pháp và phân công bước tiếp theo.', estimatedTime: '7 phút', lines: [
     { text: 'Before we choose a solution, let us identify the part that slows users down.', vi: 'Trước khi chọn giải pháp, hãy xác định phần làm người dùng chậm lại.' },
     { text: 'The data suggests that instructions are clear, but the first action is not obvious enough.', vi: 'Dữ liệu cho thấy hướng dẫn rõ, nhưng hành động đầu tiên chưa đủ dễ nhận ra.' },
-    { text: 'We could improve the button label and add one short example below itừ vựng ta có thể cải thiện nhãn nút và từ vựngắn bên dưới.' },
+    { text: 'We could improve the button label and add one short example below it.', vi: 'Chúng ta có thể cải thiện nhãn nút và thêm một ví dụ ngắn bên dưới.' },
     { text: 'After the change, we should test whether new learners complete the step faster.', vi: 'Sau thay đổi, chúng ta nên kiểm tra người học mới có hoàn thành bước đó nhanh hơn không.' },
   ] }),
   makeItem({ id: 'shadow-b2-environmental-message', titleVi: 'Thông điệp môi trường', titleEn: 'Environmental message', level: 'B2', topic: 'environmental message', descriptionVi: 'Tập nói về hành động nhỏ và tác động dài hạn.', estimatedTime: '7 phút', lines: [
-    { text: 'Protecting the ocean begins with choices that look small in daily life.', vi: 'Bảo vệ đại dương bắt đầu từ những lộ trìnhỏ trong đời sống hằng ngày.' },
+    { text: 'Protecting the ocean begins with choices that look small in daily life.', vi: 'Bảo vệ đại dương bắt đầu từ những lựa chọn trông nhỏ trong đời sống hằng ngày.' },
     { text: 'When we use fewer disposable items, we reduce waste before it reaches the water.', vi: 'Khi dùng ít đồ dùng một lần hơn, chúng ta giảm rác trước khi nó ra đến nước.' },
-    { text: 'Education also matters because people care more when they understand the impact.', vi: 'Giáo dục cũng quan từ vựngười quan tâm hơn khi hiểu tác động.' },
+    { text: 'Education also matters because people care more when they understand the impact.', vi: 'Giáo dục cũng quan trọng vì mọi người quan tâm hơn khi hiểu tác động.' },
     { text: 'A cleaner sea is not only a dream; it is a habit repeated by many people.', vi: 'Một biển sạch hơn không chỉ là giấc mơ; đó là thói quen được nhiều người lặp lại.' },
   ] }),
   makeItem({ id: 'shadow-b2-personal-growth-reflection', titleVi: 'Suy ngẫm phát triển bản thân', titleEn: 'Personal growth reflection', level: 'B2', topic: 'personal growth reflection', descriptionVi: 'Luyện kể tiến bộ cá nhân với nhịp chậm và tự nhiên.', estimatedTime: '7 phút', lines: [
     { text: 'Looking back, I can see that my confidence grew through many small attempts.', vi: 'Nhìn lại, tôi thấy sự tự tin của mình lớn lên qua nhiều lần thử nhỏ.' },
     { text: 'Some attempts were awkward, but each one taught me what to adjust next.', vi: 'Một vài lần khá vụng về, nhưng mỗi lần dạy tôi điều cần điều chỉnh tiếp theo.' },
     { text: 'I no longer expect every sentence to be perfect before I speak.', vi: 'Tôi không còn mong mọi câu phải hoàn hảo trước khi nói.' },
-    { text: 'Instead, I focus on being clear, kind to myself, and ready to repeat.', vi: 'Thay vào đó, tôi tập trung vào việc rõ ràng, tử tế với bản từ vựng lặp lại.' },
+    { text: 'Instead, I focus on being clear, kind to myself, and ready to repeat.', vi: 'Thay vào đó, tôi tập trung vào việc rõ ràng, tử tế với bản thân và sẵn sàng lặp lại.' },
   ] }),
   makeItem({ id: 'shadow-b1-resolving-a-misunderstanding', titleVi: 'Giải quyết hiểu nhầm', titleEn: 'Resolving a misunderstanding', level: 'B1', topic: 'resolving a misunderstanding', descriptionVi: 'Luyện nói bình tĩnh khi có hiểu nhầm trong nhóm.', estimatedTime: '6 phút', lines: [
-    { text: 'I think there was a small misunderstanding in our group chatừ vựnghĩ đã có một hiểu nhầm nhỏ trong nhóm chat của chúng ta.' },
+    { text: 'I think there was a small misunderstanding in our group chat.', vi: 'Tôi nghĩ đã có một hiểu nhầm nhỏ trong nhóm chat của chúng ta.' },
     { text: 'The message went to the wrong place, so I did not see it in time.', vi: 'Tin nhắn được gửi nhầm chỗ, nên tôi không thấy kịp lúc.' },
     { text: 'Let us use one shared channel for the next update.', vi: 'Hãy dùng một kênh chung cho cập nhật tiếp theo.' },
     { text: 'That way, everyone can follow the plan without feeling blamed.', vi: 'Như vậy, mọi người có thể theo dõi kế hoạch mà không cảm thấy bị đổ lỗi.' },

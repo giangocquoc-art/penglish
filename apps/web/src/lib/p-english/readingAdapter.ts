@@ -190,7 +190,7 @@ function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson
     subtitle: source.vietnameseSetup,
     level: mapLevel(source.level),
     estimatedTime: estimatedTimeFor(source.level),
-    skillTags: ['Đọc', 'từ vựng', 'Viết', 'Nghe', 'Nói', 'Ôn tập'],
+    skillTags: ['Đọc', 'Từ vựng', 'Viết', 'Nghe', 'Nói', 'Ôn tập'],
     learningObjectives: [
       'Đọc lấy ý chính trước khi nhìn đáp án.',
       'Tìm thông tin cụ thể trong đoạn đọc ngắn.',
@@ -248,7 +248,7 @@ function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson
       {
         id: `${source.id}-mistake-ignore-time-linkers`,
         mistake: 'Bỏ qua từ nối hoặc mốc thời gian như then, after, at seven, because.',
-        correction: 'Khoanh thầm từ nối và mốc từ vựng thường quyết định đáp án.',
+        correction: 'Khoanh thầm từ nối và mốc thời gian vì chúng thường quyết định đáp án.',
         explanationVi: 'Các từ này giúp bạn hiểu thứ tự hành động, lý do hoặc vị trí thông tin trong đoạn.',
       },
     ],

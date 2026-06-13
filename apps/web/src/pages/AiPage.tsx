@@ -56,7 +56,7 @@ export function AiPage() {
       <HStack justify="space-between" mb="6" flexWrap="wrap" gap="3">
         <VStack align="start" gap="1">
           <Text fontSize="2xl" fontWeight="800">AI Sinh từ vựng</Text>
-          <Text color="gray.500" fontSize="sm">từ vựng theo chủ đề bạn nhập.</Text>
+          <Text color="gray.500" fontSize="sm">Tạo bộ từ vựng theo chủ đề bạn nhập.</Text>
         </VStack>
         <Tag colorScheme="purple" borderRadius="full" px="3" py="2">
           <Icon as={Sparkles} mr="1.5" />

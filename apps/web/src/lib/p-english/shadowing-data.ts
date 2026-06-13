@@ -32,7 +32,7 @@ export type ShadowingVideo = {
 
 function createTranscriptLines(
   lessonId: string,
-  lines: Array<{ text: stừ vựng; focusNotes: string[] }>,
+  lines: Array<{ text: string; vi: string; focusNotes: string[] }>,
 ): ShadowingTranscriptLine[] {
   return lines.map((line, index) => ({
     id: `${lessonId}-s${index + 1}`,
@@ -55,7 +55,7 @@ function createCuratedShadowingLesson(config: {
   youtubeId?: string;
   embedAllowed?: boolean;
   referenceVideoTitle?: string;
-  lines: Array<{ text: stừ vựng; focusNotes: string[] }>;
+  lines: Array<{ text: string; vi: string; focusNotes: string[] }>;
 }): ShadowingVideo {
   const transcriptLines = createTranscriptLines(config.id, config.lines);
   const youtubeId = config.youtubeId ?? '';
@@ -93,7 +93,7 @@ export const curatedShadowingVideos: ShadowingVideo[] = [
       { text: 'I am good, thanks. And you?', vi: 'Mình khỏe, cảm ơn. Còn bạn?', focusNotes: ['Nhấn nhẹ good và thanks.', 'And you lên giọng cuối câu.'] },
       { text: 'I am fine. It is nice to see you.', vi: 'Mình ổn. Rất vui được gặp bạn.', focusNotes: ['Nối is nice nhẹ.', 'Âm cuối /t/ trong nice to không cần bật quá mạnh.'] },
       { text: 'Nice to see you too.', vi: 'Mình cũng vui được gặp bạn.', focusNotes: ['Đọc too dài và tròn môi.', 'Giữ nhịp chậm, rõ từng cụm.'] },
-      { text: 'Let us go to class togetừ vựng ta cùng đến lớp nhé.', focusNotes: ['Let us có thể nói như lets.', 'Nhấn class together.'] },
+      { text: 'Let us go to class together.', vi: 'Chúng ta cùng đến lớp nhé.', focusNotes: ['Let us có thể nói như lets.', 'Nhấn class together.'] },
     ],
   }),
   createCuratedShadowingLesson({
@@ -160,7 +160,7 @@ export const curatedShadowingVideos: ShadowingVideo[] = [
       { text: 'Go straight for two blocks.', vi: 'Đi thẳng hai dãy nhà.', focusNotes: ['Go straight nói liền.', 'Blocks có âm cuối /ks/.'] },
       { text: 'Then turn left at the bank.', vi: 'Sau đó rẽ trái ở ngân hàng.', focusNotes: ['Turn left nhấn rõ hướng.', 'At the nối nhẹ.'] },
       { text: 'Is it next to the supermarket?', vi: 'Nó có ở cạnh siêu thị không?', focusNotes: ['Next to nối thành cụm.', 'Supermarket nhấn âm đầu.'] },
-      { text: 'Yes, it is across from the supermarketừ vựng, nó ở đối diện siêu thị.', focusNotes: ['Across from nhấn across.', 'Không nuốt âm /s/ cuối yes.'] },
+      { text: 'Yes, it is across from the supermarket.', vi: 'Đúng, nó ở đối diện siêu thị.', focusNotes: ['Across from nhấn across.', 'Không nuốt âm /s/ cuối yes.'] },
       { text: 'Thank you for your help.', vi: 'Cảm ơn bạn đã giúp đỡ.', focusNotes: ['Thank có /θ/.', 'For your nối /fər jər/.'] },
     ],
   }),
@@ -226,7 +226,7 @@ export const curatedShadowingVideos: ShadowingVideo[] = [
     lines: [
       { text: 'Good morning. Thank you for meeting with me today.', vi: 'Chào buổi sáng. Cảm ơn anh/chị đã gặp tôi hôm nay.', focusNotes: ['Thank you for nối mượt.', 'Meeting with me chia thành cụm.'] },
       { text: 'I am excited to learn more about the role.', vi: 'Tôi rất hào hứng tìm hiểu thêm về vị trí này.', focusNotes: ['Excited nhấn âm hai.', 'Role kết thúc tròn âm /oʊl/.'] },
-      { text: 'Your experience looks very relevant.', vi: 'Kinh nghiệm của bạn trôngữ pháp.', focusNotes: ['Experience nhấn âm hai.', 'Relevant nhấn âm đầu.'] },
+      { text: 'Your experience looks very relevant.', vi: 'Kinh nghiệm của bạn trông rất phù hợp.', focusNotes: ['Experience nhấn âm hai.', 'Relevant nhấn âm đầu.'] },
       { text: 'I worked with customers for two years.', vi: 'Tôi đã làm việc với khách hàng trong hai năm.', focusNotes: ['Worked có âm /t/ cuối.', 'Customers nhấn âm đầu.'] },
       { text: 'That helped me become patient and organized.', vi: 'Điều đó giúp tôi trở nên kiên nhẫn và có tổ chức.', focusNotes: ['Helped me nối nhẹ.', 'Organized nhấn âm đầu.'] },
       { text: 'I would be happy to answer your questions.', vi: 'Tôi rất sẵn lòng trả lời câu hỏi của anh/chị.', focusNotes: ['Would be happy nói thành cụm.', 'Questions có âm /tʃ/.'] },

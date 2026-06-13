@@ -176,7 +176,7 @@ export const shadowingAiFewShotExamples: ShadowingAiFewShotExample[] = [
       matchedWords: ['although', 'remote', 'work', 'convenient', 'it', 'reduce', 'communication', 'between'],
       missingWords: ['is', 'can', 'spontaneous'],
       extraWords: [],
-      changedWords: [{ expected: 'teammates', heard: 'team', tipVi: '`teammates` là những từ vựng nhóm; đọc đủ phần cuối để giữ nghĩa.' }],
+      changedWords: [{ expected: 'teammates', heard: 'team', tipVi: '`teammates` là những thành viên trong nhóm; đọc đủ phần cuối để giữ nghĩa.' }],
       rhythmTips: ['Chia câu dài: `Although remote work is convenient` / `it can reduce spontaneous communication` / `between teammates`.'],
       pronunciationTips: ['Không cần đọc nhanh; ưu tiên giữ các từ nối nghĩa như `although`, `can`, `spontaneous`.'],
       nextDrills: ['Luyện cụm giữa: `it can reduce spontaneous communication`.'],

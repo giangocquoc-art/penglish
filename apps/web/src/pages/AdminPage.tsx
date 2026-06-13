@@ -17,9 +17,9 @@ const sectionMeta: Record<AdminSection, { title: string; description: string }> 
   overview: { title: 'Tổng quan quản trị', description: 'Theo dõi sức khỏe học tập, nội dung và phản hồi của PooEnglish.' },
   users: { title: 'Người học', description: 'Quản lý tài khoản, tiến độ học và trạng thái truy cập.' },
   lessons: { title: 'Bài học', description: 'Chuẩn bị cấu trúc quản lý bài học để nối Supabase sau này.' },
-  words: { titừ vựng', description: 'Quản lý kho từ, ví dụ, chủ đề và độ khó.' },
+  words: { title: 'Từ vựng', description: 'Quản lý kho từ, ví dụ, chủ đề và độ khó.' },
   feedback: { title: 'Phản hồi', description: 'Theo dõi góp ý, lỗi giao diện và yêu cầu hỗ trợ từ người học.' },
-  settings: { title: 'Cài đặt website', description: 'Thiết lập thông tin hiển từ vựng tắc vận hành chính.' },
+  settings: { title: 'Cài đặt website', description: 'Thiết lập thông tin hiển thị và các công tắc vận hành chính.' },
 };
 
 export function AdminPage() {
@@ -126,7 +126,7 @@ function SettingsSection() {
         <AdminField label="Link Facebook" value="https://facebook.com/pooenglish" />
         <FormControl gridColumn={{ base: 'auto', lg: 'span 2' }}>
           <FormLabel color="#0F3557" fontWeight="850">Thông báo đầu trang</FormLabel>
-          <Textarea defaultValue="Học đều 15 phát âmỗi ngày để giữ chuỗi bọt biển." borderColor="#BAE6FD" bg="rgba(255,255,255,0.78)" borderRadius="2xl" minH="110px" />
+          <Textarea defaultValue="Học đều 15 phút mỗi ngày để giữ chuỗi bọt biển." borderColor="#BAE6FD" bg="rgba(255,255,255,0.78)" borderRadius="2xl" minH="110px" />
         </FormControl>
         <AdminField label="CTA chính" value="Bắt đầu bài hôm nay" />
       </SimpleGrid>

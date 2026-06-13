@@ -114,7 +114,7 @@ export function ProfilePage() {
                 {session.isSignedIn ? 'Google' : 'Bạn học cùng Poo'}
               </Badge>
             </HStack>
-            <Text color={PROFILE_COLORS.secondaryText} fontWeight="600" mb="3">Poo đang đồng hànhọc tiếng Anh mỗi ngày.</Text>
+            <Text color={PROFILE_COLORS.secondaryText} fontWeight="600" mb="3">Poo đang đồng hành cùng bạn học tiếng Anh mỗi ngày.</Text>
             <HStack data-testid="profile-data-mode" justify={{ base: 'center', md: 'start' }} gap="2" wrap="wrap" mb="4">
               <Badge borderRadius="full" px="3" py="1" bg={session.isSignedIn ? '#EAFBF0' : '#E8F4FF'} color={session.isSignedIn ? '#16803A' : PROFILE_COLORS.deepBlue}>{session.dataModeLabel}</Badge>
               <Text fontSize="sm" color={PROFILE_COLORS.secondaryText} fontWeight="700">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { Box, SimpleGrid, HStack, VStack, Flex, Text, Button, Icon, Tag, TagLabel, List, ListItem, ListIcon, Badge } from '@chakra-ui/react';
 import { Check, Star, Zap, Trophy } from 'lucide-react';
 import { get, post } from '../api';
@@ -21,7 +21,7 @@ const TIERS: Tier[] = [
     name: 'Miễn phí',
     price: 0,
     period: 'mãi mãi',
-    benefits: ['Học từ vựngày', 'Thẻ từ cơ bản', 'Truy cập 5 lộ trình'],
+    benefits: ['Học từ vựng mỗi ngày', 'Thẻ từ cơ bản', 'Truy cập 5 lộ trình'],
     tint: 'gray.600',
     bg: 'gray.50',
   },
@@ -41,7 +41,7 @@ const TIERS: Tier[] = [
     price: 399000,
     original: 588000,
     period: '/năm',
-    benefits: ['Học tập vẫn miễn phát âm 32%', 'Quà cảm ơn không ảnh hưởng học tập', 'Chủ đề trang trí khi sẵn sàng'],
+    benefits: ['Học tập vẫn miễn phí', 'Tiết kiệm 32%', 'Quà cảm ơn không ảnh hưởng học tập', 'Chủ đề trang trí khi sẵn sàng'],
     tint: 'orange.500',
     bg: 'orange.50',
   },

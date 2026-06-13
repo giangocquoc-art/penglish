@@ -261,8 +261,8 @@ export function InteractiveLessonPage() {
       <OceanPageShell variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px="4" py="8">
         <Box maxW="760px" mx="auto" className="penglish-glass-card" bg="rgba(255,255,255,0.86)" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p="8">
           <Text fontSize="2xl" fontWeight="950" color={COLORS.text}>Poo chưa mở được bài này</Text>
-          <Text mt="2" color={COLORS.muted} fontWeight="700">Bài này đang được chuẩn bị nội dung. Hãy quay lộ trình để chọn bài đang mở.</Text>
-          <Button as={Link} to="/learning-path" mt="6" borderRadius="full" bg={COLORS.blue} color="white">Quay lộ trình</Button>
+          <Text mt="2" color={COLORS.muted} fontWeight="700">Bài này đang được chuẩn bị nội dung. Hãy quay lại lộ trình để chọn bài đang mở.</Text>
+          <Button as={Link} to="/learning-path" mt="6" borderRadius="full" bg={COLORS.blue} color="white">Quay lại lộ trình</Button>
         </Box>
       </OceanPageShell>
     );
@@ -315,7 +315,7 @@ export function InteractiveLessonPage() {
             <Flex justify="center" mb="4"><OceanMascot mascot="poo" pose="reward" size="lg" decorative motion="celebrate" /></Flex>
             <Tag borderRadius="full" bg="#FEF3C7" color="#B45309" px="4" py="2" fontWeight="950"><Icon as={Zap} boxSize="4" /> +{safeResult.xp} XP</Tag>
             <Text mt="4" fontSize={{ base: '3xl', md: '5xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.05">Hoàn thành bài học!</Text>
-            <Text mt="3" color={COLORS.muted} fontWeight="750" lineHeight="1.7">Poo đã lưu tiến độ, cộng nhịp học và đưa phần sai vào Khu luyện tập/Sổ từ vựng.</Text>
+            <Text mt="3" color={COLORS.muted} fontWeight="750" lineHeight="1.7">Poo đã lưu tiến độ, cộng nhịp học và đưa phần sai vào Khu luyện tập/Sổ tay từ vựng.</Text>
             <SimpleGrid columns={{ base: 1, md: 3 }} gap="3" mt="6">
               <Box p="4" borderRadius="2xl" bg="#EFF6FF" border="1px solid #BFDBFE"><Text fontWeight="950" color={COLORS.blue}>{safeResult.correctCount}/{Math.max(1, safeResult.totalAnswered)}</Text><Text fontSize="sm" color={COLORS.muted} fontWeight="800">Đáp án đúng</Text></Box>
               <Box p="4" borderRadius="2xl" bg="#F0FDF4" border="1px solid #BBF7D0"><Text fontWeight="950" color={COLORS.green}>{safeResult.weakItems.length}</Text><Text fontSize="sm" color={COLORS.muted} fontWeight="800">Mục cần ôn</Text></Box>
@@ -323,7 +323,7 @@ export function InteractiveLessonPage() {
             </SimpleGrid>
             <HStack justify="center" mt="7" gap="3" wrap="wrap">
               <Button as={Link} to="/practice" borderRadius="full" bg={COLORS.blue} color="white" _hover={{ bg: '#185BB2' }}>Ôn trong Khu luyện tập</Button>
-              <Button as={Link} to="/words" borderRadius="full" variant="outline">Xem Sổ từ vựng</Button>
+              <Button as={Link} to="/words" borderRadius="full" variant="outline">Xem Sổ tay từ vựng</Button>
               <Button borderRadius="full" variant="ghost" onClick={() => navigate('/learning-path')}>Về lộ trình</Button>
             </HStack>
           </Box>
@@ -336,7 +336,7 @@ export function InteractiveLessonPage() {
     <OceanPageShell data-testid="interactive-lesson-page" variant="roadmap" overlayStrength="medium" minH="calc(100vh - 68px)" px={{ base: '3', md: '5' }} py={{ base: '2', md: '5' }} pb={{ base: 'calc(var(--penglish-mobile-safe-bottom) + 104px)', lg: '8' }} overflowX="hidden">
       <Box maxW="920px" mx="auto">
         <HStack mb="3" justify="space-between" gap="3">
-          <Button as={Link} to="/learning-path" size="sm" borderRadius="full" variant="ghost" leftIcon={<Icon as={ArrowLeft} />}>lộ trình</Button>
+          <Button as={Link} to="/learning-path" size="sm" borderRadius="full" variant="ghost" leftIcon={<Icon as={ArrowLeft} />}>Lộ trình</Button>
           <Tag borderRadius="full" bg="#EFF6FF" color={COLORS.blue} px="3" py="1.5" fontWeight="950">{lesson.level}</Tag>
         </HStack>
         <Box className="penglish-glass-card" bg="rgba(255,255,255,0.88)" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '4', md: '6' }} boxShadow="0 18px 46px rgba(31,111,214,0.10)">
