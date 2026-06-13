@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender-seo-v4.cjs",
     "preview": "vite preview"
   },
   "dependencies": {

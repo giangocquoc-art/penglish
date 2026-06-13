@@ -7,9 +7,11 @@ import { RouteMetadataUpdater } from './components/seo/RouteMetadataUpdater';
 import { REVIEW_SEO_PATHS } from './data/reviewSeoPages';
 import { SEO_PAGE_PATHS } from './data/seoPagesData';
 import { LESSON_SEO_PATHS } from './data/lessonSeoPages';
+import { seoV4Routes } from './data/seoV4Top1Pages';
 import { GlobalEasterEggs } from './components/easter-eggs/GlobalEasterEggs';
 import { AuthProvider, useAuth } from './features/auth/AuthProvider';
 import { avatarFromUser, displayNameFromUser } from './lib/p-english/userSession';
+import { usePooDevtoolWarning } from './hooks/usePooDevtoolWarning';
 
 const NewVocabPage = lazy(() => import('./pages/VocabPage').then((module) => ({ default: module.VocabPage })));
 const NewLoginPage = lazy(() => import('./pages/LoginPage').then((module) => ({ default: module.LoginPage })));
@@ -41,6 +43,12 @@ const AdminPage = lazy(() => import('./pages/AdminPage').then((module) => ({ def
 const SeoLandingPage = lazy(() => import('./pages/SeoLandingPage').then((module) => ({ default: module.SeoLandingPage })));
 const BlogPage = lazy(() => import('./pages/BlogPage').then((module) => ({ default: module.BlogPage })));
 const LessonSeoPage = lazy(() => import('./pages/LessonSeoPage').then((module) => ({ default: module.LessonSeoPage })));
+const LearningPathIntentPage = lazy(() => import('./pages/SeoIntentFlowPages').then((module) => ({ default: module.LearningPathIntentPage })));
+const SpeakingCoachIntentPage = lazy(() => import('./pages/SeoIntentFlowPages').then((module) => ({ default: module.SpeakingCoachIntentPage })));
+const WordsIntentPage = lazy(() => import('./pages/SeoIntentFlowPages').then((module) => ({ default: module.WordsIntentPage })));
+const ShadowingIntentPage = lazy(() => import('./pages/SeoIntentFlowPages').then((module) => ({ default: module.ShadowingIntentPage })));
+const PracticeIntentPage = lazy(() => import('./pages/SeoIntentFlowPages').then((module) => ({ default: module.PracticeIntentPage })));
+const SeoV4Page = lazy(() => import('./pages/SeoV4Page').then((module) => ({ default: module.SeoV4Page })));
 
 type User = {
   id: string;
@@ -197,8 +205,10 @@ function AppRoutes() {
     ...SEO_PAGE_PATHS,
   ].includes(pathname);
   const isLessonSeoRoute = LESSON_SEO_PATHS.includes(pathname);
+  const isSeoV4Route = seoV4Routes.includes(pathname);
 
-  if (isSeoLandingRoute) routeElement = <NewShell user={user}><SeoLandingPage /></NewShell>;
+  if (isSeoV4Route) routeElement = <NewShell user={user}><SeoV4Page /></NewShell>;
+  else if (isSeoLandingRoute) routeElement = <NewShell user={user}><SeoLandingPage /></NewShell>;
   else if (isLessonSeoRoute) routeElement = <NewShell user={user}><LessonSeoPage /></NewShell>;
   else if (pathname === '/blog' || pathname.startsWith('/blog/')) routeElement = <NewShell user={user}><BlogPage /></NewShell>;
   else if (isLoginCasingVariant || pathname === '/login/') routeElement = <Navigate to="/login" replace />;
@@ -208,19 +218,21 @@ function AppRoutes() {
   else if (pathname === '/landing') routeElement = <Navigate to="/home" replace />;
   else if (pathname === '/home') routeElement = <ProtectedShell user={user}><NewHomePage /></ProtectedShell>;
   else if (matchPath('/paths/:id', pathname)) routeElement = <ProtectedShell user={user}><NewStudyPage /></ProtectedShell>;
-  else if (pathname === '/learning-path') routeElement = <ProtectedShell user={user}><NewLearningPathPage /></ProtectedShell>;
+  else if (pathname === '/learning-path') routeElement = <NewShell user={user}><LearningPathIntentPage /></NewShell>;
   else if (matchPath('/learning-path/lesson/:unitId/:nodeId', pathname)) routeElement = <ProtectedShell user={user}><NewInteractiveLessonPage /></ProtectedShell>;
   else if (matchPath('/learn/:lessonId', pathname)) routeElement = <ProtectedShell user={user}><NewInteractiveLessonPage /></ProtectedShell>;
   else if (pathname === '/luyen-tieng-anh/48-ngay-lay-goc') routeElement = <ProtectedShell user={user}><Foundation48Page /></ProtectedShell>;
   else if (matchPath('/luyen-tieng-anh/48-ngay-lay-goc/ngay/:dayNumber', pathname)) routeElement = <ProtectedShell user={user}><Foundation48DayPage /></ProtectedShell>;
-  else if (pathname === '/shadowing') routeElement = <ProtectedShell user={user}><NewShadowingHubPage /></ProtectedShell>;
+  else if (pathname === '/shadowing') routeElement = <NewShell user={user}><ShadowingIntentPage /></NewShell>;
   else if (matchPath('/shadowing/practice/:lessonId', pathname)) routeElement = <ProtectedShell user={user}><NewShadowingPracticePage /></ProtectedShell>;
   else if (pathname === '/video-lab') routeElement = <ProtectedShell user={user}><NewVideoLabPage /></ProtectedShell>;
   else if (matchPath('/lessons/:lessonId', pathname)) routeElement = <ProtectedShell user={user}><NewLessonPage /></ProtectedShell>;
   else if (pathname === '/categories' || pathname === '/category-list') routeElement = <ProtectedShell user={user}><NewCategoriesPage /></ProtectedShell>;
-  else if (pathname === '/vocabularies' || pathname === '/words') routeElement = <ProtectedShell user={user}><NewVocabPage /></ProtectedShell>;
+  else if (pathname === '/speaking-coach') routeElement = <NewShell user={user}><SpeakingCoachIntentPage /></NewShell>;
+  else if (pathname === '/vocabularies') routeElement = <ProtectedShell user={user}><NewVocabPage /></ProtectedShell>;
+  else if (pathname === '/words') routeElement = <NewShell user={user}><WordsIntentPage /></NewShell>;
   else if (pathname === '/games') routeElement = <ProtectedShell user={user}><NewGamesPage /></ProtectedShell>;
-  else if (pathname === '/practice') routeElement = <ProtectedShell user={user}><NewPracticePage /></ProtectedShell>;
+  else if (pathname === '/practice') routeElement = <NewShell user={user}><PracticeIntentPage /></NewShell>;
   else if (pathname === '/english-speed') routeElement = <ProtectedShell user={user}><NewEnglishSpeedPage /></ProtectedShell>;
   else if (pathname === '/resources') routeElement = <ProtectedShell user={user}><NewResourceHubPage /></ProtectedShell>;
   else if (pathname === '/folders') routeElement = <ProtectedShell user={user}><NewFoldersPage /></ProtectedShell>;
@@ -246,10 +258,13 @@ function AppRoutes() {
 }
 
 export default function App() {
+  const pooDevtoolWarning = usePooDevtoolWarning();
+
   return (
     <AuthProvider>
       <AppRoutes />
       <GlobalEasterEggs />
+      {pooDevtoolWarning}
     </AuthProvider>
   );
 }
