@@ -1,0 +1,14 @@
+- generic [active] [ref=e1]:
+  - status [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: 🐋
+      - generic [ref=e6]: P-English
+      - generic [ref=e7]: Đang mở vùng học...
+      - generic [ref=e8]: Cá voi đang chuẩn bị flashcard, ghép cặp và dữ liệu từ vựng cho bạn.
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

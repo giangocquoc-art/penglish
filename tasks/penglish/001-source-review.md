@@ -1,0 +1,1 @@
+Read tasks/penglish/001-source-review.md and execute it exactly. Use Serena, filesystem-penglish, repomix, context7, chrome-devtools, playwright, shadcn, supabase, vercel, and figma-token only when relevant. Stop after creating the report. Do not import lessons yet.

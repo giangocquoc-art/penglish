@@ -1,0 +1,436 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - generic [ref=f4e16]:
+      - generic [ref=f4e17]:
+        - banner [ref=f4e18]:
+          - button "Mở menu" [ref=f4e19] [cursor=pointer]
+          - generic "Bọt biển 5/5" [ref=f4e22]:
+            - paragraph [ref=f4e26]: Bọt biển 5/5
+        - main [ref=f4e27]:
+          - generic [ref=f4e81]:
+            - generic [ref=f4e84]:
+              - paragraph [ref=f4e90]: Nhật ký học cùng cá voi Poo
+              - heading "Blog học tiếng Anh cùng PooEnglish" [level=1] [ref=f4e91]
+              - paragraph [ref=f4e92]: "Poo gom bài viết theo từng cụm chủ đề để Google, Bing, AI Search và người học đều hiểu rõ đường bơi: ôn tiếng Anh, mất gốc, shadowing, từ vựng, luyện nghe, ngữ pháp, lộ trình và học miễn phí."
+              - generic [ref=f4e93]:
+                - link [ref=f4e94] [cursor=pointer]:
+                  - /url: /learning-path
+                - link "Xem cụm mất gốc" [ref=f4e98] [cursor=pointer]:
+                  - /url: /hoc-tieng-anh-cho-nguoi-mat-goc
+            - generic [ref=f4e99]:
+              - heading "Cụm chủ đề chính" [level=2] [ref=f4e104]
+              - generic [ref=f4e105]:
+                - link "Ôn tiếng Anh" [ref=f4e106] [cursor=pointer]:
+                  - /url: /on-tieng-anh
+                - link "Người mất gốc" [ref=f4e107] [cursor=pointer]:
+                  - /url: /hoc-tieng-anh-cho-nguoi-mat-goc
+                - link "Shadowing tiếng Anh" [ref=f4e108] [cursor=pointer]:
+                  - /url: /shadowing-tieng-anh
+                - link "Từ vựng tiếng Anh" [ref=f4e109] [cursor=pointer]:
+                  - /url: /tu-vung-tieng-anh
+                - link "Luyện nghe tiếng Anh" [ref=f4e110] [cursor=pointer]:
+                  - /url: /luyen-nghe-tieng-anh
+                - link "Ngữ pháp tiếng Anh" [ref=f4e111] [cursor=pointer]:
+                  - /url: /ngu-phap-tieng-anh
+                - link "Lộ trình học tiếng Anh" [ref=f4e112] [cursor=pointer]:
+                  - /url: /lo-trinh-hoc-tieng-anh
+                - link "Học miễn phí" [ref=f4e113] [cursor=pointer]:
+                  - /url: /hoc-tieng-anh-mien-phi
+            - generic [ref=f4e114]:
+              - generic [ref=f4e115]:
+                - generic [ref=f4e116]:
+                  - heading "Ôn tiếng Anh" [level=2] [ref=f4e117]
+                  - paragraph [ref=f4e118]: 3 bài viết hỗ trợ, liên kết về trang pillar của cụm.
+                - link "Mở pillar page" [ref=f4e119] [cursor=pointer]:
+                  - /url: /on-tieng-anh
+              - generic [ref=f4e120]:
+                - article [ref=f4e121]:
+                  - generic [ref=f4e122]:
+                    - generic [ref=f4e123]:
+                      - paragraph [ref=f4e126]: 11/06/2026
+                      - paragraph [ref=f4e127]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e128]:
+                      - link "Ôn tiếng Anh là gì? Cách ôn đúng để dùng được mỗi ngày" [ref=f4e129] [cursor=pointer]:
+                        - /url: /blog/on-tieng-anh-la-gi
+                    - paragraph [ref=f4e130]: Ôn tiếng Anh là gặp lại kiến thức cũ trong ngữ cảnh mới để nhớ lâu và dùng được, không chỉ đọc lại danh sách từ hay công thức.
+                    - generic [ref=f4e131]:
+                      - generic [ref=f4e132]: ôn tiếng Anh
+                      - generic [ref=f4e133]: cách ôn tiếng Anh
+                      - generic [ref=f4e134]: học tiếng Anh mỗi ngày
+                    - link [ref=f4e135] [cursor=pointer]:
+                      - /url: /blog/on-tieng-anh-la-gi
+                - article [ref=f4e139]:
+                  - generic [ref=f4e140]:
+                    - generic [ref=f4e141]:
+                      - paragraph [ref=f4e144]: 11/06/2026
+                      - paragraph [ref=f4e145]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e146]:
+                      - link "Cách ôn tiếng Anh cho người mới bắt đầu không bị ngợp" [ref=f4e147] [cursor=pointer]:
+                        - /url: /blog/cach-on-tieng-anh-cho-nguoi-moi-bat-dau
+                    - paragraph [ref=f4e148]: "Người mới nên ôn theo vòng nhỏ: xem lại, học một mảnh mới, dùng lại trong câu và ghi phần cần ôn cho ngày mai."
+                    - generic [ref=f4e149]:
+                      - generic [ref=f4e150]: cách ôn tiếng Anh cho người mới bắt đầu
+                      - generic [ref=f4e151]: ôn tiếng Anh cơ bản
+                      - generic [ref=f4e152]: học tiếng Anh cho người mới
+                    - link [ref=f4e153] [cursor=pointer]:
+                      - /url: /blog/cach-on-tieng-anh-cho-nguoi-moi-bat-dau
+                - article [ref=f4e157]:
+                  - generic [ref=f4e158]:
+                    - generic [ref=f4e159]:
+                      - paragraph [ref=f4e162]: 11/06/2026
+                      - paragraph [ref=f4e163]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e164]:
+                      - link "5 sai lầm khi ôn tiếng Anh khiến bạn học nhiều nhưng vẫn quên" [ref=f4e165] [cursor=pointer]:
+                        - /url: /blog/sai-lam-khi-on-tieng-anh
+                    - paragraph [ref=f4e166]: Ôn tiếng Anh sai cách thường tạo cảm giác chăm chỉ nhưng không giữ được kiến thức. Poo giúp bạn sửa từng lỗi nhỏ.
+                    - generic [ref=f4e167]:
+                      - generic [ref=f4e168]: sai lầm khi ôn tiếng Anh
+                      - generic [ref=f4e169]: ôn tiếng Anh hiệu quả
+                      - generic [ref=f4e170]: học tiếng Anh hay quên
+                    - link [ref=f4e171] [cursor=pointer]:
+                      - /url: /blog/sai-lam-khi-on-tieng-anh
+            - generic [ref=f4e175]:
+              - generic [ref=f4e176]:
+                - generic [ref=f4e177]:
+                  - heading "Người mất gốc" [level=2] [ref=f4e178]
+                  - paragraph [ref=f4e179]: 1 bài viết hỗ trợ, liên kết về trang pillar của cụm.
+                - link "Mở pillar page" [ref=f4e180] [cursor=pointer]:
+                  - /url: /hoc-tieng-anh-cho-nguoi-mat-goc
+              - article [ref=f4e182]:
+                - generic [ref=f4e183]:
+                  - generic [ref=f4e184]:
+                    - paragraph [ref=f4e187]: 11/06/2026
+                    - paragraph [ref=f4e188]: • 10 phút đọc
+                  - heading [level=3] [ref=f4e189]:
+                    - 'link "Ôn tiếng Anh cho người mất gốc tại nhà: bắt đầu lại từ câu nhỏ" [ref=f4e190] [cursor=pointer]':
+                      - /url: /blog/on-tieng-anh-cho-nguoi-mat-goc-tai-nha
+                  - paragraph [ref=f4e191]: Mất gốc không cần bắt đầu bằng sách dày; hãy bắt đầu bằng câu dùng được, từ gần đời sống và nhịp ôn đều.
+                  - generic [ref=f4e192]:
+                    - generic [ref=f4e193]: ôn tiếng Anh cho người mất gốc tại nhà
+                    - generic [ref=f4e194]: mất gốc tiếng Anh
+                    - generic [ref=f4e195]: bắt đầu lại tiếng Anh
+                  - link [ref=f4e196] [cursor=pointer]:
+                    - /url: /blog/on-tieng-anh-cho-nguoi-mat-goc-tai-nha
+            - generic [ref=f4e200]:
+              - generic [ref=f4e201]:
+                - generic [ref=f4e202]:
+                  - heading "Shadowing tiếng Anh" [level=2] [ref=f4e203]
+                  - paragraph [ref=f4e204]: 5 bài viết hỗ trợ, liên kết về trang pillar của cụm.
+                - link "Mở pillar page" [ref=f4e205] [cursor=pointer]:
+                  - /url: /shadowing-tieng-anh
+              - generic [ref=f4e206]:
+                - article [ref=f4e207]:
+                  - generic [ref=f4e208]:
+                    - generic [ref=f4e209]:
+                      - paragraph [ref=f4e212]: 11/06/2026
+                      - paragraph [ref=f4e213]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e214]:
+                      - link "Shadowing tiếng Anh là gì? Cách luyện nghe nói nhẹ nhàng cùng Poo" [ref=f4e215] [cursor=pointer]:
+                        - /url: /blog/shadowing-tieng-anh-la-gi
+                    - paragraph [ref=f4e216]: Shadowing là nghe một câu tiếng Anh rồi nói theo gần như ngay sau đó để tai và miệng phối hợp tự nhiên hơn.
+                    - generic [ref=f4e217]:
+                      - generic [ref=f4e218]: shadowing tiếng Anh
+                      - generic [ref=f4e219]: luyện nghe nói
+                      - generic [ref=f4e220]: phát âm tiếng Anh
+                    - link [ref=f4e221] [cursor=pointer]:
+                      - /url: /blog/shadowing-tieng-anh-la-gi
+                - article [ref=f4e225]:
+                  - generic [ref=f4e226]:
+                    - generic [ref=f4e227]:
+                      - paragraph [ref=f4e230]: 11/06/2026
+                      - paragraph [ref=f4e231]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e232]:
+                      - link "Cách shadowing tiếng Anh cho người mới bắt đầu" [ref=f4e233] [cursor=pointer]:
+                        - /url: /blog/cach-shadowing-tieng-anh-cho-nguoi-moi
+                    - paragraph [ref=f4e234]: Người mới không cần đuổi tốc độ bản gốc ngay. Shadowing nên bắt đầu bằng câu ngắn, tốc độ chậm và mục tiêu rõ.
+                    - generic [ref=f4e235]:
+                      - generic [ref=f4e236]: cách shadowing tiếng Anh cho người mới
+                      - generic [ref=f4e237]: luyện shadowing
+                      - generic [ref=f4e238]: nói đuổi tiếng Anh
+                    - link [ref=f4e239] [cursor=pointer]:
+                      - /url: /blog/cach-shadowing-tieng-anh-cho-nguoi-moi
+                - article [ref=f4e243]:
+                  - generic [ref=f4e244]:
+                    - generic [ref=f4e245]:
+                      - paragraph [ref=f4e248]: 11/06/2026
+                      - paragraph [ref=f4e249]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e250]:
+                      - link "Shadowing có giúp nói tiếng Anh tốt hơn không?" [ref=f4e251] [cursor=pointer]:
+                        - /url: /blog/shadowing-co-giup-noi-tieng-anh-tot-hon-khong
+                    - paragraph [ref=f4e252]: Shadowing giúp nói tốt hơn khi bạn luyện có hiểu nghĩa, có lặp lại và biết dùng câu vào tình huống thật.
+                    - generic [ref=f4e253]:
+                      - generic [ref=f4e254]: shadowing giúp nói tiếng Anh
+                      - generic [ref=f4e255]: nói tiếng Anh tốt hơn
+                      - generic [ref=f4e256]: luyện phản xạ tiếng Anh
+                    - link [ref=f4e257] [cursor=pointer]:
+                      - /url: /blog/shadowing-co-giup-noi-tieng-anh-tot-hon-khong
+                - article [ref=f4e261]:
+                  - generic [ref=f4e262]:
+                    - generic [ref=f4e263]:
+                      - paragraph [ref=f4e266]: 11/06/2026
+                      - paragraph [ref=f4e267]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e268]:
+                      - link "Lỗi sai khi luyện shadowing và cách sửa nhẹ nhàng" [ref=f4e269] [cursor=pointer]:
+                        - /url: /blog/loi-sai-khi-luyen-shadowing
+                    - paragraph [ref=f4e270]: Shadowing sai cách dễ làm bạn mệt. Hãy sửa bằng đoạn ngắn, tốc độ chậm và mục tiêu âm thanh cụ thể.
+                    - generic [ref=f4e271]:
+                      - generic [ref=f4e272]: lỗi sai khi luyện shadowing
+                      - generic [ref=f4e273]: shadowing tiếng Anh
+                      - generic [ref=f4e274]: luyện phát âm
+                    - link [ref=f4e275] [cursor=pointer]:
+                      - /url: /blog/loi-sai-khi-luyen-shadowing
+                - article [ref=f4e279]:
+                  - generic [ref=f4e280]:
+                    - generic [ref=f4e281]:
+                      - paragraph [ref=f4e284]: 11/06/2026
+                      - paragraph [ref=f4e285]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e286]:
+                      - link "Bài tập shadowing tiếng Anh mỗi ngày trong 10 phút" [ref=f4e287] [cursor=pointer]:
+                        - /url: /blog/bai-tap-shadowing-tieng-anh-moi-ngay
+                    - paragraph [ref=f4e288]: Chỉ 10 phút shadowing mỗi ngày cũng đủ tạo nhịp nếu bạn chọn câu đúng và ôn lại đều.
+                    - generic [ref=f4e289]:
+                      - generic [ref=f4e290]: bài tập shadowing tiếng Anh mỗi ngày
+                      - generic [ref=f4e291]: luyện shadowing 10 phút
+                      - generic [ref=f4e292]: nói đuổi tiếng Anh
+                    - link [ref=f4e293] [cursor=pointer]:
+                      - /url: /blog/bai-tap-shadowing-tieng-anh-moi-ngay
+            - generic [ref=f4e297]:
+              - generic [ref=f4e298]:
+                - generic [ref=f4e299]:
+                  - heading "Từ vựng tiếng Anh" [level=2] [ref=f4e300]
+                  - paragraph [ref=f4e301]: 4 bài viết hỗ trợ, liên kết về trang pillar của cụm.
+                - link "Mở pillar page" [ref=f4e302] [cursor=pointer]:
+                  - /url: /tu-vung-tieng-anh
+              - generic [ref=f4e303]:
+                - article [ref=f4e304]:
+                  - generic [ref=f4e305]:
+                    - generic [ref=f4e306]:
+                      - paragraph [ref=f4e309]: 11/06/2026
+                      - paragraph [ref=f4e310]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e311]:
+                      - link "Cách học từ vựng tiếng Anh dễ nhớ mà không cần nhồi nhét" [ref=f4e312] [cursor=pointer]:
+                        - /url: /blog/cach-hoc-tu-vung-tieng-anh-de-nho
+                    - paragraph [ref=f4e313]: Từ vựng không nên là danh sách khô khan. Khi từ có ngữ cảnh, âm thanh và cơ hội dùng lại, bạn sẽ nhớ lâu hơn.
+                    - generic [ref=f4e314]:
+                      - generic [ref=f4e315]: cách học từ vựng tiếng Anh dễ nhớ
+                      - generic [ref=f4e316]: học từ vựng tiếng Anh
+                      - generic [ref=f4e317]: nhớ từ vựng
+                    - link [ref=f4e318] [cursor=pointer]:
+                      - /url: /blog/cach-hoc-tu-vung-tieng-anh-de-nho
+                - article [ref=f4e322]:
+                  - generic [ref=f4e323]:
+                    - generic [ref=f4e324]:
+                      - paragraph [ref=f4e327]: 11/06/2026
+                      - paragraph [ref=f4e328]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e329]:
+                      - link "Học từ vựng tiếng Anh theo chủ đề sao cho không học vẹt" [ref=f4e330] [cursor=pointer]:
+                        - /url: /blog/hoc-tu-vung-tieng-anh-theo-chu-de
+                    - paragraph [ref=f4e331]: Học theo chủ đề giúp não nhóm thông tin, nhưng cần đặt câu và dùng lại để tránh học vẹt.
+                    - generic [ref=f4e332]:
+                      - generic [ref=f4e333]: học từ vựng tiếng Anh theo chủ đề
+                      - generic [ref=f4e334]: từ vựng theo chủ đề
+                      - generic [ref=f4e335]: ôn từ vựng
+                    - link [ref=f4e336] [cursor=pointer]:
+                      - /url: /blog/hoc-tu-vung-tieng-anh-theo-chu-de
+                - article [ref=f4e340]:
+                  - generic [ref=f4e341]:
+                    - generic [ref=f4e342]:
+                      - paragraph [ref=f4e345]: 11/06/2026
+                      - paragraph [ref=f4e346]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e347]:
+                      - link "Cách ôn từ vựng tiếng Anh không bị quên sau vài ngày" [ref=f4e348] [cursor=pointer]:
+                        - /url: /blog/cach-on-tu-vung-tieng-anh-khong-bi-quen
+                    - paragraph [ref=f4e349]: Quên từ là bình thường. Điều quan trọng là có nhịp gặp lại từ đúng lúc và dùng từ trong câu.
+                    - generic [ref=f4e350]:
+                      - generic [ref=f4e351]: cách ôn từ vựng tiếng Anh không bị quên
+                      - generic [ref=f4e352]: ôn từ vựng tiếng Anh
+                      - generic [ref=f4e353]: spaced repetition
+                    - link [ref=f4e354] [cursor=pointer]:
+                      - /url: /blog/cach-on-tu-vung-tieng-anh-khong-bi-quen
+                - article [ref=f4e358]:
+                  - generic [ref=f4e359]:
+                    - generic [ref=f4e360]:
+                      - paragraph [ref=f4e363]: 11/06/2026
+                      - paragraph [ref=f4e364]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e365]:
+                      - 'link "Từ vựng tiếng Anh cho người mới bắt đầu: học gì trước?" [ref=f4e366] [cursor=pointer]':
+                        - /url: /blog/tu-vung-tieng-anh-cho-nguoi-moi-bat-dau
+                    - paragraph [ref=f4e367]: Người mới nên học từ gần đời sống trước, vì đó là nhóm từ dễ đặt câu và dễ dùng lại nhất.
+                    - generic [ref=f4e368]:
+                      - generic [ref=f4e369]: từ vựng tiếng Anh cho người mới bắt đầu
+                      - generic [ref=f4e370]: từ vựng cơ bản
+                      - generic [ref=f4e371]: học từ vựng
+                    - link [ref=f4e372] [cursor=pointer]:
+                      - /url: /blog/tu-vung-tieng-anh-cho-nguoi-moi-bat-dau
+            - generic [ref=f4e376]:
+              - generic [ref=f4e377]:
+                - generic [ref=f4e378]:
+                  - heading "Luyện nghe tiếng Anh" [level=2] [ref=f4e379]
+                  - paragraph [ref=f4e380]: 3 bài viết hỗ trợ, liên kết về trang pillar của cụm.
+                - link "Mở pillar page" [ref=f4e381] [cursor=pointer]:
+                  - /url: /luyen-nghe-tieng-anh
+              - generic [ref=f4e382]:
+                - article [ref=f4e383]:
+                  - generic [ref=f4e384]:
+                    - generic [ref=f4e385]:
+                      - paragraph [ref=f4e388]: 11/06/2026
+                      - paragraph [ref=f4e389]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e390]:
+                      - 'link "Luyện nghe tiếng Anh cho người mới: nghe chậm để hiểu chắc hơn" [ref=f4e391] [cursor=pointer]':
+                        - /url: /blog/luyen-nghe-tieng-anh-cho-nguoi-moi
+                    - paragraph [ref=f4e392]: Luyện nghe không phải cứ bật video dài là tốt. Người mới cần đoạn ngắn, mục tiêu rõ và cơ hội nghe lại.
+                    - generic [ref=f4e393]:
+                      - generic [ref=f4e394]: luyện nghe tiếng Anh cho người mới
+                      - generic [ref=f4e395]: nghe tiếng Anh cơ bản
+                      - generic [ref=f4e396]: học nghe tiếng Anh
+                    - link [ref=f4e397] [cursor=pointer]:
+                      - /url: /blog/luyen-nghe-tieng-anh-cho-nguoi-moi
+                - article [ref=f4e401]:
+                  - generic [ref=f4e402]:
+                    - generic [ref=f4e403]:
+                      - paragraph [ref=f4e406]: 11/06/2026
+                      - paragraph [ref=f4e407]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e408]:
+                      - link "Nghe tiếng Anh không hiểu phải làm sao?" [ref=f4e409] [cursor=pointer]:
+                        - /url: /blog/nghe-tieng-anh-khong-hieu-phai-lam-sao
+                    - paragraph [ref=f4e410]: Không hiểu khi nghe là chuyện bình thường nếu tai chưa quen âm, từ nền chưa chắc hoặc đoạn nghe quá nhanh.
+                    - generic [ref=f4e411]:
+                      - generic [ref=f4e412]: nghe tiếng Anh không hiểu phải làm sao
+                      - generic [ref=f4e413]: luyện nghe tiếng Anh
+                      - generic [ref=f4e414]: nghe không ra từ
+                    - link [ref=f4e415] [cursor=pointer]:
+                      - /url: /blog/nghe-tieng-anh-khong-hieu-phai-lam-sao
+                - article [ref=f4e419]:
+                  - generic [ref=f4e420]:
+                    - generic [ref=f4e421]:
+                      - paragraph [ref=f4e424]: 11/06/2026
+                      - paragraph [ref=f4e425]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e426]:
+                      - link "Cách luyện nghe tiếng Anh mỗi ngày để tai quen dần" [ref=f4e427] [cursor=pointer]:
+                        - /url: /blog/cach-luyen-nghe-tieng-anh-moi-ngay
+                    - paragraph [ref=f4e428]: "Luyện nghe mỗi ngày nên có nhiệm vụ nhỏ: nghe ý chính, bắt từ khóa, kiểm tra transcript và nói lại một câu."
+                    - generic [ref=f4e429]:
+                      - generic [ref=f4e430]: cách luyện nghe tiếng Anh mỗi ngày
+                      - generic [ref=f4e431]: luyện nghe mỗi ngày
+                      - generic [ref=f4e432]: nghe tiếng Anh
+                    - link [ref=f4e433] [cursor=pointer]:
+                      - /url: /blog/cach-luyen-nghe-tieng-anh-moi-ngay
+            - generic [ref=f4e437]:
+              - generic [ref=f4e438]:
+                - generic [ref=f4e439]:
+                  - heading "Ngữ pháp tiếng Anh" [level=2] [ref=f4e440]
+                  - paragraph [ref=f4e441]: 1 bài viết hỗ trợ, liên kết về trang pillar của cụm.
+                - link "Mở pillar page" [ref=f4e442] [cursor=pointer]:
+                  - /url: /ngu-phap-tieng-anh
+              - article [ref=f4e444]:
+                - generic [ref=f4e445]:
+                  - generic [ref=f4e446]:
+                    - paragraph [ref=f4e449]: 11/06/2026
+                    - paragraph [ref=f4e450]: • 10 phút đọc
+                  - heading [level=3] [ref=f4e451]:
+                    - 'link "Ngữ pháp tiếng Anh cơ bản cho người mất gốc: học mẫu câu trước" [ref=f4e452] [cursor=pointer]':
+                      - /url: /blog/ngu-phap-tieng-anh-co-ban-cho-nguoi-mat-goc
+                  - paragraph [ref=f4e453]: "Ngữ pháp dễ hơn khi bạn học qua câu dùng được: giới thiệu, thói quen, mong muốn, nhu cầu và câu hỏi đơn giản."
+                  - generic [ref=f4e454]:
+                    - generic [ref=f4e455]: ngữ pháp tiếng Anh cơ bản cho người mất gốc
+                    - generic [ref=f4e456]: ngữ pháp tiếng Anh cơ bản
+                    - generic [ref=f4e457]: mẫu câu tiếng Anh
+                  - link [ref=f4e458] [cursor=pointer]:
+                    - /url: /blog/ngu-phap-tieng-anh-co-ban-cho-nguoi-mat-goc
+            - generic [ref=f4e462]:
+              - generic [ref=f4e463]:
+                - generic [ref=f4e464]:
+                  - heading "Lộ trình học tiếng Anh" [level=2] [ref=f4e465]
+                  - paragraph [ref=f4e466]: 2 bài viết hỗ trợ, liên kết về trang pillar của cụm.
+                - link "Mở pillar page" [ref=f4e467] [cursor=pointer]:
+                  - /url: /lo-trinh-hoc-tieng-anh
+              - generic [ref=f4e468]:
+                - article [ref=f4e469]:
+                  - generic [ref=f4e470]:
+                    - generic [ref=f4e471]:
+                      - paragraph [ref=f4e474]: 11/06/2026
+                      - paragraph [ref=f4e475]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e476]:
+                      - link "Lịch ôn tiếng Anh 30 phút mỗi ngày cho người bận" [ref=f4e477] [cursor=pointer]:
+                        - /url: /blog/lich-on-tieng-anh-30-phut-moi-ngay
+                    - paragraph [ref=f4e478]: Một lịch 30 phút tốt cần có ôn lại, học mới, luyện nghe nói và ghi chú phần yếu thay vì chỉ xem bài mới.
+                    - generic [ref=f4e479]:
+                      - generic [ref=f4e480]: lịch ôn tiếng Anh 30 phút mỗi ngày
+                      - generic [ref=f4e481]: học tiếng Anh mỗi ngày
+                      - generic [ref=f4e482]: ôn tiếng Anh hằng ngày
+                    - link [ref=f4e483] [cursor=pointer]:
+                      - /url: /blog/lich-on-tieng-anh-30-phut-moi-ngay
+                - article [ref=f4e487]:
+                  - generic [ref=f4e488]:
+                    - generic [ref=f4e489]:
+                      - paragraph [ref=f4e492]: 11/06/2026
+                      - paragraph [ref=f4e493]: • 10 phút đọc
+                    - heading [level=3] [ref=f4e494]:
+                      - link "Lộ trình học tiếng Anh cho người mới bắt đầu từ con số nhỏ" [ref=f4e495] [cursor=pointer]:
+                        - /url: /blog/lo-trinh-hoc-tieng-anh-cho-nguoi-moi-bat-dau
+                    - paragraph [ref=f4e496]: Một lộ trình tốt không cần quá nặng. Nó chỉ cần cho bạn biết hôm nay học gì, ôn gì và dùng lại thế nào.
+                    - generic [ref=f4e497]:
+                      - generic [ref=f4e498]: lộ trình học tiếng Anh cho người mới bắt đầu
+                      - generic [ref=f4e499]: lộ trình học tiếng Anh
+                      - generic [ref=f4e500]: học tiếng Anh từ đầu
+                    - link [ref=f4e501] [cursor=pointer]:
+                      - /url: /blog/lo-trinh-hoc-tieng-anh-cho-nguoi-moi-bat-dau
+            - generic [ref=f4e505]:
+              - generic [ref=f4e506]:
+                - generic [ref=f4e507]:
+                  - heading "Học miễn phí" [level=2] [ref=f4e508]
+                  - paragraph [ref=f4e509]: 1 bài viết hỗ trợ, liên kết về trang pillar của cụm.
+                - link "Mở pillar page" [ref=f4e510] [cursor=pointer]:
+                  - /url: /hoc-tieng-anh-mien-phi
+              - article [ref=f4e512]:
+                - generic [ref=f4e513]:
+                  - generic [ref=f4e514]:
+                    - paragraph [ref=f4e517]: 11/06/2026
+                    - paragraph [ref=f4e518]: • 10 phút đọc
+                  - heading [level=3] [ref=f4e519]:
+                    - link "Học tiếng Anh miễn phí ở đâu để không bị lạc giữa quá nhiều lựa chọn?" [ref=f4e520] [cursor=pointer]:
+                      - /url: /blog/hoc-tieng-anh-mien-phi-o-dau
+                  - paragraph [ref=f4e521]: Nguồn học miễn phí tốt cần có đường đi rõ, nội dung vừa sức và không đẩy người mới vào mê cung tài liệu.
+                  - generic [ref=f4e522]:
+                    - generic [ref=f4e523]: học tiếng Anh miễn phí ở đâu
+                    - generic [ref=f4e524]: học tiếng Anh miễn phí
+                    - generic [ref=f4e525]: web học tiếng Anh
+                  - link [ref=f4e526] [cursor=pointer]:
+                    - /url: /blog/hoc-tieng-anh-mien-phi-o-dau
+            - generic [ref=f4e530]:
+              - heading "Sẵn sàng học miễn phí cùng cá voi Poo?" [level=2] [ref=f4e533]
+              - paragraph [ref=f4e534]: Chỉ cần mở một bài, nói thử một câu hoặc ôn lại vài từ. Poo không cần bạn hoàn hảo; Poo chỉ cần bạn bơi thêm một nhịp nhỏ hôm nay.
+              - generic [ref=f4e535]:
+                - link "Vào lộ trình học" [ref=f4e536] [cursor=pointer]:
+                  - /url: /learning-path
+                - link "Thử shadowing" [ref=f4e537] [cursor=pointer]:
+                  - /url: /shadowing
+      - navigation [ref=f4e39]:
+        - generic [ref=f4e40]:
+          - link [ref=f4e41] [cursor=pointer]:
+            - /url: /learning-path
+            - paragraph [ref=f4e47]: Lộ trình
+          - link [ref=f4e48] [cursor=pointer]:
+            - /url: /shadowing
+            - paragraph [ref=f4e53]: Shadowing
+          - link [ref=f4e54] [cursor=pointer]:
+            - /url: /practice
+            - paragraph [ref=f4e62]: Ôn tập
+          - link [ref=f4e63] [cursor=pointer]:
+            - /url: /games
+            - paragraph [ref=f4e67]: Trò chơi
+          - link [ref=f4e68] [cursor=pointer]:
+            - /url: /words
+            - paragraph [ref=f4e72]: Từ vựng
+          - link [ref=f4e73] [cursor=pointer]:
+            - /url: /home
+            - paragraph [ref=f4e78]: Trang chủ
+    - status:
+      - paragraph: Bạn vừa mở góc tò mò 😏 Poo chào bạn!
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

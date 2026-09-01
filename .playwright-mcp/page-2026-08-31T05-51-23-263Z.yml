@@ -1,0 +1,48 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - generic [ref=f1e5]:
+      - generic [ref=f1e6]:
+        - banner [ref=f1e7]:
+          - button "Mở menu" [ref=f1e8] [cursor=pointer]
+          - generic "Bọt biển 5/5" [ref=f1e11]:
+            - paragraph [ref=f1e15]: Bọt biển 5/5
+        - main [ref=f1e16]:
+          - generic [ref=f1e20]:
+            - generic [ref=f1e23]:
+              - paragraph [ref=f1e24]: 404 · Lạc dòng
+              - heading "Bài học này bơi lạc rồi" [level=1] [ref=f1e25]
+              - paragraph [ref=f1e26]: Đường dẫn này không còn ở đây hoặc đã đổi chỗ. Poo sẽ đưa bạn về đúng vùng học nhé.
+            - generic [ref=f1e27]:
+              - link "Về trang chủ" [ref=f1e28] [cursor=pointer]:
+                - /url: /home
+              - link "Mở lộ trình học" [ref=f1e29] [cursor=pointer]:
+                - /url: /learning-path
+      - navigation [ref=f1e30]:
+        - generic [ref=f1e31]:
+          - link [ref=f1e32] [cursor=pointer]:
+            - /url: /learning-path
+            - paragraph [ref=f1e38]: Lộ trình
+          - link [ref=f1e39] [cursor=pointer]:
+            - /url: /shadowing
+            - paragraph [ref=f1e44]: Shadowing
+          - link [ref=f1e45] [cursor=pointer]:
+            - /url: /practice
+            - paragraph [ref=f1e53]: Ôn tập
+          - link [ref=f1e54] [cursor=pointer]:
+            - /url: /games
+            - paragraph [ref=f1e58]: Trò chơi
+          - link [ref=f1e59] [cursor=pointer]:
+            - /url: /words
+            - paragraph [ref=f1e63]: Từ vựng
+          - link [ref=f1e64] [cursor=pointer]:
+            - /url: /home
+            - paragraph [ref=f1e69]: Trang chủ
+    - status:
+      - paragraph: Bạn vừa mở góc tò mò 😏 Poo chào bạn!
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

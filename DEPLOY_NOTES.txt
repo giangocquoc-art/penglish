@@ -1,0 +1,71 @@
+Pshare deploy package - full-stack Express production mode
+
+What changed:
+- Backend private/mutable routes are scoped by authenticated userId.
+- Subscriptions, shop/activity/streak, AI usage/generations are no longer shared globally.
+- In production, Express can serve both API routes and the built Vite web app from apps/web/dist.
+- When VITE_API_URL is not set in production, the web app uses same-origin API calls such as /auth/google.
+
+Package notes:
+- node_modules is NOT included; install dependencies on server.
+- local API data is NOT included: apps/api/data/* excluded to avoid overwriting server users.
+- Backup server apps/api/data before replacing code.
+
+Deploy quick commands from extracted project root:
+npm ci
+npm run build
+npm run start:api
+
+Production mode:
+- Build first with npm run build.
+- Then run npm run start:api.
+- Express keeps API routes first, then serves apps/web/dist static assets and SPA fallback routes.
+- Open http://localhost:8080/home, /learning-path, /practice, and /health from the same port.
+
+Local development mode:
+- Run web and API separately:
+  npm run dev:api
+  npm run dev:web
+- In development, the web app falls back to http://localhost:8080 when VITE_API_URL is missing.
+
+Production test:
+- Restart API after deploy.
+- Login with two different accounts and verify each account sees only its own data.
+
+Vercel + Supabase deployment workflow:
+- This repository is currently Vite + Express + SQLite. It is not fully Supabase-backed yet.
+- The one-command deployment script is intentionally conservative and only pushes Supabase migrations if supabase/migrations exists.
+- Frontend deployment target: Vercel production, serving apps/web/dist.
+- Supabase intended production storage target: users, progress, streaks, vocabulary status, custom shadowing items, and uploaded lesson assets.
+- Never put SUPABASE_SERVICE_ROLE_KEY in frontend code or Vercel frontend env variables.
+- Frontend may use only VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.
+- Local deployment CLI may use SUPABASE_ACCESS_TOKEN if your Supabase CLI login requires it.
+- Keep secrets out of Git, docs, screenshots, and reports.
+
+Dry run:
+  .\scripts\deploy-prod.ps1 -DryRun
+
+Production deploy:
+  .\scripts\deploy-prod.ps1
+
+Required local env vars before real deploy:
+  $env:VITE_SUPABASE_URL="https://your-project-ref.supabase.co"
+  $env:VITE_SUPABASE_ANON_KEY="your-anon-key"
+  $env:SUPABASE_PROJECT_REF="your-project-ref"
+
+Required CLIs:
+- node
+- npm
+- npx
+- vercel     (install with: npm i -g vercel)
+- supabase   (install with: npm i -g supabase)
+
+The script runs:
+1. command checks
+2. environment variable checks
+3. npm ci
+4. npm run build
+5. supabase link/db push only when supabase/migrations exists
+6. safe best-effort Vercel env setup
+7. vercel --prod
+8. final reminder to test /home, /learning-path, /shadowing, /practice

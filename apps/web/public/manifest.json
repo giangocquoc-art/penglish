@@ -1,0 +1,26 @@
+﻿{
+    "id": "/",
+    "name": "PooEnglish - Học tiếng Anh cùng Poo",
+    "short_name": "PooEnglish",
+    "description": "Học tiếng Anh mỗi ngày với lộ trình, từ vựng, shadowing và luyện tập cùng cá voi Poo.",
+    "start_url": "/home",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#F4FBFF",
+    "theme_color": "#2563EB",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/brand/p-english-whale-icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "categories": [
+        "education",
+        "games"
+    ],
+    "lang": "vi",
+    "dir": "ltr"
+}

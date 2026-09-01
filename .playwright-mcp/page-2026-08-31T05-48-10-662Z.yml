@@ -1,0 +1,101 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e5]:
+      - complementary [ref=e7]:
+        - generic [ref=e8]:
+          - img "PooEnglish logo" [ref=e10]:
+            - img "PooEnglish logo" [ref=e12]
+            - generic [ref=e13]:
+              - paragraph [ref=e14]: PooEnglish
+              - paragraph [ref=e15]: Học tiếng Anh mỗi ngày
+          - generic [ref=e16]:
+            - generic [ref=e17]:
+              - generic [ref=e18]:
+                - img "Chuỗi ngày học" [ref=e19]
+                - paragraph [ref=e20]: "Chuỗi:"
+                - paragraph [ref=e21]: 1 ngày
+              - generic [ref=e22]:
+                - img "Bọt biển còn lại" [ref=e23]
+                - paragraph [ref=e24]: "Bọt biển:"
+                - paragraph [ref=e25]: 5/5
+            - paragraph [ref=e32]: "0"
+        - navigation "Điều hướng chính" [ref=e33]:
+          - link [ref=e34] [cursor=pointer]:
+            - /url: /luyen-tieng-anh/48-ngay-lay-goc
+            - generic [ref=e41]:
+              - paragraph [ref=e42]: Học hôm nay
+              - paragraph [ref=e43]: Bài hôm nay
+          - link [ref=e44] [cursor=pointer]:
+            - /url: /learning-path
+            - generic [ref=e51]:
+              - paragraph [ref=e52]: Lộ trình
+              - paragraph [ref=e53]: Lộ trình học
+          - link "Shadowing Nghe & nói" [ref=e54] [cursor=pointer]:
+            - /url: /shadowing
+            - generic [ref=e57]:
+              - paragraph [ref=e58]: Shadowing
+              - paragraph [ref=e59]: Nghe & nói
+          - link [ref=e60] [cursor=pointer]:
+            - /url: /speaking-coach
+            - generic [ref=e66]:
+              - paragraph [ref=e67]: Speaking
+              - paragraph [ref=e68]: Poo chấm nói
+          - link [ref=e69] [cursor=pointer]:
+            - /url: /practice
+            - generic [ref=e78]:
+              - paragraph [ref=e79]: Ôn tập
+              - paragraph [ref=e80]: Câu cần ôn
+          - link [ref=e81] [cursor=pointer]:
+            - /url: /games
+            - generic [ref=e86]:
+              - paragraph [ref=e87]: Trò chơi
+              - paragraph [ref=e88]: Luyện phản xạ
+          - link [ref=e89] [cursor=pointer]:
+            - /url: /words
+            - generic [ref=e94]:
+              - paragraph [ref=e95]: Từ vựng
+              - paragraph [ref=e96]: Kho từ
+          - link [ref=e97] [cursor=pointer]:
+            - /url: /home
+            - generic [ref=e103]:
+              - paragraph [ref=e104]: Trang chủ
+              - paragraph [ref=e105]: Tổng quan
+        - generic [ref=e106]:
+          - link [ref=e107] [cursor=pointer]:
+            - /url: /profile
+            - generic [ref=e108]:
+              - img "Khách" [ref=e110]: K
+              - generic [ref=e111]:
+                - paragraph [ref=e112]: Khách
+                - paragraph [ref=e113]: Tiến độ lưu trên thiết bị này
+                - paragraph [ref=e114]: Poo đang giữ tiến độ cho bạn
+          - button "Vào học bằng Google" [ref=e118] [cursor=pointer]
+          - button "Đừng bấm nút này" [ref=e120] [cursor=pointer]
+          - generic [ref=e121] [cursor=pointer]:
+            - paragraph [ref=e122]: 🌙
+            - paragraph [ref=e123]: Giao diện
+            - button "Đổi màu giao diện" [ref=e124]
+      - generic [ref=e127]:
+        - banner [ref=e128]:
+          - generic "Bọt biển 5/5" [ref=e130]:
+            - paragraph [ref=e134]: Bọt biển 5/5
+        - main [ref=e135]:
+          - generic [ref=e139]:
+            - generic [ref=e142]:
+              - paragraph [ref=e143]: 404 · Lạc dòng
+              - heading "Bài học này bơi lạc rồi" [level=1] [ref=e144]
+              - paragraph [ref=e145]: Đường dẫn này không còn ở đây hoặc đã đổi chỗ. Poo sẽ đưa bạn về đúng vùng học nhé.
+            - generic [ref=e146]:
+              - link "Về trang chủ" [ref=e147] [cursor=pointer]:
+                - /url: /home
+              - link "Mở lộ trình học" [ref=e148] [cursor=pointer]:
+                - /url: /learning-path
+    - status:
+      - paragraph: Bạn vừa mở góc tò mò 😏 Poo chào bạn!
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

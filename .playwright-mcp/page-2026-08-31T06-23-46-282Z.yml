@@ -1,0 +1,54 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - generic [ref=f2e16]:
+      - generic [ref=f2e17]:
+        - banner [ref=f2e18]:
+          - button "Mở menu" [ref=f2e19] [cursor=pointer]
+          - generic "Bọt biển 5/5" [ref=f2e22]:
+            - paragraph [ref=f2e26]: Bọt biển 5/5
+        - main [ref=f2e27]:
+          - generic [ref=f2e28]:
+            - heading "Bộ từ vựng" [level=2] [ref=f2e29]
+            - generic [ref=f2e30]:
+              - generic [ref=f2e31]:
+                - paragraph [ref=f2e32]: Bộ từ vựng
+                - paragraph [ref=f2e33]: Quản lý bộ từ cá nhân và khám phá bộ từ public.
+              - generic [ref=f2e34]:
+                - textbox "Tìm bộ từ..." [ref=f2e40]
+                - link [ref=f2e41] [cursor=pointer]:
+                  - /url: /vocabularies
+            - alert [ref=f2e45]:
+              - generic [ref=f2e48]:
+                - paragraph [ref=f2e49]: Poo cần bạn giúp một chút
+                - heading "Poo chưa mở được các bộ từ" [level=2] [ref=f2e50]
+                - paragraph [ref=f2e51]: Kết nối có thể vừa bị ngắt. Bạn tải lại để Poo thử lấy danh sách một lần nữa nhé.
+              - button "Tải lại bộ từ" [ref=f2e52] [cursor=pointer]
+      - navigation [ref=f2e53]:
+        - generic [ref=f2e54]:
+          - link [ref=f2e55] [cursor=pointer]:
+            - /url: /learning-path
+            - paragraph [ref=f2e61]: Lộ trình
+          - link [ref=f2e62] [cursor=pointer]:
+            - /url: /shadowing
+            - paragraph [ref=f2e67]: Shadowing
+          - link [ref=f2e68] [cursor=pointer]:
+            - /url: /practice
+            - paragraph [ref=f2e76]: Ôn tập
+          - link [ref=f2e77] [cursor=pointer]:
+            - /url: /games
+            - paragraph [ref=f2e81]: Trò chơi
+          - link [ref=f2e82] [cursor=pointer]:
+            - /url: /words
+            - paragraph [ref=f2e86]: Từ vựng
+          - link [ref=f2e87] [cursor=pointer]:
+            - /url: /home
+            - paragraph [ref=f2e92]: Trang chủ
+    - status:
+      - paragraph: Bạn vừa mở góc tò mò 😏 Poo chào bạn!
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"

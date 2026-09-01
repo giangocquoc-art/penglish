@@ -1,0 +1,56 @@
+{
+  "name": "pshare",
+  "version": "1.0.0",
+  "description": "Pshare - Ung dung hoc tu vung tieng Anh thong minh",
+  "author": "Pshare Team",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev -w @pshare/api",
+    "dev:web": "npm run dev -w @pshare/web",
+    "validate:lessons": "tsx scripts/lesson-import/validate-lessons.ts",
+    "validate:penglish-runtime-lessons": "tsx scripts/validate-penglish-runtime-lessons.ts",
+    "check:penglish-runtime-depth": "tsx scripts/check-penglish-runtime-lesson-depth.ts",
+    "qa:penglish-practice": "node scripts/penglish-practice-browser-qa.cjs",
+    "qa:penglish-guest-routes": "node scripts/penglish-guest-route-browser-qa.cjs",
+    "qa:penglish-production-routes": "node scripts/penglish-production-route-browser-qa.cjs",
+    "qa:penglish-all-lessons": "node scripts/penglish-all-lessons-browser-qa.cjs",
+    "qa:penglish-interactive-lessons": "node scripts/penglish-interactive-lessons-e2e-qa.cjs",
+    "qa:penglish-dynamic-learning": "node scripts/penglish-dynamic-learning-routes-qa.cjs",
+    "qa:penglish-system-states": "node scripts/penglish-system-state-browser-qa.cjs",
+    "qa:penglish-daily-session": "node scripts/penglish-daily-session-browser-qa.cjs",
+    "audit:penglish-experience": "node scripts/penglish-experience-audit.cjs",
+    "audit:penglish-lesson-experience": "tsx scripts/audit-penglish-lesson-experience.ts",
+    "qa:penglish-lesson-format": "node scripts/penglish-lesson-format-browser-qa.cjs",
+    "audit:learning-data": "node scripts/audit-penglish-learning-data.cjs",
+    "qa:penglish-phase3": "node scripts/penglish-phase3-browser-qa.cjs",
+    "release:penglish": "npm run audit:learning-data && npm run audit:penglish-lesson-experience && npm run validate:penglish-runtime-lessons && npm run check:penglish-runtime-depth && npm run build -w @pshare/web",
+    "build": "npm run build -w @pshare/api && npm run build -w @pshare/web",
+    "start:api": "npm run start -w @pshare/api",
+    "start:web": "npm run preview -w @pshare/web"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.10",
+    "@types/react-window": "^1.8.8",
+    "csv-parse": "^6.2.1",
+    "fast-glob": "^3.3.3",
+    "playwright": "^1.60.0",
+    "pngjs": "^7.0.0",
+    "tsx": "^4.22.3",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-win32-x64-msvc": "^4.60.4"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "gsap": "^3.15.0",
+    "react-window": "^2.2.7",
+    "youtube-caption-extractor": "^1.10.2",
+    "youtube-transcript-api-js": "^3.0.3",
+    "youtube-transcript-plus": "^2.0.0"
+  }
+}

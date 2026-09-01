@@ -1,0 +1,185 @@
+import { normalizeSpeechTextForComparison } from './speechTextNormalizer';
+
+export type ShadowingApiConfidence = 'high' | 'medium' | 'low';
+export type ShadowingApiStatus = 'correct' | 'nearCorrect' | 'retry';
+
+export type ShadowingApiSuccess = {
+  ok: true;
+  source: 'gemini';
+  score: number;
+  confidence: ShadowingApiConfidence;
+  transcript: string;
+  normalizedTranscript: string;
+  normalizedTarget: string;
+  matchedWords: string[];
+  missingWords: string[];
+  extraWords: string[];
+  changedWords: string[];
+  pronunciationTips: string[];
+  rhythmTips: string[];
+  nextDrill: string;
+  coachMessage: string;
+  status: ShadowingApiStatus;
+  passed: boolean;
+  allowContinue: boolean;
+};
+
+export type ShadowingApiFailure = {
+  ok: false;
+  error: 'GEMINI_API_KEY_MISSING' | 'EMPTY_AUDIO' | 'NO_AUDIO' | 'NETWORK_ERROR' | 'INVALID_JSON' | 'API_ERROR';
+  message: string;
+  status?: number;
+};
+
+export type ShadowingApiResult = ShadowingApiSuccess | ShadowingApiFailure;
+
+export type ShadowingFeedbackRequest = {
+  audio: Blob;
+  targetText: string;
+  translation?: string;
+  lessonTitle?: string;
+  level?: string;
+  sentenceIndex?: number;
+  onTranscribed?: (transcript: string) => void;
+};
+
+const DEFAULT_ERROR_MESSAGE = 'Poo chưa nghe rõ. Bạn thử nói lại chậm hơn một chút nhé.';
+
+function normalizeStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((item) => String(item ?? '').trim()).filter(Boolean).slice(0, 12);
+}
+
+function normalizeConfidence(value: unknown): ShadowingApiConfidence {
+  return value === 'high' || value === 'medium' || value === 'low' ? value : 'low';
+}
+
+function asRecord(value: unknown): Record<string, unknown> {
+  return value && typeof value === 'object' ? value as Record<string, unknown> : {};
+}
+
+function nestedRecord(record: Record<string, unknown>, keys: string[]): Record<string, unknown> {
+  for (const key of keys) {
+    const nested = asRecord(record[key]);
+    if (Object.keys(nested).length > 0) return nested;
+  }
+  return record;
+}
+
+function extractTranscript(payload: Record<string, unknown>): string {
+  const nested = nestedRecord(payload, ['data', 'result']);
+  return String(payload.transcript ?? payload.text ?? nested.transcript ?? nested.text ?? '').trim();
+}
+
+function buildWordDiff(targetText: string, transcript: string) {
+  const normalizedTarget = normalizeSpeechTextForComparison(targetText);
+  const normalizedTranscript = normalizeSpeechTextForComparison(transcript);
+  const targetWords = normalizedTarget.split(' ').filter(Boolean);
+  const attemptWords = normalizedTranscript.split(' ').filter(Boolean);
+  const attemptSet = new Set(attemptWords);
+  const targetSet = new Set(targetWords);
+
+  return {
+    normalizedTarget,
+    normalizedTranscript,
+    matchedWords: targetWords.filter((word) => attemptSet.has(word)).slice(0, 12),
+    missingWords: targetWords.filter((word) => !attemptSet.has(word)).slice(0, 12),
+    extraWords: attemptWords.filter((word) => !targetSet.has(word)).slice(0, 12),
+  };
+}
+
+function normalizeStatus(value: unknown, score: number, confidence: ShadowingApiConfidence): ShadowingApiStatus {
+  if (value === 'correct' || value === 'nearCorrect' || value === 'retry') return value;
+  if (score >= 88 && confidence !== 'low') return 'correct';
+  if (score >= 62) return 'nearCorrect';
+  return 'retry';
+}
+
+function isPooBooNearCorrect(targetText: string, transcript: string) {
+  const target = normalizeSpeechTextForComparison(targetText);
+  const attempt = normalizeSpeechTextForComparison(transcript);
+  return /\bpoo\b/.test(target) && /\bboo\b/.test(attempt);
+}
+
+function normalizeSuccess(payload: Record<string, unknown>, targetText: string, transcriptOverride = ''): ShadowingApiSuccess {
+  const record = nestedRecord(payload, ['feedback', 'result', 'data']);
+  const transcript = String(record.transcript ?? payload.transcript ?? transcriptOverride).trim();
+  const wordDiff = buildWordDiff(targetText, transcript);
+  const score = Math.max(0, Math.min(100, Number(record.score ?? payload.score ?? 0) || 0));
+  const confidence = normalizeConfidence(record.confidence ?? payload.confidence);
+  const status = isPooBooNearCorrect(targetText, transcript) ? 'nearCorrect' : normalizeStatus(record.status ?? payload.status, score, confidence);
+  const passed = status === 'correct' || status === 'nearCorrect';
+  const allowContinue = passed;
+  const goodTips = normalizeStringArray(record.good);
+  const fixTips = normalizeStringArray(record.fix);
+  const pronunciationTips = normalizeStringArray(record.pronunciationTips);
+  const rhythmTips = normalizeStringArray(record.rhythmTips);
+  const coachMessage = isPooBooNearCorrect(targetText, transcript)
+    ? "Đạt rồi đó! Poo nghe hơi giống 'boo' một chút, lần sau thử bật nhẹ âm /p/ nha."
+    : String(record.coachMessage ?? record.summary ?? '').trim() || (passed ? 'Đạt rồi, Poo góp ý nhẹ nha. Nói câu ngắn, đúng ý, rõ nhịp là đủ.' : 'Poo đã nghe bản ghi. Hãy luyện lại một lượt thật chậm và rõ.');
+
+  return {
+    ok: true,
+    source: 'gemini',
+    score,
+    confidence,
+    transcript,
+    normalizedTranscript: String(record.normalizedTranscript ?? '').trim() || wordDiff.normalizedTranscript,
+    normalizedTarget: String(record.normalizedTarget ?? '').trim() || wordDiff.normalizedTarget,
+    matchedWords: normalizeStringArray(record.matchedWords).length ? normalizeStringArray(record.matchedWords) : wordDiff.matchedWords,
+    missingWords: normalizeStringArray(record.missingWords).length ? normalizeStringArray(record.missingWords) : wordDiff.missingWords,
+    extraWords: normalizeStringArray(record.extraWords).length ? normalizeStringArray(record.extraWords) : wordDiff.extraWords,
+    changedWords: normalizeStringArray(record.changedWords ?? record.misheardWords),
+    pronunciationTips: pronunciationTips.length ? pronunciationTips : (fixTips.length ? fixTips : ['Nói chậm hơn và làm rõ âm cuối của từ chính.']),
+    rhythmTips: rhythmTips.length ? rhythmTips : (goodTips.length ? goodTips : ['Đọc theo cụm ngắn, nghỉ nhẹ giữa các cụm.']),
+    nextDrill: String(record.nextDrill ?? record.retryText ?? '').trim() || (passed ? 'Nếu muốn mượt hơn, nghe mẫu một lần rồi nói lại nhẹ nhàng.' : 'Luyện lại câu này thêm một lần nhé.'),
+    coachMessage,
+    status,
+    passed,
+    allowContinue,
+  };
+}
+
+async function readJsonResponse(response: Response): Promise<Record<string, unknown> | null> {
+  try {
+    return asRecord(await response.json());
+  } catch {
+    return null;
+  }
+}
+
+export async function requestShadowingFeedback(input: ShadowingFeedbackRequest): Promise<ShadowingApiResult> {
+  if (!input.audio || input.audio.size <= 0) {
+    return { ok: false, error: 'EMPTY_AUDIO', message: DEFAULT_ERROR_MESSAGE };
+  }
+
+  const formData = new FormData();
+  formData.append('audio', input.audio, `shadowing-${Date.now()}.webm`);
+  formData.append('targetText', input.targetText ?? '');
+  if (input.translation) formData.append('translation', input.translation);
+  if (input.lessonTitle) formData.append('lessonTitle', input.lessonTitle);
+  if (input.level) formData.append('level', input.level);
+  if (typeof input.sentenceIndex === 'number') formData.append('sentenceIndex', String(input.sentenceIndex));
+
+  try {
+    input.onTranscribed?.('...');
+
+    const response = await fetch('/api/shadowing-feedback', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const payload = await readJsonResponse(response);
+    if (!payload) {
+      return { ok: false, error: 'INVALID_JSON', status: response.status, message: DEFAULT_ERROR_MESSAGE };
+    }
+
+    if (!response.ok || payload.ok === false) {
+      return { ok: false, error: 'API_ERROR', status: response.status, message: DEFAULT_ERROR_MESSAGE };
+    }
+
+    return normalizeSuccess(payload, input.targetText ?? '');
+  } catch {
+    return { ok: false, error: 'NETWORK_ERROR', message: DEFAULT_ERROR_MESSAGE };
+  }
+}

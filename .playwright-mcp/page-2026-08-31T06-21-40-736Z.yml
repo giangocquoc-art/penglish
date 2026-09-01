@@ -1,0 +1,15 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - status "Poo đang chuẩn bị bài học" [ref=e3]:
+      - generic [ref=e7]:
+        - paragraph [ref=e8]: Poo đang chuẩn bị bài học...
+        - paragraph [ref=e9]: Chờ Poo bơi một chút nha.
+    - status:
+      - paragraph: Bạn vừa mở góc tò mò 😏 Poo chào bạn!
+  - generic:
+    - region "Notifications-top"
+    - region "Notifications-top-left"
+    - region "Notifications-top-right"
+    - region "Notifications-bottom-left"
+    - region "Notifications-bottom"
+    - region "Notifications-bottom-right"
