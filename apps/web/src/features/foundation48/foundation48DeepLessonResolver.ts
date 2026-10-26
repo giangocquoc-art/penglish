@@ -15,6 +15,23 @@ let stage7LazyPromise: Promise<Record<number, Foundation48DeepLesson>> | null = 
 let stage8LazyPromise: Promise<Record<number, Foundation48DeepLesson>> | null = null;
 const lessonCache = new Map<number, Foundation48DeepLesson>();
 
+function loadRetryableStage<T>(
+  getCached: () => Promise<T> | null,
+  setCached: (promise: Promise<T> | null) => void,
+  load: () => Promise<T>,
+): Promise<T> {
+  const cached = getCached();
+  if (cached) return cached;
+
+  let retryablePromise: Promise<T>;
+  retryablePromise = load().catch((error: unknown) => {
+    if (getCached() === retryablePromise) setCached(null);
+    throw error;
+  });
+  setCached(retryablePromise);
+  return retryablePromise;
+}
+
 function getStaticFoundation48DeepLesson(dayNumber: number) {
   return foundation48DeepLessons[dayNumber];
 }
@@ -44,45 +61,51 @@ function canLoadStage8LazyLesson(dayNumber: number) {
 }
 
 async function loadStage3LazyLessons() {
-  if (!stage3LazyPromise) {
-    stage3LazyPromise = import('./foundation48DeepLessons.stage3.lazy').then((module) => module.foundation48Stage3LazyDeepLessons);
-  }
-  return stage3LazyPromise;
+  return loadRetryableStage(
+    () => stage3LazyPromise,
+    (promise) => { stage3LazyPromise = promise; },
+    () => import('./foundation48DeepLessons.stage3.lazy').then((module) => module.foundation48Stage3LazyDeepLessons),
+  );
 }
 
 async function loadStage4LazyLessons() {
-  if (!stage4LazyPromise) {
-    stage4LazyPromise = import('./foundation48DeepLessons.stage4.lazy').then((module) => module.foundation48Stage4LazyDeepLessons);
-  }
-  return stage4LazyPromise;
+  return loadRetryableStage(
+    () => stage4LazyPromise,
+    (promise) => { stage4LazyPromise = promise; },
+    () => import('./foundation48DeepLessons.stage4.lazy').then((module) => module.foundation48Stage4LazyDeepLessons),
+  );
 }
 
 async function loadStage5LazyLessons() {
-  if (!stage5LazyPromise) {
-    stage5LazyPromise = import('./foundation48DeepLessons.stage5.lazy').then((module) => module.foundation48Stage5LazyDeepLessons);
-  }
-  return stage5LazyPromise;
+  return loadRetryableStage(
+    () => stage5LazyPromise,
+    (promise) => { stage5LazyPromise = promise; },
+    () => import('./foundation48DeepLessons.stage5.lazy').then((module) => module.foundation48Stage5LazyDeepLessons),
+  );
 }
 
 async function loadStage6LazyLessons() {
-  if (!stage6LazyPromise) {
-    stage6LazyPromise = import('./foundation48DeepLessons.stage6.lazy').then((module) => module.foundation48Stage6LazyDeepLessons);
-  }
-  return stage6LazyPromise;
+  return loadRetryableStage(
+    () => stage6LazyPromise,
+    (promise) => { stage6LazyPromise = promise; },
+    () => import('./foundation48DeepLessons.stage6.lazy').then((module) => module.foundation48Stage6LazyDeepLessons),
+  );
 }
 
 async function loadStage7LazyLessons() {
-  if (!stage7LazyPromise) {
-    stage7LazyPromise = import('./foundation48DeepLessons.stage7.lazy').then((module) => module.foundation48Stage7LazyDeepLessons);
-  }
-  return stage7LazyPromise;
+  return loadRetryableStage(
+    () => stage7LazyPromise,
+    (promise) => { stage7LazyPromise = promise; },
+    () => import('./foundation48DeepLessons.stage7.lazy').then((module) => module.foundation48Stage7LazyDeepLessons),
+  );
 }
 
 async function loadStage8LazyLessons() {
-  if (!stage8LazyPromise) {
-    stage8LazyPromise = import('./foundation48DeepLessons.stage8.lazy').then((module) => module.foundation48Stage8LazyDeepLessons);
-  }
-  return stage8LazyPromise;
+  return loadRetryableStage(
+    () => stage8LazyPromise,
+    (promise) => { stage8LazyPromise = promise; },
+    () => import('./foundation48DeepLessons.stage8.lazy').then((module) => module.foundation48Stage8LazyDeepLessons),
+  );
 }
 
 function cacheLazyLessons(lazyLessons: Record<number, Foundation48DeepLesson>) {

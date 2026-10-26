@@ -25,15 +25,15 @@ const foundation48DisplayTitles: Record<number, string> = {
 
 const stage3InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
   13: { learnerTitle: 'Hỏi chuyện đã xảy ra — Did you...? và câu trả lời ngắn', readiness: 'complete' },
-  14: { learnerTitle: 'Tôi đã không làm — phủ định quá khứ với didn’t', readiness: 'complete' },
-  15: { learnerTitle: 'Đã từng ở đâu? — was/were trong câu hỏi và phủ định', readiness: 'complete' },
-  16: { learnerTitle: 'Tương lai gần — be going to', readiness: 'complete' },
-  17: { learnerTitle: 'Tôi có thể làm — can / can’t cho khả năng', readiness: 'complete' },
+  14: { learnerTitle: 'Tôi đang làm gì lúc đó? — thì quá khứ tiếp diễn', readiness: 'complete' },
+  15: { learnerTitle: 'Tôi đã làm được chưa? — thì hiện tại hoàn thành', readiness: 'complete' },
+  16: { learnerTitle: 'Ngày mai sẽ làm gì? — thì tương lai đơn với will', readiness: 'complete' },
+  17: { learnerTitle: 'Việc nào sẽ xong trước? — thì tương lai hoàn thành', readiness: 'complete' },
 };
 
 const stage4InteractiveMeta: Record<number, { learnerTitle: string; readiness: 'complete' }> = {
-  18: { learnerTitle: 'Nghe âm và bắt chước thật chậm', readiness: 'complete' },
-  19: { learnerTitle: 'Nhấn nhẹ vào từ quan trọng', readiness: 'complete' },
+  18: { learnerTitle: 'Săn âm trong từ — nhận diện 44 âm IPA', readiness: 'complete' },
+  19: { learnerTitle: 'Trọng âm từ — bắt đúng âm tiết được nhấn', readiness: 'complete' },
   20: { learnerTitle: 'Các câu hỏi với từ để hỏi khác trong tiếng Anh', readiness: 'complete' },
   21: { learnerTitle: 'Luyện nghe số và tên', readiness: 'complete' },
 };

@@ -389,7 +389,7 @@ export function EnglishSpeedPage() {
 
           <VStack align="stretch" gap="3" gridColumn={{ lg: 'span 4' }} order={{ base: 2, lg: 0 }}>
             <Box as="details" className="penglish-glass-card" bg="rgba(255,255,255,0.76)" backdropFilter="blur(14px) saturate(1.1)" border="1px solid" borderColor="#BAE6FD" borderRadius="3xl" p="4" boxShadow="0 10px 24px rgba(31, 111, 214, 0.05)">
-              <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}><HStack gap="3" align="center" display="inline-flex"><OceanMascot mascot="caNguaToc" pose="coach" size="sm" decorative motion="pulse" /><Text fontSize="lg" fontWeight="700" color={COLORS.text}>Poo cổ vũ phản xạ</Text></HStack></Box>
+                  <Box as="summary" cursor="pointer" fontWeight="700" color={COLORS.text}><HStack gap="3" align="center" display="inline-flex"><OceanMascot mascot="caNguaToc" pose="coach" size="sm" decorative motion="pulse" /><Text fontSize="lg" fontWeight="700" color={COLORS.text}>Cá Ngựa Tốc cổ vũ phản xạ</Text></HStack></Box>
               <VStack align="stretch" mt="3" gap="2">
                 {prompt?.whaleCoachLines.slice(0, 2).map((line) => <Tip key={line} text={line} />)}
               </VStack>

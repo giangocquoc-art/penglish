@@ -1,0 +1,7 @@
+.foundation48-mobile-continue-dock {
+  border-top: 1px solid rgba(186, 230, 253, 0.82);
+  background: linear-gradient(180deg, rgba(248, 252, 255, 0.72), rgba(248, 252, 255, 0.97) 30%, #f8fcff);
+  box-shadow: 0 -8px 24px rgba(31, 111, 214, 0.08);
+  backdrop-filter: blur(10px);
+}
+

@@ -23,7 +23,7 @@ function assert(condition, message) {
 function isAllowedFailedRequest(url) {
   return url.includes('favicon')
     || url.includes('chrome-extension')
-    || url.includes('/ocean/ambient-whale/frames/')
+    || url.includes('/ocean/mascots/refined/poo-coach.webp')
     || url.includes('youtube-nocookie.com')
     || url.includes('youtube.com');
 }

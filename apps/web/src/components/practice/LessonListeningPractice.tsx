@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 import { recordLearningActivity } from '../../lib/p-english/daily-rewards';
 import { loseHeart } from '../../lib/p-english/learning-hearts';
 import type { EnglishLesson, ListeningPracticeItem, MiniDialogue } from '../../lib/p-english/lesson-content-data';
-import { mergeLessonProgress, readLessonProgress } from '../../lib/p-english/lesson-progress';
+import { getDueReviewItems, markItemReviewed, mergeLessonProgress, readLessonProgress } from '../../lib/p-english/lesson-progress';
 import { recordPracticeSessionMemory } from '../../lib/p-english/localSkillMemory';
 import { getPracticeSessionFeedback } from '../../lib/p-english/practiceSessionFeedback';
+import { shuffleChoiceOptions } from '../../lib/p-english/practice-randomization';
 import { PracticeSessionFeedbackCard } from './PracticeSessionFeedbackCard';
 import type { WhaleMood } from '../streak/AdaptiveWhaleStreak';
 import { PooSystemState } from '../p-english/PooSystemState';
@@ -68,6 +69,13 @@ function makeInitialAnswers(items: ListeningPracticeItem[]) {
   }, {});
 }
 
+function randomizeListeningOptions(items: ListeningPracticeItem[], sessionSeed: string) {
+  return items.map((item) => ({
+    ...item,
+    options: shuffleChoiceOptions(item.options, item.answer, `${sessionSeed}:${item.id}`),
+  }));
+}
+
 function summaryMessage(percentage: number) {
   if (percentage >= 80) return 'Bạn nghe khá ổn, hãy chuyển sang phản xạ.';
   if (percentage >= 50) return 'Ổn rồi, hãy nghe lại các câu sai ở tốc độ chậm.';
@@ -75,8 +83,38 @@ function summaryMessage(percentage: number) {
 }
 
 export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {
-  const allItems = lesson.listeningPractice;
-  const [items, setItems] = useState<ListeningPracticeItem[]>(allItems);
+  const dueReviewOnly = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('review') === 'due';
+  const allItems = useMemo(() => {
+    if (!dueReviewOnly) return lesson.listeningPractice;
+    return getDueReviewItems(lesson.id, lesson)
+      .filter((item) => item.type === 'listening')
+      .map((item): ListeningPracticeItem | null => {
+        const listening = lesson.listeningPractice.find((entry) => entry.id === item.itemId);
+        if (listening) return listening;
+
+        const dialogueMatch = item.itemId.match(/^(.*)-(\d+)$/);
+        const dialogue = dialogueMatch && lesson.miniDialogues.find((entry) => entry.id === dialogueMatch[1]);
+        const lineIndex = Number(dialogueMatch?.[2]);
+        const line = dialogue?.lines[lineIndex];
+        if (!dialogue || !line) return null;
+        const previous = dialogue.lines[lineIndex - 1];
+        const options = Array.from(new Set([line.text, ...dialogue.lines.map((entry) => entry.text).filter((text) => text !== line.text)])).slice(0, 4);
+        if (options.length < 2) options.push('I am not sure.');
+        return {
+          id: item.itemId,
+          text: line.text,
+          question: previous
+            ? `Nghe lời đáp tiếp theo sau: “${previous.text}”`
+            : `Nghe câu mở đầu trong hội thoại “${dialogue.title}”`,
+          options,
+          answer: line.text,
+          explanationVi: dialogue.focusPhrases.join(' · ') || dialogue.suggestedShadowingInstruction,
+        };
+      })
+      .filter((item): item is ListeningPracticeItem => Boolean(item));
+  }, [dueReviewOnly, lesson]);
+  const [listeningShuffleSeed] = useState(() => Math.random().toString(36).slice(2));
+  const [items, setItems] = useState<ListeningPracticeItem[]>(() => randomizeListeningOptions(allItems, listeningShuffleSeed));
   const [answers, setAnswers] = useState(() => makeInitialAnswers(allItems));
   const [started, setStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -84,6 +122,7 @@ export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson:
   const [savedSummary, setSavedSummary] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
   const [listenedDialogueIds, setListenedDialogueIds] = useState<string[]>([]);
+  const [reviewSessionId] = useState(() => `${lesson.id}:listening:${Math.random().toString(36).slice(2)}`);
   const currentItem = items[currentIndex];
   const currentAnswer = currentItem ? answers[currentItem.id] : undefined;
 
@@ -165,8 +204,9 @@ export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson:
   };
 
   const checkCurrent = () => {
-    if (!currentItem || !currentAnswer?.selected) return;
+    if (!currentItem || !currentAnswer?.selected || currentAnswer.checked) return;
     const isCorrect = currentAnswer.selected === currentItem.answer;
+    markItemReviewed(lesson.id, currentItem.id, 'listening', isCorrect ? 'correct' : 'wrong', lesson.reviewPolicy.wrongAnswerDelayMinutes, reviewSessionId, true);
     const hearts = isCorrect ? undefined : loseHeart('listening-wrong');
     onWhaleMoodChange?.(isCorrect ? 'correct' : 'mistake');
     updateAnswer(currentItem.id, {
@@ -200,7 +240,7 @@ export function LessonListeningPractice({ lesson, onWhaleMoodChange }: { lesson:
 
   const restartWith = (nextItems: ListeningPracticeItem[]) => {
     const safeItems = nextItems.length > 0 ? nextItems : allItems;
-    setItems(safeItems);
+    setItems(randomizeListeningOptions(safeItems, Math.random().toString(36).slice(2)));
     setAnswers(makeInitialAnswers(safeItems));
     setCurrentIndex(0);
     setStarted(true);

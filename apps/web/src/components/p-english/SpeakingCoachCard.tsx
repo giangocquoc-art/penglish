@@ -33,10 +33,17 @@ function PooSpeakingSprite({
       bgPosition="0 0"
       sx={{
         imageRendering: 'auto',
-        animation: animated ? `pooSpeakingSpriteSteps 1.15s steps(${asset.frames}) infinite` : 'none',
-        '@keyframes pooSpeakingSpriteSteps': {
-          from: { backgroundPosition: '0 0' },
-          to: { backgroundPosition: '100% 100%' },
+        animation: animated ? 'pooSpeakingSpriteGrid 1.15s steps(1, end) infinite' : 'none',
+        '@keyframes pooSpeakingSpriteGrid': {
+          '0%': { backgroundPosition: '0% 0%' },
+          '11.11%': { backgroundPosition: '50% 0%' },
+          '22.22%': { backgroundPosition: '100% 0%' },
+          '33.33%': { backgroundPosition: '0% 50%' },
+          '44.44%': { backgroundPosition: '50% 50%' },
+          '55.55%': { backgroundPosition: '100% 50%' },
+          '66.66%': { backgroundPosition: '0% 100%' },
+          '77.77%': { backgroundPosition: '50% 100%' },
+          '88.88%, 100%': { backgroundPosition: '100% 100%' },
         },
         '@media (prefers-reduced-motion: reduce)': { animation: 'none' },
       }}

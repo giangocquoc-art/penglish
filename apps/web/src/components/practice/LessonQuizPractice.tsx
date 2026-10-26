@@ -19,6 +19,7 @@ import { loseHeart } from '../../lib/p-english/learning-hearts';
 import { markItemReviewed } from '../../lib/p-english/lesson-progress';
 import { recordPracticeSessionMemory } from '../../lib/p-english/localSkillMemory';
 import { getPracticeSessionFeedback } from '../../lib/p-english/practiceSessionFeedback';
+import { shuffleChoiceOptions } from '../../lib/p-english/practice-randomization';
 import { PracticeSessionFeedbackCard } from './PracticeSessionFeedbackCard';
 import type { WhaleMood } from '../streak/AdaptiveWhaleStreak';
 import type {
@@ -57,6 +58,8 @@ type CombinedQuizQuestion = {
   answer: string | string[];
   explanationVi?: string;
   hint?: string;
+  sourceItemId: string;
+  srsType: 'quiz' | 'typing';
 };
 
 type AnswerState = {
@@ -202,16 +205,23 @@ function hasAnswer(question: CombinedQuizQuestion, state: AnswerState) {
   return false;
 }
 
-function buildQuestionSet(lesson: EnglishLesson): CombinedQuizQuestion[] {
+function buildQuestionSet(lesson: EnglishLesson, sessionSeed: string): CombinedQuizQuestion[] {
   const quizQuestions = lesson.quizQuestions.map((question: QuizQuestion): CombinedQuizQuestion => ({
     ...question,
+    ...(question.type === 'multiple-choice' && typeof question.answer === 'string' && question.options?.length
+      ? { options: shuffleChoiceOptions(question.options, question.answer, `${sessionSeed}:${question.id}`) }
+      : {}),
     source: 'quizQuestions',
+    sourceItemId: question.id,
+    srsType: question.type === 'fill-blank' ? 'typing' : 'quiz',
   }));
 
   const sentenceTasks = lesson.sentenceOrderingTasks.map((task: SentenceOrderingTask): CombinedQuizQuestion => ({
     id: `order-task-${task.id}`,
     type: 'sentence-order',
     source: 'sentenceOrderingTasks',
+    sourceItemId: task.id,
+    srsType: 'quiz',
     vietnamese: task.vietnamese,
     words: task.words,
     answer: task.answer,
@@ -222,6 +232,8 @@ function buildQuestionSet(lesson: EnglishLesson): CombinedQuizQuestion[] {
     id: `blank-task-${task.id}`,
     type: 'fill-blank',
     source: 'fillBlankTasks',
+    sourceItemId: task.id,
+    srsType: 'typing',
     prompt: task.prompt,
     answer: task.answer,
     hint: task.hint,
@@ -254,7 +266,8 @@ function getSummaryMessage(percentage: number) {
 }
 
 export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {
-  const allQuestions = useMemo(() => buildQuestionSet(lesson), [lesson]);
+  const [shuffleSessionSeed] = useState(() => Math.random().toString(36).slice(2));
+  const allQuestions = useMemo(() => buildQuestionSet(lesson, shuffleSessionSeed), [lesson, shuffleSessionSeed]);
   const [questions, setQuestions] = useState<CombinedQuizQuestion[]>(allQuestions);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, AnswerState>>(() => makeInitialAnswers(allQuestions));
@@ -303,7 +316,14 @@ export function LessonQuizPractice({ lesson, onWhaleMoodChange }: { lesson: Engl
     const isCorrect = checkAnswer(current, currentAnswer);
     const hearts = isCorrect ? undefined : loseHeart('quiz-wrong');
     onWhaleMoodChange?.(isCorrect ? 'correct' : 'mistake');
-    markItemReviewed(lesson.id, current.id, 'quiz', isCorrect ? 'correct' : 'wrong');
+    markItemReviewed(
+      lesson.id,
+      current.sourceItemId,
+      current.srsType,
+      isCorrect ? 'correct' : 'wrong',
+      lesson.reviewPolicy.wrongAnswerDelayMinutes,
+      `${lesson.id}:practice-quiz:${shuffleSessionSeed}`,
+    );
     updateCurrentAnswer({ checked: true, isCorrect, warning: undefined, heartLossText: hearts ? `Bạn mất 1 bọt biển. Còn ${hearts.heartsLeft}/${hearts.maxHearts} bọt biển.` : undefined });
   };
 

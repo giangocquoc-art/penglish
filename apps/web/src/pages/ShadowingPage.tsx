@@ -47,10 +47,6 @@ const PIXEL_ASSETS = {
   microSuccess: `${SHADOWING_PIXEL_ASSET_BASE}/micro-success.png`,
   microError: `${SHADOWING_PIXEL_ASSET_BASE}/micro-error.png`,
   nextWave: `${SHADOWING_PIXEL_ASSET_BASE}/next-wave.png`,
-  pooNeutral: `${SHADOWING_PIXEL_ASSET_BASE}/poo-neutral.png`,
-  pooListening: `${SHADOWING_PIXEL_ASSET_BASE}/poo-listening.png`,
-  pooHappy: `${SHADOWING_PIXEL_ASSET_BASE}/poo-happy.png`,
-  pooConfused: `${SHADOWING_PIXEL_ASSET_BASE}/poo-confused.png`,
   bubbleCorner: `${SHADOWING_PIXEL_ASSET_BASE}/bubble-corner.png`,
   waveDivider: `${SHADOWING_PIXEL_ASSET_BASE}/wave-divider.png`,
   badgePracticed: `${SHADOWING_PIXEL_ASSET_BASE}/badge-practiced.png`,
@@ -379,13 +375,13 @@ export function ShadowingPracticePage() {
       : apiError || recordingStatus === 'error'
         ? PIXEL_ASSETS.microError
         : PIXEL_ASSETS.microNormal;
-  const feedbackMascotSrc = isRecording || isProcessingRecording
-    ? PIXEL_ASSETS.pooListening
+  const feedbackMascotPose = isRecording || isProcessingRecording
+    ? 'listen'
     : isGoodSpeaking
-      ? PIXEL_ASSETS.pooHappy
+      ? 'celebrate'
       : apiError
-        ? PIXEL_ASSETS.pooConfused
-        : PIXEL_ASSETS.pooNeutral;
+        ? 'think'
+        : 'coach';
 
   useEffect(() => {
     recordingStatusRef.current = recordingStatus;
@@ -879,7 +875,7 @@ export function ShadowingPracticePage() {
       <Flex mb="4" justify="space-between" align={{ base: 'start', md: 'center' }} gap="4" direction={{ base: 'column', md: 'row' }}>
         <HStack align="center" gap="3" minW="0">
           <Box data-testid="poo-shadowing-coach" position="relative" w="92px" flexShrink={0} pointerEvents="none" overflow="visible">
-            <Box as="img" className="pooPixelMascot" src={feedbackMascotSrc} alt="Poo góp ý phát âm" loading="lazy" w={{ base: '78px', md: '92px' }} h={{ base: '78px', md: '92px' }} />
+            <OceanMascot mascot="poo" pose={feedbackMascotPose} size="sm" decorative motion="none" />
           </Box>
           <Box minW="0">
             <Text as="h2" fontWeight="700" color={COLORS.text}>Poo góp ý cách nói</Text>
@@ -1070,14 +1066,14 @@ export function ShadowingPracticePage() {
                       </Flex>
                       <Box minW="0">
                         <Text fontWeight="800" color={COLORS.text}>{isRecording ? 'Đang nghe...' : isProcessingRecording ? processingMessage : apiFeedback ? 'Đã có góp ý' : apiError ? 'Poo nghe chưa rõ' : 'Sẵn sàng nói thử'}</Text>
-                        <Text fontSize="sm" color={COLORS.muted} fontWeight="700" noOfLines={{ base: 3, md: 2 }}>{isRecording ? `Tự dừng sau ${formatTimer(Math.max(0, Math.ceil(SHADOWING_RECORDING_TIMEOUT_MS / 1000) - elapsedSeconds))}` : recordMessage}</Text>
+                        <Text fontSize="sm" color={COLORS.muted} fontWeight="700" noOfLines={2}>{isRecording ? `Tự dừng sau ${formatTimer(Math.max(0, Math.ceil(SHADOWING_RECORDING_TIMEOUT_MS / 1000) - elapsedSeconds))}` : recordMessage}</Text>
                       </Box>
                     </HStack>
                     {isRecording ? <Text fontSize="lg" fontWeight="900" color="#991B1B">{formatTimer(elapsedSeconds)}</Text> : null}
                   </HStack>
                 </Box>
 
-                {mediaMessage ? <Text mt="2" fontSize="sm" color={COLORS.deepBlue} fontWeight="800" role="status" aria-live="polite">{mediaMessage}</Text> : null}
+                {mediaMessage ? <Text mt="2" fontSize="sm" color={COLORS.deepBlue} fontWeight="800" noOfLines={{ base: 1, md: 2 }} role="status" aria-live="polite">{mediaMessage}</Text> : null}
               </Box>
 
               {hasSelectedVideoUrl ? (

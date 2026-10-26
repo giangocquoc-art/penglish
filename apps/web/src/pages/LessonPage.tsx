@@ -152,7 +152,7 @@ export function LessonPage() {
   const learningLocked = isLearningLocked(heartsState);
   const lessonKind = lesson.id.startsWith('reading-') ? 'reading' : lesson.id.startsWith('grammar-') ? 'grammar' : 'communication';
   const readingPassage = lessonKind === 'reading'
-    ? lesson.grammarNotes.find((note) => note.title === 'Đoạn đọc chính')?.examples[0]
+    ? lesson.grammarNotes.find((note) => note.title === 'Đoạn đọc chính')?.examples.join(' ')
     : undefined;
   const corePattern = lesson.sentencePatterns[0];
   const lessonSections = lessonKind === 'reading'

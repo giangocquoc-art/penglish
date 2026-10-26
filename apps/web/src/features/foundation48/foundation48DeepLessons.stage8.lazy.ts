@@ -17,7 +17,18 @@ const stage8Seeds: Record<number, DaySeed> = {
 };
 
 export const foundation48Stage8LazyDeepLessons: Record<number, Foundation48DeepLesson> = Object.fromEntries(
-  Object.entries(stage8Seeds).map(([day, daySeed]) => [Number(day), buildDeepLesson(Number(day), daySeed)]),
+  Object.entries(stage8Seeds).map(([day, daySeed]) => {
+    const normalizedSeed: DaySeed = {
+      ...daySeed,
+      // Stage 8 stores [prompt, completed sentence, missing word], unlike earlier stages.
+      fills: daySeed.fills.map(([prompt, completedSentence, missingAnswer]) => [
+        prompt,
+        missingAnswer,
+        `Điền “${missingAnswer}” để hoàn thành: ${completedSentence}`,
+      ]),
+    };
+    return [Number(day), buildDeepLesson(Number(day), normalizedSeed)];
+  }),
 ) as Record<number, Foundation48DeepLesson>;
 
 export function getFoundation48Stage8LazyDeepLesson(dayNumber: number) {

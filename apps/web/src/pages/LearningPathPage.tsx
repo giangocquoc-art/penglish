@@ -142,7 +142,7 @@ export function LearningPathPage() {
           ))}
         </VStack>
 
-        <HStack justify="center" mt={{ base: '3', md: '4' }} gap="2" wrap="wrap">
+        <HStack justify="center" mt={{ base: '3', md: '4' }} pb={{ base: '10', md: '0' }} gap="2" wrap="wrap">
           {currentDayNumber > 1 ? (
             <Button as={Link} to={getFoundation48DayPath(currentDayNumber - 1)} variant="outline" borderColor={COLORS.border} bg="rgba(255,255,255,0.72)" color={COLORS.blue} borderRadius="full" px="5" data-testid="foundation48-prev-day">
               Bài trước
@@ -193,7 +193,7 @@ function RoadmapHero({ completed, total, waterStreak, currentDay, percent }: { c
           </Flex>
         </VStack>
         <Box display={{ base: 'none', md: 'block' }} alignSelf={{ base: 'center', md: 'auto' }} pointerEvents="none">
-          <OceanMascot mascot="poo" pose="coach" size="md" decorative motion="float" />
+          <OceanMascot mascot="ruaRi" pose="map" size="md" decorative motion="float" />
         </Box>
       </Flex>
     </Box>
@@ -233,7 +233,7 @@ function PathNode({ item, isLast }: { item: RoadmapDay; isLast: boolean }) {
         </Flex>
         {!isLast ? <Box w="2px" flex="1" minH="18px" bg={status === 'completed' ? '#86EFAC' : '#BAE6FD'} /> : null}
       </VStack>
-      <Box flex="1" minW="0" border="1px solid" borderColor={tone.border} bg={tone.bg} borderRadius="2xl" p={{ base: '3', md: '3.5' }} mb={isLast ? '0' : '2.5'}>
+      <Box flex="1" minW="0" border="1px solid" borderColor={tone.border} bg={tone.bg} borderRadius="2xl" p={{ base: '3', md: '3.5' }} mb={isLast ? '0' : { base: '1.5', md: '2.5' }}>
         <Flex justify="space-between" align="center" gap="3">
           <Box minW="0">
             <Text color={COLORS.text} fontWeight="950" fontSize={{ base: 'sm', md: 'md' }} lineHeight="1.2" noOfLines={1}>Bài {day.dayNumber}: {getShortTopic(day)}</Text>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Box, Button, Flex, HStack, Icon, SimpleGrid, Tag, TagLabel, Text, VStack } from '@chakra-ui/react';
 import { ArrowRight, BookOpen, Clock, Mic, Sparkles, Video, Waves } from 'lucide-react';
 import { OceanPageShell } from '../components/p-english/OceanPageShell';
+import { OceanMascot } from '../components/p-english/OceanMascot';
 import { GlassPanel } from '../components/p-english/OceanBackdrop';
 import { readShadowingProgressStore, type ShadowingProgressEntry } from '../hooks/useShadowingProgress';
 import { shadowingLevels, shadowingLessons, shadowingPronunciationFocus, shadowingTopics, type ShadowingLesson } from '../data/shadowingLessons';
@@ -20,8 +21,6 @@ const COLORS = {
 
 const PIXEL_ASSETS = {
   microNormal: '/assets/shadowing-pixel/micro-normal.png',
-  pooNeutral: '/assets/shadowing-pixel/poo-neutral.png',
-  pooConfused: '/assets/shadowing-pixel/poo-confused.png',
   bubbleCorner: '/assets/shadowing-pixel/bubble-corner.png',
   waveDivider: '/assets/shadowing-pixel/wave-divider.png',
   badgeHard: '/assets/shadowing-pixel/badge-hard.png',
@@ -139,7 +138,7 @@ export function ShadowingHubPage() {
             <Text mt="2" color={COLORS.muted} maxW="720px" fontSize={{ base: 'sm', md: 'md' }} fontWeight="750" lineHeight="1.7">Nghe mẫu, nói theo nhịp, để Poo góp ý nhẹ nhàng từng câu.</Text>
           </Box>
           <Flex position="relative" align="center" justify="center" gap="3" flexShrink={0}>
-            <Box as="img" src={PIXEL_ASSETS.pooNeutral} alt="Poo rủ luyện Shadowing" className="pooPixelMascot" w={{ base: '76px', md: '104px' }} h={{ base: '76px', md: '104px' }} />
+            <OceanMascot mascot="poo" pose="listen" size="md" decorative motion="float" />
             <Box as="img" src={PIXEL_ASSETS.microNormal} alt="Micro Shadowing" className="pooPixelIcon" w={{ base: '44px', md: '58px' }} h={{ base: '44px', md: '58px' }} />
           </Flex>
         </Flex>
@@ -224,7 +223,7 @@ export function ShadowingHubPage() {
                 <Text fontWeight="950" color={COLORS.text}>Câu khó đã lưu</Text>
                 <Text color={COLORS.muted} fontSize="sm" fontWeight="750">Poo gom lại để bạn quay lại luyện.</Text>
               </Box>
-              <Box as="img" src={difficultSentences.length ? PIXEL_ASSETS.badgeHard : PIXEL_ASSETS.pooConfused} alt="Câu khó" className="pooPixelBadge" w="42px" h="42px" />
+              {difficultSentences.length ? <Box as="img" src={PIXEL_ASSETS.badgeHard} alt="Câu khó" className="pooPixelBadge" w="42px" h="42px" /> : <OceanMascot mascot="poo" pose="think" size="xs" decorative motion="none" />}
             </HStack>
             {difficultSentences.length ? (
               <VStack align="stretch" gap="2.5">
@@ -237,7 +236,7 @@ export function ShadowingHubPage() {
               </VStack>
             ) : (
               <Flex direction="column" align="center" textAlign="center" p="4" border="1px dashed" borderColor={COLORS.border} borderRadius="2xl" bg="rgba(232,244,255,0.54)">
-                <Box as="img" src={PIXEL_ASSETS.pooConfused} alt="Poo chưa thấy câu khó" className="pooPixelMascot" w="74px" h="74px" />
+                <OceanMascot mascot="poo" pose="think" size="sm" decorative motion="none" />
                 <Text mt="2" fontWeight="900" color={COLORS.text}>Chưa có câu khó nào.</Text>
                 <Text mt="1" color={COLORS.muted} fontSize="sm" fontWeight="750" lineHeight="1.55">Khi luyện bài, bấm “Câu còn vấp” để Poo giữ lại tại đây.</Text>
               </Flex>

@@ -21,7 +21,8 @@ const screenshots = {
 };
 
 function todayKey() {
-  return new Date().toISOString().slice(0, 10);
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+  return `${parts.find((part) => part.type === 'year').value}-${parts.find((part) => part.type === 'month').value}-${parts.find((part) => part.type === 'day').value}`;
 }
 
 async function setupContext(browser) {
@@ -71,6 +72,9 @@ async function setupContext(browser) {
         updated_at: new Date().toISOString(),
       },
     }));
+    const vnDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+    const vietnamDayKey = `${vnDate.find((part) => part.type === 'year').value}-${vnDate.find((part) => part.type === 'month').value}-${vnDate.find((part) => part.type === 'day').value}`;
+    window.localStorage.setItem('p-english:daily-hearts', JSON.stringify({ maxHearts: 5, heartsLeft: 5, wrongCountToday: 0, vietnamDayKey, lastUpdatedAt: new Date().toISOString() }));
     if (!window.localStorage.getItem(progressKey)) {
       window.localStorage.setItem(progressKey, JSON.stringify({
         lastDayOpened: 2,
@@ -109,9 +113,53 @@ async function assertHomeState(page, label, expected) {
 }
 
 async function answerCurrentChallengeIfNeeded(page) {
-  if (await page.getByTestId('foundation48-choice-options').isVisible().catch(() => false)) {
-    await page.getByTestId('foundation48-answer-option-1').click();
+  if (await page.getByTestId('foundation48-listen-done').isVisible().catch(() => false)) {
+    await page.getByTestId('foundation48-listen-done').click();
+    return;
+  }
+  if (await page.getByTestId('foundation48-meaning-reveal').isVisible().catch(() => false)) {
+    await page.getByTestId('foundation48-meaning-reveal').click();
+    return;
+  }
+  if (await page.getByTestId('foundation48-vocab-flashcards').isVisible().catch(() => false)) {
+    const buttons = page.locator('[data-testid^="foundation48-vocab-remember-"]');
+    for (let i = 0; i < await buttons.count(); i += 1) await buttons.nth(i).click();
+    return;
+  }
+  if (await page.getByTestId('foundation48-speaking-self-practiced').isVisible().catch(() => false)) {
+    await page.getByTestId('foundation48-speaking-self-practiced').click();
     await page.getByTestId('foundation48-challenge-feedback').waitFor({ timeout: 8000 });
+    return;
+  }
+  if (await page.getByTestId('foundation48-free-response').isVisible().catch(() => false)) {
+    await page.getByTestId('foundation48-free-response').fill('I am practicing English today.');
+    await page.getByRole('button', { name: 'Lưu câu trả lời' }).click();
+    return;
+  }
+
+  if (await page.getByTestId('foundation48-choice-options').isVisible().catch(() => false)) {
+    const options = page.locator('[data-testid^="foundation48-answer-option-"]');
+    const feedback = page.getByTestId('foundation48-challenge-feedback');
+    for (let index = 0; index < await options.count(); index += 1) {
+      await page.evaluate(() => {
+        const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+        const vietnamDayKey = `${parts.find((part) => part.type === 'year').value}-${parts.find((part) => part.type === 'month').value}-${parts.find((part) => part.type === 'day').value}`;
+        window.localStorage.setItem('p-english:daily-hearts', JSON.stringify({ maxHearts: 5, heartsLeft: 5, wrongCountToday: 0, vietnamDayKey, lastUpdatedAt: new Date().toISOString() }));
+        window.dispatchEvent(new Event('p-english:hearts-updated'));
+      });
+      await page.waitForTimeout(50);
+      await options.nth(index).click();
+      await feedback.waitFor({ timeout: 8000 });
+      if (await feedback.evaluate((element) => getComputedStyle(element).borderColor === 'rgb(134, 239, 172)')) return;
+      await page.evaluate(() => {
+        const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+        const vietnamDayKey = `${parts.find((part) => part.type === 'year').value}-${parts.find((part) => part.type === 'month').value}-${parts.find((part) => part.type === 'day').value}`;
+        window.localStorage.setItem('p-english:daily-hearts', JSON.stringify({ maxHearts: 5, heartsLeft: 5, wrongCountToday: 0, vietnamDayKey, lastUpdatedAt: new Date().toISOString() }));
+        window.dispatchEvent(new Event('p-english:hearts-updated'));
+      });
+      await page.waitForTimeout(100);
+    }
+    throw new Error('Could not find a correct answer among the visible Foundation48 options.');
     return;
   }
 
@@ -119,32 +167,22 @@ async function answerCurrentChallengeIfNeeded(page) {
     const body = await page.locator('body').innerText();
     const answer = body.includes('___ you') ? 'Are' : body.includes('___ she') ? 'Is' : body.includes('he ___ not') ? 'is' : 'Are';
     await page.getByTestId('foundation48-fill-answer').fill(answer);
-    await page.getByRole('button', { name: /^Kiểm tra$/i }).click();
+    await page.getByRole('button', { name: 'Poo xem giúp' }).click();
     await page.getByTestId('foundation48-challenge-feedback').waitFor({ timeout: 8000 });
     return;
   }
 
   if (await page.getByTestId('foundation48-sentence-builder').isVisible().catch(() => false)) {
-    const sequences = [
-      ['Are', 'you', 'a', 'student'],
-      ['No,', 'she', 'is', 'not'],
-      ['No', 'she', 'is', 'not'],
-    ];
-    for (const words of sequences) {
-      let canUseSequence = true;
-      for (const word of words) {
-        const tokenCount = await page.locator('[data-testid^="foundation48-token-"]', { hasText: new RegExp(`^${word}$`, 'i') }).count();
-        if (!tokenCount) canUseSequence = false;
-      }
-      if (!canUseSequence) continue;
-      for (const word of words) {
-        await page.locator('[data-testid^="foundation48-token-"]', { hasText: new RegExp(`^${word}$`, 'i') }).first().click({ timeout: 5000 });
-      }
-      await page.getByTestId('foundation48-sentence-check').click();
-      await page.getByTestId('foundation48-challenge-feedback').waitFor({ timeout: 8000 });
-      return;
+    const candidates = [['Are', 'you', 'a', 'student'], ['No', 'she', 'is', 'not'], ['Is', 'she', 'your', 'teacher'], ['Is', 'it', 'your', 'book']];
+    const tokens = page.locator('[data-testid="foundation48-token"]');
+    const labels = await tokens.evaluateAll((elements) => elements.map((element) => element.innerText.trim().toLowerCase().replace(/[.,!?]+$/, '')));
+    const words = candidates.find((candidate) => candidate.every((word) => labels.includes(word.toLowerCase())));
+    if (!words) throw new Error(`Could not find a supported Day 2 sentence-order token sequence. Tokens: ${labels.join(' | ')}`);
+    for (const word of words) {
+      await page.locator('[data-testid="foundation48-token"]', { hasText: new RegExp(`^${word}[.,!?]?$`, 'i') }).first().click();
     }
-    throw new Error('Could not find a supported Day 2 sentence-order token sequence.');
+    await page.getByTestId('foundation48-sentence-check').click();
+    await page.getByTestId('foundation48-challenge-feedback').waitFor({ timeout: 8000 });
   }
 
   if (await page.getByTestId('foundation48-speaking-self-practiced').isVisible().catch(() => false)) {
@@ -153,7 +191,7 @@ async function answerCurrentChallengeIfNeeded(page) {
   }
 }
 
-async function advanceTo(page, testId, limit = 34) {
+async function advanceTo(page, testId, limit = 80) {
   for (let index = 0; index < limit; index += 1) {
     if (await page.getByTestId(testId).isVisible().catch(() => false)) return index;
     await answerCurrentChallengeIfNeeded(page);
@@ -185,7 +223,7 @@ async function advanceTo(page, testId, limit = 34) {
 
     await page.goto(`${baseUrl}/home`, { waitUntil: 'domcontentloaded' });
     await waitForHome(page);
-    await assertHomeState(page, 'home before', ['Ngày 2', 'Đang học']);
+    await assertHomeState(page, 'home before', ['Bài 2 — Bạn có phải', 'Đang học']);
     await assertNoOverflow(page, 'home before');
     await page.screenshot({ path: path.join(outDir, screenshots.homeBefore), fullPage: true });
     const beforeProgress = await page.evaluate((progressKey) => JSON.parse(window.localStorage.getItem(progressKey) || '{}'), progressKey);
@@ -194,7 +232,9 @@ async function advanceTo(page, testId, limit = 34) {
     report.checks.push('Home showed the current Day 2 target with started Day 2 state; local progress had 1/48 completed days.');
 
     await page.getByTestId('home-primary-today-cta').click();
-    await page.waitForURL(new RegExp(`${day2Path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`), { timeout: 12000 });
+    await page.waitForURL(/\/today$/, { timeout: 12000, waitUntil: 'domcontentloaded' });
+    await page.getByTestId('today-primary-action').click();
+    await page.waitForURL(new RegExp(`${day2Path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`), { timeout: 12000, waitUntil: 'domcontentloaded' });
     await page.getByTestId('foundation48-day-page').waitFor({ timeout: 20000 });
     report.checks.push('Bắt đầu bài hôm nay routed to Foundation48 Day 2.');
 
@@ -215,9 +255,11 @@ async function advanceTo(page, testId, limit = 34) {
     await advanceTo(page, 'foundation48-complete-reward', 42);
     await page.getByTestId('foundation48-complete-reward').waitFor({ timeout: 10000 });
     await page.getByTestId('foundation48-complete-day').click();
-    await page.waitForURL(/\/home$/, { timeout: 12000 });
+    await page.waitForURL(/\/today$/, { timeout: 12000, waitUntil: 'domcontentloaded' });
+    await page.getByRole('link', { name: 'Về trang chủ' }).click();
+    await page.waitForURL(/\/home$/, { timeout: 12000, waitUntil: 'domcontentloaded' });
     await waitForHome(page);
-    await assertHomeState(page, 'home after completion', ['Ngày 3', 'Hoàn thành']);
+    await assertHomeState(page, 'home after completion', ['Bài 3 — Ai và cái gì?', '2/48 ngày', 'Đang học']);
     const afterProgress = await page.evaluate((progressKey) => JSON.parse(window.localStorage.getItem(progressKey) || '{}'), progressKey);
     const afterCompletedDays = Object.values(afterProgress.days || {}).filter((day) => day && day.completed).length;
     if (afterCompletedDays !== 2) throw new Error(`Expected 2 completed Foundation48 days after flow, got ${afterCompletedDays}: ${JSON.stringify(afterProgress)}`);
@@ -227,7 +269,7 @@ async function advanceTo(page, testId, limit = 34) {
 
     await page.reload({ waitUntil: 'domcontentloaded' });
     await waitForHome(page);
-    await assertHomeState(page, 'home after refresh', ['Ngày 3', 'Hoàn thành']);
+    await assertHomeState(page, 'home after refresh', ['Bài 3 — Ai và cái gì?', '2/48 ngày', 'Đang học']);
     await page.screenshot({ path: path.join(outDir, screenshots.homeAfterRefresh), fullPage: true });
     report.checks.push('Refresh preserved completed Day 2 progress.');
 

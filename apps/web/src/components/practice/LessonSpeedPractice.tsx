@@ -13,12 +13,14 @@ import {
 } from '@chakra-ui/react';
 import { Volume2, Zap } from 'lucide-react';
 import { loseHeart } from '../../lib/p-english/learning-hearts';
-import type { EnglishLesson, QuizQuestion, SpeakingReflexPrompt, VocabularyItem } from '../../lib/p-english/lesson-content-data';
+import { markItemReviewed } from '../../lib/p-english/lesson-progress';
+import type { EnglishLesson, EnglishSpeedPrompt, QuizQuestion, SpeakingReflexPrompt, VocabularyItem } from '../../lib/p-english/lesson-content-data';
 import { recordPracticeSessionMemory } from '../../lib/p-english/localSkillMemory';
 import { normalizeToken } from '../../lib/p-english/practice-randomization';
 import { getPracticeSessionFeedback } from '../../lib/p-english/practiceSessionFeedback';
 import { PracticeSessionFeedbackCard } from './PracticeSessionFeedbackCard';
 import type { WhaleMood } from '../streak/AdaptiveWhaleStreak';
+import { OceanMascot } from '../p-english/OceanMascot';
 import { PooSystemState } from '../p-english/PooSystemState';
 
 const COLORS = {
@@ -38,16 +40,18 @@ const GAME_SECONDS = 60;
 const MAX_QUESTIONS = 30;
 const AUTO_NEXT_MS = 780;
 
-type SpeedSourceLabel = 'Từ vựng' | 'Thử sức nhẹ' | 'Phản xạ';
+type SpeedSourceLabel = 'Tăng tốc' | 'Từ vựng' | 'Thử sức nhẹ' | 'Phản xạ';
 
 type SpeedQuestion = {
   id: string;
-  type: 'vocab-meaning' | 'vocab-reverse' | 'quiz-multiple-choice' | 'reflex-quick-choice';
+  type: 'authored-speed-prompt' | 'vocab-meaning' | 'vocab-reverse' | 'quiz-multiple-choice' | 'reflex-quick-choice';
   prompt: string;
   options: string[];
   answer: string;
   explanationVi?: string;
   sourceLabel: SpeedSourceLabel;
+  srsType?: 'quiz' | 'reflex' | 'speed' | 'match';
+  sourceItemId?: string;
 };
 
 type WrongSpeedAnswer = {
@@ -161,6 +165,8 @@ function vocabularyMeaningQuestion(item: VocabularyItem, vocabulary: VocabularyI
     answer: item.meaningVi,
     explanationVi: item.exampleMeaningVi,
     sourceLabel: 'Từ vựng',
+    sourceItemId: item.id,
+    srsType: 'match',
   };
 }
 
@@ -173,6 +179,8 @@ function vocabularyReverseQuestion(item: VocabularyItem, vocabulary: VocabularyI
     answer: item.term,
     explanationVi: item.example,
     sourceLabel: 'Từ vựng',
+    sourceItemId: item.id,
+    srsType: 'match',
   };
 }
 
@@ -187,6 +195,8 @@ function quizQuestionToSpeed(question: QuizQuestion): SpeedQuestion | null {
     answer: question.answer,
     explanationVi: question.explanationVi,
     sourceLabel: 'Thử sức nhẹ',
+    sourceItemId: question.id,
+    srsType: 'quiz',
   };
 }
 
@@ -199,16 +209,33 @@ function reflexQuestionToSpeed(prompt: SpeakingReflexPrompt, prompts: SpeakingRe
     answer: prompt.expectedEnglish,
     explanationVi: prompt.hint,
     sourceLabel: 'Phản xạ',
+    sourceItemId: prompt.id,
+    srsType: 'reflex',
+  };
+}
+
+function authoredSpeedPromptToQuestion(prompt: EnglishSpeedPrompt, prompts: EnglishSpeedPrompt[]): SpeedQuestion {
+  return {
+    id: prompt.id,
+    type: 'authored-speed-prompt',
+    prompt: prompt.promptVi,
+    options: makeOptions(prompt.expectedEnglish, prompts.map((item) => item.expectedEnglish)),
+    answer: prompt.expectedEnglish,
+    explanationVi: prompt.hint,
+    sourceLabel: 'Tăng tốc',
+    sourceItemId: prompt.id,
+    srsType: 'speed',
   };
 }
 
 function buildSpeedQuestions(lesson: EnglishLesson): SpeedQuestion[] {
+  const authoredSpeed = (lesson.englishSpeedPrompts || []).map((prompt) => authoredSpeedPromptToQuestion(prompt, lesson.englishSpeedPrompts || []));
   const vocabularyMeaning = lesson.vocabulary.slice(0, 9).map((item) => vocabularyMeaningQuestion(item, lesson.vocabulary));
   const vocabularyReverse = lesson.vocabulary.slice(9, 18).map((item) => vocabularyReverseQuestion(item, lesson.vocabulary));
   const quiz = lesson.quizQuestions.map(quizQuestionToSpeed).filter((item): item is SpeedQuestion => Boolean(item));
   const reflex = lesson.speakingReflexPrompts.map((prompt) => reflexQuestionToSpeed(prompt, lesson.speakingReflexPrompts));
 
-  return [...vocabularyMeaning, ...vocabularyReverse, ...quiz, ...reflex].slice(0, MAX_QUESTIONS);
+  return [...authoredSpeed, ...vocabularyMeaning, ...vocabularyReverse, ...quiz, ...reflex].slice(0, MAX_QUESTIONS);
 }
 
 function getResultMessage(accuracy: number) {
@@ -219,6 +246,7 @@ function getResultMessage(accuracy: number) {
 
 export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {
   const baseQuestions = useMemo(() => buildSpeedQuestions(lesson), [lesson]);
+  const [reviewSessionId] = useState(() => `${lesson.id}:speed:${Math.random().toString(36).slice(2)}`);
   const autoNextRef = useRef<number | null>(null);
   const [questions, setQuestions] = useState<SpeedQuestion[]>([]);
   const [started, setStarted] = useState(false);
@@ -293,6 +321,9 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
     if (!started || ended || !currentQuestion || feedback) return;
 
     const isCorrect = option === currentQuestion.answer;
+    if (currentQuestion.sourceItemId && currentQuestion.srsType) {
+      markItemReviewed(lesson.id, currentQuestion.sourceItemId, currentQuestion.srsType, isCorrect ? 'correct' : 'wrong', lesson.reviewPolicy.wrongAnswerDelayMinutes, reviewSessionId, true);
+    }
     const nextStreak = isCorrect ? streak + 1 : 0;
     const bonus = isCorrect && nextStreak % 3 === 0 ? 5 : 0;
     let heartLossText: string | undefined;
@@ -419,17 +450,22 @@ export function LessonSpeedPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
     return (
       <Box bg={COLORS.bg} minH="calc(100vh - 72px)" px={{ base: '4', md: '6' }} py="8">
         <Box maxW="900px" mx="auto" bg="white" border="1px solid" borderColor={COLORS.border} borderRadius="3xl" p={{ base: '6', md: '8' }}>
-          <HStack wrap="wrap" gap="2" mb="4">
-            <Badge bg="#FEF3C7" color="#92400E" borderRadius="full" px="3" py="1">Tốc độ</Badge>
-            <Badge bg="#EFF6FF" color={COLORS.primary} borderRadius="full" px="3" py="1">60 giây</Badge>
-          </HStack>
-          <Text fontSize={{ base: '3xl', md: '5xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.05">Tốc độ</Text>
-          <Text mt="3" fontSize="xl" fontWeight="800" color={COLORS.text}>{lesson.titleVi}</Text>
-          <Text color={COLORS.muted}>{lesson.titleEn}</Text>
+          <Flex align="start" justify="space-between" gap="3">
+            <Box minW="0">
+              <HStack wrap="wrap" gap="2" mb="4">
+                <Badge bg="#FEF3C7" color="#92400E" borderRadius="full" px="3" py="1">Tốc độ</Badge>
+                <Badge bg="#EFF6FF" color={COLORS.primary} borderRadius="full" px="3" py="1">60 giây</Badge>
+              </HStack>
+              <Text fontSize={{ base: '3xl', md: '5xl' }} fontWeight="950" color={COLORS.text} lineHeight="1.05">Tốc độ</Text>
+              <Text mt="3" fontSize="xl" fontWeight="800" color={COLORS.text}>{lesson.titleVi}</Text>
+              <Text color={COLORS.muted}>{lesson.titleEn}</Text>
+            </Box>
+            <OceanMascot mascot="caNguaToc" pose="dash" size="sm" decorative motion="float" mt={{ base: '1', md: '2' }} />
+          </Flex>
           <Text mt="5" color={COLORS.muted} fontSize="lg">
-            Trả lời nhanh các cụm câu Bài 1 trong 60 giây. Ưu tiên phản xạ đúng, không cần suy nghĩ quá lâu.
+            Trả lời nhanh các cụm từ và câu trong bài trong 60 giây. Ưu tiên phản xạ đúng, không cần suy nghĩ quá lâu.
           </Text>
-          <SimpleGrid columns={{ base: 1, md: 3 }} gap="4" mt="7">
+          <SimpleGrid columns={3} gap={{ base: '2', md: '4' }} mt={{ base: '5', md: '7' }}>
             <Metric label="Kho câu hỏi" value={baseQuestions.length} />
             <Metric label="Thời gian" value={`${GAME_SECONDS}s`} tone="amber" />
             <Metric label="Kỷ lục vui nhất" value={bestScore} tone="green" />
@@ -627,9 +663,9 @@ function Metric({ label, value, tone }: { label: string; value: string | number;
   const color = tone === 'green' ? COLORS.green : tone === 'amber' ? COLORS.amber : tone === 'red' ? '#9A3412' : COLORS.text;
 
   return (
-    <Box border="1px solid" borderColor={COLORS.border} bg="#F8FAFC" borderRadius="2xl" p="4">
-      <Text color={COLORS.muted} fontSize="sm" fontWeight="800">{label}</Text>
-      <Text mt="1" fontSize="2xl" fontWeight="950" color={color}>{value}</Text>
+    <Box minW="0" border="1px solid" borderColor={COLORS.border} bg="#F8FAFC" borderRadius="2xl" p={{ base: '2', md: '4' }} textAlign={{ base: 'center', md: 'left' }}>
+      <Text color={COLORS.muted} fontSize={{ base: 'xs', md: 'sm' }} fontWeight="800" lineHeight="1.25">{label}</Text>
+      <Text mt="1" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="950" color={color}>{value}</Text>
     </Box>
   );
 }

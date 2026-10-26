@@ -13,8 +13,10 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Volume2 } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import { OceanMascot } from '../p-english/OceanMascot';
 import { loseHeart } from '../../lib/p-english/learning-hearts';
+import { getDueReviewItems, markItemReviewed } from '../../lib/p-english/lesson-progress';
 import type { EnglishLesson, VocabularyItem } from '../../lib/p-english/lesson-content-data';
 import { recordPracticeSessionMemory } from '../../lib/p-english/localSkillMemory';
 import { getQuestionRandomSeed, shuffleArrayStableCopy } from '../../lib/p-english/practice-randomization';
@@ -45,6 +47,7 @@ type MatchPair = {
   example: string;
   exampleMeaningVi: string;
   tags: string[];
+  srsItemIds?: string[];
 };
 
 type MatchProgress = {
@@ -67,6 +70,7 @@ function vocabularyToPair(item: VocabularyItem): MatchPair {
     example: item.example,
     exampleMeaningVi: item.exampleMeaningVi,
     tags: item.tags,
+    srsItemIds: [item.id],
   };
 }
 
@@ -117,11 +121,33 @@ function getSummaryMessage(mistakes: number) {
 }
 
 export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {
-  const allPairs = useMemo(() => lesson.vocabulary.map(vocabularyToPair), [lesson.vocabulary]);
+  const [searchParams] = useSearchParams();
+  const dueReviewOnly = searchParams.get('review') === 'due';
+  const allPairs = useMemo(() => {
+    const pairs = [
+      ...lesson.vocabulary.map(vocabularyToPair),
+      ...(lesson.matchPairs ?? []).map((pair): MatchPair => ({ ...pair, example: '', exampleMeaningVi: '', tags: [], srsItemIds: [pair.id] })),
+    ];
+    const deduped = new Map<string, MatchPair>();
+    pairs.forEach((pair) => {
+      const key = `${pair.left.trim().toLowerCase()}|${pair.right.trim().toLowerCase()}`;
+      const existing = deduped.get(key);
+      if (existing) {
+        existing.srsItemIds = Array.from(new Set([...(existing.srsItemIds ?? [existing.id]), ...(pair.srsItemIds ?? [pair.id])]));
+        return;
+      }
+      deduped.set(key, { ...pair, srsItemIds: pair.srsItemIds ?? [pair.id] });
+    });
+    const uniquePairs = Array.from(deduped.values());
+    if (!dueReviewOnly) return uniquePairs;
+    const dueMatchItemIds = new Set(getDueReviewItems(lesson.id, lesson).filter((item) => item.type === 'match').map((item) => item.itemId));
+    return uniquePairs.filter((pair) => (pair.srsItemIds ?? [pair.id]).some((itemId) => dueMatchItemIds.has(itemId)));
+  }, [dueReviewOnly, lesson]);
   const [activePairs, setActivePairs] = useState<MatchPair[]>(allPairs);
   const [rounds, setRounds] = useState<MatchPair[][]>(() => splitIntoRounds(shuffleArrayStableCopy(allPairs, getQuestionRandomSeed(`match-${lesson.id}`, 0))));
   const [rightOrders, setRightOrders] = useState<MatchPair[][]>(() => splitIntoRounds(shuffleArrayStableCopy(allPairs, getQuestionRandomSeed(`match-${lesson.id}`, 0))).map((round, index) => shuffleArrayStableCopy(round, `${getQuestionRandomSeed(`match-${lesson.id}`, 0)}::right::${index}`)));
   const [matchSessionAttempt, setMatchSessionAttempt] = useState(0);
+  const [reviewSessionId] = useState(() => `${lesson.id}:match:${Math.random().toString(36).slice(2)}`);
   const [started, setStarted] = useState(false);
   const [roundIndex, setRoundIndex] = useState(0);
   const [selectedLeftId, setSelectedLeftId] = useState<string | null>(null);
@@ -194,6 +220,8 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
     }
 
     if (selectedLeftId === pairId) {
+      const matchedPair = currentRound.find((pair) => pair.id === pairId);
+      (matchedPair?.srsItemIds ?? [pairId]).forEach((itemId) => markItemReviewed(lesson.id, itemId, 'match', 'correct', lesson.reviewPolicy.wrongAnswerDelayMinutes, reviewSessionId, true));
       onWhaleMoodChange?.('correct');
       setMatchedIds((current) => [...current, pairId]);
       setCompletedPairIds((current) => (current.includes(pairId) ? current : [...current, pairId]));
@@ -205,6 +233,8 @@ export function LessonMatchPractice({ lesson, onWhaleMoodChange }: { lesson: Eng
     }
 
     setMistakes((count) => count + 1);
+    const missedPair = currentRound.find((pair) => pair.id === selectedLeftId);
+    (missedPair?.srsItemIds ?? [selectedLeftId]).forEach((itemId) => markItemReviewed(lesson.id, itemId, 'match', 'wrong', lesson.reviewPolicy.wrongAnswerDelayMinutes, reviewSessionId, true));
     setRoundMistakes((count) => count + 1);
     setWeakPairIds((current) => (current.includes(selectedLeftId) ? current : [...current, selectedLeftId]));
     const hearts = loseHeart('match-wrong');
@@ -439,7 +469,26 @@ function MatchLeftCard({ pair, selected, matched, wrong, onPick }: { pair: Match
   const color = matched ? '#166534' : COLORS.text;
 
   return (
-    <Box border="2px solid" borderColor={borderColor} bg={bg} borderRadius="2xl" p="4" cursor={matched ? 'default' : 'pointer'} onClick={onPick} opacity={matched ? 0.78 : 1}>
+    <Box
+      role="button"
+      tabIndex={matched ? -1 : 0}
+      aria-pressed={selected || matched}
+      aria-disabled={matched}
+      border="2px solid"
+      borderColor={borderColor}
+      bg={bg}
+      borderRadius="2xl"
+      p="4"
+      cursor={matched ? 'default' : 'pointer'}
+      onClick={matched ? undefined : onPick}
+      onKeyDown={(event) => {
+        if (matched || (event.key !== 'Enter' && event.key !== ' ')) return;
+        event.preventDefault();
+        onPick();
+      }}
+      opacity={matched ? 0.78 : 1}
+      sx={{ '&:focus-visible': { outline: '3px solid #2563EB', outlineOffset: '2px' } }}
+    >
       <Flex align="center" justify="space-between" gap="3">
         <Box minW="0">
           <Text color={color} fontWeight="900" fontSize="lg" wordBreak="break-word">{pair.left}</Text>
@@ -459,6 +508,7 @@ function MatchLeftCard({ pair, selected, matched, wrong, onPick }: { pair: Match
             event.stopPropagation();
             speakEnglish(pair.left);
           }}
+          onKeyDown={(event) => event.stopPropagation()}
         />
       </Flex>
     </Box>
@@ -471,7 +521,26 @@ function MatchRightCard({ pair, matched, wrong, onPick }: { pair: MatchPair; mat
   const color = matched ? '#166534' : COLORS.text;
 
   return (
-    <Box border="2px solid" borderColor={borderColor} bg={bg} borderRadius="2xl" p="4" cursor={matched ? 'default' : 'pointer'} onClick={onPick} opacity={matched ? 0.78 : 1}>
+    <Box
+      role="button"
+      tabIndex={matched ? -1 : 0}
+      aria-pressed={matched}
+      aria-disabled={matched}
+      border="2px solid"
+      borderColor={borderColor}
+      bg={bg}
+      borderRadius="2xl"
+      p="4"
+      cursor={matched ? 'default' : 'pointer'}
+      onClick={matched ? undefined : onPick}
+      onKeyDown={(event) => {
+        if (matched || (event.key !== 'Enter' && event.key !== ' ')) return;
+        event.preventDefault();
+        onPick();
+      }}
+      opacity={matched ? 0.78 : 1}
+      sx={{ '&:focus-visible': { outline: '3px solid #2563EB', outlineOffset: '2px' } }}
+    >
       <Text color={color} fontWeight="900" fontSize="lg" wordBreak="break-word">{pair.right}</Text>
     </Box>
   );

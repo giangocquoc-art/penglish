@@ -184,6 +184,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
   const [needsReviewCardIds, setNeedsReviewCardIds] = useState<string[]>([]);
   const [reviewedCardIds, setReviewedCardIds] = useState<string[]>([]);
   const [completedSessions, setCompletedSessions] = useState(0);
+  const [reviewSessionId, setReviewSessionId] = useState(() => `${lesson.id}:flashcard:${Math.random().toString(36).slice(2)}`);
   const [showSummary, setShowSummary] = useState(false);
   const [meaningInput, setMeaningInput] = useState('');
   const [meaningVerified, setMeaningVerified] = useState(false);
@@ -293,7 +294,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
   const markRemembered = () => {
     if (!currentCard) return;
     onWhaleMoodChange?.('correct');
-    markItemReviewed(lesson.id, currentCard.id, 'flashcard', 'correct');
+    markItemReviewed(lesson.id, currentCard.id, 'flashcard', 'correct', lesson.reviewPolicy.wrongAnswerDelayMinutes, reviewSessionId, true);
     updateWordAfterCorrectAnswer(vocabularyWordIdFromFlashcard(currentCard.id));
     const nextReviewed = unique([...reviewedCardIds, currentCard.id]);
     const nextRemembered = unique([...rememberedCardIds, currentCard.id]);
@@ -307,7 +308,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
   const markNeedsReview = () => {
     if (!currentCard) return;
     onWhaleMoodChange?.('mistake');
-    markItemReviewed(lesson.id, currentCard.id, 'flashcard', 'wrong');
+    markItemReviewed(lesson.id, currentCard.id, 'flashcard', 'wrong', lesson.reviewPolicy.wrongAnswerDelayMinutes, reviewSessionId, true);
     updateWordAfterWrongAnswer(vocabularyWordIdFromFlashcard(currentCard.id));
     const nextReviewed = unique([...reviewedCardIds, currentCard.id]);
     const nextNeedsReview = unique([...needsReviewCardIds, currentCard.id]);
@@ -340,6 +341,7 @@ export function LessonFlashcardPractice({ lesson, onWhaleMoodChange }: { lesson:
   }, [showSummary, meaningVerified, meaningRevealed, isFlipped, currentCard, markNeedsReview, markRemembered]);
 
   const restartWithDeck = (nextDeck: FlashcardItem[]) => {
+    setReviewSessionId(`${lesson.id}:flashcard:${Math.random().toString(36).slice(2)}`);
     setDeck(nextDeck);
     setCurrentIndex(0);
     setIsFlipped(false);

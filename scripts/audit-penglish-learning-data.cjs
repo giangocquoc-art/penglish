@@ -90,6 +90,24 @@ function checkUnique(items, key, source, recorder, severity = 'error') {
 function checkLessonExerciseIntegrity(lessons, recorder) {
   for (const lesson of lessons) {
     const lessonId = lesson.id;
+    const criteria = lesson.completionCriteria;
+    if (!criteria || Object.values(criteria).some((value) => !Number.isInteger(value) || value < 0)) {
+      recorder.add('error', 'completion-criteria', 'lesson.completionCriteria', lessonId, `Completion criteria for ${lessonId} must contain non-negative whole numbers.`, 'Provide complete, non-negative integer criteria for each learning milestone.');
+    } else {
+      const dialogueLines = (lesson.miniDialogues ?? []).reduce((sum, dialogue) => sum + (dialogue.lines?.length ?? 0), 0);
+      const totalAvailableQuiz = (lesson.quizQuestions ?? []).length + (lesson.fillBlankTasks ?? []).length + (lesson.sentenceOrderingTasks ?? []).length;
+      const checks = [
+        ['flashcardsReviewed', criteria.flashcardsReviewed, (lesson.vocabulary ?? []).length],
+        ['totalQuizQuestions', criteria.totalQuizQuestions, Math.max((lesson.quizQuestions ?? []).length, totalAvailableQuiz)],
+        ['totalReflexPrompts', criteria.totalReflexPrompts, (lesson.speakingReflexPrompts ?? []).length],
+        ['minimumListeningOrDialogueRepeats', criteria.minimumListeningOrDialogueRepeats, (lesson.listeningPractice ?? []).length + dialogueLines],
+      ];
+      for (const [key, value, available] of checks) {
+        if (value > available) recorder.add('error', 'completion-criteria', 'lesson.completionCriteria', lessonId, `${key} (${value}) exceeds available authored items (${available}) for ${lessonId}.`, 'Align the milestone count with items that the lesson flow can serve.');
+      }
+      if (criteria.minimumQuizCorrect > criteria.totalQuizQuestions) recorder.add('error', 'completion-criteria', 'lesson.completionCriteria', lessonId, `minimumQuizCorrect exceeds totalQuizQuestions for ${lessonId}.`, 'Set the correct-answer target no higher than the quiz pool.');
+      if (criteria.minimumReflexPromptsCompleted > criteria.totalReflexPrompts) recorder.add('error', 'completion-criteria', 'lesson.completionCriteria', lessonId, `minimumReflexPromptsCompleted exceeds totalReflexPrompts for ${lessonId}.`, 'Set the speaking target no higher than the speaking pool.');
+    }
     for (const question of lesson.quizQuestions ?? []) {
       if (question.type === 'multiple-choice') {
         if (!Array.isArray(question.options) || question.options.length < 2) {

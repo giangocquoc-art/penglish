@@ -9,16 +9,26 @@ const reportPath = path.join(process.cwd(), 'reports', 'penglish-practice-browse
 const checks = [
   {
     name: 'sentence-order-token-identity-duplicate-words',
+    kind: 'sentence-order',
     route: '/practice?lessonId=grammar-a2-going-to-plans&mode=quiz',
     viewport: { width: 1440, height: 960 },
     screenshot: 'penglish-practice-qa-sentence-order.png',
   },
   {
     name: 'mobile-practice-mode-shell',
+    kind: 'sentence-order',
     route: '/practice?lessonId=grammar-a2-going-to-plans&mode=quiz',
     viewport: { width: 390, height: 844 },
     isMobile: true,
     screenshot: 'penglish-practice-qa-mobile-quiz.png',
+  },
+  {
+    name: 'authored-speed-prompts-appear-in-speed-game',
+    kind: 'speed-prompt',
+    route: '/practice?lessonId=a1-listening-meeting-classmate&mode=speed',
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    screenshot: 'penglish-practice-qa-speed-authored-prompt.png',
   },
 ];
 
@@ -115,8 +125,33 @@ async function runCheck(browser, check) {
     const status = response ? response.status() : 0;
     if (status >= 400) throw new Error(`${check.name} returned HTTP ${status}`);
 
-    const identity = await checkSentenceOrderIdentity(page);
-    await page.screenshot({ path: path.join(screenshotDir, check.screenshot), fullPage: true });
+    let identity;
+    if (check.kind === 'speed-prompt') {
+      const bank = await page.evaluate(async () => {
+        const { getLessonById } = await import('/src/lib/p-english/lesson-content-data.ts');
+        const lesson = getLessonById('a1-listening-meeting-classmate');
+        if (!lesson) throw new Error('Missing authored speed QA lesson.');
+        const quizCount = lesson.quizQuestions.filter((question) => question.type === 'multiple-choice' && question.options?.length && question.question && !Array.isArray(question.answer)).length;
+        return {
+          authoredSpeedPromptCount: lesson.englishSpeedPrompts?.length ?? 0,
+          expectedQuestionCount: Math.min(30, Math.min(9, lesson.vocabulary.length) + Math.min(9, Math.max(0, lesson.vocabulary.length - 9)) + quizCount + lesson.speakingReflexPrompts.length + (lesson.englishSpeedPrompts?.length ?? 0)),
+        };
+      });
+      const metricText = await page.getByText('Kho câu hỏi', { exact: true }).locator('..').innerText();
+      const actualQuestionCount = Number(metricText.split('\n').at(-1));
+      if (bank.authoredSpeedPromptCount < 1 || actualQuestionCount !== bank.expectedQuestionCount) {
+        throw new Error(`Authored speed prompts are missing from the Speed question pool: ${JSON.stringify({ ...bank, actualQuestionCount })}`);
+      }
+      const ctaBox = await page.getByRole('button', { name: 'Bắt đầu', exact: true }).boundingBox();
+      const navBox = await page.getByTestId('mobile-bottom-nav').boundingBox();
+      if (!ctaBox || !navBox || ctaBox.y + ctaBox.height > navBox.y - 8) {
+        throw new Error(`The Speed start button is hidden by mobile navigation: ${JSON.stringify({ ctaBox, navBox })}`);
+      }
+      identity = { ...bank, actualQuestionCount, authoredSpeedPromptsIncluded: true };
+    } else {
+      identity = await checkSentenceOrderIdentity(page);
+    }
+    await page.screenshot({ path: path.join(screenshotDir, check.screenshot), fullPage: check.kind !== 'speed-prompt' });
     if (consoleErrors.length) throw new Error(`${check.name} console errors: ${consoleErrors.join(' | ')}`);
 
     return { name: check.name, route: check.route, status, screenshot: `reports/screenshots/${check.screenshot}`, identity };

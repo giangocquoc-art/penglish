@@ -77,14 +77,15 @@ function stateFromRows(rows: Foundation48CloudRow[]): Foundation48ProgressState 
 function dayToUpsertRow(userId: string, dayNumber: number, dayProgress: Foundation48ProgressDay) {
   const normalized = normalizeDay(dayProgress);
   const challengeResults = Object.values(normalized.challengeResults || {});
-  const correctCount = challengeResults.filter((item) => item.correct).length;
+  const scoredResults = challengeResults.filter((item) => item.scoreEligible !== false && (item.firstAttemptCorrect ?? item.correct) !== null);
+  const correctCount = scoredResults.filter((item) => (item.firstAttemptCorrect ?? item.correct) === true).length;
   return {
     user_id: userId,
     day_number: dayNumber,
     current_step: currentStepFromDay(normalized),
     completed: Boolean(normalized.completed),
     correct_count: correctCount,
-    wrong_count: Math.max(challengeResults.length - correctCount, 0),
+    wrong_count: Math.max(scoredResults.length - correctCount, 0),
     score: scoreFromDay(normalized),
     payload: normalized,
     updated_at: new Date().toISOString(),

@@ -3,6 +3,7 @@ import { Box, Button, Flex, FormControl, FormLabel, HStack, Icon, Input, SimpleG
 import { Link } from 'react-router-dom';
 import { CheckCircle2, FileVideo, Headphones, Keyboard, Mic, Play, Sparkles, Upload, Video, Waves } from 'lucide-react';
 import { OceanPageShell } from '../components/p-english/OceanPageShell';
+import { OceanMascot } from '../components/p-english/OceanMascot';
 import { GlassPanel } from '../components/p-english/OceanBackdrop';
 import { useAudioRecorder } from '../hooks/useAudioRecorder';
 import { compareTypedAnswer, getYouTubeVideoIdFromUrl, splitTranscriptIntoSegments, type ComparedWord, type VideoLesson, type VideoSegment } from '../lib/video-lab';
@@ -480,7 +481,7 @@ export function VideoLabPage() {
             <Text mt="2" color={COLORS.muted} maxW="760px" fontSize={{ base: 'sm', md: 'md' }} fontWeight="750" lineHeight="1.7">Biến video tiếng Anh thành bài luyện nghe, nói và gõ theo từng câu. YouTube chỉ embed iframe; Poo sẽ tự thử lấy caption tiếng Anh nếu video có sẵn phụ đề.</Text>
           </Box>
           <Flex position="relative" align="center" justify="center" gap="3" flexShrink={0}>
-            <Box as="img" src={PIXEL_ASSETS.pooNeutral} alt="Poo Video Lab" className="pooPixelMascot" w={{ base: '76px', md: '104px' }} h={{ base: '76px', md: '104px' }} />
+            <OceanMascot mascot="poo" pose="coach" size="md" decorative motion="float" />
             <Icon as={Video} boxSize={{ base: '10', md: '14' }} color={COLORS.deepBlue} />
           </Flex>
         </Flex>

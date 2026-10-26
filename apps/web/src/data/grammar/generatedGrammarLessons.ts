@@ -4,6 +4,11 @@ function normalizeWords(text: string) {
   return text.replace(/[.!?]/g, '').split(/\s+/).filter(Boolean);
 }
 
+function makeBlankedDistractor(text: string, pattern: RegExp, fallback: string) {
+  const distractor = text.replace(pattern, '___');
+  return distractor === text ? fallback : distractor;
+}
+
 function buildGrammarReviewExercises(lesson: GeneratedGrammarLessonSource): GeneratedGrammarExercise[] {
   const firstExample = lesson.examples[0] ?? { text: 'I can practise English every day.', meaningVi: 'Tôi có thể luyện tiếng Anh mỗi ngày.' };
   const secondExample = lesson.examples[1] ?? firstExample;
@@ -20,7 +25,7 @@ function buildGrammarReviewExercises(lesson: GeneratedGrammarLessonSource): Gene
       id: `${lesson.id}-review-mc-example`,
       type: 'multiple-choice',
       promptVi: `Chọn câu đúng theo mẫu: ${firstExample.meaningVi}`,
-      options: [firstExample.text, firstExample.text.replace(/\b(is|are|am|have|has|can|should|will)\b/i, '___'), 'This sentence is not natural.', 'I not sure this grammar.'],
+      options: [firstExample.text, makeBlankedDistractor(firstExample.text, /\b(is|are|am|have|has|can|should|will)\b/i, 'I practise this pattern every day.'), 'This sentence is not natural.', 'I not sure this grammar.'],
       answer: firstExample.text,
       hintVi: 'Nhìn lại ví dụ chính và chọn câu hoàn chỉnh, tự nhiên nhất.',
       explanationVi: `Câu đúng giữ nguyên mẫu ngữ pháp của bài: ${lesson.titleVi}.`,
@@ -65,7 +70,7 @@ type GrammarExpansionSeed = {
   patternDescription: string;
   patternSummary: string;
   explanationVi: string;
-  examples: Array<{ text: string; meaningVi: string }>;
+  examples: Array<{ text: string; meaningVi: string; pronunciation?: string }>;
   sourcePatternId: string;
 };
 
@@ -78,6 +83,7 @@ function buildExpandedGrammarLesson(seed: GrammarExpansionSeed): GeneratedGramma
   const fourthWords = normalizeWords(fourth.text);
   const fourthAnswer = fourthWords[0] ?? 'This';
   const fourthBlank = fourth.text.replace(new RegExp(`^${fourthAnswer.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`), '___');
+  const fifthDistractor = makeBlankedDistractor(fifth.text, /\b(not|never|already|because|although|if|when)\b/i, 'The learner practises this sentence every day.');
 
   return {
     id: seed.id,
@@ -93,12 +99,12 @@ function buildExpandedGrammarLesson(seed: GrammarExpansionSeed): GeneratedGramma
     vietnameseExplanation: seed.explanationVi,
     examples: seed.examples,
     exercises: [
-      { id: `${seed.id}-mc-main`, type: 'multiple-choice', promptVi: `Chọn câu đúng: ${first.meaningVi}`, options: [first.text, first.text.replace(/\b(is|are|am|have|has|do|does|did|will|would|can|should|to)\b/i, '___'), 'This grammar does not match the meaning.', 'The word order is not natural.'], answer: first.text, hintVi: 'So sánh ý tiếng Việt với câu hoàn chỉnh, tự nhiên nhất.', explanationVi: `Đúng rồi, câu này đi theo mẫu chính của bài: ${seed.titleVi}.` },
+      { id: `${seed.id}-mc-main`, type: 'multiple-choice', promptVi: `Chọn câu đúng: ${first.meaningVi}`, options: [first.text, makeBlankedDistractor(first.text, /\b(is|are|am|have|has|do|does|did|will|would|can|should|to)\b/i, 'I practise this pattern every day.'), 'This grammar does not match the meaning.', 'The word order is not natural.'], answer: first.text, hintVi: 'So sánh ý tiếng Việt với câu hoàn chỉnh, tự nhiên nhất.', explanationVi: `Đúng rồi, câu này đi theo mẫu chính của bài: ${seed.titleVi}.` },
       { id: `${seed.id}-fill-first-word`, type: 'fill-blank', promptVi: `Điền phần còn thiếu: ${second.meaningVi}`, promptEn: secondBlank, answer: secondAnswer, hintVi: 'Ô trống nằm ở đầu câu; đọc cả câu trước khi điền.', explanationVi: `Đúng rồi, “${secondAnswer}” mở đầu câu tự nhiên và giữ đúng mẫu mình đang luyện.` },
-      { id: `${seed.id}-order-focus`, type: 'sentence-order', promptVi: `Sắp xếp câu: ${third.meaningVi}`, words: thirdWords, answer: thirdWords.join(' '), hintVi: 'Sắp theo thứ tự chủ ngữ → động từ → phần bổ sung.', explanationVi: 'Đúng rồi, thứ tự này tạo thành câu đầy đủ theo mẫu Poo đang dẫn bạn luyện.' },
-      { id: `${seed.id}-mc-context`, type: 'multiple-choice', promptVi: `Chọn câu phù hợp với ngữ cảnh: ${fifth.meaningVi}`, options: [fifth.text, fifth.text.replace(/\b(not|never|already|because|although|if|when)\b/i, '___'), 'The idea is unclear in this sentence.', 'Use only one word without a full sentence.'], answer: fifth.text, hintVi: 'Chọn câu diễn đạt đủ ý và đúng cấu trúc.', explanationVi: 'Đúng rồi, đáp án này nói trọn ý và nghe tự nhiên hơn.' },
+      { id: `${seed.id}-order-focus`, type: 'sentence-order', promptVi: third.meaningVi, words: thirdWords, answer: thirdWords.join(' '), hintVi: 'Sắp theo thứ tự chủ ngữ → động từ → phần bổ sung.', explanationVi: 'Đúng rồi, thứ tự này tạo thành câu đầy đủ theo mẫu Poo đang dẫn bạn luyện.' },
+      { id: `${seed.id}-mc-context`, type: 'multiple-choice', promptVi: `Chọn câu phù hợp với ngữ cảnh: ${fifth.meaningVi}`, options: [fifth.text, fifthDistractor === fifth.text ? 'The learner practises this sentence every day.' : fifthDistractor, 'The idea is unclear in this sentence.', 'Use only one word without a full sentence.'], answer: fifth.text, hintVi: 'Chọn câu diễn đạt đủ ý và đúng cấu trúc.', explanationVi: 'Đúng rồi, đáp án này nói trọn ý và nghe tự nhiên hơn.' },
       { id: `${seed.id}-fill-review`, type: 'fill-blank', promptVi: `Hoàn thành câu ôn tập: ${fourth.meaningVi}`, promptEn: fourthBlank, answer: fourthAnswer, hintVi: 'Tập trung vào từ/cụm mở đầu câu.', explanationVi: `Đúng rồi, “${fourthAnswer}” giúp câu đầy đủ và đúng mẫu hơn.` },
-      { id: `${seed.id}-order-review`, type: 'sentence-order', promptVi: `Sắp xếp câu ôn tập: ${fourth.meaningVi}`, words: fourthWords, answer: fourthWords.join(' '), hintVi: 'Giữ đúng trật tự cụm ý, không dịch từng từ.', explanationVi: 'Đúng rồi, câu hoàn chỉnh giúp mình luyện theo cụm ngắn dễ nhớ hơn.' },
+      { id: `${seed.id}-order-review`, type: 'sentence-order', promptVi: fourth.meaningVi, words: fourthWords, answer: fourthWords.join(' '), hintVi: 'Giữ đúng trật tự cụm ý, không dịch từng từ.', explanationVi: 'Đúng rồi, câu hoàn chỉnh giúp mình luyện theo cụm ngắn dễ nhớ hơn.' },
     ],
     source: { ...fluentcardsSource, sourcePatternId: seed.sourcePatternId },
   };
@@ -111,6 +117,8 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'There is some water in the bottle.', meaningVi: 'Có một ít nước trong chai.' },
     { text: 'There are many students in the room.', meaningVi: 'Có nhiều học sinh trong phòng.' },
     { text: 'There is a small cafe near my school.', meaningVi: 'Có một quán cà phê nhỏ gần trường tôi.' },
+    { text: 'There is a pencil in my bag.', meaningVi: 'Có một cây bút chì trong cặp tôi.', pronunciation: '/ðer ɪz ə ˈpensəl ɪn maɪ bæɡ/' },
+    { text: 'There are two chairs near the door.', meaningVi: 'Có hai chiếc ghế gần cửa.', pronunciation: '/ðer ɑːr tuː tʃerz nɪr ðə dɔːr/' },
   ] },
   { id: 'grammar-a1-can-for-ability', unitId: 'grammar-foundations-a1', level: 'A1', titleVi: 'Can để nói khả năng', titleEn: 'Can for ability', subtitleVi: 'Nói mình có thể làm gì và đặt câu hỏi “Can you...?” thật gọn.', patternTitle: 'Modal can: ability', patternDescription: 'Use can plus base verb for ability and simple requests.', patternSummary: 'Mẫu luyện can/cannot + động từ nguyên mẫu trong câu khả năng hằng ngày.', explanationVi: 'Sau can dùng động từ nguyên mẫu, không thêm s/es hay to. Phủ định là cannot/can’t.', sourcePatternId: 'can-ability', examples: [
     { text: 'I can read short English stories.', meaningVi: 'Tôi có thể đọc truyện tiếng Anh ngắn.' },
@@ -118,6 +126,8 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'Can you spell this word?', meaningVi: 'Bạn có thể đánh vần từ này không?' },
     { text: 'We cannot hear the audio clearly.', meaningVi: 'Chúng tôi không thể nghe âm thanh rõ.' },
     { text: 'My brother can draw a blue whale.', meaningVi: 'Em trai tôi có thể vẽ một chú cá voi xanh.' },
+    { text: 'Can you open the window?', meaningVi: 'Bạn có thể mở cửa sổ giúp tôi không?', pronunciation: '/kæn juː ˈoʊpən ðə ˈwɪndoʊ/' },
+    { text: 'I cannot ride a bike yet.', meaningVi: 'Tôi vẫn chưa biết đi xe đạp.', pronunciation: '/aɪ ˈkænɑːt raɪd ə baɪk jet/' },
   ] },
   { id: 'grammar-a2-past-simple-regular', unitId: 'grammar-verbs-a2', level: 'A2', titleVi: 'Quá khứ đơn với động từ có quy tắc', titleEn: 'Past simple with regular verbs', subtitleVi: 'Kể việc đã xảy ra bằng động từ thêm -ed và mốc thời gian rõ.', patternTitle: 'Past simple: regular verbs', patternDescription: 'Use regular -ed verbs with finished time.', patternSummary: 'Mẫu luyện V-ed với yesterday, last night, ago và các hoạt động quen thuộc.', explanationVi: 'Dùng quá khứ đơn cho hành động đã kết thúc. Động từ có quy tắc thường thêm -ed/-d, câu phủ định dùng did not + động từ nguyên mẫu.', sourcePatternId: 'past-simple-regular', examples: [
     { text: 'I watched a short video yesterday.', meaningVi: 'Hôm qua tôi đã xem một video ngắn.' },
@@ -125,6 +135,8 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'We practiced pronunciation after class.', meaningVi: 'Chúng tôi đã luyện phát âm sau giờ học.' },
     { text: 'They visited the museum two days ago.', meaningVi: 'Họ đã thăm bảo tàng hai ngày trước.' },
     { text: 'He did not finish the lesson yesterday.', meaningVi: 'Hôm qua anh ấy chưa hoàn thành bài học.' },
+      { text: 'We walked home after the lesson.', meaningVi: 'Chúng tôi đã đi bộ về nhà sau buổi học.', pronunciation: '/wi wɔːkt hoʊm ˈæftər ðə ˈlesən/' },
+      { text: 'She opened the window this morning.', meaningVi: 'Sáng nay cô ấy đã mở cửa sổ.', pronunciation: '/ʃi ˈoʊpənd ðə ˈwɪndoʊ ðɪs ˈmɔːrnɪŋ/' },
   ] },
   { id: 'grammar-a2-comparatives-everyday', unitId: 'grammar-adjectives-a2', level: 'A2', titleVi: 'So sánh hơn trong đời sống', titleEn: 'Everyday comparatives', subtitleVi: 'So sánh người, vật và lựa chọn bằng -er hoặc more.', patternTitle: 'Comparatives: -er and more', patternDescription: 'Make simple comparisons with short and long adjectives.', patternSummary: 'Mẫu luyện adjective-er than và more + adjective than trong lựa chọn hằng ngày.', explanationVi: 'Tính từ ngắn thường thêm -er; tính từ dài dùng more. Sau đó dùng than để nêu đối tượng so sánh.', sourcePatternId: 'comparatives-everyday', examples: [
     { text: 'This exercise is easier than the last one.', meaningVi: 'Bài tập này dễ hơn bài trước.' },
@@ -132,6 +144,8 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'This route is more convenient than the bus route.', meaningVi: 'Tuyến đường này tiện hơn tuyến xe buýt.' },
     { text: 'Reading slowly is better than guessing quickly.', meaningVi: 'Đọc chậm tốt hơn đoán nhanh.' },
     { text: 'The new lesson is more useful for speaking.', meaningVi: 'Bài mới hữu ích hơn cho nói.' },
+    { text: 'My new phone is lighter than my old phone.', meaningVi: 'Điện thoại mới của tôi nhẹ hơn điện thoại cũ.', pronunciation: '/maɪ nuː foʊn ɪz ˈlaɪtər ðæn maɪ oʊld foʊn/' },
+    { text: 'Walking is cheaper than taking a taxi.', meaningVi: 'Đi bộ rẻ hơn đi taxi.', pronunciation: '/ˈwɔːkɪŋ ɪz ˈtʃiːpər ðæn ˈteɪkɪŋ ə ˈtæksi/' },
   ] },
   { id: 'grammar-a2-going-to-plans', unitId: 'grammar-verbs-a2', level: 'A2', titleVi: 'Be going to cho kế hoạch', titleEn: 'Be going to for plans', subtitleVi: 'Nói kế hoạch gần hoặc ý định đã có trước bằng am/is/are going to.', patternTitle: 'Future plans: be going to', patternDescription: 'Use be going to plus base verb for planned future actions.', patternSummary: 'Mẫu luyện am/is/are going to + verb trong kế hoạch học, đi lại và cuối tuần.', explanationVi: 'Dùng be going to khi đã có ý định hoặc kế hoạch. Chọn am/is/are theo chủ ngữ, sau đó dùng động từ nguyên mẫu.', sourcePatternId: 'going-to-plans', examples: [
     { text: 'I am going to review vocabulary tonight.', meaningVi: 'Tối nay tôi sẽ ôn từ vựng.' },
@@ -139,6 +153,8 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'We are going to watch an English movie.', meaningVi: 'Chúng tôi sẽ xem một bộ phim tiếng Anh.' },
     { text: 'They are going to meet at the station.', meaningVi: 'Họ sẽ gặp nhau ở nhà ga.' },
     { text: 'He is not going to buy a new phone.', meaningVi: 'Anh ấy sẽ không mua điện thoại mới.' },
+      { text: 'I am going to meet my friend after class.', meaningVi: 'Tôi định gặp bạn sau giờ học.', pronunciation: '/aɪ æm ˈɡoʊɪŋ tə miːt maɪ frend ˈæftər klæs/' },
+      { text: 'They are going to cook dinner tonight.', meaningVi: 'Tối nay họ định nấu bữa tối.', pronunciation: '/ðeɪ ɑːr ˈɡoʊɪŋ tə kʊk ˈdɪnər təˈnaɪt/' },
   ] },
   { id: 'grammar-b1-relative-clauses-people-things', unitId: 'grammar-clauses-b1', level: 'B1', titleVi: 'Mệnh đề quan hệ who / which / that', titleEn: 'Relative clauses for people and things', subtitleVi: 'Nối thêm thông tin về người hoặc vật mà không tách thành hai câu rời.', patternTitle: 'Relative clauses: who, which, that', patternDescription: 'Use who for people and which/that for things or ideas.', patternSummary: 'Mẫu luyện mệnh đề quan hệ xác định trong mô tả người, đồ vật và bài học.', explanationVi: 'Dùng who cho người; which cho vật/ý; that có thể thay who/which trong nhiều câu xác định.', sourcePatternId: 'relative-clauses-basic', examples: [
     { text: 'The teacher who helped me was very patient.', meaningVi: 'Giáo viên đã giúp tôi rất kiên nhẫn.' },
@@ -146,6 +162,8 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'I like lessons which include clear examples.', meaningVi: 'Tôi thích các bài có ví dụ rõ ràng.' },
     { text: 'The friend who studies with me lives nearby.', meaningVi: 'Người bạn học cùng tôi sống gần đây.' },
     { text: 'The sentence that confused me is now easier.', meaningVi: 'Câu từng làm tôi rối giờ đã dễ hơn.' },
+    { text: 'The book that I borrowed is on my desk.', meaningVi: 'Cuốn sách tôi mượn đang ở trên bàn.', pronunciation: '/ðə bʊk ðæt aɪ ˈbɑːroʊd ɪz ɑːn maɪ desk/' },
+    { text: 'People who practise regularly improve over time.', meaningVi: 'Những người luyện tập đều đặn tiến bộ theo thời gian.', pronunciation: '/ˈpiːpəl huː ˈpræktɪs ˈreɡjələrli ɪmˈpruːv ˈoʊvər taɪm/' },
   ] },
   { id: 'grammar-b1-gerunds-after-verbs', unitId: 'grammar-verbs-b1', level: 'B1', titleVi: 'V-ing sau một số động từ', titleEn: 'Gerunds after common verbs', subtitleVi: 'Dùng V-ing sau enjoy, avoid, practise, finish để nói hoạt động tự nhiên hơn.', patternTitle: 'Gerunds after verbs', patternDescription: 'Use -ing forms after selected common verbs.', patternSummary: 'Mẫu luyện enjoy/avoid/practise/finish + V-ing trong học tập và sinh hoạt.', explanationVi: 'Một số động từ thường đi với V-ing phía sau. Không dùng to + verb sau enjoy, avoid, practise hoặc finish trong mẫu này.', sourcePatternId: 'gerunds-after-verbs', examples: [
     { text: 'I enjoy listening to short conversations.', meaningVi: 'Tôi thích nghe các đoạn hội thoại ngắn.' },
@@ -153,6 +171,8 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'We practise speaking English every morning.', meaningVi: 'Chúng tôi luyện nói tiếng Anh mỗi sáng.' },
     { text: 'He finished writing his paragraph before dinner.', meaningVi: 'Anh ấy viết xong đoạn văn trước bữa tối.' },
     { text: 'They keep reviewing difficult words together.', meaningVi: 'Họ tiếp tục ôn các từ khó cùng nhau.' },
+    { text: 'They practise speaking before meetings.', meaningVi: 'Họ luyện nói trước các buổi họp.', pronunciation: '/ðeɪ ˈpræktɪs ˈspiːkɪŋ bɪˈfɔːr ˈmiːtɪŋz/' },
+    { text: 'I avoid using my phone while studying.', meaningVi: 'Tôi tránh dùng điện thoại khi đang học.', pronunciation: '/aɪ əˈvɔɪd ˈjuːzɪŋ maɪ foʊn waɪl ˈstʌdiɪŋ/' },
   ] },
   { id: 'grammar-b1-used-to-habits', unitId: 'grammar-verbs-b1', level: 'B1', titleVi: 'Used to cho thói quen cũ', titleEn: 'Used to for past habits', subtitleVi: 'Nói điều từng thường xảy ra trước đây nhưng bây giờ đã khác.', patternTitle: 'Past habits: used to', patternDescription: 'Use used to plus base verb for past habits and states.', patternSummary: 'Mẫu luyện used to + verb để so sánh thói quen cũ và hiện tại.', explanationVi: 'Dùng used to + động từ nguyên mẫu cho thói quen/trạng thái trong quá khứ không còn đúng ở hiện tại.', sourcePatternId: 'used-to-past-habits', examples: [
     { text: 'I used to translate every word.', meaningVi: 'Tôi từng dịch từng từ một.' },
@@ -160,13 +180,17 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'We did not use to record our voices.', meaningVi: 'Trước đây chúng tôi không ghi âm giọng mình.' },
     { text: 'Did you use to study at night?', meaningVi: 'Bạn từng học vào ban đêm phải không?' },
     { text: 'He used to forget new vocabulary quickly.', meaningVi: 'Anh ấy từng quên từ mới rất nhanh.' },
+    { text: 'He used to walk to school with his sister.', meaningVi: 'Anh ấy từng đi bộ đến trường cùng chị gái.', pronunciation: '/hiː juːst tə wɔːk tə skuːl wɪð hɪz ˈsɪstər/' },
+    { text: 'We did not use to have online classes.', meaningVi: 'Trước đây chúng tôi không có lớp học trực tuyến.', pronunciation: '/wi dɪd nɑːt juːs tə hæv ˈɑːnlaɪn ˈklæsɪz/' },
   ] },
   { id: 'grammar-b1-passive-simple-processes', unitId: 'grammar-clauses-b1', level: 'B1', titleVi: 'Bị động hiện tại cho quy trình', titleEn: 'Present passive for simple processes', subtitleVi: 'Mô tả việc được làm như thế nào khi người thực hiện không quan trọng.', patternTitle: 'Present passive: processes', patternDescription: 'Use am/is/are plus past participle for simple processes.', patternSummary: 'Mẫu luyện bị động hiện tại trong hướng dẫn, quy trình học và mô tả sản phẩm.', explanationVi: 'Dùng am/is/are + V3 khi tập trung vào hành động/kết quả hơn người làm hành động.', sourcePatternId: 'present-passive-process', examples: [
     { text: 'New words are reviewed after each lesson.', meaningVi: 'Từ mới được ôn sau mỗi bài.' },
     { text: 'My answer is checked gently by Poo.', meaningVi: 'Poo xem câu trả lời của tôi thật nhẹ nhàng.' },
     { text: 'Short examples are added to the notebook.', meaningVi: 'Ví dụ ngắn được thêm vào vở.' },
     { text: 'The audio is played twice for practice.', meaningVi: 'Âm thanh được phát hai lần để luyện tập.' },
-    { text: 'Poo keeps my small steps safe.', meaningVi: 'Poo giữ lại từng bước nhỏ cho tôi.' },
+    { text: 'My progress is saved after each lesson.', meaningVi: 'Tiến độ của tôi được lưu sau mỗi bài học.' },
+    { text: 'The room is cleaned every morning.', meaningVi: 'Căn phòng được dọn mỗi buổi sáng.', pronunciation: '/ðə ruːm ɪz kliːnd ˈevri ˈmɔːrnɪŋ/' },
+    { text: 'New messages are checked before lunch.', meaningVi: 'Tin nhắn mới được kiểm tra trước bữa trưa.', pronunciation: '/nuː ˈmesɪdʒɪz ɑːr tʃekt bɪˈfɔːr lʌntʃ/' },
   ] },
   { id: 'grammar-b2-second-conditional-careful-advice', unitId: 'grammar-clauses-b2', level: 'B2', titleVi: 'Điều kiện loại 2 cho lời khuyên mềm', titleEn: 'Second conditional for careful advice', subtitleVi: 'Đưa giả định và lời khuyên lịch sự bằng if + quá khứ, would/could.', patternTitle: 'Second conditional advice', patternDescription: 'Use if plus past simple with would or could for hypothetical advice.', patternSummary: 'Mẫu luyện tình huống giả định để đưa lời khuyên mềm mại hơn.', explanationVi: 'Dùng if + quá khứ đơn, would/could + động từ nguyên mẫu để nói điều giả định hoặc lời khuyên gián tiếp.', sourcePatternId: 'second-conditional-advice', examples: [
     { text: 'If I had more time, I would practise speaking daily.', meaningVi: 'Nếu có nhiều thời gian hơn, tôi sẽ luyện nói hằng ngày.' },
@@ -174,6 +198,8 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'I would ask for feedback if I felt unsure.', meaningVi: 'Tôi sẽ xin góp ý nếu thấy chưa chắc.' },
     { text: 'If she knew the pattern, she could answer faster.', meaningVi: 'Nếu cô ấy biết mẫu câu, cô ấy có thể trả lời nhanh hơn.' },
     { text: 'If we recorded our practice, we would notice mistakes sooner.', meaningVi: 'Nếu ghi âm phần luyện tập, chúng tôi sẽ nhận ra lỗi sớm hơn.' },
+    { text: 'If I lived nearer, I would walk to work.', meaningVi: 'Nếu sống gần hơn, tôi sẽ đi bộ đến chỗ làm.', pronunciation: '/ɪf aɪ lɪvd ˈnɪrər aɪ wʊd wɔːk tə wɜːrk/' },
+    { text: 'If he had a map, he could find the museum.', meaningVi: 'Nếu có bản đồ, anh ấy có thể tìm được bảo tàng.', pronunciation: '/ɪf hi hæd ə mæp hi kʊd faɪnd ðə mjuˈziːəm/' },
   ] },
   { id: 'grammar-b2-linking-ideas-contrast', unitId: 'grammar-clauses-b2', level: 'B2', titleVi: 'Nối ý tương phản although / however', titleEn: 'Linking contrast with although and however', subtitleVi: 'Nói hai ý trái chiều một cách mạch lạc khi viết hoặc thuyết trình.', patternTitle: 'Contrast linkers', patternDescription: 'Use although inside a sentence and however between sentences.', patternSummary: 'Mẫu luyện nối ý tương phản bằng although, however, despite ở mức B2.', explanationVi: 'Although nối mệnh đề trong cùng câu; however thường đứng đầu câu mới và theo sau bằng dấu phẩy.', sourcePatternId: 'contrast-linkers-b2', examples: [
     { text: 'Although the task was difficult, we finished it on time.', meaningVi: 'Mặc dù nhiệm vụ khó, chúng tôi hoàn thành đúng hạn.' },
@@ -181,6 +207,8 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'Despite the noise, she stayed focused on the lesson.', meaningVi: 'Dù ồn, cô ấy vẫn tập trung vào bài học.' },
     { text: 'Although I made mistakes, I kept speaking.', meaningVi: 'Mặc dù mắc lỗi, tôi vẫn tiếp tục nói.' },
     { text: 'The sentence is long. However, the meaning is clear.', meaningVi: 'Câu dài. Tuy nhiên, nghĩa vẫn rõ.' },
+    { text: 'The instructions were brief. However, they were complete.', meaningVi: 'Hướng dẫn ngắn gọn. Tuy nhiên, chúng vẫn đầy đủ.', pronunciation: '/ði ɪnˈstrʌkʃənz wɜːr briːf haʊˈevər ðeɪ wɜːr kəmˈpliːt/' },
+    { text: 'Despite feeling nervous, Maya gave a clear presentation.', meaningVi: 'Dù cảm thấy lo lắng, Maya vẫn thuyết trình rõ ràng.', pronunciation: '/dɪˈspaɪt ˈfiːlɪŋ ˈnɜːrvəs ˈmaɪə ɡeɪv ə klɪr ˌprezənˈteɪʃən/' },
   ] },
   { id: 'grammar-b2-reported-speech-feedback', unitId: 'grammar-clauses-b2', level: 'B2', titleVi: 'Tường thuật góp ý và lời nhắc', titleEn: 'Reported speech for feedback', subtitleVi: 'Kể lại lời góp ý, lời nhắc hoặc ý kiến mà không cần trích nguyên văn.', patternTitle: 'Reported speech: feedback', patternDescription: 'Report advice, reminders, and opinions with said, told, and suggested.', patternSummary: 'Mẫu luyện said that, told someone to, suggested -ing trong ngữ cảnh học tập.', explanationVi: 'Khi tường thuật, có thể dùng said that + mệnh đề, told someone to + verb, hoặc suggested + V-ing.', sourcePatternId: 'reported-speech-feedback', examples: [
     { text: 'My teacher said that my pronunciation was clearer.', meaningVi: 'Giáo viên nói phát âm của tôi rõ hơn.' },
@@ -188,6 +216,8 @@ const grammarExpansionSeeds: GrammarExpansionSeed[] = [
     { text: 'He suggested recording one sentence again.', meaningVi: 'Anh ấy đề nghị ghi âm lại một câu.' },
     { text: 'They said that the explanation was easy to follow.', meaningVi: 'Họ nói phần giải thích dễ theo dõi.' },
     { text: 'The coach told us to focus on word stress.', meaningVi: 'Huấn luyện viên bảo chúng tôi tập trung vào trọng âm từ.' },
+    { text: 'She said that she needed more time.', meaningVi: 'Cô ấy nói rằng cô ấy cần thêm thời gian.', pronunciation: '/ʃi sed ðæt ʃi ˈniːdɪd mɔːr taɪm/' },
+    { text: 'The guide told us to follow the blue signs.', meaningVi: 'Người hướng dẫn bảo chúng tôi đi theo các biển báo màu xanh.', pronunciation: '/ðə ɡaɪd toʊld ʌs tə ˈfɑːloʊ ðə bluː saɪnz/' },
   ] },
 ];
 
@@ -219,6 +249,8 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'The book is on the desk.', meaningVi: 'Quyển sách đó ở trên bàn.' },
       { text: 'He eats an apple.', meaningVi: 'Anh ấy ăn một quả táo.' },
       { text: 'Please close the door.', meaningVi: 'Làm ơn đóng cánh cửa đó lại.' },
+      { text: 'I see an orange in the bag.', meaningVi: 'Tôi thấy một quả cam trong túi.', pronunciation: '/aɪ siː ən ˈɔːrɪndʒ ɪn ðə bæɡ/' },
+      { text: 'The orange is sweet.', meaningVi: 'Quả cam đó ngọt.', pronunciation: '/ði ˈɔːrɪndʒ ɪz swiːt/' },
     ],
     exercises: [
       { id: 'articles-mc-book', type: 'multiple-choice', promptVi: 'Chọn câu đúng: “Tôi có một quyển sách.”', options: ['I have a book.', 'I have an book.', 'I have the book.', 'I have book.'], answer: 'I have a book.', hintVi: 'book bắt đầu bằng âm /b/.', explanationVi: 'Dùng a trước danh từ số ít bắt đầu bằng âm phụ âm.' },
@@ -271,6 +303,8 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'Each answer is important.', meaningVi: 'Mỗi câu trả lời đều quan trọng.' },
       { text: 'Every room has a window.', meaningVi: 'Mỗi căn phòng đều có một cửa sổ.' },
       { text: 'Each child gets a card.', meaningVi: 'Mỗi đứa trẻ nhận một tấm thẻ.' },
+      { text: 'Every student brings a notebook.', meaningVi: 'Mỗi học sinh đều mang một quyển vở.', pronunciation: '/ˈevri ˈstuːdənt brɪŋz ə ˈnoʊtbʊk/' },
+      { text: 'Each player has a turn.', meaningVi: 'Mỗi người chơi có một lượt.', pronunciation: '/iːtʃ ˈpleɪər hæz ə tɜːrn/' },
     ],
     exercises: [
       { id: 'each-every-mc-day', type: 'multiple-choice', promptVi: 'Chọn cụm tự nhiên nhất để nói “mỗi ngày”.', options: ['Every day', 'Each days', 'Every students', 'Each time every'], answer: 'Every day', hintVi: 'Cụm chỉ thói quen hằng ngày thường dùng every day.', explanationVi: 'Every day là cụm cố định rất thường gặp.' },
@@ -297,6 +331,8 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'We do not have any milk.', meaningVi: 'Chúng tôi không có chút sữa nào.' },
       { text: 'Would you like some tea?', meaningVi: 'Bạn có muốn dùng một ít trà không?' },
       { text: 'Is there any bread?', meaningVi: 'Có chút bánh mì nào không?' },
+      { text: 'We need some apples for lunch.', meaningVi: 'Chúng tôi cần vài quả táo cho bữa trưa.', pronunciation: '/wi niːd səm ˈæpəlz fər lʌntʃ/' },
+      { text: 'Are there any clean cups?', meaningVi: 'Có chiếc cốc sạch nào không?', pronunciation: '/ɑːr ðer ˈeni kliːn kʌps/' },
     ],
     exercises: [
       { id: 'some-any-mc-question', type: 'multiple-choice', promptVi: 'Chọn câu hỏi tự nhiên nhất.', options: ['Do you have any questions?', 'Do you have some questions?', 'You have any water.', 'Any I have water.'], answer: 'Do you have any questions?', hintVi: 'Câu hỏi thường dùng any.', explanationVi: 'Trong câu hỏi chung, any là lựa chọn an toàn.' },
@@ -323,6 +359,8 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'We saw a good film.', meaningVi: 'Chúng tôi đã xem một bộ phim hay.' },
       { text: 'He took the early bus.', meaningVi: 'Anh ấy đã đi chuyến xe buýt sớm.' },
       { text: 'They have gone home.', meaningVi: 'Họ đã về nhà.' },
+    { text: 'We bought fresh fruit this morning.', meaningVi: 'Sáng nay chúng tôi đã mua trái cây tươi.', pronunciation: '/wi bɔːt freʃ fruːt ðɪs ˈmɔːrnɪŋ/' },
+    { text: 'He broke his glasses yesterday.', meaningVi: 'Hôm qua anh ấy làm vỡ kính.', pronunciation: '/hi broʊk hɪz ˈɡlæsɪz ˈjestərdeɪ/' },
     ],
     exercises: [
       { id: 'irregular-mc-go', type: 'multiple-choice', promptVi: 'Chọn dạng quá khứ của go.', options: ['went', 'goed', 'gone', 'goes'], answer: 'went', hintVi: 'go là động từ bất quy tắc.', explanationVi: 'Quá khứ đơn của go là went.' },
@@ -349,6 +387,8 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'My brother studies at home.', meaningVi: 'Em/anh trai tôi học ở nhà.' },
       { text: 'The bus arrives at seven.', meaningVi: 'Xe buýt đến lúc bảy giờ.' },
       { text: 'Mai watches TV after dinner.', meaningVi: 'Mai xem TV sau bữa tối.' },
+      { text: 'My dad walks to work.', meaningVi: 'Bố tôi đi bộ đến chỗ làm.', pronunciation: '/maɪ dæd wɔːks tə wɜːrk/' },
+      { text: 'The cafe closes at six.', meaningVi: 'Quán cà phê đóng cửa lúc sáu giờ.', pronunciation: '/ðə kæˈfeɪ ˈkloʊzɪz æt sɪks/' },
     ],
     exercises: [
       { id: 'third-person-mc-likes', type: 'multiple-choice', promptVi: 'Chọn câu đúng.', options: ['She likes English.', 'She like English.', 'I likes English.', 'They likes English.'], answer: 'She likes English.', hintVi: 'She đi với động từ thêm -s.', explanationVi: 'She là ngôi thứ ba số ít nên like thành likes.' },
@@ -375,6 +415,8 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'She puts on her coat.', meaningVi: 'Cô ấy mặc áo khoác vào.' },
       { text: 'We need to find out the answer.', meaningVi: 'Chúng ta cần tìm ra câu trả lời.' },
       { text: 'He picked up his phone.', meaningVi: 'Anh ấy nhấc điện thoại lên.' },
+      { text: 'Please pick up your books after class.', meaningVi: 'Làm ơn nhặt sách của bạn sau giờ học.', pronunciation: '/pliːz pɪk ʌp jʊr bʊks ˈæftər klæs/' },
+      { text: 'She looks after her little brother.', meaningVi: 'Cô ấy chăm sóc em trai nhỏ.', pronunciation: '/ʃi lʊks ˈæftər hər ˈlɪtəl ˈbrʌðər/' },
     ],
     exercises: [
       { id: 'phrasal-mc-turn-off', type: 'multiple-choice', promptVi: 'Chọn câu đúng để nói “tắt đèn”.', options: ['Please turn off the light.', 'Please turn on the dark.', 'Please turn up the light off.', 'Please look off the light.'], answer: 'Please turn off the light.', hintVi: 'turn off = tắt.', explanationVi: 'turn off dùng với thiết bị/đèn để nói tắt đi.' },
@@ -401,6 +443,8 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'We must be quiet in the library.', meaningVi: 'Chúng ta phải giữ im lặng trong thư viện.' },
       { text: 'Can you help me with this word?', meaningVi: 'Bạn có thể giúp tôi với từ này không?' },
       { text: 'You must not use your phone here.', meaningVi: 'Bạn không được dùng điện thoại ở đây.' },
+    { text: 'You must wear a helmet on the bike.', meaningVi: 'Bạn phải đội mũ bảo hiểm khi đi xe đạp.', pronunciation: '/juː mʌst wer ə ˈhelmɪt ɑːn ðə baɪk/' },
+    { text: 'She might join us after class.', meaningVi: 'Có thể cô ấy sẽ tham gia cùng chúng tôi sau giờ học.', pronunciation: '/ʃi maɪt dʒɔɪn ʌs ˈæftər klæs/' },
     ],
     exercises: [
       { id: 'modal-mc-advice', type: 'multiple-choice', promptVi: 'Chọn modal để đưa lời khuyên.', options: ['You should review new words.', 'You can review new words yesterday.', 'You must maybe review.', 'You are review words.'], answer: 'You should review new words.', hintVi: 'Lời khuyên thường dùng should.', explanationVi: 'should dùng để khuyên ai nên làm gì.' },
@@ -427,6 +471,8 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'The lesson starts at eight.', meaningVi: 'Bài học bắt đầu lúc tám giờ.' },
       { text: 'We study English on Monday.', meaningVi: 'Chúng tôi học tiếng Anh vào thứ Hai.' },
       { text: 'She is at the bus stop.', meaningVi: 'Cô ấy đang ở trạm xe buýt.' },
+      { text: 'My keys are in the blue bag.', meaningVi: 'Chìa khóa của tôi ở trong chiếc túi xanh.', pronunciation: '/maɪ kiːz ɑːr ɪn ðə bluː bæɡ/' },
+      { text: 'The picture is on the wall.', meaningVi: 'Bức tranh ở trên tường.', pronunciation: '/ðə ˈpɪktʃər ɪz ɑːn ðə wɔːl/' },
     ],
     exercises: [
       { id: 'prep-mc-vietnam', type: 'multiple-choice', promptVi: 'Chọn câu đúng.', options: ['I live in Vietnam.', 'I live on Vietnam.', 'I live at Vietnam.', 'I live Vietnam in.'], answer: 'I live in Vietnam.', hintVi: 'Quốc gia thường dùng in.', explanationVi: 'Dùng in với quốc gia/thành phố/khu vực.' },
@@ -453,6 +499,8 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'They are in class.', meaningVi: 'Họ đang ở trong lớp.' },
       { text: 'You are my partner.', meaningVi: 'Bạn là bạn cùng cặp của tôi.' },
       { text: 'The book is on the table.', meaningVi: 'Quyển sách ở trên bàn.' },
+      { text: 'We are ready for class.', meaningVi: 'Chúng tôi đã sẵn sàng vào lớp.', pronunciation: '/wi ɑːr ˈredi fɔːr klæs/' },
+      { text: 'It is on the desk.', meaningVi: 'Nó ở trên bàn.', pronunciation: '/ɪt ɪz ɑːn ðə desk/' },
     ],
     exercises: [
       { id: 'be-present-mc-she', type: 'multiple-choice', promptVi: 'Chọn câu đúng với “cô ấy vui”.', options: ['She is happy.', 'She are happy.', 'She am happy.', 'She be happy.'], answer: 'She is happy.', hintVi: 'She đi với is.', explanationVi: 'She là ngôi thứ ba số ít nên dùng is.' },
@@ -479,6 +527,8 @@ export const generatedGrammarLessonSources: GeneratedGrammarLessonSource[] = ([
       { text: 'We have never missed a lesson.', meaningVi: 'Chúng tôi chưa từng bỏ lỡ buổi học nào.' },
       { text: 'They have already finished the task.', meaningVi: 'Họ đã hoàn thành nhiệm vụ rồi.' },
       { text: 'Have you ever spoken to a tourist?', meaningVi: 'Bạn đã từng nói chuyện với một du khách chưa?' },
+      { text: 'Have you ever tried sushi?', meaningVi: 'Bạn đã từng thử sushi chưa?', pronunciation: '/hæv juː ˈevər traɪd ˈsuːʃi/' },
+      { text: 'I have just finished my homework.', meaningVi: 'Tôi vừa làm xong bài tập về nhà.', pronunciation: '/aɪ hæv dʒʌst ˈfɪnɪʃt maɪ ˈhoʊmwɜːrk/' },
     ],
     exercises: [
       { id: 'present-perfect-mc-tried', type: 'multiple-choice', promptVi: 'Chọn câu đúng với she.', options: ['She has tried Korean food.', 'She have tried Korean food.', 'She has try Korean food.', 'She tried yesterday Korean food.'], answer: 'She has tried Korean food.', hintVi: 'She đi với has và sau đó là V3.', explanationVi: 'Đúng rồi, với she mình dùng has tried để kể điều cô ấy đã từng thử.' },

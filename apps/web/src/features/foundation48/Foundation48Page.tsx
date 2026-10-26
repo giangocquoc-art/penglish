@@ -7,6 +7,7 @@ import { OceanMascot } from '../../components/p-english/OceanMascot';
 import { foundation48Days, getFoundation48DayPath } from './foundation48Data';
 import { FOUNDATION48_PROGRESS_UPDATED_EVENT, getFoundation48ProgressSummary } from './foundation48Progress';
 import { Foundation48Roadmap } from './Foundation48Roadmap';
+import './foundation48Page.css';
 
 const COLORS = { text: '#102A43', muted: '#52667A', blue: '#1F6FD6', border: '#BAE6FD', green: '#16A34A' };
 
@@ -48,7 +49,7 @@ export function Foundation48Page() {
               </Text>
             </Box>
             <Box display={{ base: 'none', md: 'block' }} pr="1" w="92px" flexShrink={0}>
-              <OceanMascot mascot="poo" pose="coach" size="md" decorative motion="float" />
+              <OceanMascot mascot="ruaRi" pose="map" size="md" decorative motion="float" />
             </Box>
           </Flex>
         </Box>
@@ -78,7 +79,7 @@ export function Foundation48Page() {
                 </Text>
               </VStack>
             </HStack>
-            <Button as={Link} to={getFoundation48DayPath(nextDay)} leftIcon={<Icon as={Play} />} bg={COLORS.blue} color="white" _hover={{ bg: '#185BB2', transform: 'translateY(-1px)' }} _focusVisible={{ outline: '3px solid rgba(31,111,214,0.35)', outlineOffset: '2px' }} borderRadius="full" size="lg" minH="56px" px="8" fontSize="lg" boxShadow="0 16px 34px rgba(31,111,214,0.22)" w={{ base: '100%', md: 'auto' }} data-testid="foundation48-primary-cta">
+            <Button display={{ base: 'none', md: 'inline-flex' }} as={Link} to={getFoundation48DayPath(nextDay)} leftIcon={<Icon as={Play} />} bg={COLORS.blue} color="white" _hover={{ bg: '#185BB2', transform: 'translateY(-1px)' }} _focusVisible={{ outline: '3px solid rgba(31,111,214,0.35)', outlineOffset: '2px' }} borderRadius="full" size="lg" minH="56px" px="8" fontSize="lg" boxShadow="0 16px 34px rgba(31,111,214,0.22)" w="auto" data-testid="foundation48-primary-cta">
               {primaryCta}
             </Button>
           </Flex>
@@ -112,6 +113,43 @@ export function Foundation48Page() {
           <Text fontSize="sm" fontWeight="700" textAlign="center">Học mỗi ngày một chút, Poo sẽ lưu tiến độ cho bạn.</Text>
         </VStack>
       </Box>
+      <Flex
+        className="foundation48-mobile-continue-dock"
+        display={{ base: 'flex', md: 'none' }}
+        position="fixed"
+        left="0"
+        right="0"
+        bottom="calc(var(--penglish-mobile-nav-height) + env(safe-area-inset-bottom))"
+        zIndex="30"
+        align="center"
+        gap="2"
+        px="3"
+        pt="2"
+        pb="2"
+        data-testid="foundation48-mobile-continue-dock"
+      >
+        <OceanMascot mascot="poo" pose="coach" size="xs" decorative motion="none" imageLoading="eager" />
+        <Button
+          as={Link}
+          to={getFoundation48DayPath(nextDay)}
+          leftIcon={<Icon as={Play} />}
+          flex="1"
+          minW="0"
+          minH="52px"
+          bg={COLORS.blue}
+          color="white"
+          _hover={{ bg: '#185BB2' }}
+          _focusVisible={{ outline: '3px solid rgba(31,111,214,0.35)', outlineOffset: '2px' }}
+          borderRadius="full"
+          fontSize="md"
+          fontWeight="900"
+          boxShadow="0 10px 28px rgba(31,111,214,0.22)"
+          aria-label={`${primaryCta}, ngày ${nextDay}`}
+          data-testid="foundation48-mobile-primary-cta"
+        >
+          {nextState?.started ? `Học tiếp · Ngày ${nextDay}` : `Bắt đầu · Ngày ${nextDay}`}
+        </Button>
+      </Flex>
     </OceanPageShell>
   );
 }

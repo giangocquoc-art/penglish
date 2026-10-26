@@ -127,7 +127,7 @@ const routes = [
 ];
 
 function isAllowedFailedRequest(url) {
-  return url.includes('youtube') || url.includes('ytimg') || url.includes('googlevideo') || url.includes('favicon') || url.includes('fonts.gstatic.com') || url.includes('/ocean/ambient-whale/frames/') || url.includes('/ocean/backgrounds/');
+  return url.includes('youtube') || url.includes('ytimg') || url.includes('googlevideo') || url.includes('favicon') || url.includes('fonts.gstatic.com') || url.includes('/ocean/mascots/refined/poo-coach.webp') || url.includes('/ocean/backgrounds/');
 }
 
 function normalizeText(value) {

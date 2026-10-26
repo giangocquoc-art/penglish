@@ -3,6 +3,7 @@ import { Badge, Box, Button, Collapse, Flex, HStack, Icon, Input, Progress, Simp
 import { ArrowLeft, CheckCircle2, Lightbulb, RotateCcw, Volume2, XCircle, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { loseHeart } from '../../lib/p-english/learning-hearts';
+import { markItemReviewed } from '../../lib/p-english/lesson-progress';
 import type { EnglishLesson, SpeakingReflexPrompt } from '../../lib/p-english/lesson-content-data';
 import { recordPracticeSessionMemory } from '../../lib/p-english/localSkillMemory';
 import { getPracticeSessionFeedback } from '../../lib/p-english/practiceSessionFeedback';
@@ -137,6 +138,7 @@ export function LessonReflexPractice({ lesson, onWhaleMoodChange }: { lesson: En
   const [showSummary, setShowSummary] = useState(false);
   const [savedSummary, setSavedSummary] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(true);
+  const [reviewSessionId] = useState(() => `${lesson.id}:reflex:${Math.random().toString(36).slice(2)}`);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const currentPrompt = prompts[currentIndex];
   const currentState = currentPrompt ? states[currentPrompt.id] : undefined;
@@ -210,6 +212,7 @@ export function LessonReflexPractice({ lesson, onWhaleMoodChange }: { lesson: En
   const checkCurrent = () => {
     if (!currentPrompt || !currentState || currentState.checked) return;
     const correct = isCorrectAnswer(currentPrompt, currentState.answer);
+    markItemReviewed(lesson.id, currentPrompt.id, 'reflex', correct ? 'correct' : 'wrong', lesson.reviewPolicy.wrongAnswerDelayMinutes, reviewSessionId, true);
     const hearts = correct ? undefined : loseHeart('reflex-wrong');
     onWhaleMoodChange?.(correct ? 'correct' : 'mistake');
     updateState(currentPrompt.id, { checked: true, isCorrect: correct, hintVisible: true, heartLossText: hearts ? `Bạn mất 1 bọt biển. Còn ${hearts.heartsLeft}/${hearts.maxHearts} bọt biển.` : undefined });

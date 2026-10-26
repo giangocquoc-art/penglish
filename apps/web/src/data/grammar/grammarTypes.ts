@@ -37,6 +37,7 @@ export type GeneratedGrammarLessonSource = {
   examples: Array<{
     text: string;
     meaningVi: string;
+    pronunciation?: string;
   }>;
   exercises: GeneratedGrammarExercise[];
   source: GeneratedGrammarSourceMetadata;

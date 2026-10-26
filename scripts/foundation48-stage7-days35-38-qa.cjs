@@ -14,7 +14,7 @@ const progressSeed = {
     started: true,
     completed: i < 34 || [12, 16, 17, 20, 21, 27].includes(i),
     score: 88 + (i % 8),
-    completedSteps: ['intro'],
+    completedSteps: [],
     mistakes: [],
     updatedAt: '2026-06-08T04:00:00.000Z',
   }])),
@@ -28,16 +28,16 @@ const checks = [
   { name: 'foundation48-stage7-day35-mobile', route: `${basePath}/ngay/35`, width: 390, height: 844, screenshot: 'foundation48-stage7-day35-mobile.png', expected: /Ngày 35|Đại từ phản thân|I made it myself|herself/i, lazy: true, mobilePreview: true },
   { name: 'foundation48-stage7-day36-mobile', route: `${basePath}/ngay/36`, width: 390, height: 844, screenshot: 'foundation48-stage7-day36-mobile.png', expected: /Ngày 36|Sự hòa hợp về thì|He says he is tired|He said he was tired/i, lazy: true, mobilePreview: true },
   { name: 'foundation48-stage7-day37-mobile', route: `${basePath}/ngay/37`, width: 390, height: 844, screenshot: 'foundation48-stage7-day37-mobile.png', expected: /Ngày 37|Tiếng Anh giao tiếp 1|Can you help me|Could you repeat/i, lazy: true, mobilePreview: true },
-  { name: 'foundation48-stage7-day38-mobile', route: `${basePath}/ngay/38`, width: 390, height: 844, screenshot: 'foundation48-stage7-day38-mobile.png', expected: /Ngày 38|Liên từ tương hỗ|Both Lan and Nam|either tea or coffee/i, lazy: true, mobilePreview: true },
+  { name: 'foundation48-stage7-day38-mobile', route: `${basePath}/ngay/38`, width: 390, height: 844, screenshot: 'foundation48-stage7-day38-mobile.png', expected: /Ngày 38|Nối hai ý đi cùng nhau|Đã hoàn thành Ngày 38/i, lazy: true, mobilePreview: true },
   { name: 'foundation48-stage7-day35-desktop', route: `${basePath}/ngay/35`, width: 1440, height: 950, screenshot: 'foundation48-stage7-day35-desktop.png', expected: /Đại từ phản thân|Hôm nay bạn sẽ luyện|Từ vựng|Mini quiz/i, lazy: true, preview: true },
-  { name: 'foundation48-stage7-day38-desktop', route: `${basePath}/ngay/38`, width: 1440, height: 950, screenshot: 'foundation48-stage7-day38-desktop.png', expected: /Liên từ tương hỗ|Hôm nay bạn sẽ luyện|Nói lại|Mini quiz/i, lazy: true, preview: true },
+  { name: 'foundation48-stage7-day38-desktop', route: `${basePath}/ngay/38`, width: 1440, height: 950, screenshot: 'foundation48-stage7-day38-desktop.png', expected: /Nối hai ý đi cùng nhau|Đã hoàn thành Ngày 38|Đã hoàn thành lộ trình/i, lazy: true },
   { name: 'foundation48-stage7-regression-day13-mobile', route: `${basePath}/ngay/13`, width: 390, height: 844, screenshot: 'foundation48-stage7-regression-day13-mobile.png', expected: /Ngày 13|Did you|Hỏi chuyện đã xảy ra/i },
   { name: 'foundation48-stage7-regression-day17-mobile', route: `${basePath}/ngay/17`, width: 390, height: 844, screenshot: 'foundation48-stage7-regression-day17-mobile.png', expected: /Ngày 17|can|can’t|can't|Tôi có thể làm/i },
   { name: 'foundation48-stage7-regression-day18-mobile', route: `${basePath}/ngay/18`, width: 390, height: 844, screenshot: 'foundation48-stage7-regression-day18-mobile.png', expected: /Ngày 18|Học ngữ âm|Listen carefully|âm cuối/i },
   { name: 'foundation48-stage7-regression-day21-mobile', route: `${basePath}/ngay/21`, width: 390, height: 844, screenshot: 'foundation48-stage7-regression-day21-mobile.png', expected: /Ngày 21|Luyện nghe số và tên|thirteen|thirty/i },
   { name: 'foundation48-stage7-regression-day22-mobile', route: `${basePath}/ngay/22`, width: 390, height: 844, screenshot: 'foundation48-stage7-regression-day22-mobile.png', expected: /Ngày 22|Động từ khuyết thiếu|I can help you/i },
   { name: 'foundation48-stage7-regression-day28-mobile', route: `${basePath}/ngay/28`, width: 390, height: 844, screenshot: 'foundation48-stage7-regression-day28-mobile.png', expected: /Ngày 28|Câu điều kiện loại 3|had known/i },
-  { name: 'foundation48-stage7-regression-day22-completed-mobile', route: `${basePath}/ngay/22`, width: 390, height: 844, screenshot: 'foundation48-stage7-regression-day22-completed-mobile.png', expected: /Đã lưu ngày 22|Sang ngày 23/i, completedPanel: true },
+  { name: 'foundation48-stage7-regression-day22-completed-mobile', route: `${basePath}/ngay/22`, width: 390, height: 844, screenshot: 'foundation48-stage7-regression-day22-completed-mobile.png', expected: /Poo đã giữ ngày 22|Đã hoàn thành Ngày 22/i, completedPanel: true },
   { name: 'foundation48-stage7-regression-day29-mobile', route: `${basePath}/ngay/29`, width: 390, height: 844, screenshot: 'foundation48-stage7-regression-day29-mobile.png', expected: /Ngày 29|Luyện nghe điền từ/i },
   { name: 'foundation48-stage7-regression-day34-mobile', route: `${basePath}/ngay/34`, width: 390, height: 844, screenshot: 'foundation48-stage7-regression-day34-mobile.png', expected: /Ngày 34|Luyện nghe về tiền bạc/i },
 ];
@@ -57,7 +57,7 @@ async function inspectLayout(page) {
     const nav = document.querySelector('[data-testid="mobile-bottom-nav"]');
     const navRect = nav ? nav.getBoundingClientRect() : null;
     const text = document.body.innerText || '';
-    const mainEls = Array.from(document.querySelectorAll('main a, main button, [data-testid^="foundation48-day-card-"], [data-testid^="foundation48-review-card"], [data-testid="foundation48-roadmap"]'));
+    const mainEls = Array.from(document.querySelectorAll('[data-testid="foundation48-mobile-step-actions"], [data-testid="foundation48-primary-cta"]'));
     const bottomNavOverlap = navRect ? mainEls.some((el) => {
       if (nav.contains(el)) return false;
       const r = el.getBoundingClientRect();

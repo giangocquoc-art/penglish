@@ -29,17 +29,30 @@ type Seed = {
   blank: [string, string, string, string];
   order: [string, string[], string];
   vocab: Array<[string, string, string, string, string]>;
+  extraVocab?: Array<Pick<GeneratedReadingLessonSource['vocabularyFocus'][number], 'term' | 'meaningVi' | 'partOfSpeechOrType' | 'example' | 'exampleMeaningVi' | 'pronunciation'>>;
+  speakingFocusExamples?: Array<{ text: string; meaningVi: string }>;
 };
 
 function buildThirdQuestion(seed: Seed): [string, string, string[], string, string] {
   if (seed.q3) return seed.q3;
-  const focusVocabulary = seed.vocab[0]?.[0] ?? 'the key phrase';
+  const fallbackDistractors = [
+    'This idea does not appear in the passage.',
+    'The passage gives the opposite information.',
+    'The passage discusses a different idea.',
+    'This idea is not supported by the passage.',
+    'The passage has a different focus.',
+  ];
+  const options = [seed.focusSentence, seed.pattern].filter((option, index, candidates) => candidates.indexOf(option) === index);
+  for (const distractor of fallbackDistractors) {
+    if (options.length >= 4) break;
+    if (!options.includes(distractor)) options.push(distractor);
+  }
   return [
-    `Câu nào thể hiện đúng ý chính hoặc từ khóa “${focusVocabulary}”?`,
-    `Which sentence best matches the passage focus or the word “${focusVocabulary}”?`,
-    [seed.focusSentence, seed.pattern, `The text is mainly about ${focusVocabulary}.`, 'The passage says the opposite of the focus sentence.'],
+    `Câu tiếng Anh nào diễn đạt đúng ý này: “${seed.focusMeaningVi}”?`,
+    `Which English sentence best expresses this idea: “${seed.focusMeaningVi}”?`,
+    options,
     seed.focusSentence,
-    `Đúng rồi, câu này bám sát ý chính của đoạn. Poo chỉ cần bạn nhận ra từ khóa là ổn.`,
+    'Đúng rồi, câu này diễn đạt đúng ý trọng tâm và phù hợp với đoạn đọc.',
   ];
 }
 
@@ -102,14 +115,18 @@ function lesson(seed: Seed): GeneratedReadingLessonSource {
         explanationVi: 'Sắp xếp theo trật tự câu tiếng Anh tự nhiên: chủ ngữ trước, động từ sau, rồi thông tin bổ sung.',
       },
     ],
-    vocabularyFocus: seed.vocab.map(([term, meaningVi, partOfSpeechOrType, example, exampleMeaningVi], index) => ({
-      id: `${seed.id}-vocab-${index + 1}`,
-      term,
-      meaningVi,
-      partOfSpeechOrType,
-      example,
-      exampleMeaningVi,
-    })),
+    vocabularyFocus: [
+      ...seed.vocab.map(([term, meaningVi, partOfSpeechOrType, example, exampleMeaningVi], index) => ({
+        id: `${seed.id}-vocab-${index + 1}`,
+        term,
+        meaningVi,
+        partOfSpeechOrType,
+        example,
+        exampleMeaningVi,
+      })),
+      ...(seed.extraVocab ?? []).map((item, index) => ({ id: `${seed.id}-extra-vocab-${index + 1}`, ...item })),
+    ],
+    speakingFocusExamples: seed.speakingFocusExamples,
     whaleCoachLines: [
       'Đọc ý chính trước, đừng dịch từng chữ.',
       'Gạch thầm từ khóa trong câu hỏi rồi quay lại đoạn đọc.',
@@ -126,7 +143,7 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
     level: 'A1',
     titleVi: 'Đọc cùng Poo: Buổi sáng của Mai',
     titleEn: 'Mai’s Morning',
-    passage: 'Mai gets up at six. She washes her face and eats bread with milk. At seven, she goes to school. Her bag is blue, and her notebook is in the bag.',
+    passage: 'Mai gets up at six. She washes her face and has bread and milk for breakfast. At seven, she goes to school. Her bag is blue, and her notebook is in the bag.',
     setup: 'Đọc đoạn ngắn về thói quen buổi sáng. Chú ý giờ, đồ vật và hành động hằng ngày.',
     pattern: 'She + verb-s + at + time.',
     patternVi: 'Ở đoạn dễ này, mình chỉ cần nhận ra chủ ngữ “she/he” thường đi với động từ thêm -s trong hiện tại đơn.',
@@ -140,6 +157,10 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
       ['get up', 'thức dậy', 'verb phrase', 'I get up at six.', 'Tôi thức dậy lúc sáu giờ.'],
       ['bag', 'cặp/túi', 'noun', 'Her bag is blue.', 'Cặp của cô ấy màu xanh.'],
       ['notebook', 'quyển vở', 'noun', 'My notebook is in the bag.', 'Vở của tôi ở trong cặp.'],
+    ],
+    speakingFocusExamples: [
+      { text: 'She washes her face.', meaningVi: 'Cô ấy rửa mặt.' },
+      { text: 'Her notebook is in the bag.', meaningVi: 'Quyển vở của cô ấy ở trong cặp.' },
     ],
   }),
   lesson({
@@ -163,6 +184,11 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
       ['board', 'bảng', 'noun', 'The teacher writes on the board.', 'Giáo viên viết lên bảng.'],
       ['ruler', 'thước kẻ', 'noun', 'I have a small ruler.', 'Tôi có một cây thước nhỏ.'],
     ],
+    extraVocab: [{ term: 'write on the board', meaningVi: 'viết lên bảng', partOfSpeechOrType: 'verb phrase', example: 'The teacher writes on the board.', exampleMeaningVi: 'Giáo viên viết lên bảng.', pronunciation: '/ðə ˈtiːtʃər raɪts ɑːn ðə bɔːrd/' }],
+    speakingFocusExamples: [
+      { text: 'Nam has a pencil and a book.', meaningVi: 'Nam có một cây bút chì và một quyển sách.' },
+      { text: 'His small ruler is on the desk.', meaningVi: 'Cây thước nhỏ của cậu ấy ở trên bàn.' },
+    ],
   }),
   lesson({
     id: 'reading-a1-my-family-dinner',
@@ -184,6 +210,10 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
       ['dinner', 'bữa tối', 'noun', 'We have dinner at home.', 'Chúng tôi ăn tối ở nhà.'],
       ['soup', 'súp/canh', 'noun', 'My mother likes soup.', 'Mẹ tôi thích súp.'],
       ['thank you', 'cảm ơn', 'phrase', 'Thank you, Mom.', 'Cảm ơn mẹ.'],
+    ],
+    speakingFocusExamples: [
+      { text: 'Lan has dinner with her family.', meaningVi: 'Lan ăn tối cùng gia đình.' },
+      { text: 'Lan drinks water and says thank you.', meaningVi: 'Lan uống nước và nói lời cảm ơn.' },
     ],
   }),
   lesson({
@@ -207,6 +237,11 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
       ['egg', 'trứng', 'noun', 'He has an egg.', 'Cậu ấy ăn một quả trứng.'],
       ['kitchen', 'nhà bếp', 'noun', 'The cup is in the kitchen.', 'Cái cốc ở trong bếp.'],
     ],
+    extraVocab: [{ term: 'a cup of tea', meaningVi: 'một tách trà', partOfSpeechOrType: 'noun phrase', example: 'He has a cup of tea.', exampleMeaningVi: 'Cậu ấy uống một tách trà.', pronunciation: '/hi hæz ə kʌp əv tiː/' }],
+    speakingFocusExamples: [
+      { text: 'He is not hungry after breakfast.', meaningVi: 'Cậu ấy không đói sau bữa sáng.' },
+      { text: 'The cup is in the kitchen.', meaningVi: 'Cái cốc ở trong bếp.' },
+    ],
   }),
   lesson({
     id: 'reading-a1-after-school',
@@ -214,7 +249,7 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
     level: 'A1',
     titleVi: 'Đọc cùng Poo: Sau giờ học',
     titleEn: 'After School',
-    passage: 'After school, Ben goes home. He does his homework at the table. Then he plays football with his brother. At nine, he reads a short book and sleeps.',
+    passage: 'After school, Ben goes home. He does his homework at the table. Then he plays football with his brother. At nine, he reads a short book and goes to bed.',
     setup: 'Đọc lịch hoạt động sau giờ học. Chú ý after, then và các động từ quen thuộc.',
     pattern: 'Then + subject + verb.',
     patternVi: '“Then” giúp nối hai hành động theo thứ tự thời gian.',
@@ -228,6 +263,11 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
       ['after school', 'sau giờ học', 'phrase', 'After school, I go home.', 'Sau giờ học, tôi về nhà.'],
       ['homework', 'bài tập về nhà', 'noun', 'He does his homework.', 'Cậu ấy làm bài tập về nhà.'],
       ['short', 'ngắn', 'adjective', 'This is a short book.', 'Đây là một quyển sách ngắn.'],
+    ],
+    extraVocab: [{ term: 'play football with his brother', meaningVi: 'chơi bóng đá với anh/em trai', partOfSpeechOrType: 'verb phrase', example: 'Ben plays football with his brother.', exampleMeaningVi: 'Ben chơi bóng đá với anh/em trai.', pronunciation: '/ben pleɪz ˈfʊtbɔːl wɪð hɪz ˈbrʌðər/' }],
+    speakingFocusExamples: [
+      { text: 'He does his homework at the table.', meaningVi: 'Cậu ấy làm bài tập ở bàn.' },
+      { text: 'At nine, he reads a short book.', meaningVi: 'Lúc chín giờ, cậu ấy đọc một quyển sách ngắn.' },
     ],
   }),
   lesson({
@@ -368,7 +408,7 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
     level: 'A2',
     titleVi: 'Đọc cùng Poo: Hỏi đường đến thư viện',
     titleEn: 'Asking for Directions',
-    passage: 'A tourist asks Linh for directions to the library. Linh says, “Go straight for two minutes, then turn left at the coffee shop.” The library is between a bank and a bookstore. The tourist thanks Linh and follows the street slowly.',
+    passage: 'A tourist asks Linh for directions to the library. Linh says, “Go straight for two minutes, then turn left at the coffee shop.” The library is between a bank and a bookstore. The tourist thanks Linh and follows her directions.',
     setup: 'Đọc đoạn hỏi đường. Tập nhìn ra go straight, turn left và between.',
     pattern: 'Go straight, then turn left at + place.',
     patternVi: 'Mẫu chỉ đường này dùng hai bước: đi thẳng, sau đó rẽ tại một địa điểm mốc.',
@@ -698,20 +738,20 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
     level: 'A2',
     titleVi: 'Đọc cùng Poo: Chợ cuối tuần',
     titleEn: 'A Weekend Market',
-    passage: 'On Saturday morning, Minh visits a weekend market near the river. He wants fresh fruit for his family, but he also checks the price carefully. One seller offers mangoes in a paper bag and explains that local fruit creates less transport waste. Minh buys two bags and walks home before the street becomes crowded.',
+    passage: 'On Saturday morning, Minh visits a weekend market near the river. He wants fresh fruit for his family, but he also checks the price carefully. One seller offers mangoes in a paper bag and explains that local fruit travels a shorter distance. Minh buys two bags and walks home before the street becomes crowded.',
     setup: 'Đọc đoạn A2 về mua sắm có lựa chọn xanh. Chú ý but, before và cụm chỉ lý do đơn giản.',
     pattern: 'Subject wants..., but subject also + verb.',
     patternVi: 'Dùng “but” để thêm một điều cần cân nhắc khác, không nhất thiết trái ngược hoàn toàn.',
     focusSentence: 'He wants fresh fruit for his family, but he also checks the price carefully.',
     focusMeaningVi: 'Cậu ấy muốn trái cây tươi cho gia đình, nhưng cũng kiểm tra giá cẩn thận.',
     q1: ['Minh đi đâu vào sáng thứ Bảy?', 'Where does Minh go on Saturday morning?', ['a weekend market', 'a train station', 'a library', 'a cinema'], 'a weekend market', 'Câu đầu nói Minh visits a weekend market.'],
-    q2: ['Vì sao trái cây địa phương được nhắc đến?', 'Why is local fruit mentioned?', ['It creates less transport waste.', 'It is always free.', 'It is from another country.', 'It needs plastic boxes.'], 'It creates less transport waste.', 'Người bán giải thích local fruit creates less transport waste.'],
+    q2: ['Vì sao trái cây địa phương được nhắc đến?', 'Why is local fruit mentioned?', ['It travels a shorter distance.', 'It is always free.', 'It is from another country.', 'It needs plastic boxes.'], 'It travels a shorter distance.', 'Người bán giải thích local fruit travels a shorter distance.'],
     blank: ['Minh checks the price ___.', 'carefully', 'Cách làm chậm và chú ý.', 'carefully nghĩa là một cách cẩn thận.'],
     order: ['Cậu ấy đi bộ về nhà trước khi phố đông.', ['He', 'walks', 'home', 'before', 'the', 'street', 'becomes', 'crowded'], 'He walks home before the street becomes crowded'],
     vocab: [
       ['weekend market', 'chợ cuối tuần', 'noun phrase', 'The weekend market is near the river.', 'Chợ cuối tuần ở gần con sông.'],
       ['carefully', 'một cách cẩn thận', 'adverb', 'Check the price carefully.', 'Kiểm tra giá cẩn thận.'],
-      ['transport waste', 'rác thải từ vận chuyển', 'noun phrase', 'Local fruit creates less transport waste.', 'Trái cây địa phương tạo ít rác thải vận chuyển hơn.'],
+      ['local fruit', 'trái cây địa phương', 'noun phrase', 'Local fruit travels a shorter distance.', 'Trái cây địa phương được vận chuyển quãng đường ngắn hơn.'],
     ],
   }),
   lesson({
@@ -766,6 +806,10 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
     q2: ['Bức tranh ở đâu?', 'Where is the picture?', ['on her notebook', 'under the bed', 'in a shop', 'near the river'], 'on her notebook', 'Đoạn đọc nói it is on her notebook.'],
     blank: ['The whale is ___.', 'happy', 'Vui vẻ.', 'happy nghĩa là vui vẻ.'], order: ['Lan mỉm cười trước lớp tiếng Anh.', ['Lan', 'smiles', 'before', 'English', 'class'], 'Lan smiles before English class'],
     vocab: [['picture', 'bức tranh', 'noun', 'This picture is blue.', 'Bức tranh này màu xanh.'], ['notebook', 'vở ghi', 'noun', 'My notebook is open.', 'Vở ghi của tôi đang mở.'], ['smile', 'mỉm cười', 'verb', 'I smile in class.', 'Tôi mỉm cười trong lớp.']],
+    speakingFocusExamples: [
+      { text: 'The whale is happy.', meaningVi: 'Chú cá voi rất vui.' },
+      { text: 'Lan smiles before English class.', meaningVi: 'Lan mỉm cười trước giờ học tiếng Anh.' },
+    ],
   }),
   lesson({
     id: 'reading-a1-new-pencil', unitId: 'reading-a1-starter-scenes', level: 'A1', titleVi: 'Đọc cùng Poo: Cây bút chì mới', titleEn: 'A New Pencil',
@@ -775,6 +819,10 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
     q2: ['Giáo viên nói gì?', 'What does the teacher say?', ['Good job, Tom.', 'Go home now.', 'Open the door.', 'I need water.'], 'Good job, Tom.', 'Câu cuối là lời khen của giáo viên.'],
     blank: ['He writes his name ___.', 'slowly', 'Một cách chậm rãi.', 'slowly nghĩa là chậm rãi.'], order: ['Nó màu vàng và dài.', ['It', 'is', 'yellow', 'and', 'long'], 'It is yellow and long'],
     vocab: [['pencil', 'bút chì', 'noun', 'This pencil is new.', 'Cây bút chì này mới.'], ['yellow', 'màu vàng', 'adjective', 'The pencil is yellow.', 'Cây bút chì màu vàng.'], ['slowly', 'chậm rãi', 'adverb', 'Write slowly.', 'Viết chậm rãi.']],
+    speakingFocusExamples: [
+      { text: 'It is yellow and long.', meaningVi: 'Nó màu vàng và dài.' },
+      { text: 'He writes his name slowly.', meaningVi: 'Cậu ấy viết tên mình chậm rãi.' },
+    ],
   }),
   lesson({
     id: 'reading-a1-rainy-day-home', unitId: 'reading-a1-starter-scenes', level: 'A1', titleVi: 'Đọc cùng Poo: Ngày mưa ở nhà', titleEn: 'A Rainy Day at Home',
@@ -784,15 +832,24 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
     q2: ['Buổi tối họ nghe gì?', 'What do they listen to in the evening?', ['English words', 'football news', 'bus sounds', 'a cooking show'], 'English words', 'Câu cuối nói they listen to English words.'],
     blank: ['Nam stays at ___ with his sister.', 'home', 'Ở nhà.', 'home là nhà.'], order: ['Họ đọc một truyện ngắn.', ['They', 'read', 'a', 'short', 'story'], 'They read a short story'],
     vocab: [['rainy', 'có mưa', 'adjective', 'It is rainy today.', 'Hôm nay trời mưa.'], ['short story', 'truyện ngắn', 'noun phrase', 'Read a short story.', 'Đọc một truyện ngắn.'], ['warm milk', 'sữa ấm', 'noun phrase', 'Drink warm milk.', 'Uống sữa ấm.']],
+    speakingFocusExamples: [
+      { text: 'They read a short story.', meaningVi: 'Họ đọc một truyện ngắn.' },
+      { text: 'In the evening, they listen to English words.', meaningVi: 'Vào buổi tối, họ nghe các từ tiếng Anh.' },
+    ],
   }),
   lesson({
     id: 'reading-a1-bus-to-school', unitId: 'reading-a1-starter-scenes', level: 'A1', titleVi: 'Đọc cùng Poo: Xe buýt đến trường', titleEn: 'The Bus to School',
-    passage: 'Mia takes the bus to school. She sits near the window. She sees trees, shops, and many bikes. The bus arrives at eight o clock.',
+    passage: 'Mia takes the bus to school. She sits near the window. She sees trees, shops, and many bikes. The bus arrives at eight o’clock.',
     setup: 'Đọc đoạn A1 về đi học bằng xe buýt. Chú ý places và thời gian.', pattern: 'Subject sees noun, noun, and noun.', patternVi: 'Liệt kê ba vật bằng dấu phẩy và “and”.', focusSentence: 'She sees trees, shops, and many bikes.', focusMeaningVi: 'Cô ấy thấy cây, cửa hàng và nhiều xe đạp.',
     q1: ['Mia đi học bằng gì?', 'How does Mia go to school?', ['by bus', 'by boat', 'by plane', 'on foot only'], 'by bus', 'Câu đầu nói she takes the bus.'],
-    q2: ['Xe buýt đến lúc mấy giờ?', 'When does the bus arrive?', ['at eight o clock', 'at five o clock', 'at lunch', 'at night'], 'at eight o clock', 'Câu cuối nêu thời gian.'],
+    q2: ['Xe buýt đến lúc mấy giờ?', 'When does the bus arrive?', ['at eight o’clock', 'at five o’clock', 'at lunch', 'at night'], 'at eight o’clock', 'Câu cuối nêu thời gian.'],
     blank: ['She sits near the ___.', 'window', 'Cửa sổ.', 'window là cửa sổ.'], order: ['Cô ấy thấy nhiều xe đạp.', ['She', 'sees', 'many', 'bikes'], 'She sees many bikes'],
     vocab: [['bus', 'xe buýt', 'noun', 'I take the bus.', 'Tôi đi xe buýt.'], ['window', 'cửa sổ', 'noun', 'Sit near the window.', 'Ngồi gần cửa sổ.'], ['arrive', 'đến nơi', 'verb', 'The bus arrives early.', 'Xe buýt đến sớm.']],
+    extraVocab: [{ term: 'take the bus to school', meaningVi: 'đi xe buýt đến trường', partOfSpeechOrType: 'verb phrase', example: 'Mia takes the bus to school.', exampleMeaningVi: 'Mia đi xe buýt đến trường.', pronunciation: '/ˈmiːə teɪks ðə bʌs tə skuːl/' }],
+    speakingFocusExamples: [
+      { text: 'She sits near the window.', meaningVi: 'Cô ấy ngồi gần cửa sổ.' },
+      { text: 'The bus arrives at eight o’clock.', meaningVi: 'Xe buýt đến lúc tám giờ.' },
+    ],
   }),
   lesson({
     id: 'reading-a2-library-card', unitId: 'reading-a2-everyday-notices', level: 'A2', titleVi: 'Đọc cùng Poo: Thẻ thư viện', titleEn: 'A Library Card',
@@ -838,22 +895,27 @@ export const generatedReadingLessonSources: GeneratedReadingLessonSource[] = [
     q2: ['Minh không tìm thấy gì?', 'What can Minh not find?', ['page ten', 'his lunch', 'a red hat', 'the bus stop'], 'page ten', 'Đoạn đọc nói he cannot find page ten.'],
     blank: ['Can you ___ me, please?', 'help', 'Động từ nghĩa là giúp đỡ.', 'help nghĩa là giúp đỡ.'], order: ['Bạn có thể giúp tôi được không?', ['Can', 'you', 'help', 'me', 'please'], 'Can you help me please'],
     vocab: [['help', 'giúp đỡ', 'verb', 'Can you help me?', 'Bạn có thể giúp tôi không?'], ['page', 'trang sách', 'noun', 'Open page ten.', 'Mở trang mười.'], ['raise your hand', 'giơ tay', 'verb phrase', 'Raise your hand in class.', 'Giơ tay trong lớp.']],
+    extraVocab: [{ term: 'show him the page', meaningVi: 'chỉ cho cậu ấy xem trang đó', partOfSpeechOrType: 'verb phrase', example: 'The teacher shows him the page.', exampleMeaningVi: 'Giáo viên chỉ cho cậu ấy xem trang đó.', pronunciation: '/ðə ˈtiːtʃər ʃoʊz hɪm ðə peɪdʒ/' }],
+    speakingFocusExamples: [
+      { text: 'Minh raises his hand in class.', meaningVi: 'Minh giơ tay trong lớp.' },
+      { text: 'The teacher smiles and shows him the page.', meaningVi: 'Giáo viên mỉm cười và chỉ cho cậu ấy xem trang đó.' },
+    ],
   }),
   lesson({
     id: 'reading-a1-weather-plan', unitId: 'reading-a1-starter-scenes', level: 'A1', titleVi: 'Đọc cùng Poo: Kế hoạch theo thời tiết', titleEn: 'A Weather Plan',
-    passage: 'It is sunny in the morning. Linh wants to play in the park with her friend. She takes a small hat and a bottle of water. If it rains later, they will go home.',
-    setup: 'Đọc đoạn A1 về thời tiết và kế hoạch rất ngắn. Chú ý sunny, wants to và if.', pattern: 'It is + weather word.', patternVi: 'Dùng “It is” với từ thời tiết như sunny, rainy, cloudy.', focusSentence: 'It is sunny in the morning.', focusMeaningVi: 'Buổi sáng trời nắng.',
+    passage: 'It is sunny in the morning. Linh wants to play in the park with her friend. She takes a small hat and a bottle of water. They play in the park together.',
+    setup: 'Đọc đoạn A1 về thời tiết và kế hoạch đơn giản. Chú ý sunny, wants to và các hành động quen thuộc.', pattern: 'It is + weather word.', patternVi: 'Dùng “It is” với từ thời tiết như sunny, rainy, cloudy.', focusSentence: 'It is sunny in the morning.', focusMeaningVi: 'Buổi sáng trời nắng.',
     q1: ['Buổi sáng thời tiết thế nào?', 'What is the weather like in the morning?', ['sunny', 'rainy', 'snowy', 'windy at night'], 'sunny', 'Câu đầu nói It is sunny.'],
     q2: ['Linh mang theo gì?', 'What does Linh take?', ['a small hat and water', 'a train ticket', 'a big coat only', 'a school test'], 'a small hat and water', 'Đoạn đọc nói she takes a small hat and a bottle of water.'],
     blank: ['It is ___ in the morning.', 'sunny', 'Có nắng.', 'sunny nghĩa là có nắng.'], order: ['Linh muốn chơi trong công viên.', ['Linh', 'wants', 'to', 'play', 'in', 'the', 'park'], 'Linh wants to play in the park'],
-    vocab: [['sunny', 'có nắng', 'adjective', 'It is sunny today.', 'Hôm nay trời nắng.'], ['hat', 'mũ', 'noun', 'Take a small hat.', 'Mang một chiếc mũ nhỏ.'], ['rain', 'mưa', 'verb/noun', 'If it rains, go home.', 'Nếu trời mưa, hãy về nhà.']],
+    vocab: [['sunny', 'có nắng', 'adjective', 'It is sunny today.', 'Hôm nay trời nắng.'], ['hat', 'mũ', 'noun', 'Take a small hat.', 'Mang một chiếc mũ nhỏ.'], ['friend', 'bạn', 'noun', 'Linh plays with her friend.', 'Linh chơi cùng bạn của mình.']],
   }),
   lesson({
     id: 'reading-a2-changing-an-appointment', unitId: 'reading-a2-everyday-notices', level: 'A2', titleVi: 'Đọc cùng Poo: Đổi lịch hẹn', titleEn: 'Changing an Appointment',
     passage: 'An has an appointment at four, but his bus is late. He sends a polite message to the clinic and asks to change the time to four thirty. The receptionist replies that four thirty is fine, and An thanks her for understanding.',
     setup: 'Đọc đoạn A2 về đổi lịch hẹn lịch sự. Chú ý appointment, but, asks to và thanks.', pattern: 'Subject asks to change the time to + time.', patternVi: 'Dùng “ask to change the time to...” để xin đổi giờ hẹn một cách rõ ràng.', focusSentence: 'He asks to change the time to four thirty.', focusMeaningVi: 'Cậu ấy xin đổi giờ sang bốn giờ ba mươi.',
     q1: ['Vì sao An cần đổi giờ?', 'Why does An need to change the time?', ['his bus is late', 'the clinic is closed forever', 'he lost his phone', 'the weather is perfect'], 'his bus is late', 'Đoạn đọc nói his bus is late.'],
-    q2: ['An muốn đổi sang mấy giờ?', 'What time does An ask for?', ['four thirty', 'three fifteen', 'six o clock', 'noon'], 'four thirty', 'Câu thứ hai nói change the time to four thirty.'],
+    q2: ['An muốn đổi sang mấy giờ?', 'What time does An ask for?', ['four thirty', 'three fifteen', 'six o’clock', 'noon'], 'four thirty', 'Câu thứ hai nói change the time to four thirty.'],
     blank: ['He sends a polite ___ to the clinic.', 'message', 'Tin nhắn.', 'message là tin nhắn.'], order: ['An cảm ơn cô ấy vì đã thông cảm.', ['An', 'thanks', 'her', 'for', 'understanding'], 'An thanks her for understanding'],
     vocab: [['appointment', 'lịch hẹn/cuộc hẹn', 'noun', 'I have an appointment at four.', 'Tôi có lịch hẹn lúc bốn giờ.'], ['change the time', 'đổi giờ', 'verb phrase', 'Can I change the time?', 'Tôi có thể đổi giờ không?'], ['understanding', 'sự thông cảm', 'noun', 'Thank you for understanding.', 'Cảm ơn vì đã thông cảm.']],
   }),

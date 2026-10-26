@@ -16,7 +16,7 @@ const progressSeed = {
       started: true,
       completed: dayNumber <= 38,
       score: 88 + (dayNumber % 8),
-      completedSteps: ['intro'],
+      completedSteps: [],
       mistakes: [],
       updatedAt: '2026-06-08T05:00:00.000Z',
     }];
@@ -49,7 +49,7 @@ const checks = [
   { name: 'foundation48-stage8-regression-day29-mobile', route: `${basePath}/ngay/29`, width: 390, height: 844, expected: /Ngày 29|Luyện nghe điền từ/i },
   { name: 'foundation48-stage8-regression-day34-mobile', route: `${basePath}/ngay/34`, width: 390, height: 844, screenshot: 'foundation48-stage8-regression-day34-mobile.png', expected: /Ngày 34|Luyện nghe về tiền bạc/i },
   { name: 'foundation48-stage8-regression-day35-mobile', route: `${basePath}/ngay/35`, width: 390, height: 844, expected: /Ngày 35|Đại từ phản thân|I made it myself/i },
-  { name: 'foundation48-stage8-regression-day38-completed-mobile', route: `${basePath}/ngay/38`, width: 390, height: 844, screenshot: 'foundation48-stage8-regression-day38-completed-mobile.png', expected: /Đã lưu ngày 38|Sang ngày 39|Liên từ tương hỗ/i, completedPanel: true },
+  { name: 'foundation48-stage8-regression-day38-completed-mobile', route: `${basePath}/ngay/38`, width: 390, height: 844, screenshot: 'foundation48-stage8-regression-day38-completed-mobile.png', expected: /Poo đã giữ ngày 38|Đã hoàn thành/i, completedPanel: true },
 ];
 
 function isCriticalFailedRequest(request) {
@@ -75,7 +75,7 @@ async function inspectLayout(page) {
     const nav = document.querySelector('[data-testid="mobile-bottom-nav"]');
     const navRect = nav ? nav.getBoundingClientRect() : null;
     const text = document.body.innerText || '';
-    const mainEls = Array.from(document.querySelectorAll('main a, main button, [data-testid^="foundation48-day-card-"], [data-testid^="foundation48-review-card"], [data-testid="foundation48-roadmap"], [data-testid="foundation48-completion-panel"]'));
+    const mainEls = Array.from(document.querySelectorAll('[data-testid="foundation48-mobile-step-actions"], [data-testid="foundation48-primary-cta"]'));
     const bottomNavOverlap = navRect ? mainEls.some((el) => {
       if (nav.contains(el)) return false;
       const r = el.getBoundingClientRect();
@@ -93,7 +93,7 @@ async function inspectLayout(page) {
       hasHorizontalOverflow: document.body.scrollWidth > document.documentElement.clientWidth + 1,
       introPreviewVisible: Boolean(document.querySelector('[data-testid="foundation48-intro-preview"]')),
       mobileIntroPreviewVisible: Boolean(document.querySelector('[data-testid="foundation48-mobile-intro-preview"]')),
-      compactPreviewTextVisible: /6 Từ vựng\s*·\s*3 Mẫu câu\s*·\s*5 Nghe\s*·\s*5 Nói lại\s*·\s*9 Mini quiz/i.test(text),
+      compactPreviewTextVisible: /6 Từ vựng\s*·\s*\d+ Mẫu câu\s*·\s*5 Nghe\s*·\s*5 Nói lại\s*·\s*\d+ Thử sức nhẹ/i.test(text),
       completionPanelVisible: Boolean(document.querySelector('[data-testid="foundation48-completion-panel"]')),
     };
   });

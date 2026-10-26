@@ -118,6 +118,26 @@ async function setupContext(browser, options = {}) {
             resolved: false,
             tags: ['A1'],
           },
+          'qa-lesson-fill-blank': {
+            id: 'qa-lesson-fill-blank', source: 'interactive-lesson', sourceId: 'reading-a1-my-morning', type: 'fill-blank',
+            prompt: 'Complete the sentence.', correctAnswer: 'I wake up early.', userAnswer: 'I wake early.', explanation: 'Hoàn thành cụm động từ.',
+            attempts: 1, lastWrongAt: new Date(Date.now() + 5000).toISOString(), nextReviewAt: now, resolved: false, tags: ['A1'],
+          },
+          'qa-lesson-sentence-order': {
+            id: 'qa-lesson-sentence-order', source: 'interactive-lesson', sourceId: 'reading-a1-my-morning', type: 'sentence-order',
+            prompt: 'Sắp xếp câu.', correctAnswer: 'I eat breakfast at seven.', userAnswer: 'I breakfast eat seven.', explanation: 'Nhớ trật tự cụm từ.',
+            attempts: 1, lastWrongAt: new Date(Date.now() + 2000).toISOString(), nextReviewAt: now, resolved: false, tags: ['A1'],
+          },
+          'qa-lesson-listening': {
+            id: 'qa-lesson-listening', source: 'interactive-lesson', sourceId: 'reading-a1-my-morning', type: 'listen-and-choose',
+            prompt: 'Câu vừa nghe gần với ý nào nhất?', correctAnswer: 'I wake up early.', userAnswer: 'I go to school.', explanation: 'Nghe lại câu mẫu.',
+            attempts: 1, lastWrongAt: new Date(Date.now() + 4000).toISOString(), nextReviewAt: now, resolved: false, tags: ['A1'],
+          },
+          'qa-lesson-speaking': {
+            id: 'qa-lesson-speaking', source: 'interactive-lesson', sourceId: 'reading-a1-my-morning', type: 'speaking-repeat',
+            prompt: 'Nói lại câu mẫu.', correctAnswer: 'I wake up early.', userAnswer: '', explanation: 'Nói chậm theo mẫu.',
+            attempts: 1, lastWrongAt: new Date(Date.now() + 3000).toISOString(), nextReviewAt: now, resolved: false, tags: ['A1'],
+          },
         },
         words: {
           'qa-word-english': {
@@ -205,6 +225,7 @@ async function assertHomeMistakeNavigation(browser) {
   await attachWatchers(page, errors, failedResponses);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${baseUrl}/home`, { waitUntil: 'domcontentloaded' });
+  await page.getByTestId('home-more-details').locator('summary').click();
   await page.getByTestId('home-task-mistakes').waitFor({ timeout: 20000 });
   await page.getByTestId('home-task-mistakes').click();
   await page.waitForURL(/\/practice(?:$|[?#])/, { timeout: 10000 });
@@ -221,11 +242,19 @@ async function assertHomeMistakeNavigation(browser) {
     const desktop = await real.context.newPage();
     await attachWatchers(desktop, real.errors, real.failedResponses);
     await gotoPractice(desktop, 1366, 900, 'desktop', real.errors);
-    await desktop.getByText('Ôn lỗi sai cùng Poo').waitFor({ timeout: 8000 });
+    await desktop.getByText('Ôn câu Poo nhắc').waitFor({ timeout: 8000 });
     await desktop.getByText('Poo gom vài chỗ bạn hay quên để ôn nhẹ hôm nay.').waitFor({ timeout: 8000 });
     await desktop.getByText('Câu hay nhầm').waitFor({ timeout: 8000 });
     await desktop.getByText('Từ cần nhớ').waitFor({ timeout: 8000 });
     await desktop.getByText('Nghe lại câu cũ').waitFor({ timeout: 8000 });
+    const reviewSourceLinks = await desktop.getByTestId('practice-poo-mistake-item').locator('a').evaluateAll((anchors) => anchors.map((anchor) => anchor.getAttribute('href')));
+    for (const expectedPath of [
+      '/practice?lessonId=reading-a1-my-morning&mode=type',
+      '/practice?lessonId=reading-a1-my-morning&mode=listen',
+      '/practice?lessonId=reading-a1-my-morning&mode=reflex',
+    ]) {
+      if (!reviewSourceLinks.includes(expectedPath)) throw new Error(`Expected a review source link to ${expectedPath}, got ${reviewSourceLinks.join(', ')}`);
+    }
     await desktop.screenshot({ path: path.join(outDir, screenshots.desktop), fullPage: true });
     await desktop.getByTestId('practice-poo-start').click();
     await desktop.getByTestId('practice-poo-flow').waitFor({ timeout: 8000 });
@@ -248,7 +277,7 @@ async function assertHomeMistakeNavigation(browser) {
     await assertNoHorizontalOverflow(mobile, 'mobile empty');
     await assertBottomSafe(mobile, 'practice-poo-summary', 'mobile empty');
     await completeFlow(mobile);
-    await mobile.getByText('Poo đã dọn xong lỗi hôm nay!').waitFor({ timeout: 8000 });
+    await mobile.getByText('Poo đã ôn xong vài câu hôm nay!').waitFor({ timeout: 8000 });
     await mobile.screenshot({ path: path.join(outDir, screenshots.completeMobile), fullPage: true });
     await mobile.getByTestId('practice-poo-back-home').click();
     await mobile.waitForURL(/\/home(?:$|[?#])/, { timeout: 10000 });
@@ -265,6 +294,7 @@ async function assertHomeMistakeNavigation(browser) {
         '/practice desktop 1366x900',
         '/practice mobile 390x844',
         '/home Ôn lỗi sai navigation to /practice',
+        'interactive-lesson fill-blank, listening, and speaking mistakes route to typing, listening, and reflex practice',
         'empty fallback',
         'flow start -> answer -> mark understood -> complete',
         'completion CTA back to /home',

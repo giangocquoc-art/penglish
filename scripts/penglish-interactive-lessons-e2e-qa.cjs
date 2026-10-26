@@ -1,8 +1,10 @@
 const { chromium } = require('playwright');
+const fs = require('fs');
+const path = require('path');
 const validationReport = require('../reports/penglish-runtime-lesson-validation.json');
 
 const BASE_URL = process.env.PENGLISH_QA_BASE_URL || 'http://127.0.0.1:8080';
-const EMOJI_PATTERN = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
+const EMOJI_PATTERN = /\p{Extended_Pictographic}/u;
 const VIEWPORTS = [
   { name: 'desktop', width: 1365, height: 900, isMobile: false },
   { name: 'mobile', width: 390, height: 844, isMobile: true },
@@ -30,6 +32,55 @@ async function answerCurrentStep(page) {
     return 'intro';
   }
 
+  const lessonTipContinue = page.locator('[data-testid="interactive-lesson-tip-continue-button"]');
+  if (await visible(lessonTipContinue)) {
+    await lessonTipContinue.click();
+    return 'lesson_tip';
+  }
+
+  const shadowing = page.locator('[data-testid="interactive-shadowing"]');
+  if (await visible(shadowing)) {
+    const listen = shadowing.locator('[data-testid="interactive-shadowing-model"]');
+    const selfCheck = shadowing.locator('[data-testid="interactive-shadowing-self-check"]');
+    if (!await listen.isVisible() || !await selfCheck.isVisible() || !await selfCheck.isDisabled()) {
+      throw new Error('Shadowing must require listening to the model before the unscored self-check can continue.');
+    }
+    if (process.env.PENGLISH_QA_CAPTURE_SHADOWING === '1') {
+      const screenshotDir = path.join(__dirname, '..', 'reports', 'screenshots');
+      fs.mkdirSync(screenshotDir, { recursive: true });
+      const viewportName = process.env.PENGLISH_QA_VIEWPORT || 'mobile';
+      await page.screenshot({ path: path.join(screenshotDir, `interactive-lesson-shadowing-${viewportName}.png`) });
+    }
+    await listen.click();
+    await selfCheck.waitFor({ state: 'visible' });
+    if (await selfCheck.isDisabled()) throw new Error('Listening to the model should unlock the shadowing self-check fallback.');
+    if (process.env.PENGLISH_QA_SHADOWING_RECORD === '1') {
+      await page.route('**/api/shadowing-feedback', (route) => route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ ok: false, error: 'GEMINI_API_KEY_MISSING', message: 'Poo chưa nghe rõ.' }),
+      }));
+      const record = shadowing.locator('[data-testid="interactive-shadowing-record"]');
+      await record.click();
+      await page.waitForTimeout(700);
+      await record.click();
+      const playback = shadowing.locator('[data-testid="interactive-shadowing-playback"]');
+      await playback.waitFor({ state: 'visible', timeout: 5000 });
+      await shadowing.locator('[data-testid="interactive-shadowing-compare"]').click();
+      await shadowing.locator('[data-testid="interactive-shadowing-fallback"]').waitFor({ state: 'visible', timeout: 5000 });
+      if (await selfCheck.isDisabled()) throw new Error('Shadowing must remain completable when the feedback service is unavailable.');
+    }
+    await selfCheck.click();
+    return 'shadowing';
+  }
+
+  const revealCard = page.locator('[data-testid="interactive-lesson-reveal-card-button"]');
+  if (await visible(revealCard)) {
+    await revealCard.click();
+    await page.locator('[data-testid="interactive-lesson-remember-button"]').click();
+    return 'flashcard';
+  }
+
   const remember = page.locator('[data-testid="interactive-lesson-remember-button"]');
   if (await visible(remember)) {
     await remember.click();
@@ -42,11 +93,123 @@ async function answerCurrentStep(page) {
     return 'choice';
   }
 
+  const matchGame = page.locator('[data-testid="interactive-match-game"]');
+  if (await visible(matchGame)) {
+    if (process.env.PENGLISH_QA_CAPTURE_MATCH === '1') {
+      const screenshotDir = path.join(__dirname, '..', 'reports', 'screenshots');
+      fs.mkdirSync(screenshotDir, { recursive: true });
+      const viewportName = process.env.PENGLISH_QA_VIEWPORT || 'mobile';
+      await page.screenshot({ path: path.join(screenshotDir, `interactive-lesson-match-pairs-${viewportName}.png`) });
+    }
+    const left = matchGame.locator('[data-testid="interactive-match-left"]');
+    const right = matchGame.locator('[data-testid="interactive-match-right"]');
+    const pairCount = await left.count();
+    if (pairCount < 1 || pairCount !== await right.count()) throw new Error('A matching round must render the same non-zero number of left and right cards.');
+    const leftIds = await left.evaluateAll((buttons) => buttons.map((button) => button.getAttribute('data-pair-id')));
+    const rightIds = await right.evaluateAll((buttons) => buttons.map((button) => button.getAttribute('data-pair-id')));
+    if (leftIds.some((id) => !id) || new Set(leftIds).size !== leftIds.length || new Set(rightIds).size !== rightIds.length) {
+      throw new Error('Matching cards must carry unique pair IDs on both sides.');
+    }
+    if (pairCount > 1 && leftIds.every((id, index) => id === rightIds[index])) {
+      throw new Error('The right matching column must use a different order from the left column.');
+    }
+
+    // Exercise the recovery path: make one deliberate mismatch, then finish every pair.
+    const firstId = leftIds[0];
+    await matchGame.locator(`[data-testid="interactive-match-left"][data-pair-id="${firstId}"]`).click();
+    const wrongId = rightIds.find((id) => id !== firstId);
+    if (wrongId) await matchGame.locator(`[data-testid="interactive-match-right"][data-pair-id="${wrongId}"]`).click();
+    for (const pairId of leftIds) {
+      if (pairId === firstId) {
+        await matchGame.locator(`[data-testid="interactive-match-right"][data-pair-id="${pairId}"]`).click();
+        continue;
+      }
+      await matchGame.locator(`[data-testid="interactive-match-left"][data-pair-id="${pairId}"]`).click();
+      await matchGame.locator(`[data-testid="interactive-match-right"][data-pair-id="${pairId}"]`).click();
+    }
+    return 'match_pairs';
+  }
+
   const fillInput = page.locator('[data-testid="interactive-lesson-fill-input"]');
   if (await visible(fillInput)) {
+    const speedRound = page.locator('[data-testid="interactive-speed-recall"]');
+    if (await visible(speedRound)) {
+      const timer = speedRound.locator('[data-testid="interactive-speed-timer"]');
+      const untimed = speedRound.locator('[data-testid="interactive-speed-untimed"]');
+      if (!await timer.isVisible() || !await untimed.isVisible()) throw new Error('Speed recall must show both its timer and an untimed accessibility option.');
+      if (process.env.PENGLISH_QA_CAPTURE_SPEED === '1') {
+        const screenshotDir = path.join(__dirname, '..', 'reports', 'screenshots');
+        fs.mkdirSync(screenshotDir, { recursive: true });
+        const viewportName = process.env.PENGLISH_QA_VIEWPORT || 'mobile';
+        await page.screenshot({ path: path.join(screenshotDir, `interactive-lesson-speed-recall-${viewportName}.png`) });
+      }
+      if (process.env.PENGLISH_QA_SPEED_TIMEOUT === '1' && !page.__penglishSpeedTimeoutChecked) {
+        page.__penglishSpeedTimeoutChecked = true;
+        await page.waitForFunction(() => document.querySelector('[data-testid="interactive-speed-timer"]')?.textContent?.includes('Hết giờ'), null, { timeout: 25000 });
+        if (await fillInput.isDisabled()) throw new Error('The speed answer must remain available after the timer ends.');
+      } else {
+        await untimed.click();
+        if (!(await timer.innerText()).includes('Không giới hạn')) throw new Error('Untimed mode did not stop the speed countdown.');
+      }
+      await fillInput.fill('test answer');
+      await fillInput.press('Enter');
+      await page.locator('[data-testid="interactive-lesson-feedback"]').waitFor({ state: 'visible', timeout: 3000 });
+      return 'speed_recall';
+    }
     await fillInput.fill('test answer');
     await page.locator('[data-testid="interactive-lesson-check-button"]').click();
-    return 'fill_blank';
+    return await visible(page.locator('[data-testid="interactive-speed-recall"]')) ? 'speed_recall' : 'fill_blank';
+  }
+
+  const openResponse = page.locator('[data-testid="interactive-lesson-final-response"]');
+  if (await visible(openResponse)) {
+    const phraseCard = page.locator('[data-testid^="interactive-lesson-phrase-card-"]').first();
+    if (await visible(phraseCard)) {
+      if (process.env.PENGLISH_QA_CAPTURE_SCENARIO === '1') {
+        const screenshotDir = path.join(__dirname, '..', 'reports', 'screenshots');
+        fs.mkdirSync(screenshotDir, { recursive: true });
+        const viewportName = process.env.PENGLISH_QA_VIEWPORT || 'mobile';
+        await page.screenshot({ path: path.join(screenshotDir, `interactive-lesson-real-life-${viewportName}.png`) });
+      }
+      const phrase = (await phraseCard.innerText()).replace(/^\+\s*/, '').trim();
+      await phraseCard.click();
+      if (!(await openResponse.inputValue()).includes(phrase)) throw new Error('Selecting a real-life phrase card must add that phrase to the learner response.');
+    }
+    await openResponse.fill('I am practicing a short answer.');
+    await page.locator('[data-testid="interactive-lesson-final-submit-button"]').click();
+    const selfCheckFeedback = page.locator('[data-testid="interactive-lesson-feedback"]');
+    await selfCheckFeedback.waitFor({ state: 'visible', timeout: 3000 });
+    const feedbackText = await selfCheckFeedback.innerText();
+    if (!feedbackText.includes('Đã lưu phần tự luyện') || feedbackText.includes('Chuẩn rồi!')) {
+      throw new Error('Open responses must be identified as unscored self-checks, not falsely celebrated as correct answers.');
+    }
+    return 'free_response';
+  }
+
+  const missionTracker = page.locator('[data-testid="interactive-lesson-mission-tracker"]');
+  if (await visible(missionTracker)) {
+    if (process.env.PENGLISH_QA_CAPTURE_MISSION === '1') {
+      const screenshotDir = path.join(__dirname, '..', 'reports', 'screenshots');
+      fs.mkdirSync(screenshotDir, { recursive: true });
+      const viewportName = process.env.PENGLISH_QA_VIEWPORT || 'mobile';
+      await page.screenshot({ path: path.join(screenshotDir, `interactive-lesson-mission-${viewportName}.png`) });
+    }
+    const targetRows = missionTracker.locator('[data-testid="interactive-lesson-mission-targets"] > *');
+    if (await targetRows.count() < 2) throw new Error('A linked mission must display its source activities and measured progress.');
+    const mode = await missionTracker.getAttribute('data-mission-mode');
+    const current = Number(await missionTracker.getAttribute('data-mission-current'));
+    const minimum = Number(await missionTracker.getAttribute('data-mission-minimum'));
+    const expectedMet = current >= minimum;
+    if (mode === 'unconfigured' || await missionTracker.getAttribute('data-mission-met') !== String(expectedMet)) {
+      throw new Error('Mission success must match the configured source-activity threshold.');
+    }
+    const missionButton = missionTracker.locator('[data-testid="interactive-lesson-mission-continue-button"]');
+    await missionButton.click();
+    const feedback = page.locator('[data-testid="interactive-lesson-feedback"]');
+    await feedback.waitFor({ state: 'visible', timeout: 3000 });
+    const text = await feedback.innerText();
+    if (!text.includes('nhiệm vụ')) throw new Error('Mission feedback must report the measured mission outcome.');
+    return 'mission_tracker';
   }
 
   const speakDone = page.locator('[data-testid="interactive-lesson-speak-done-button"]');
@@ -87,14 +250,25 @@ async function answerCurrentStep(page) {
 
 (async () => {
   const allLessonIds = [...collectLessonIds(validationReport)];
+  const requestedIds = (process.env.PENGLISH_QA_IDS || '').split(',').map((id) => id.trim()).filter(Boolean);
   const requestedLimit = Number(process.env.PENGLISH_QA_LIMIT || 0);
-  const lessonIds = requestedLimit > 0 ? allLessonIds.slice(0, requestedLimit) : allLessonIds;
-  if (!requestedLimit && lessonIds.length !== validationReport.lessonCount) {
+  const lessonIds = requestedIds.length
+    ? allLessonIds.filter((id) => requestedIds.includes(id))
+    : requestedLimit > 0 ? allLessonIds.slice(0, requestedLimit) : allLessonIds;
+  if (requestedIds.length && lessonIds.length !== new Set(requestedIds).size) {
+    throw new Error(`Some requested lesson IDs were not found: ${requestedIds.filter((id) => !allLessonIds.includes(id)).join(', ')}`);
+  }
+  if (!requestedLimit && !requestedIds.length && lessonIds.length !== validationReport.lessonCount) {
     throw new Error(`Expected ${validationReport.lessonCount} lesson IDs but found ${lessonIds.length}.`);
   }
 
-  const browser = await chromium.launch({ headless: true });
+  const shadowingMediaQa = process.env.PENGLISH_QA_SHADOWING_RECORD === '1';
+  const browser = await chromium.launch({
+    headless: true,
+    args: shadowingMediaQa ? ['--use-fake-device-for-media-stream', '--use-fake-ui-for-media-stream'] : [],
+  });
   const results = [];
+  let verifiedReviewResume = false;
 
   for (const viewport of VIEWPORTS) {
     const context = await browser.newContext({
@@ -105,9 +279,13 @@ async function answerCurrentStep(page) {
     });
     const page = await context.newPage();
     page.setDefaultTimeout(5000);
+    if (shadowingMediaQa) await context.grantPermissions(['microphone']);
     await page.addInitScript(() => {
-      localStorage.clear();
-      sessionStorage.clear();
+      if (sessionStorage.getItem('penglish-qa-session-initialized') !== '1') {
+        localStorage.clear();
+        sessionStorage.clear();
+        sessionStorage.setItem('penglish-qa-session-initialized', '1');
+      }
     });
 
     for (const [index, lessonId] of lessonIds.entries()) {
@@ -136,9 +314,78 @@ async function answerCurrentStep(page) {
 
       let completed = false;
       let answeredSteps = 0;
-      for (let guard = 0; guard < 24; guard += 1) {
+      let reviewTagSeen = false;
+      let reviewPromptModeSeen = false;
+      let reviewScreenshotCaptured = false;
+      let didReviewResumeCheck = false;
+      let didPlayBonus = false;
+      let didBonusResumeCheck = false;
+      let capturedCoreSummary = false;
+      let capturedBonusSummary = false;
+      for (let guard = 0; guard < 280; guard += 1) {
         const bodyText = await page.locator('body').innerText();
-        if (bodyText.includes('Hoàn thành bài học!')) {
+        if (process.env.PENGLISH_QA_CAPTURE_QUEST === '1' && viewport.name === 'mobile') {
+          const screenshotDir = path.join(__dirname, '..', 'reports', 'screenshots');
+          if (!capturedCoreSummary && bodyText.includes('Hoàn thành nhiệm vụ chính!')) {
+            fs.mkdirSync(screenshotDir, { recursive: true });
+            await page.screenshot({ path: path.join(screenshotDir, 'interactive-lesson-core-quest-summary-mobile.png'), fullPage: true });
+            capturedCoreSummary = true;
+          }
+          if (!capturedBonusSummary && bodyText.includes('Hoàn thành vòng thưởng!')) {
+            fs.mkdirSync(screenshotDir, { recursive: true });
+            await page.screenshot({ path: path.join(screenshotDir, 'interactive-lesson-bonus-summary-mobile.png'), fullPage: true });
+            capturedBonusSummary = true;
+          }
+        }
+        if (bodyText.includes('Lượt ôn · không đổi điểm lần đầu')) {
+          reviewTagSeen = true;
+          const expectedReviewPrompt = lessonId.startsWith('reading-')
+            ? 'Quay lại đoạn đọc, tìm câu có bằng chứng'
+            : lessonId.startsWith('grammar-')
+              ? 'Nhớ lại khung ngữ pháp, tự dựng lại câu'
+              : 'Nhớ lại tình huống giao tiếp';
+          if (bodyText.includes(expectedReviewPrompt)) reviewPromptModeSeen = true;
+          if (!reviewScreenshotCaptured && viewport.name === 'mobile') {
+            const screenshotDir = path.join(__dirname, '..', 'reports', 'screenshots');
+            fs.mkdirSync(screenshotDir, { recursive: true });
+            await page.screenshot({ path: path.join(screenshotDir, 'interactive-lesson-review-mobile.png'), fullPage: true });
+            reviewScreenshotCaptured = true;
+          }
+          if (process.env.PENGLISH_QA_RELOAD_DURING_REVIEW === '1' && !didReviewResumeCheck) {
+            didReviewResumeCheck = true;
+            await page.reload({ waitUntil: 'domcontentloaded' });
+            const reviewTag = page.getByText('Lượt ôn · không đổi điểm lần đầu');
+            try {
+              await reviewTag.waitFor({ state: 'visible', timeout: 7000 });
+            } catch {
+              const resumedState = await page.evaluate(() => ({
+                body: document.body.innerText.slice(-1200),
+                progress: localStorage.getItem('penglish.lesson.progress.v1'),
+              }));
+              throw new Error(`Review step did not resume after reload: ${JSON.stringify(resumedState)}`);
+            }
+            verifiedReviewResume = true;
+            continue;
+          }
+        }
+        if (bodyText.includes('Hoàn thành nhiệm vụ chính!') && process.env.PENGLISH_QA_PLAY_BONUS === '1' && !didPlayBonus) {
+          const startBonus = page.locator('[data-testid="interactive-lesson-start-bonus"]');
+          if (!await visible(startBonus)) {
+            stuckReason = 'The completed core quest did not offer access to its optional bonus challenges.';
+            break;
+          }
+          didPlayBonus = true;
+          await startBonus.click();
+          if (process.env.PENGLISH_QA_RELOAD_IN_BONUS === '1' && !didBonusResumeCheck) {
+            didBonusResumeCheck = true;
+            const bonusStep = page.locator('[data-testid="interactive-lesson-card"][data-optional-bonus="true"]');
+            await bonusStep.waitFor({ state: 'visible', timeout: 5000 });
+            await page.reload({ waitUntil: 'domcontentloaded' });
+            await page.locator('[data-testid="interactive-lesson-card"][data-optional-bonus="true"]').waitFor({ state: 'visible', timeout: 7000 });
+          }
+          continue;
+        }
+        if (bodyText.includes('Hoàn thành nhiệm vụ chính!') || bodyText.includes('Hoàn thành vòng thưởng!')) {
           completed = true;
           break;
         }
@@ -171,7 +418,8 @@ async function answerCurrentStep(page) {
 
         const controller = await answerCurrentStep(page);
         if (!controller) {
-          stuckReason = 'No supported control was visible for the current step.';
+          const currentStep = await page.locator('[data-testid="interactive-lesson-card"]').innerText().catch(() => 'step unavailable');
+          stuckReason = `No supported control was visible for the current step: ${currentStep.slice(0, 240)}`;
           break;
         }
         seenControllers.add(controller);
@@ -180,6 +428,40 @@ async function answerCurrentStep(page) {
       }
 
       const finalText = await page.locator('body').innerText();
+      const reviewState = await page.evaluate(() => {
+        const records = JSON.parse(localStorage.getItem('penglish.lesson.progress.v1') || '{}');
+        const lessonId = decodeURIComponent(window.location.pathname.split('/').pop() || '');
+        const record = records[lessonId];
+        const progress = JSON.parse(localStorage.getItem(`p-english:lesson-progress:${lessonId}`) || '{}');
+        const wrongReviewDelays = Object.values(progress.srs?.items || {})
+          .filter((item) => item.wrongCount > 0 && item.lastWrongAt === item.lastReviewedAt)
+          .map((item) => (new Date(item.nextReviewAt).getTime() - Date.now()) / 60000);
+        const matchReviews = Object.values(progress.srs?.items || {}).filter((item) => item.type === 'match');
+        return {
+          completedReviewIds: (record?.completedSteps || []).filter((id) => id.startsWith('review-')),
+          reviewOutcomes: Object.keys(record?.stepOutcomes || {}).filter((id) => id.startsWith('review-')),
+          wrongReviewDelays,
+          matchReviewCount: matchReviews.filter((item) => item.correctCount > 0 || item.wrongCount > 0).length,
+          recoveredMatchCount: matchReviews.filter((item) => item.wrongCount > 0 && item.correctCount > 0 && item.lastReviewedAt > item.lastWrongAt).length,
+        };
+      });
+      if (process.env.PENGLISH_QA_EXPECT_REVIEW === '1') {
+        if (!reviewTagSeen || reviewState.completedReviewIds.length === 0) stuckReason = 'An authored error did not create a completed in-lesson review step.';
+        if (reviewState.reviewOutcomes.length > 0) stuckReason = 'An in-lesson retry changed the saved first-attempt outcome.';
+        if (!reviewPromptModeSeen) stuckReason = `The retry step did not show the ${lessonId.startsWith('reading-') ? 'reading-evidence' : lessonId.startsWith('grammar-') ? 'grammar-pattern' : 'real-life-context'} instruction.`;
+        if (!reviewState.wrongReviewDelays.length || reviewState.wrongReviewDelays.some((minutes) => minutes < 8 || minutes > 10.1)) {
+          stuckReason = `The SRS review delay did not follow the 10-minute policy: ${reviewState.wrongReviewDelays.join(', ')}`;
+        }
+      }
+      if (process.env.PENGLISH_QA_REQUIRE_MATCH === '1' && (!seenControllers.has('match_pairs') || reviewState.matchReviewCount < 1 || reviewState.recoveredMatchCount < 1)) {
+        stuckReason = `The matching game did not preserve per-pair review and wrong-to-correct recovery: ${JSON.stringify({ controllers: [...seenControllers], matchReviewCount: reviewState.matchReviewCount, recoveredMatchCount: reviewState.recoveredMatchCount })}`;
+      }
+      if (process.env.PENGLISH_QA_RELOAD_DURING_REVIEW === '1' && !didReviewResumeCheck) stuckReason = 'The review step was not interrupted and resumed for this run.';
+      if (completed && index === 0 && viewport.name === 'mobile') {
+        const screenshotDir = path.join(__dirname, '..', 'reports', 'screenshots');
+        fs.mkdirSync(screenshotDir, { recursive: true });
+        await page.screenshot({ path: path.join(screenshotDir, 'interactive-lesson-criteria-mobile.png'), fullPage: true });
+      }
       hasEmoji ||= EMOJI_PATTERN.test(finalText);
       const finalOverflow = await page.evaluate(() => Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - window.innerWidth);
       maxHorizontalOverflow = Math.max(maxHorizontalOverflow, finalOverflow);
@@ -188,16 +470,24 @@ async function answerCurrentStep(page) {
         lessonId,
         viewport: viewport.name,
         completed,
+        hasCriteriaSummary: await page.locator('[data-testid="interactive-lesson-criteria"]').isVisible().catch(() => false),
         answeredSteps,
+        reviewRetrySteps: reviewState.completedReviewIds.length,
+        reviewPromptModeSeen,
+        wrongReviewDelays: reviewState.wrongReviewDelays,
+        matchReviewCount: reviewState.matchReviewCount,
+        recoveredMatchCount: reviewState.recoveredMatchCount,
         seenControllers: [...seenControllers],
         stuckReason,
         hasEmoji,
+        emojiContexts: [...finalText.matchAll(/\p{Extended_Pictographic}/gu)].slice(0, 8).map((match) => finalText.slice(Math.max(0, match.index - 40), Math.min(finalText.length, match.index + match[0].length + 40))),
         maxHorizontalOverflow,
         brokenImages,
         responseErrors,
         consoleErrors,
         pageErrors,
       };
+      if (completed && !result.hasCriteriaSummary) stuckReason = 'Lesson completed but the completion-criteria summary was not visible.';
       results.push(result);
 
       page.off('response', onResponse);
@@ -214,7 +504,7 @@ async function answerCurrentStep(page) {
 
   const failures = results.filter((result) => (
     !result.completed
-    || result.answeredSteps !== 9
+    || result.answeredSteps < 1
     || result.stuckReason
     || result.hasEmoji
     || result.maxHorizontalOverflow > 2
@@ -231,11 +521,19 @@ async function answerCurrentStep(page) {
     completedLessonRuns: results.filter((result) => result.completed).length,
     totalLessonRuns: results.length,
     totalAnsweredSteps: results.reduce((sum, result) => sum + result.answeredSteps, 0),
+    totalReviewRetrySteps: results.reduce((sum, result) => sum + result.reviewRetrySteps, 0),
+    verifiedReviewResume,
+    reviewPromptModesSeen: [...new Set(results.filter((result) => result.reviewPromptModeSeen).map((result) => result.lessonId))],
+    wrongReviewDelays: results.flatMap((result) => result.wrongReviewDelays),
     controllerCoverage,
     failureCount: failures.length,
     failures,
   };
   console.log(JSON.stringify(summary, null, 2));
+  const reportFile = process.env.PENGLISH_QA_REPORT_FILE || 'penglish-interactive-lessons-e2e-results.json';
+  const reportPath = path.resolve(__dirname, '..', 'reports', reportFile);
+  fs.writeFileSync(reportPath, JSON.stringify(summary, null, 2), 'utf8');
+  console.log(`Report written: ${reportPath}`);
   await browser.close();
   if (failures.length) process.exitCode = 1;
 })().catch((error) => {

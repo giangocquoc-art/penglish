@@ -7,6 +7,9 @@ const VISIBLE_MS = 5200;
 
 function isDevtoolsLikelyOpen() {
   if (typeof window === 'undefined') return false;
+  // Mobile browsers and responsive viewport emulation create large outer/inner
+  // gaps too. Keep this playful notice off tablet and phone layouts.
+  if (!window.matchMedia('(min-width: 1024px)').matches) return false;
   const widthGap = Math.abs(window.outerWidth - window.innerWidth);
   const heightGap = Math.abs(window.outerHeight - window.innerHeight);
   return widthGap > DEVTOOLS_THRESHOLD || heightGap > DEVTOOLS_THRESHOLD;

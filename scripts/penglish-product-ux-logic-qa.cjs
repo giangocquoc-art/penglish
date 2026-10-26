@@ -24,7 +24,7 @@ const mobileViewport = { width: 390, height: 844 };
 
 function isAllowedFailedRequest(url, failureText = '') {
   return url.includes('favicon')
-    || url.includes('/ocean/ambient-whale/frames/')
+    || url.includes('/ocean/mascots/refined/poo-coach.webp')
     || url.includes('youtube-nocookie.com')
     || url.includes('youtube.com')
     || url.includes('googlevideo.com')

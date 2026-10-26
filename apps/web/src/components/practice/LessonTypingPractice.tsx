@@ -14,6 +14,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { loseHeart } from '../../lib/p-english/learning-hearts';
+import { markItemReviewed } from '../../lib/p-english/lesson-progress';
 import { recordPracticeSessionMemory } from '../../lib/p-english/localSkillMemory';
 import { getPracticeSessionFeedback } from '../../lib/p-english/practiceSessionFeedback';
 import { PracticeSessionFeedbackCard } from './PracticeSessionFeedbackCard';
@@ -47,7 +48,7 @@ const SELECTED_VOCABULARY_IDS = [
   'goodbye',
 ];
 
-type TypingTaskType = 'listen-type' | 'fill-blank' | 'meaning-to-english';
+type TypingTaskType = 'listen-type' | 'fill-blank' | 'meaning-to-english' | 'sentence-repair';
 
 type TypingTask = {
   id: string;
@@ -59,6 +60,9 @@ type TypingTask = {
   hint?: string;
   sourceText?: string;
   meaningVi?: string;
+  correctionPrompt?: string;
+  sourceItemId?: string;
+  srsType?: 'typing';
 };
 
 type TaskResult = {
@@ -148,6 +152,8 @@ function buildTypingTasks(lesson: EnglishLesson): TypingTask[] {
     prompt: task.prompt,
     answer: task.answer,
     hint: task.hint,
+    sourceItemId: task.id,
+    srsType: 'typing',
   }));
 
   const vocabularyTasks = SELECTED_VOCABULARY_IDS.map((id) => lesson.vocabulary.find((item) => item.id === id))
@@ -161,18 +167,31 @@ function buildTypingTasks(lesson: EnglishLesson): TypingTask[] {
       sourceText: item.term,
     }));
 
-  return [...listeningTasks, ...fillBlankTasks, ...vocabularyTasks].slice(0, 16);
+  const sentenceRepairTasks = (lesson.commonMistakes ?? []).map((mistake): TypingTask => ({
+    id: `repair-${mistake.id}`,
+    type: 'sentence-repair',
+    label: 'Sửa câu sai',
+    prompt: mistake.mistake,
+    answer: mistake.correction,
+    correctionPrompt: mistake.explanationVi,
+    sourceItemId: mistake.id,
+    srsType: 'typing',
+  }));
+
+  return [...listeningTasks, ...fillBlankTasks, ...sentenceRepairTasks, ...vocabularyTasks];
 }
 
 function getTaskPrompt(task: TypingTask) {
   if (task.type === 'listen-type') return task.promptVi ?? 'Nghe và gõ lại câu tiếng Anh';
   if (task.type === 'fill-blank') return task.prompt ?? 'Điền phần còn thiếu';
+  if (task.type === 'sentence-repair') return task.prompt ?? 'Viết lại câu cho đúng';
   return task.meaningVi ?? 'Gõ cụm tiếng Anh';
 }
 
 function getPlaceholder(task: TypingTask) {
   if (task.type === 'listen-type') return 'Gõ câu bạn nghe được...';
   if (task.type === 'fill-blank') return 'Điền phần còn thiếu...';
+  if (task.type === 'sentence-repair') return 'Viết lại câu đúng...';
   return 'Gõ cụm tiếng Anh...';
 }
 
@@ -184,6 +203,7 @@ function getSummaryMessage(percentage: number) {
 
 export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: EnglishLesson; onWhaleMoodChange?: (mood: WhaleMood) => void }) {
   const allTasks = useMemo(() => buildTypingTasks(lesson), [lesson]);
+  const sessionId = useMemo(() => `${lesson.id}:typing:${Math.random().toString(36).slice(2)}`, [lesson.id]);
   const [activeTasks, setActiveTasks] = useState<TypingTask[]>(allTasks);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [started, setStarted] = useState(false);
@@ -232,6 +252,9 @@ export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: En
     }
 
     const isCorrect = normalizeAnswer(input) === normalizeAnswer(currentTask.answer);
+    if (currentTask.sourceItemId && currentTask.srsType) {
+      markItemReviewed(lesson.id, currentTask.sourceItemId, currentTask.srsType, isCorrect ? 'correct' : 'wrong', lesson.reviewPolicy.wrongAnswerDelayMinutes, sessionId, true);
+    }
     onWhaleMoodChange?.(isCorrect ? 'correct' : 'mistake');
     const hearts = isCorrect ? undefined : loseHeart('typing-wrong');
     setIsCurrentCorrect(isCorrect);
@@ -413,7 +436,7 @@ export function LessonTypingPractice({ lesson, onWhaleMoodChange }: { lesson: En
           <SimpleGrid columns={{ base: 1, md: 3 }} gap="3" mt="6">
             <SummaryMetric label="Tổng câu" value={allTasks.length} />
             <SummaryMetric label="Nghe và gõ" value={allTasks.filter((task) => task.type === 'listen-type').length} />
-            <SummaryMetric label="Điền chỗ trống" value={allTasks.filter((task) => task.type !== 'listen-type').length} />
+            <SummaryMetric label="Điền / sửa câu" value={allTasks.filter((task) => task.type === 'fill-blank' || task.type === 'sentence-repair').length} />
           </SimpleGrid>
           <Box mt="6" border="1px solid" borderColor="#FDE68A" bg="#FFFBEB" borderRadius="2xl" p="4">
             <Text color="#92400E" fontWeight="700">
@@ -587,6 +610,16 @@ function TaskPrompt({
       <Box border="1px solid" borderColor={COLORS.border} bg="#F8FAFC" borderRadius="2xl" p="5">
         <Text color={COLORS.muted} fontWeight="800">Điền vào chỗ trống</Text>
         <Text mt="2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="900" color={COLORS.text}>{task.prompt}</Text>
+      </Box>
+    );
+  }
+
+  if (task.type === 'sentence-repair') {
+    return (
+      <Box border="1px solid" borderColor={COLORS.border} bg="#F8FAFC" borderRadius="2xl" p="5">
+        <Text color={COLORS.muted} fontWeight="800">Câu đang có lỗi · hãy viết lại</Text>
+        <Text mt="2" fontSize={{ base: 'xl', md: '2xl' }} fontWeight="900" color={COLORS.text}>{task.prompt}</Text>
+        {checked && task.correctionPrompt ? <Text mt="3" color={COLORS.muted}>{task.correctionPrompt}</Text> : null}
       </Box>
     );
   }

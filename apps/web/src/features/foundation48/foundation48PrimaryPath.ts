@@ -366,7 +366,16 @@ function toIdText(value: string) {
 function makeLesson(seed: DaySeed): PooLesson {
   const stage = foundation48PrimaryStages.find((item) => item.id === seed.stageId) ?? foundation48PrimaryStages[0];
   const firstDialogueText = seed.dialogueLines.map(([, en]) => en).join(' ');
-  const correctQuizAnswer = seed.vocabulary[0]?.[1] ?? '';
+  const dialogueMeanings = seed.dialogueLines.map(([, , vi]) => vi);
+  const distractorMeanings = ['Bạn khỏe không?', 'Tôi cần giúp đỡ.', 'Cảm ơn bạn nhé.', 'Mình đang tìm đường.'];
+  const meaningChoices = (answerIndex: number) => {
+    const correctMeaning = dialogueMeanings[answerIndex] ?? dialogueMeanings[0] ?? '';
+    return [...new Set([
+      correctMeaning,
+      ...dialogueMeanings.filter((_, index) => index !== answerIndex),
+      ...distractorMeanings.filter((meaning) => meaning !== correctMeaning),
+    ])].slice(0, 4);
+  };
 
   return {
     id: `foundation48-day-${String(seed.day).padStart(2, '0')}-primary`,
@@ -421,10 +430,10 @@ function makeLesson(seed: DaySeed): PooLesson {
         questions: [
           {
             id: `d${seed.day}-listening-q1`,
-            questionVi: `Từ “${seed.vocabulary[0]?.[0] ?? 'hello'}” nghĩa là gì?`,
-            choices: [correctQuizAnswer, 'không biết', 'tạm biệt'].filter((item, index, arr) => arr.indexOf(item) === index),
-            correctAnswer: correctQuizAnswer,
-            explanationVi: `Trong bài, “${seed.vocabulary[0]?.[0]}” nghĩa là “${correctQuizAnswer}”.`,
+            questionVi: 'Câu đầu tiên trong hội thoại có ý nghĩa gần nhất là gì?',
+            choices: meaningChoices(0),
+            correctAnswer: dialogueMeanings[0] ?? '',
+            explanationVi: `Trong hội thoại: “${seed.dialogueLines[0]?.[1] ?? ''}” có nghĩa là “${dialogueMeanings[0] ?? ''}”.`,
           },
         ],
       },
@@ -446,12 +455,12 @@ function makeLesson(seed: DaySeed): PooLesson {
     ],
     quiz: [
       {
-        id: `d${seed.day}-quiz-vocab`,
+        id: `d${seed.day}-quiz-dialogue-detail`,
         type: 'multiple-choice',
-        promptVi: `“${seed.vocabulary[0]?.[0]}” nghĩa là gì?`,
-        choices: [correctQuizAnswer, 'xin lỗi', 'ngày mai'].filter((item, index, arr) => arr.indexOf(item) === index),
-        correctAnswer: correctQuizAnswer,
-        explanationVi: `“${seed.vocabulary[0]?.[0]}” = “${correctQuizAnswer}”.`,
+        promptVi: 'Câu tiếp theo trong hội thoại có ý nghĩa gần nhất là gì?',
+        choices: meaningChoices(1),
+        correctAnswer: dialogueMeanings[1] ?? dialogueMeanings[0] ?? '',
+        explanationVi: `Trong hội thoại: “${seed.dialogueLines[1]?.[1] ?? seed.dialogueLines[0]?.[1] ?? ''}” có nghĩa là “${dialogueMeanings[1] ?? dialogueMeanings[0] ?? ''}”.`,
       },
       {
         id: `d${seed.day}-quiz-speaking`,

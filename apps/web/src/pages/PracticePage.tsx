@@ -158,7 +158,19 @@ function getMistakeActionPath(mistake: LearningLoopMistakeRecord) {
     const day = Number(mistake.sourceId.replace('day-', ''));
     return Number.isFinite(day) && day > 0 ? getFoundation48DayPath(day) : FOUNDATION48_BASE_PATH;
   }
-  if (mistake.source === 'interactive-lesson') return `/practice?lessonId=${mistake.sourceId}&mode=quiz`;
+  if (mistake.source === 'interactive-lesson') {
+    const modeByMistakeType: Partial<Record<LearningLoopMistakeRecord['type'], LessonProgressMode>> = {
+      'multiple-choice': 'quiz',
+      'fill-blank': 'type',
+      'picture-response': 'type',
+      'sentence-order': 'type',
+      'listen-and-choose': 'listen',
+      'speaking-repeat': 'reflex',
+      'word-missed': 'flashcard',
+    };
+    const mode = modeByMistakeType[mistake.type] ?? 'quiz';
+    return `/practice?lessonId=${encodeURIComponent(mistake.sourceId)}&mode=${mode}`;
+  }
   if (mistake.source === 'shadowing') return '/shadowing';
   if (mistake.source === 'english-speed') return '/english-speed';
   if (mistake.source === 'words') return '/words';

@@ -281,6 +281,31 @@ button, input, select, textarea { font: inherit; }
 .bubble-streak-badge::after { content: ""; position: absolute; inset: -45% auto auto -35%; width: 42%; height: 190%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.52), transparent); transform: rotate(18deg); animation: bubble-streak-shimmer 5.2s ease-in-out infinite; pointer-events: none; }
 .bubble-streak-badge.is-compact { background: var(--soft-aqua, #DDF5FF); box-shadow: 0 10px 22px rgba(47, 158, 235, 0.08); }
 .bubble-streak-badge.is-full { animation: bubble-streak-bob 2.8s ease-in-out infinite, bubble-streak-full-pulse 2.8s ease-in-out infinite; }
+.bubble-streak-sponge-row { position: relative; }
+.bubble-streak-sponge { position: relative; display: inline-flex; transform-origin: center; animation: bubble-streak-sponge-bob 2.6s ease-in-out infinite; }
+.bubble-streak-sponge::after { content: ""; position: absolute; width: 4px; height: 4px; right: 1px; top: 0; border: 1px solid rgba(47, 158, 235, 0.46); border-radius: 50%; background: rgba(255,255,255,0.84); opacity: 0; animation: bubble-streak-sponge-bubble 3.6s ease-out infinite; pointer-events: none; }
+.learning-sponge-buddy { display: inline-flex; align-items: center; justify-content: center; isolation: isolate; }
+.learning-sponge-buddy::before,
+.learning-sponge-buddy::after { content: ""; position: absolute; z-index: -1; width: 5px; height: 5px; right: 0; top: 5px; border: 1px solid rgba(47, 158, 235, 0.5); border-radius: 50%; background: rgba(255,255,255,0.88); opacity: 0; pointer-events: none; animation: learning-sponge-bubble 2.8s ease-out infinite; }
+.learning-sponge-buddy::after { right: auto; left: 2px; top: 11px; width: 4px; height: 4px; animation-delay: 1.25s; }
+.learning-sponge-character { display: block; filter: drop-shadow(0 3px 4px rgba(17, 63, 116, 0.16)); animation: learning-sponge-float 2.6s ease-in-out infinite; transform-origin: center; }
+.learning-sponge-buddy.is-resting .learning-sponge-character { animation-duration: 4.2s; filter: saturate(0.78) drop-shadow(0 3px 4px rgba(17, 63, 116, 0.12)); }
+.learning-sponge-buddy.learning-sponge-hit:not(.is-lost) .learning-sponge-character { animation: learning-sponge-encourage 820ms ease-out 1; }
+.learning-sponge-buddy.learning-sponge-hit::before { animation-duration: 1.5s; animation-delay: 0ms; }
+.learning-sponge-buddy.learning-sponge-hit::after { animation-duration: 1.8s; animation-delay: 140ms; }
+.learning-sponge-buddy.is-restored .learning-sponge-character { animation: learning-sponge-restored 820ms cubic-bezier(.2,.8,.25,1) 1; }
+.learning-sponge-buddy.is-restored::before,
+.learning-sponge-buddy.is-restored::after { animation: learning-sponge-pop 820ms ease-out 1; }
+.learning-sponge-buddy.is-restored::after { animation-delay: 100ms; }
+.learning-sponge-buddy.is-lost .learning-sponge-character { animation: learning-sponge-lost 720ms ease-out 1; }
+.learning-sponge-buddy.is-lost::before,
+.learning-sponge-buddy.is-lost::after { animation: learning-sponge-pop 720ms ease-out 1 reverse; }
+.learning-sponge-buddy.is-lost::after { animation-delay: 80ms; }
+.ocean-mascot-bubbles { position: absolute; inset: 8% -4% 4%; pointer-events: none; overflow: visible; }
+.ocean-mascot-bubble { position: absolute; display: block; width: 9%; aspect-ratio: 1; border: 1px solid rgba(66, 183, 240, .68); border-radius: 50%; background: radial-gradient(circle at 32% 27%, rgba(255,255,255,.98) 0 12%, rgba(161,232,255,.58) 38%, rgba(63,174,236,.15) 75%); box-shadow: inset 0 0 3px rgba(255,255,255,.92), 0 1px 4px rgba(47,158,235,.12); opacity: 0; animation: ocean-mascot-bubble-rise 3.4s ease-out infinite; }
+.ocean-mascot-bubble-one { left: 8%; bottom: 28%; }
+.ocean-mascot-bubble-two { right: 5%; bottom: 36%; width: 7%; animation-delay: 1.1s; }
+.ocean-mascot-bubble-three { right: 20%; bottom: 12%; width: 5%; animation-delay: 2.2s; }
 .bubble-streak-stat { border: 1px solid rgba(186,230,253,0.86); border-radius: 18px; background: rgba(248,252,255,0.82); padding: 10px 12px; }
 .bubble-streak-progress { height: 10px; border-radius: 999px; overflow: hidden; border: 1px solid rgba(186,230,253,0.82); background: rgba(232,244,255,0.78); }
 .bubble-streak-progress-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #5BBCEB, #FFD95A, #66D9C8); transition: width .24s ease; animation: bubble-streak-water 3.8s ease-in-out infinite; }
@@ -289,6 +314,15 @@ button, input, select, textarea { font: inherit; }
 @keyframes bubble-streak-shimmer { 0%, 64% { left: -42%; opacity: 0; } 72% { opacity: 0.55; } 88% { left: 115%; opacity: 0; } 100% { left: 115%; opacity: 0; } }
 @keyframes bubble-streak-full-pulse { 0%, 100% { box-shadow: 0 12px 26px rgba(249, 185, 62, 0.12); } 50% { box-shadow: 0 14px 30px rgba(249, 185, 62, 0.22); } }
 @keyframes bubble-streak-water { 0%, 100% { filter: saturate(1); } 50% { filter: saturate(1.14) brightness(1.02); } }
+@keyframes bubble-streak-sponge-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
+@keyframes bubble-streak-sponge-bubble { 0%, 62%, 100% { opacity: 0; transform: translate(0, 3px) scale(0.75); } 70% { opacity: 0.8; } 90% { opacity: 0; transform: translate(2px, -7px) scale(1.12); } }
+@keyframes learning-sponge-float { 0%, 100% { transform: translateY(1px) rotate(-2deg); } 50% { transform: translateY(-2px) rotate(2deg); } }
+@keyframes learning-sponge-encourage { 0% { transform: scale(.82) rotate(-8deg); } 42% { transform: scale(1.12) rotate(6deg); } 72% { transform: scale(.96) rotate(-3deg); } 100% { transform: scale(1) rotate(0); } }
+@keyframes learning-sponge-bubble { 0%, 55%, 100% { opacity: 0; transform: translate(0, 3px) scale(.72); } 65% { opacity: .78; } 90% { opacity: 0; transform: translate(2px, -9px) scale(1.12); } }
+@keyframes learning-sponge-restored { 0% { transform: translateY(2px) scale(.82); } 48% { transform: translateY(-4px) scale(1.14); } 76% { transform: translateY(1px) scale(.96); } 100% { transform: translateY(0) scale(1); } }
+@keyframes learning-sponge-lost { 0%, 100% { transform: translateX(0) rotate(0) scale(1); } 20% { transform: translateX(-3px) rotate(-10deg) scale(.92); } 45% { transform: translateX(3px) rotate(9deg) scale(.9); } 68% { transform: translateX(-2px) rotate(-6deg) scale(.96); } 84% { transform: translateX(1px) rotate(3deg); } }
+@keyframes learning-sponge-pop { 0% { opacity: 0; transform: translate(0, 3px) scale(.5); } 34% { opacity: .9; } 100% { opacity: 0; transform: translate(3px, -10px) scale(1.2); } }
+@keyframes ocean-mascot-bubble-rise { 0%, 12% { opacity: 0; transform: translate3d(0, 4px, 0) scale(.72); } 25% { opacity: .82; } 82% { opacity: .38; } 100% { opacity: 0; transform: translate3d(4px, -18px, 0) scale(1.08); } }
 .streak-badge { background: rgba(232, 244, 255, 0.88); color: var(--streak-active); border: 1px solid rgba(47, 158, 235, 0.24); border-radius: 999px; padding: 8px 14px; font-weight: 800; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 10px 22px rgba(47, 158, 235, 0.08); }
 .streak-badge strong { color: var(--streak-active); }
 .streak-badge.inactive { background: rgba(241, 245, 249, 0.92); color: var(--streak-inactive); border-color: rgba(148, 163, 184, 0.34); box-shadow: 0 8px 18px rgba(100, 117, 138, 0.06); }
@@ -746,6 +780,15 @@ body[data-theme="dark"] .carousel-strip::-webkit-scrollbar-thumb {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .bubble-streak-badge,
+  .bubble-streak-badge::after,
+  .bubble-streak-sponge,
+  .bubble-streak-sponge::after,
+  .bubble-streak-progress-fill,
+  .learning-sponge-character,
+  .learning-sponge-buddy::before,
+  .learning-sponge-buddy::after,
+  .ocean-mascot-bubble,
   .pooPixelMascot,
   .pooPixelDecor,
   .shadowing-ocean-bubble,

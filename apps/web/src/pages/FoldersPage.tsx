@@ -3,7 +3,7 @@ import { Box, SimpleGrid, HStack, VStack, Flex, Text, Button, Icon, Tabs, TabLis
 import { Folder, ArrowUp, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { get } from '../api';
+import { API_BASE, get } from '../api';
 import { PooSystemState } from '../components/p-english/PooSystemState';
 
 const MotionBox = chakra(motion.div);
@@ -25,14 +25,18 @@ export function FoldersPage() {
   const [newest, setNewest] = useState<Folder[]>([]);
   const [trending, setTrending] = useState<Folder[]>([]);
   const [mine, setMine] = useState<Folder[]>([]);
-  const [pageStatus, setPageStatus] = useState<'loading' | 'error' | 'ready'>('loading');
+  const [pageStatus, setPageStatus] = useState<'loading' | 'error' | 'ready' | 'unavailable'>('loading');
 
   const loadFolders = useCallback(() => {
+    if (!API_BASE) {
+      setPageStatus('unavailable');
+      return;
+    }
     setPageStatus('loading');
     Promise.allSettled([
-      get<{ data: Folder[] }>('/folders/shared/newest').then((r: any) => r?.data ?? r ?? []),
-      get<{ data: Folder[] }>('/folders/shared/trending').then((r: any) => r?.data ?? r ?? []),
-      get<{ data: Folder[] }>('/folders').then((r: any) => r?.data ?? r ?? []),
+      get<unknown>('/folders/shared/newest').then(parseFolderList),
+      get<unknown>('/folders/shared/trending').then(parseFolderList),
+      get<unknown>('/folders').then(parseFolderList),
     ]).then((results) => {
       setNewest(results[0].status === 'fulfilled' ? results[0].value : []);
       setTrending(results[1].status === 'fulfilled' ? results[1].value : []);
@@ -57,8 +61,10 @@ export function FoldersPage() {
 
       {pageStatus === 'loading' ? (
         <PooSystemState variant="loading" title="Poo đang mở các thư mục..." description="Poo đang gom bộ từ của bạn và cộng đồng vào đúng ngăn." />
+      ) : pageStatus === 'unavailable' ? (
+        <PooSystemState variant="empty" title="Khu thư mục chưa được kết nối" description="Máy chủ học hiện chưa mở tính năng thư mục. Bạn vẫn có thể khám phá các bộ từ và lưu từ cần ôn trong sổ từ vựng." actionLabel="Mở sổ từ vựng" actionTo="/vocabularies" />
       ) : pageStatus === 'error' ? (
-        <PooSystemState variant="error" title="Poo chưa mở được các thư mục" description="Một phần dữ liệu chưa về kịp. Bạn tải lại để Poo gom đủ các thư mục nhé." actionLabel="Tải lại thư mục" onAction={loadFolders} />
+        <PooSystemState variant="error" title="Poo chưa mở được các thư mục" description="Máy chủ chưa gửi danh sách thư mục đúng định dạng. Bạn tải lại để Poo thử kết nối lần nữa nhé." actionLabel="Tải lại thư mục" onAction={loadFolders} />
       ) : (
         <Tabs colorScheme="blue" variant="soft-rounded">
           <TabList mb="4">
@@ -75,6 +81,14 @@ export function FoldersPage() {
       )}
     </Box>
   );
+}
+
+function parseFolderList(response: unknown): Folder[] {
+  const payload = response && typeof response === 'object' && 'data' in response
+    ? (response as { data?: unknown }).data
+    : response;
+  if (!Array.isArray(payload)) throw new TypeError('Folder list response must be an array.');
+  return payload as Folder[];
 }
 
 function FolderGrid({ items }: { items: Folder[] }) {

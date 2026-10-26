@@ -34,6 +34,7 @@ async function inspectPage(page, route, viewport) {
     const visibleTargets = safeTargets
       .map((element) => {
         if (element.closest('[data-testid="mobile-bottom-nav"]')) return null;
+        if (typeof element.checkVisibility === 'function' && !element.checkVisibility({ checkOpacity: true, checkVisibilityCSS: true })) return null;
 
         const rect = element.getBoundingClientRect();
         return {
@@ -66,7 +67,7 @@ async function inspectPage(page, route, viewport) {
       debugPoo: whale?.getAttribute('data-debug-poo') ?? null,
       swimmerDisplay: swimmerStyle?.display ?? null,
       swimmerOpacity: swimmerStyle?.opacity ?? null,
-      frameLoaded: imageLoaded && whaleImage.currentSrc.includes('/ocean/ambient-whale/frames/frame-'),
+      whaleAssetLoaded: imageLoaded && whaleImage.currentSrc.includes('/ocean/mascots/refined/poo-coach.webp'),
       bottomNavPresent: Boolean(bottomNav),
       bottomNavOverlapCount: navOverlapTargets.length,
       bottomNavOverlapTargets: navOverlapTargets.slice(0, 5),
@@ -127,7 +128,7 @@ async function main() {
       results.push({ viewport: viewport.name, consoleMessages: consoleMessages.slice(0, 30) });
     }
 
-    const whaleRequestFailures = failedRequests.filter((item) => item.includes('/ocean/ambient-whale/frames/'));
+    const whaleRequestFailures = failedRequests.filter((item) => item.includes('/ocean/mascots/refined/poo-coach.webp'));
     if (whaleRequestFailures.length > 0) {
       results.push({ viewport: viewport.name, whaleRequestFailures });
     }

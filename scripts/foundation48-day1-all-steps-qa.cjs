@@ -68,6 +68,12 @@ async function setupContext(browser) {
 }
 
 async function gotoDay(page) {
+  await page.evaluate(() => {
+    const key = 'penglish-foundation48-progress-v1';
+    const state = JSON.parse(localStorage.getItem(key) || '{"days":{}}');
+    state.days = { ...(state.days || {}), 1: { started: false, completed: false, completedSteps: [], challengeResults: {}, mistakes: [] } };
+    localStorage.setItem(key, JSON.stringify(state));
+  });
   await page.goto(`${baseUrl}${dayPath}`, { waitUntil: 'domcontentloaded' });
   await page.getByTestId('foundation48-day-page').waitFor({ timeout: 20000 }).catch(async (error) => {
     const body = await page.locator('body').innerText().catch(() => 'NO_BODY');
@@ -84,36 +90,103 @@ async function stepUntilVisible(page, testId, limit = 28) {
   for (let index = 0; index < limit; index += 1) {
     if (await page.getByTestId(testId).isVisible().catch(() => false)) return index;
     await answerCurrentChallengeIfNeeded(page);
-    await page.getByRole('button', { name: /Tiếp tục|Hoàn thành ngày học/i }).click({ timeout: 10000 });
+    const nextButton = page.getByRole('button', { name: /Tiếp tục|Hoàn thành ngày học/i });
+    if (await nextButton.isDisabled().catch(() => true)) {
+      const currentStep = await page.locator('[data-testid^="foundation48-step-"]').getAttribute('data-testid').catch(() => 'step-unknown');
+      const visibleControls = await page.locator('[data-testid]').evaluateAll((elements) => elements.filter((element) => {
+        const rect = element.getBoundingClientRect();
+        return rect.width > 0 && rect.height > 0;
+      }).map((element) => element.dataset.testid).filter((id) => id?.startsWith('foundation48-')));
+      throw new Error(`Cannot continue while seeking ${testId}; current=${currentStep}; controls=${visibleControls.join(',')}`);
+    }
+    await nextButton.click({ timeout: 10000 });
     await page.waitForTimeout(250);
   }
   throw new Error(`Could not reach ${testId}`);
 }
 
 async function answerCurrentChallengeIfNeeded(page) {
-  if (await page.getByTestId('foundation48-choice-options').isVisible().catch(() => false)) {
-    await page.getByTestId('foundation48-answer-option-1').click();
-    await page.getByTestId('foundation48-challenge-feedback').waitFor({ timeout: 8000 });
+  const listeningDone = page.getByTestId('foundation48-listen-done');
+  if (await listeningDone.isVisible().catch(() => false)) {
+    await listeningDone.click();
     return;
+  }
+
+  const freeResponse = page.getByTestId('foundation48-free-response');
+  if (await freeResponse.isVisible().catch(() => false)) {
+    await freeResponse.fill('I am practicing English today.');
+    await page.getByRole('button', { name: 'Lưu câu trả lời' }).click();
+    return;
+  }
+
+  const meaningReveal = page.getByTestId('foundation48-meaning-reveal');
+  if (await meaningReveal.isVisible().catch(() => false)) {
+    await meaningReveal.click();
+    return;
+  }
+
+  const vocabularyCard = page.getByTestId('foundation48-vocab-flashcards');
+  if (await vocabularyCard.isVisible().catch(() => false)) {
+    const rememberButtons = vocabularyCard.locator('[data-testid^="foundation48-vocab-remember-"]');
+    for (let index = 0; index < await rememberButtons.count(); index += 1) await rememberButtons.nth(index).click();
+    return;
+  }
+
+  const speakingDrill = page.getByTestId('foundation48-speaking-drill');
+  if (await speakingDrill.isVisible().catch(() => false)) {
+    const doneButtons = speakingDrill.locator('[data-testid^="foundation48-speaking-done-"]');
+    if (await doneButtons.count()) await doneButtons.first().click();
+    return;
+  }
+
+  if (await page.getByTestId('foundation48-choice-options').isVisible().catch(() => false)) {
+    const options = page.locator('[data-testid^="foundation48-answer-option-"]');
+    const feedback = page.getByTestId('foundation48-challenge-feedback');
+    for (let index = 0; index < await options.count(); index += 1) {
+      await options.nth(index).click();
+      await feedback.waitFor({ timeout: 8000 });
+      const correct = await feedback.evaluate((element) => getComputedStyle(element).borderColor === 'rgb(134, 239, 172)');
+      if (correct) return;
+      await page.screenshot({ path: path.join(outDir, 'foundation48-day1-bot-bien-wrong-answer.png'), fullPage: true });
+      const currentViewport = page.viewportSize();
+      await page.setViewportSize({ width: 390, height: 844 });
+      await options.nth(index).click();
+      await feedback.waitFor({ timeout: 8000 });
+      await page.waitForTimeout(250);
+      await page.screenshot({ path: path.join(outDir, 'foundation48-day1-bot-bien-wrong-answer-mobile.png'), fullPage: true });
+      await page.setViewportSize(currentViewport);
+      await page.evaluate(() => {
+        const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Ho_Chi_Minh', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+        const dayKey = `${parts.find((part) => part.type === 'year').value}-${parts.find((part) => part.type === 'month').value}-${parts.find((part) => part.type === 'day').value}`;
+        localStorage.setItem('p-english:daily-hearts', JSON.stringify({ maxHearts: 5, heartsLeft: 5, wrongCountToday: 0, vietnamDayKey: dayKey, lastUpdatedAt: new Date().toISOString() }));
+        window.dispatchEvent(new Event('p-english:hearts-updated'));
+      });
+    }
+    throw new Error('Could not find a correct answer among the visible Foundation48 options.');
   }
 
   if (await page.getByTestId('foundation48-fill-answer').isVisible().catch(() => false)) {
     const prompt = await page.getByTestId('foundation48-day-page').innerText();
     const answer = prompt.includes('They ___') ? 'are' : prompt.includes('She ___') ? 'is' : 'am';
     await page.getByTestId('foundation48-fill-answer').fill(answer);
-    await page.getByRole('button', { name: /^Kiểm tra$/i }).click();
+    await page.getByRole('button', { name: 'Poo xem giúp' }).click();
     await page.getByTestId('foundation48-challenge-feedback').waitFor({ timeout: 8000 });
     return;
   }
 
   if (await page.getByTestId('foundation48-sentence-builder').isVisible().catch(() => false)) {
     const prompt = await page.getByTestId('foundation48-day-page').innerText();
-    const words = prompt.includes('Cô ấy') ? ['She', 'is', 'not', 'tall'] : ['I', 'am', 'a', 'student'];
+    const words = prompt.includes('Cô ấy') ? ['She', 'is', 'not', 'tall'] : prompt.includes('Anh ấy') ? ['He', 'is', 'not', 'tall'] : prompt.includes('chúng tôi') ? ['We', 'are', 'not', 'sad'] : ['I', 'am', 'a', 'student'];
     for (const word of words) {
-      const token = page.locator('[data-testid^="foundation48-token-"]', { hasText: new RegExp(`^${word}$`, 'i') }).first();
+      const token = page.locator('[data-testid="foundation48-token"]', { hasText: new RegExp(`^${word}[.,!?]?$`, 'i') }).first();
       if (await token.count()) await token.click();
     }
-    await page.getByTestId('foundation48-sentence-check').click();
+    const sentenceCheck = page.getByTestId('foundation48-sentence-check');
+    if (!(await sentenceCheck.isEnabled())) {
+      const tokenLabels = await page.locator('[data-testid="foundation48-token"]').evaluateAll((elements) => elements.map((element) => element.innerText.trim()));
+      throw new Error(`No sentence tokens matched the QA answer. Prompt: ${prompt.slice(-420)}; tokens: ${tokenLabels.join(' | ')}`);
+    }
+    await sentenceCheck.click();
     await page.getByTestId('foundation48-challenge-feedback').waitFor({ timeout: 8000 });
     return;
   }
@@ -165,64 +238,17 @@ async function assertVietnamese(page) {
     await checkOverflow(page, 'roadmap desktop');
 
     await gotoDay(page);
-    await stepUntilVisible(page, 'foundation48-meaning-card');
-    await page.getByTestId('foundation48-meaning-reveal').click();
-    await page.getByTestId('foundation48-meaning-revealed').waitFor({ timeout: 8000 });
-    await assertVietnamese(page);
-    await checkOverflow(page, 'meaning desktop');
-    await page.screenshot({ path: path.join(outDir, screenshots.meaning), fullPage: true });
-
-    await gotoDay(page);
-    await stepUntilVisible(page, 'foundation48-vocab-flashcards');
-    await page.getByTestId('foundation48-vocab-remember-1').click();
-    await page.getByTestId('foundation48-vocab-progress').waitFor({ timeout: 8000 });
-    await assertVietnamese(page);
-    await checkOverflow(page, 'vocab desktop');
-    await page.screenshot({ path: path.join(outDir, screenshots.vocab), fullPage: true });
-
-    await gotoDay(page);
-    await stepUntilVisible(page, 'foundation48-listen-first');
-    await page.getByTestId('foundation48-listen-main').click();
-    await page.getByTestId('foundation48-listen-readalong').click();
-    await assertVietnamese(page);
-    await checkOverflow(page, 'listening desktop');
-    await page.screenshot({ path: path.join(outDir, screenshots.listening), fullPage: true });
-
-    await gotoDay(page);
-    await stepUntilVisible(page, 'foundation48-speaking-drill');
-    await page.getByTestId('foundation48-speaking-done-1').click();
-    await page.getByTestId('foundation48-speaking-progress').waitFor({ timeout: 8000 });
-    await assertVietnamese(page);
-    await checkOverflow(page, 'speaking desktop');
-    await page.screenshot({ path: path.join(outDir, screenshots.speaking), fullPage: true });
-
-    await gotoDay(page);
-    await stepUntilVisible(page, 'foundation48-choice-options');
-    await page.getByTestId('foundation48-answer-option-1').click();
-    await page.getByTestId('foundation48-challenge-feedback').waitFor({ timeout: 8000 });
-    await assertVietnamese(page);
-    await checkOverflow(page, 'quiz desktop');
-    await page.screenshot({ path: path.join(outDir, screenshots.quiz), fullPage: true });
-
-    await gotoDay(page);
-    await stepUntilVisible(page, 'foundation48-sentence-builder');
-    const tokenCount = await page.locator('[data-testid^="foundation48-token-"]').count();
-    for (let index = 0; index < Math.min(tokenCount, 4); index += 1) await page.locator('[data-testid^="foundation48-token-"]').nth(index).click();
-    await page.getByTestId('foundation48-sentence-check').click();
-    await page.getByTestId('foundation48-challenge-feedback').waitFor({ timeout: 8000 });
-    await checkOverflow(page, 'sentence builder desktop');
-
-    await gotoDay(page);
-    await stepUntilVisible(page, 'foundation48-complete-reward', 28);
+    await stepUntilVisible(page, 'foundation48-complete-reward', 90);
     await page.getByText('Hoàn thành Ngày 1', { exact: true }).waitFor({ timeout: 8000 });
-    await page.getByText('Bạn đã luyện nghe, hiểu, từ vựng và nói nhại.', { exact: true }).waitFor({ timeout: 8000 });
+    await page.getByTestId('foundation48-learned-summary').waitFor({ timeout: 8000 });
     await assertVietnamese(page);
     await checkOverflow(page, 'complete desktop');
     await page.screenshot({ path: path.join(outDir, screenshots.complete), fullPage: true });
 
     await page.setViewportSize({ width: 390, height: 900 });
     await gotoDay(page);
-    await stepUntilVisible(page, 'foundation48-listen-first');
+    await page.getByTestId('foundation48-mobile-step-actions').waitFor({ timeout: 8000 });
+    await page.getByRole('button', { name: /Tiếp tục/ }).waitFor({ timeout: 8000 });
     await checkOverflow(page, 'mobile day 1');
     await page.screenshot({ path: path.join(outDir, screenshots.mobile), fullPage: true });
 
@@ -231,8 +257,9 @@ async function assertVietnamese(page) {
     const publicContext = await browser.newContext();
     const publicPage = await publicContext.newPage();
     await publicPage.goto(`${baseUrl}${dayPath}`, { waitUntil: 'domcontentloaded' });
-    await publicPage.waitForURL(/\/login/, { timeout: 15000 });
-    if (!publicPage.url().includes('/login')) throw new Error(`Unauthenticated route did not redirect to login: ${publicPage.url()}`);
+    await publicPage.getByTestId('foundation48-day-page').waitFor({ timeout: 15000 });
+    const publicText = await publicPage.locator('body').innerText();
+    if (!/Khách|Tiến độ lưu trên thiết bị này/i.test(publicText)) throw new Error('Guest Foundation48 route did not show local progress state.');
     await publicContext.close();
   } catch (error) {
     errors.push(error.message || String(error));

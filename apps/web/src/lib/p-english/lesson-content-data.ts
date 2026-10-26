@@ -130,6 +130,16 @@ export type ReviewRules = {
   priorityRule: string;
 };
 
+export type ReviewPolicy = {
+  inLessonRetryLimit: number;
+  wrongAnswerDelayMinutes: number;
+  familiarAfterCorrectSessions: number;
+  masteredAfterCorrectSessions: number;
+  retryPromptMode: 'reading-evidence' | 'grammar-pattern' | 'real-life-context';
+  wrongAnswerAction: 'show-reading-evidence' | 'show-explanation-and-retry' | 'replay-slow-with-transcript' | 'repeat-context-phrases' | 'same-session-recall';
+  priorityStrategy: 'recent-mistakes-first' | 'recent-mistakes-and-weak-keywords' | 'phrases-before-single-words' | 'target-phrases-before-details';
+};
+
 export type CompletionCriteria = {
   flashcardsReviewed: number;
   minimumQuizCorrect: number;
@@ -181,6 +191,9 @@ export type GameMission = {
   title: string;
   instructionVi: string;
   successCriteria: string;
+  completion?:
+    | { kind: 'correct'; sourceItemIds: string[]; minimum: number }
+    | { kind: 'complete'; sourceItemIds: string[]; minimum: number };
 };
 
 export type FinalMiniChallenge = {
@@ -221,6 +234,7 @@ export type EnglishLesson = {
   whaleCoachLines?: string[];
   finalMiniChallenge?: FinalMiniChallenge;
   reviewRules: ReviewRules;
+  reviewPolicy: ReviewPolicy;
   completionCriteria: CompletionCriteria;
 };
 
@@ -824,6 +838,7 @@ export const pEnglishLessons: EnglishLesson[] = [
       ifCorrectThreeTimesAcrossSessions: 'Nếu trả lời đúng 3 lần qua nhiều phiên, đánh dấu là đã học.',
       priorityRule: 'Ưu tiên luyện các cụm trước từ đơn lẻ.',
     },
+    reviewPolicy: { inLessonRetryLimit: 3, wrongAnswerDelayMinutes: 10, familiarAfterCorrectSessions: 2, masteredAfterCorrectSessions: 3, retryPromptMode: 'real-life-context', wrongAnswerAction: 'same-session-recall', priorityStrategy: 'phrases-before-single-words' },
     completionCriteria: {
       flashcardsReviewed: 18,
       minimumQuizCorrect: 8,
@@ -940,10 +955,11 @@ export const pEnglishLessons: EnglishLesson[] = [
       { id: 'a1-classmate-situation-class', title: 'Ngày đầu vào lớp', scenarioVi: 'Bạn vào lớp mới và cần hỏi chỗ ngồi còn trống.', usefulPhrases: ['I am new here.', 'Is this seat free?', 'You can sit here.'] },
       { id: 'a1-classmate-situation-role-swap', title: 'Giúp một bạn mới', scenarioVi: 'Một bạn mới ngồi cạnh bạn. Hãy xác nhận chỗ trống, chỉ trang sách và bắt đầu làm việc theo cặp.', usefulPhrases: ['Are you new here?', 'You can sit here.', 'Open your book to page ten.', 'We have pair work today.'] },
     ],
-    gameMissions: [{ id: 'a1-classmate-mission-listen', title: 'Bắt 5 từ khóa lớp học', instructionVi: 'Nghe mỗi câu ít nhất 2 lần và ghi nhớ từ khóa chính trước khi xem lời thoại.', successCriteria: 'Trả lời đúng ít nhất 4/5 câu nghe.' }],
+    gameMissions: [{ id: 'a1-classmate-mission-listen', title: 'Bắt 5 từ khóa lớp học', instructionVi: 'Nghe mỗi câu ít nhất 2 lần và ghi nhớ từ khóa chính trước khi xem lời thoại.', successCriteria: 'Trả lời đúng ít nhất 4/5 câu nghe.', completion: { kind: 'correct', sourceItemIds: ['a1-classmate-listen-new', 'a1-classmate-listen-seat', 'a1-classmate-listen-sit', 'a1-classmate-listen-page', 'a1-classmate-listen-pair-work'], minimum: 4 } }],
     whaleCoachLines: ['Nghe từ khóa trước, xem lời thoại sau.', 'Nếu nghe nhầm seat/sit, hãy bấm Nghe chậm một lần nữa.'],
     finalMiniChallenge: { id: 'a1-classmate-final', title: 'Tự giới thiệu với bạn mới', instructionVi: 'Nói 3 câu: mình mới ở đây, hỏi chỗ ngồi, cảm ơn.', targetOutput: ['I am new here.', 'Is this seat free?', 'Thank you.'] },
     reviewRules: { newWordReviewAfterMinutes: 10, ifWrong: 'Nếu sai câu nghe, phát lại ở tốc độ chậm và hiện lời thoại sau khi chọn đáp án.', ifCorrectTwice: 'Nếu đúng 2 lần, chuyển sang phản xạ nói câu đó.', ifCorrectThreeTimesAcrossSessions: 'Nếu đúng 3 phiên, đưa cụm vào nhóm đã quen.', priorityRule: 'Ưu tiên cụm giao tiếp lớp học trước từ đơn.' },
+    reviewPolicy: { inLessonRetryLimit: 3, wrongAnswerDelayMinutes: 10, familiarAfterCorrectSessions: 2, masteredAfterCorrectSessions: 3, retryPromptMode: 'real-life-context', wrongAnswerAction: 'replay-slow-with-transcript', priorityStrategy: 'target-phrases-before-details' },
     completionCriteria: { flashcardsReviewed: 10, minimumQuizCorrect: 4, totalQuizQuestions: 5, minimumReflexPromptsCompleted: 3, totalReflexPrompts: 5, minimumListeningOrDialogueRepeats: 3 },
   },
   {
@@ -1005,10 +1021,11 @@ export const pEnglishLessons: EnglishLesson[] = [
       { id: 'a1-drink-situation-cafe', title: 'Gọi đồ ở quán nước', scenarioVi: 'Bạn muốn xem thực đơn, gọi cà phê nhỏ và hỏi giá.', usefulPhrases: ['Can I see the menu?', 'One small coffee, please.', 'How much is it?'] },
       { id: 'a1-drink-situation-change-order', title: 'Đổi món hoặc kích cỡ', scenarioVi: 'Quán hết cà phê nhỏ. Hãy đổi sang trà lớn, gọi thêm nước lạnh và hỏi tổng giá.', usefulPhrases: ['A large tea, please.', 'Cold water, please.', 'Anything else?', 'How much is it?'] },
     ],
-    gameMissions: [{ id: 'a1-drink-mission-listen', title: 'Bắt tên đồ uống và giá', instructionVi: 'Nghe mỗi câu trước khi xem lời thoại, tập trung vào tên đồ uống/kích cỡ/giá.', successCriteria: 'Trả lời đúng ít nhất 4/5 câu nghe.' }],
+    gameMissions: [{ id: 'a1-drink-mission-listen', title: 'Bắt tên đồ uống và giá', instructionVi: 'Nghe mỗi câu trước khi xem lời thoại, tập trung vào tên đồ uống/kích cỡ/giá.', successCriteria: 'Trả lời đúng ít nhất 4/5 câu nghe.', completion: { kind: 'correct', sourceItemIds: ['a1-drink-listen-menu', 'a1-drink-listen-coffee', 'a1-drink-listen-size', 'a1-drink-listen-water', 'a1-drink-listen-price'], minimum: 4 } }],
     whaleCoachLines: ['Trong quán nước, hãy nghe tên đồ uống trước, chi tiết kích cỡ sau.', 'Nếu bỏ lỡ “small/large”, nghe chậm rồi chọn lại.'],
     finalMiniChallenge: { id: 'a1-drink-final', title: 'Gọi một đồ uống', instructionVi: 'Nói 3 câu: xin xem menu, gọi đồ uống, hỏi giá.', targetOutput: ['Can I see the menu?', 'One small coffee, please.', 'How much is it?'] },
     reviewRules: { newWordReviewAfterMinutes: 10, ifWrong: 'Nếu sai câu nghe, hiện lại câu có đồ uống/kích cỡ trong phiên học.', ifCorrectTwice: 'Nếu đúng 2 lần, chuyển sang phản xạ gọi món.', ifCorrectThreeTimesAcrossSessions: 'Nếu đúng 3 phiên, đánh dấu cụm gọi món là đã quen.', priorityRule: 'Ưu tiên cụm gọi món lịch sự trước từ đơn.' },
+    reviewPolicy: { inLessonRetryLimit: 3, wrongAnswerDelayMinutes: 10, familiarAfterCorrectSessions: 2, masteredAfterCorrectSessions: 3, retryPromptMode: 'real-life-context', wrongAnswerAction: 'repeat-context-phrases', priorityStrategy: 'target-phrases-before-details' },
     completionCriteria: { flashcardsReviewed: 10, minimumQuizCorrect: 4, totalQuizQuestions: 5, minimumReflexPromptsCompleted: 3, totalReflexPrompts: 5, minimumListeningOrDialogueRepeats: 3 },
   },
   {
@@ -1120,6 +1137,7 @@ export const pEnglishLessons: EnglishLesson[] = [
       ifCorrectThreeTimesAcrossSessions: 'Nếu trả lời đúng 3 lần qua nhiều phiên, đánh dấu là đã học.',
       priorityRule: 'Ưu tiên luyện cụm giới thiệu người thân/bạn bè trước khi mở rộng tính từ mô tả.',
     },
+    reviewPolicy: { inLessonRetryLimit: 3, wrongAnswerDelayMinutes: 10, familiarAfterCorrectSessions: 2, masteredAfterCorrectSessions: 3, retryPromptMode: 'real-life-context', wrongAnswerAction: 'repeat-context-phrases', priorityStrategy: 'target-phrases-before-details' },
     commonMistakes: [
       { id: 'unit-2-mistake-this-is-my-vs-i-have', mistake: 'Nói “I have a mother” khi muốn giới thiệu.', correction: 'Nói “This is my mother.” khi chỉ người; “I have a brother.” khi nói số lượng.', explanationVi: 'Giới thiệu người dùng “This is my + người.” Khi muốn nói mình có bao nhiêu người thân thì mới dùng “have”.' },
       { id: 'unit-2-mistake-he-she-confusion', mistake: 'Nói “This is he.” khi giới thiệu mẹ hoặc bạn gái.', correction: 'Nói “This is she.” cho người nữ, “This is he.” cho người nam.', explanationVi: '“he” = người nam, “she” = người nữ. Nhìn người trước khi chọn đại từ.' },
@@ -1244,6 +1262,7 @@ export const pEnglishLessons: EnglishLesson[] = [
       ifCorrectThreeTimesAcrossSessions: 'Nếu trả lời đúng 3 lần qua nhiều phiên, đánh dấu là đã học.',
       priorityRule: 'Ưu tiên cụm giao tiếp lớp học như “Can I borrow...?” và “Can you help me...?” trước khi mở rộng thêm môn học.',
     },
+    reviewPolicy: { inLessonRetryLimit: 3, wrongAnswerDelayMinutes: 10, familiarAfterCorrectSessions: 2, masteredAfterCorrectSessions: 3, retryPromptMode: 'real-life-context', wrongAnswerAction: 'repeat-context-phrases', priorityStrategy: 'target-phrases-before-details' },
     commonMistakes: [
       { id: 'unit-3-mistake-borrow-vs-lend', mistake: 'Nói “Can I lend your pencil?”', correction: 'Nói “Can I borrow your pencil?”', explanationVi: '“borrow” = mượn (mình lấy về), “lend” = cho mượn (mình đưa đi). Khi xin thì luôn dùng “borrow”.' },
       { id: 'unit-3-mistake-homework-plural', mistake: 'Nói “I have many homeworks.”', correction: 'Nói “I have a lot of homework.”', explanationVi: '“homework” là danh từ không đếm được, không thêm “s” và không dùng “many”.' },

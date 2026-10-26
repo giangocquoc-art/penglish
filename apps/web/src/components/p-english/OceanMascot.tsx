@@ -1,7 +1,7 @@
-import { useState, type CSSProperties } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { Box, Image, type BoxProps } from '@chakra-ui/react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { getOceanMascotPose, oceanMascots, type OceanMascotName, type OceanMascotPoseName } from '../../lib/p-english/oceanAssets';
+import { getOceanMascotFallbackPose, getOceanMascotPose, oceanMascots, type OceanMascotName, type OceanMascotPoseName } from '../../lib/p-english/oceanAssets';
 
 export type OceanMascotSize = 'xs' | 'sm' | 'md' | 'lg' | 'hero';
 export type OceanMascotMotion = 'none' | 'float' | 'pulse' | 'celebrate' | 'swim';
@@ -13,6 +13,7 @@ export type OceanMascotProps<TMascot extends OceanMascotName = OceanMascotName> 
   alt?: string;
   motion?: OceanMascotMotion;
   pose?: OceanMascotPoseName<TMascot>;
+  imageLoading?: 'eager' | 'lazy';
 };
 
 const sizeMap: Record<OceanMascotSize, BoxProps['w']> = {
@@ -31,22 +32,30 @@ const motionClass: Record<OceanMascotMotion, string> = {
   swim: 'ocean-mascot-swim',
 };
 
-export function OceanMascot<TMascot extends OceanMascotName>({ mascot, size = 'md', decorative = false, alt, motion = 'float', pose, className, ...props }: OceanMascotProps<TMascot>) {
+export function OceanMascot<TMascot extends OceanMascotName>({ mascot, size = 'md', decorative = false, alt, motion = 'float', pose, imageLoading = 'lazy', className, ...props }: OceanMascotProps<TMascot>) {
   const [hidden, setHidden] = useState(false);
+  const [usingFallback, setUsingFallback] = useState(false);
   const reducedMotion = useReducedMotion();
   const asset = oceanMascots[mascot];
-
-  if (!asset || hidden) return null;
-
   const resolvedAlt = decorative ? '' : alt ?? asset.alt;
   const resolvedMotion = reducedMotion ? 'none' : motion;
   const resolvedPose = pose ?? asset.defaultPose;
   const src = getOceanMascotPose(mascot, resolvedPose as OceanMascotPoseName<TMascot>);
+  const fallbackSrc = getOceanMascotFallbackPose(mascot, resolvedPose as OceanMascotPoseName<TMascot>);
+  const hasBubbleEffect = mascot === 'botBien' && resolvedMotion !== 'none';
+
+  useEffect(() => {
+    setHidden(false);
+    setUsingFallback(false);
+  }, [src]);
+
+  if (!asset || hidden) return null;
 
   return (
     <Box
       className={['ocean-mascot', motionClass[resolvedMotion], className].filter(Boolean).join(' ')}
       w={sizeMap[size]}
+      position="relative"
       flexShrink={0}
       pointerEvents={decorative ? 'none' : props.pointerEvents}
       aria-hidden={decorative ? true : undefined}
@@ -60,12 +69,15 @@ export function OceanMascot<TMascot extends OceanMascotName>({ mascot, size = 'm
       {...props}
     >
       <Image
-        src={src}
+        src={usingFallback && fallbackSrc ? fallbackSrc : src}
         alt={resolvedAlt}
         draggable={false}
-        loading="eager"
-        decoding="sync"
-        onError={() => setHidden(true)}
+        loading={imageLoading}
+        decoding="async"
+        onError={() => {
+          if (!usingFallback && fallbackSrc) setUsingFallback(true);
+          else setHidden(true);
+        }}
         w="100%"
         h="auto"
         display="block"
@@ -73,6 +85,13 @@ export function OceanMascot<TMascot extends OceanMascotName>({ mascot, size = 'm
         userSelect="none"
         filter="drop-shadow(0 16px 24px rgba(31, 111, 214, 0.12))"
       />
+      {hasBubbleEffect ? (
+        <Box className="ocean-mascot-bubbles" aria-hidden="true">
+          <span className="ocean-mascot-bubble ocean-mascot-bubble-one" />
+          <span className="ocean-mascot-bubble ocean-mascot-bubble-two" />
+          <span className="ocean-mascot-bubble ocean-mascot-bubble-three" />
+        </Box>
+      ) : null}
     </Box>
   );
 }

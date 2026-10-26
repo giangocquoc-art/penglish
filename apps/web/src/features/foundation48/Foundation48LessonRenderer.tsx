@@ -29,7 +29,7 @@ export function Foundation48LessonRenderer({ day }: { day: Foundation48Day }) {
       <VStack align="stretch" gap="3" data-testid="foundation48-polished-lesson">
         <HeroLessonCard day={day} />
         <Section title="Mục tiêu hôm nay" body={lesson.goal} mascot="poo" pose="coach" />
-        <Section title="Poo giải thích nhanh" body={lesson.explanation} mascot="mucMo" pose="teacher" />
+        <Section title="Mực Mơ giải thích nhanh" body={lesson.explanation} mascot="mucMo" pose="teacher" />
         <ListSection title="Công thức / mẫu câu" items={lesson.formulas} mascot="mucMo" />
         <ListSection title="Ví dụ dễ nhớ" items={lesson.examples} mascot="poo" />
         <ListSection title="Luyện tập" items={lesson.practiceQuestions} mascot="cuaQuiz" />

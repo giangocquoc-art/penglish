@@ -70,7 +70,7 @@ export type Foundation48Day = Foundation48SourceDay & {
   summary: Foundation48LessonSummary;
 };
 
-export type Foundation48ChallengeType = 'multiple-choice' | 'fill-blank' | 'sentence-order' | 'listen-and-choose' | 'speaking-repeat';
+export type Foundation48ChallengeType = 'multiple-choice' | 'fill-blank' | 'picture-response' | 'sentence-order' | 'listen-and-choose' | 'speaking-repeat' | 'free-response';
 
 export type Foundation48LessonStepType = 'intro' | 'explain' | 'example' | 'practice' | 'listening' | 'speaking' | 'challenge' | 'complete';
 
@@ -80,15 +80,25 @@ export type Foundation48Challenge = {
   prompt: string;
   target: string;
   answer: string;
+  acceptableAnswers?: string[];
   options?: string[];
+  phraseBank?: string[];
   tokens?: string[];
   hint?: string;
   explanation?: string;
+  selfCheckOnly?: boolean;
+  scoreEligible?: boolean;
+  audioSrc?: string;
+  audioLabel?: string;
+  speakText?: string;
+  picture?: { src: string; alt: string; panel: number; gridColumns?: number; gridRows?: number };
 };
 
 export type Foundation48LessonStep = {
   id: string;
   type: Foundation48LessonStepType;
+  /** Extra authored practice that can be skipped after the daily mission. */
+  isBonus?: boolean;
   title: string;
   subtitle?: string;
   body?: string;
@@ -113,14 +123,23 @@ export type Foundation48MistakeItem = {
 
 export type Foundation48ChallengeResult = {
   challengeId: string;
-  correct: boolean;
+  /** null means the result is an unscored speaking or open-response task. */
+  correct: boolean | null;
   answer: string;
   updatedAt: string;
+  successRewarded?: boolean;
+  /** Preserve the first scored attempt when later retries update the current result. */
+  firstAttemptCorrect?: boolean | null;
+  firstAttemptAnswer?: string;
+  /** Speaking is only scored when a reliable speech-recognition result is available. */
+  scoreEligible?: boolean;
 };
 
 export type Foundation48ProgressDay = {
   started?: boolean;
   completed?: boolean;
+  /** Stable per-learner question draw; keeps an in-progress day unchanged after reload. */
+  exerciseSeed?: string;
   completedSteps?: string[];
   miniTestScore?: number;
   challengeResults?: Record<string, Foundation48ChallengeResult>;

@@ -42,6 +42,7 @@ export type GeneratedReadingVocabularyFocus = {
   partOfSpeechOrType: string;
   example: string;
   exampleMeaningVi: string;
+  pronunciation?: string;
 };
 
 export type GeneratedReadingLessonSource = {
@@ -64,6 +65,7 @@ export type GeneratedReadingLessonSource = {
   fillBlankTasks: GeneratedReadingFillBlankTask[];
   sentenceOrderingTasks: GeneratedReadingSentenceOrderingTask[];
   vocabularyFocus: GeneratedReadingVocabularyFocus[];
+  speakingFocusExamples?: Array<{ text: string; meaningVi: string }>;
   whaleCoachLines: string[];
   source: GeneratedReadingSourceMetadata;
 };

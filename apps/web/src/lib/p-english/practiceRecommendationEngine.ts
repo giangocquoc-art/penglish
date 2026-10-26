@@ -1,5 +1,5 @@
 import type { EnglishLesson } from './lesson-content-data';
-import { calculateLessonProgressSummary, getAvailableLessonProgressModes, type LessonProgress, type LessonProgressMode } from './lesson-progress';
+import { calculateLessonProgressSummary, getAvailableLessonProgressModes, getDueReviewItems, type LessonProgress, type LessonProgressMode } from './lesson-progress';
 import { getResolvedLessonEnhancement, type ResolvedLessonEnhancement } from './lessonEnrichmentEngine';
 
 export type PracticeRecommendation = {
@@ -46,20 +46,30 @@ function modeUrl(lessonId: string, mode?: LessonProgressMode, extra = '') {
   return mode ? `/practice?lessonId=${lessonId}&mode=${mode}${extra}` : `/lessons/${lessonId}`;
 }
 
+function modeForReviewItem(itemUrl: string): LessonProgressMode | null {
+  const mode = new URLSearchParams(itemUrl.split('?')[1] || '').get('mode');
+  return mode === 'typing' ? 'type' : mode === 'flashcard' || mode === 'quiz' || mode === 'listen' || mode === 'reflex' || mode === 'type' || mode === 'match' || mode === 'speed' ? mode : null;
+}
+
 export function getPracticeRecommendation(lesson: EnglishLesson, progress: LessonProgress | null): PracticeRecommendation {
   const enhancement = getResolvedLessonEnhancement(lesson);
   const availableModes = getAvailableLessonProgressModes(lesson);
   const orderedModes = orderModesByEnhancement(availableModes, enhancement);
   const summary = calculateLessonProgressSummary(progress, lesson);
+  const dueReviewItems = getDueReviewItems(lesson.id, lesson);
+  const nextDueReviewItem = dueReviewItems.find((item) => {
+    const mode = modeForReviewItem(item.practiceUrl);
+    return mode && availableModes.includes(mode);
+  });
 
   let primaryMode = orderedModes[0];
   let reasonVi = enhancement.matchReasonVi;
   let urlExtra = '';
 
-  if (summary.dueReviewCount > 0 && availableModes.includes('flashcard')) {
-    primaryMode = 'flashcard';
-    urlExtra = '&review=due';
-    reasonVi = `Có ${summary.dueReviewCount} mục đến hạn ôn, nên ôn nhanh trước khi học tiếp.`;
+  if (nextDueReviewItem) {
+    primaryMode = modeForReviewItem(nextDueReviewItem.practiceUrl) ?? primaryMode;
+    urlExtra = primaryMode === 'flashcard' || primaryMode === 'listen' || primaryMode === 'match' ? '&review=due' : '';
+    reasonVi = `Có ${summary.dueReviewCount} mục đến hạn ôn; Poo gợi ý ôn theo dạng ${MODE_LABELS[primaryMode].toLowerCase()}.`;
   } else if (summary.weakReviewCount > 0) {
     primaryMode = pickPreferredAvailableMode(enhancement.recommendedFlow, availableModes);
     reasonVi = `Có ${summary.weakReviewCount} mục còn yếu, nên luyện phần phù hợp nhất để củng cố.`;

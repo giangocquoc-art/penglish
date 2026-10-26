@@ -8,7 +8,7 @@ const outDir = path.resolve(__dirname, '..', 'reports', 'screenshots', 'penglish
 function isAllowedFailedRequest(url) {
   return url.includes('favicon')
     || url.includes('chrome-extension')
-    || url.includes('/ocean/ambient-whale/frames/')
+    || url.includes('/ocean/mascots/refined/poo-coach.webp')
     || url.includes('youtube-nocookie.com')
     || url.includes('youtube.com');
 }

@@ -170,6 +170,7 @@ export function validateLessonContent(lesson: EnglishLesson): LessonContentValid
     if (item.type === 'multiple-choice') {
       const options = item.options ?? [];
       if (options.length < 2) pushWarning(warnings, lessonId, 'warning', 'quiz', 'Multiple-choice question should have at least 2 options.', item.id);
+      if (new Set(options.map(normalizeText)).size !== options.length) pushWarning(warnings, lessonId, 'error', 'quiz', 'Multiple-choice options should be unique after normalization.', item.id);
       if (!options.includes(answerToText(item.answer))) pushWarning(warnings, lessonId, 'error', 'quiz', 'Multiple-choice answer is not present in options.', item.id);
       if (isBlank(item.explanationVi)) pushWarning(warnings, lessonId, 'warning', 'quiz', 'Multiple-choice explanationVi is missing.', item.id);
     }
@@ -213,6 +214,7 @@ export function validateLessonContent(lesson: EnglishLesson): LessonContentValid
     if (isBlank(item.text)) pushWarning(warnings, lessonId, 'error', 'listening', 'Listening text is required.', item.id);
     if (isBlank(item.question)) pushWarning(warnings, lessonId, 'error', 'listening', 'Listening question is required.', item.id);
     if (!item.options.includes(item.answer)) pushWarning(warnings, lessonId, 'error', 'listening', 'Listening answer is not present in options.', item.id);
+    if (new Set(item.options.map(normalizeText)).size !== item.options.length) pushWarning(warnings, lessonId, 'error', 'listening', 'Listening options should be unique after normalization.', item.id);
     const wordCount = item.text.split(/\s+/).filter(Boolean).length;
     const listeningLimit = maxListeningWordCount(lesson);
     if (listeningLimit !== null && wordCount > listeningLimit) {

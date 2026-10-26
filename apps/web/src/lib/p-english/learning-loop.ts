@@ -1,6 +1,6 @@
 import { LOCAL_PROGRESS_UPDATED_EVENT } from './local-progress';
 
-export type LearningLoopMistakeType = 'multiple-choice' | 'fill-blank' | 'sentence-order' | 'listen-and-choose' | 'speaking-repeat' | 'listening-skipped' | 'shadowing-low-similarity' | 'speed-weak' | 'word-missed';
+export type LearningLoopMistakeType = 'multiple-choice' | 'fill-blank' | 'picture-response' | 'sentence-order' | 'listen-and-choose' | 'speaking-repeat' | 'listening-skipped' | 'shadowing-low-similarity' | 'speed-weak' | 'word-missed';
 
 export type LearningLoopSource = 'foundation48' | 'interactive-lesson' | 'practice' | 'words' | 'shadowing' | 'english-speed';
 
@@ -103,18 +103,22 @@ function getStorage() {
   }
 }
 
-function toLocalDateKey(date = new Date()) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+function toVietnamDateKey(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date);
+  const part = (type: string) => parts.find((value) => value.type === type)?.value || '00';
+  return `${part('year')}-${part('month')}-${part('day')}`;
 }
 
 function parseDateKey(value?: string) {
   if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
   const [year, month, day] = value.split('-').map(Number);
-  const date = new Date(year, month - 1, day);
-  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
   return date;
 }
 
@@ -224,7 +228,7 @@ export function recordLearningLoopActivity(source: LearningLoopSource, sourceId:
   const cleanSourceId = sourceId.trim();
   if (!cleanSourceId) return getLearningLoopState();
   const now = new Date();
-  const today = toLocalDateKey(now);
+  const today = toVietnamDateKey(now);
   const current = getLearningLoopState();
   const diff = dayDiff(current.lastActiveDate, today);
   const firstActivityToday = current.lastActiveDate !== today;

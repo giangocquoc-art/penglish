@@ -35,7 +35,7 @@ async function main() {
 
     foundationDays.push({
       dayNumber: day.dayNumber,
-      challenges: primary ?? deepChallenges,
+      challenges: deepChallenges.length ? deepChallenges : primary ?? [],
     });
   }
 

@@ -5,10 +5,7 @@ import { Topbar as ChakraTopbar, Shell as ChakraShell } from './components/Topba
 import { Box, Button, Center, HStack, Stack, Text, VStack } from '@chakra-ui/react';
 import { OceanMascot } from './components/p-english/OceanMascot';
 import { RouteMetadataUpdater } from './components/seo/RouteMetadataUpdater';
-import { REVIEW_SEO_PATHS } from './data/reviewSeoPages';
-import { SEO_PAGE_PATHS } from './data/seoPagesData';
-import { LESSON_SEO_PATHS } from './data/lessonSeoPages';
-import { seoV4Routes } from './data/seoV4Top1Pages';
+import { LESSON_SEO_PATHS, REVIEW_SEO_PATHS, SEO_PAGE_PATHS, seoV4Routes } from './data/seoRouteManifest';
 import { GlobalEasterEggs } from './components/easter-eggs/GlobalEasterEggs';
 import { AuthProvider, useAuth } from './features/auth/AuthProvider';
 import { avatarFromUser, displayNameFromUser } from './lib/p-english/userSession';

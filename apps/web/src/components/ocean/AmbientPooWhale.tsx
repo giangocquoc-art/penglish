@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Box, Image, Text, type BoxProps } from '@chakra-ui/react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
@@ -41,14 +41,10 @@ type AmbientWhaleRoutePreset = {
 };
 
 export type AmbientPooWhaleProps = Omit<BoxProps, 'children'> & {
-  frameCount?: number;
-  frameIntervalMs?: number;
   preset?: AmbientPooWhalePresetName;
 };
 
-const DEFAULT_FRAME_COUNT = 16;
-const DEFAULT_FRAME_INTERVAL_MS = 150;
-const FRAME_BASE_PATH = '/ocean/ambient-whale/frames';
+const AMBIENT_WHALE_IMAGE = '/ocean/mascots/refined/poo-coach.webp';
 
 const DEFAULT_AMBIENT_WHALE_PRESET_NAME: AmbientPooWhalePresetName = 'dashboard';
 
@@ -211,24 +207,26 @@ export const AMBIENT_WHALE_ROUTE_PRESETS: Record<AmbientPooWhalePresetName, Ambi
   },
 };
 
-function getFramePath(index: number) {
-  return `${FRAME_BASE_PATH}/frame-${String(index).padStart(2, '0')}.png`;
-}
-
 function readDebugPoo() {
   if (typeof window === 'undefined') return false;
   return new URLSearchParams(window.location.search).get('debugPoo') === '1';
 }
 
-export function AmbientPooWhale({ frameCount = DEFAULT_FRAME_COUNT, frameIntervalMs = DEFAULT_FRAME_INTERVAL_MS, preset = 'dashboard', className, ...props }: AmbientPooWhaleProps) {
+export function AmbientPooWhale({ preset = 'dashboard', className, ...props }: AmbientPooWhaleProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const whaleRef = useRef<HTMLDivElement | null>(null);
   const reducedMotion = useReducedMotion();
-  const [activeFrame, setActiveFrame] = useState(0);
+  const [desktopViewport, setDesktopViewport] = useState(false);
   const [debugPoo, setDebugPoo] = useState(readDebugPoo);
   const activePreset = AMBIENT_WHALE_ROUTE_PRESETS[preset] ?? AMBIENT_WHALE_ROUTE_PRESETS[DEFAULT_AMBIENT_WHALE_PRESET_NAME];
 
-  const frames = useMemo(() => Array.from({ length: Math.max(1, frameCount) }, (_, index) => getFramePath(index)), [frameCount]);
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 768px)');
+    const syncViewport = () => setDesktopViewport(media.matches);
+    syncViewport();
+    media.addEventListener('change', syncViewport);
+    return () => media.removeEventListener('change', syncViewport);
+  }, []);
 
   useEffect(() => {
     const syncDebugState = () => setDebugPoo(readDebugPoo());
@@ -243,19 +241,6 @@ export function AmbientPooWhale({ frameCount = DEFAULT_FRAME_COUNT, frameInterva
   useEffect(() => {
     setDebugPoo(readDebugPoo());
   }, [preset]);
-
-  useEffect(() => {
-    if (reducedMotion || frames.length <= 1) {
-      setActiveFrame(0);
-      return undefined;
-    }
-
-    const interval = window.setInterval(() => {
-      setActiveFrame((current) => (current + 1) % frames.length);
-    }, Math.max(120, Math.min(180, frameIntervalMs)));
-
-    return () => window.clearInterval(interval);
-  }, [frameIntervalMs, frames.length, reducedMotion]);
 
   useGSAP(
     () => {
@@ -326,6 +311,9 @@ export function AmbientPooWhale({ frameCount = DEFAULT_FRAME_COUNT, frameInterva
     { scope: rootRef, dependencies: [activePreset, debugPoo, reducedMotion], revertOnUpdate: true },
   );
 
+  // The decorative whale is hidden on mobile or disabled presets; keep its single optimized asset off those routes.
+  if (!desktopViewport || activePreset.display === 'none') return null;
+
   return (
     <Box
       ref={rootRef}
@@ -366,10 +354,10 @@ export function AmbientPooWhale({ frameCount = DEFAULT_FRAME_COUNT, frameInterva
         }}
       >
         <Image
-          src={reducedMotion ? frames[0] : frames[activeFrame]}
+          src={AMBIENT_WHALE_IMAGE}
           alt=""
           draggable={false}
-          loading="eager"
+          loading="lazy"
           decoding="async"
           w="100%"
           h="auto"

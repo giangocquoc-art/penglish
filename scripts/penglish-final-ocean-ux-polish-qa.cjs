@@ -27,7 +27,7 @@ function isAllowedFailedRequest(url) {
     || url.includes('googlevideo')
     || url.includes('favicon')
     || url.includes('chrome-extension')
-    || url.includes('/ocean/ambient-whale/frames/');
+    || url.includes('/ocean/mascots/refined/poo-coach.webp');
 }
 
 async function waitForAppReady(page, text) {

@@ -80,11 +80,13 @@ function normalizeState(input: Partial<LearningHeartsState> | null | undefined, 
   if (!input || typeof input !== 'object') return fallback;
 
   const lastUpdatedAt = typeof input.lastUpdatedAt === 'string' && !Number.isNaN(new Date(input.lastUpdatedAt).getTime()) ? input.lastUpdatedAt : fallback.lastUpdatedAt;
+  const currentVietnamDayKey = getVietnamDayKey(now);
+  const isSameVietnamDay = input.vietnamDayKey === currentVietnamDayKey;
   const base: LearningHeartsState = {
     maxHearts: MAX_DAILY_HEARTS,
     heartsLeft: normalizeBubbleCount(input.heartsLeft, MAX_DAILY_HEARTS),
-    wrongCountToday: Math.max(0, Number(input.wrongCountToday ?? 0)),
-    vietnamDayKey: typeof input.vietnamDayKey === 'string' ? input.vietnamDayKey : fallback.vietnamDayKey,
+    wrongCountToday: isSameVietnamDay ? Math.max(0, Number(input.wrongCountToday ?? 0)) : 0,
+    vietnamDayKey: currentVietnamDayKey,
     lockedUntilVietnamMidnight: undefined,
     lastUpdatedAt,
   };

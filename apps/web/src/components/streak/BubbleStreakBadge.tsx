@@ -1,7 +1,9 @@
-import { HStack, Icon, Text } from '@chakra-ui/react';
+import { Box, HStack, Icon, Text } from '@chakra-ui/react';
 import { Droplets, Waves } from 'lucide-react';
 import { getUnifiedBubbles, getWaterStreak, type DailyRewardState, type UnifiedBubbleStreak, type UnifiedWaterStreak } from '../../lib/p-english/daily-rewards';
 import { OCEAN_TOKENS } from '../p-english/OceanBackdrop';
+import { SpongeIcon } from '../learning/SpongeIcon';
+import { OceanMascot } from '../p-english/OceanMascot';
 
 type BubbleStreakBadgeProps = {
   state?: Partial<DailyRewardState> | null;
@@ -14,6 +16,7 @@ type BubbleStreakBadgeProps = {
 export function BubbleStreakBadge({ state, streak, compact = false, showLabel = true, testId = 'bubble-streak-badge' }: BubbleStreakBadgeProps) {
   const unified = streak ?? getUnifiedBubbles(state);
   const motionKey = `${unified.current}-${unified.max}-${unified.progressPercent}`;
+  const sponges = Array.from({ length: unified.max }, (_, index) => index < unified.current);
 
   return (
     <HStack
@@ -29,7 +32,23 @@ export function BubbleStreakBadge({ state, streak, compact = false, showLabel = 
       aria-label={unified.label}
       title={unified.label}
     >
-      <Icon as={Droplets} boxSize={compact ? '4' : '4.5'} color={OCEAN_TOKENS.oceanBlue} flexShrink={0} />
+      <OceanMascot
+        mascot="botBien"
+        pose="encourage"
+        size="xs"
+        decorative
+        motion="float"
+        className="bubble-streak-mascot"
+        w={compact ? '34px' : '40px'}
+        aria-hidden="true"
+      />
+      <HStack className="bubble-streak-sponge-row" gap="0" flexShrink={0} aria-hidden="true">
+        {sponges.map((active, index) => (
+          <Box key={index} className="bubble-streak-sponge" style={{ animationDelay: `${index * 90}ms` }}>
+            <SpongeIcon active={active} compact size={compact ? 14 : 16} />
+          </Box>
+        ))}
+      </HStack>
       <Text fontSize={compact ? 'sm' : { base: 'xs', md: 'sm' }} fontWeight={compact ? '850' : '800'} noOfLines={1}>
         {showLabel ? unified.label : `${unified.current}/${unified.max}`}
       </Text>

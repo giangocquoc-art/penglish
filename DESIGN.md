@@ -4,6 +4,23 @@ This is the highest-priority product/design rule file for P-English.
 
 Before changing UI, learning flow, Shadowing, Vocabulary, English Speed, Learning Path, Practice, dashboard, or shared components, every AI coding agent must read and follow this file.
 
+## 0. Required image-and-code workflow
+
+Every visual UI upgrade must combine a generated or purpose-made image asset with code changes. Do not claim or ship a visual upgrade that changes only CSS, markup, or component code.
+
+Before creating an image:
+- Gather the surrounding layout context: the page purpose, target viewport, neighboring content, available space, visual hierarchy, existing design tokens, and current mascot/brand assets.
+- Generate only the specific visual component that needs improvement, in the correct aspect ratio and with transparent background when it will sit inside the interface.
+- Preserve the existing P-English identity and make sure the image supports the task rather than competing with the content.
+
+When integrating the image:
+- Reuse existing assets and rendering components where they fit; add no new dependency for visual decoration.
+- Keep files appropriately sized and compressed for fast delivery on Vercel. Prefer responsive modern formats when the current asset pipeline supports them, and retain a practical fallback where needed.
+- Avoid eagerly loading below-the-fold decorative images. Respect reduced motion and provide meaningful alternative text for informative images.
+- Review the rendered page with the asset at mobile and desktop sizes to catch cropping, overlap, contrast, and loading problems.
+
+If an image cannot be generated or integrated, do not present a code-only visual adjustment as a completed UI upgrade; report the limitation and leave that upgrade unfinished.
+
 ## 1. Product identity
 
 P-English is a Vietnamese-first English learning web app.

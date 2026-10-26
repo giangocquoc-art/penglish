@@ -18,6 +18,19 @@ function getStorage(): Storage | null {
 }
 
 function todayKey(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date);
+  const part = (type: string) => parts.find((value) => value.type === type)?.value || '00';
+  return `${part('year')}-${part('month')}-${part('day')}`;
+}
+
+function previousDayKey(dayKey: string) {
+  const date = new Date(`${dayKey}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() - 1);
   return date.toISOString().slice(0, 10);
 }
 
@@ -34,9 +47,7 @@ function getNextStreak(current: Foundation48ProgressState) {
   const today = todayKey();
   if (current.lastStudiedDate === today) return current.streak || 1;
 
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  if (current.lastStudiedDate === todayKey(yesterday)) return (current.streak || 0) + 1;
+  if (current.lastStudiedDate === previousDayKey(today)) return (current.streak || 0) + 1;
 
   return 1;
 }
@@ -97,15 +108,15 @@ function syncFoundation48Activity(dayNumber: number, xp = 3) {
   syncFoundation48Words(dayNumber);
 }
 
-function touchProgress(state: Foundation48ProgressState, dayNumber: number, day: Foundation48ProgressDay) {
+function touchProgress(state: Foundation48ProgressState, dayNumber: number, day: Foundation48ProgressDay, learningActivity = true) {
   const now = new Date().toISOString();
   return {
+    ...state,
     lastDayOpened: dayNumber,
-    lastStudiedDate: todayKey(),
-    streak: getNextStreak(state),
+    ...(learningActivity ? { lastStudiedDate: todayKey(), streak: getNextStreak(state) } : {}),
     days: {
       ...state.days,
-      [dayNumber]: { ...day, started: true, lastStudiedAt: now },
+      [dayNumber]: { ...day, started: true, ...(learningActivity ? { lastStudiedAt: now } : {}) },
     },
   };
 }
@@ -117,8 +128,13 @@ export function getFoundation48DayProgress(dayNumber: number): Foundation48Progr
 export function markFoundation48Started(dayNumber: number) {
   const state = getFoundation48Progress();
   const current = normalizeDay(state.days[dayNumber]);
-  saveFoundation48Progress(touchProgress(state, dayNumber, current));
-  syncFoundation48Activity(dayNumber, 2);
+  const freshAttempt = !current.started && !current.completed && !current.completedSteps?.length && !Object.keys(current.challengeResults || {}).length;
+  const exerciseSeed = current.exerciseSeed || (freshAttempt
+    ? `f48-${dayNumber}-${globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`}`
+    : `f48-${dayNumber}-legacy`);
+  // Route mount remembers the day and seed but cannot advance the study streak.
+  saveFoundation48Progress(touchProgress(state, dayNumber, { ...current, exerciseSeed }, false));
+  syncFoundation48Words(dayNumber);
 }
 
 function saveSignedInFoundation48Day(dayNumber: number, day: Foundation48ProgressDay) {
@@ -148,25 +164,33 @@ export function markFoundation48StepCompleted(dayNumber: number, stepId: string)
   const state = getFoundation48Progress();
   const current = normalizeDay(state.days[dayNumber]);
   const completedSteps = new Set(current.completedSteps || []);
+  const isFirstCompletion = !completedSteps.has(stepId);
   completedSteps.add(stepId);
   const nextDay = { ...current, completedSteps: Array.from(completedSteps) };
   saveFoundation48Progress(touchProgress(state, dayNumber, nextDay));
   saveSignedInFoundation48Day(dayNumber, nextDay);
-  syncFoundation48Activity(dayNumber, 1);
+  syncFoundation48Activity(dayNumber, isFirstCompletion ? 1 : 0);
 }
 
-export function recordFoundation48ChallengeResult(dayNumber: number, challenge: Foundation48Challenge, correct: boolean, answer: string) {
+export function recordFoundation48ChallengeResult(dayNumber: number, challenge: Foundation48Challenge, correct: boolean | null, answer: string) {
   const state = getFoundation48Progress();
   const current = normalizeDay(state.days[dayNumber]);
   const now = new Date().toISOString();
+  const previousResult = current.challengeResults?.[challenge.id];
+  const successRewarded = Boolean(previousResult?.successRewarded || (correct === true && previousResult?.correct !== true));
+  const firstAttemptCorrect = previousResult && Object.prototype.hasOwnProperty.call(previousResult, 'firstAttemptCorrect')
+    ? previousResult.firstAttemptCorrect
+    : previousResult?.correct ?? correct;
+  const firstAttemptAnswer = previousResult?.firstAttemptAnswer ?? previousResult?.answer ?? answer;
+  const scoreEligible = previousResult?.scoreEligible ?? challenge.scoreEligible ?? challenge.type !== 'speaking-repeat';
   const challengeResults = {
     ...(current.challengeResults || {}),
-    [challenge.id]: { challengeId: challenge.id, correct, answer, updatedAt: now },
+    [challenge.id]: { challengeId: challenge.id, correct, answer, updatedAt: now, successRewarded, firstAttemptCorrect, firstAttemptAnswer, scoreEligible },
   };
   const existingMistakes = current.mistakes || [];
   const mistakeId = `${dayNumber}-${challenge.id}`;
   const previousMistake = existingMistakes.find((item) => item.id === mistakeId);
-  const mistakes = correct
+  const mistakes = correct !== false
     ? existingMistakes.map((item) => item.id === mistakeId ? { ...item, resolved: true } : item)
     : [
         ...existingMistakes.filter((item) => item.id !== mistakeId),
@@ -185,17 +209,26 @@ export function recordFoundation48ChallengeResult(dayNumber: number, challenge: 
           resolved: false,
         } satisfies Foundation48MistakeItem,
       ];
-  const total = Object.keys(challengeResults).length;
-  const right = Object.values(challengeResults).filter((item) => item.correct).length;
+  const scoredResults = Object.values(challengeResults).filter((item) => item.scoreEligible !== false && (item.firstAttemptCorrect ?? item.correct) !== null);
+  const total = scoredResults.length;
+  const right = scoredResults.filter((item) => (item.firstAttemptCorrect ?? item.correct) === true).length;
   const score = total > 0 ? Math.round((right / total) * 100) : current.score;
 
   const nextDay = { ...current, challengeResults, mistakes, score };
   saveFoundation48Progress(touchProgress(state, dayNumber, nextDay));
   saveSignedInFoundation48Day(dayNumber, nextDay);
-  syncFoundation48Activity(dayNumber, correct ? 4 : 1);
-  if (correct) {
+  // Award the success bonus once, even if the learner reopens or resubmits a challenge.
+  // A first wrong attempt earns the retry encouragement once. Reopening an
+  // already-scored challenge must not create an XP loop after its success bonus.
+  const earnedXp = correct === true && !previousResult?.successRewarded
+    ? 4
+    : correct === false && !previousResult
+      ? 1
+      : 0;
+  syncFoundation48Activity(dayNumber, earnedXp);
+  if (correct === true) {
     resolveLearningLoopMistake(mistakeId);
-  } else {
+  } else if (correct === false && challenge.type !== 'free-response') {
     recordLearningLoopMistake({
       id: mistakeId,
       source: 'foundation48',
@@ -213,11 +246,13 @@ export function recordFoundation48ChallengeResult(dayNumber: number, challenge: 
 export function markFoundation48Completed(dayNumber: number, stepIds: string[] = [], miniTestScore?: number) {
   const state = getFoundation48Progress();
   const current = normalizeDay(state.days[dayNumber]);
+  const isFirstCompletion = !current.completed;
   const completedSteps = new Set([...(current.completedSteps || []), ...stepIds]);
-  const nextDay = { ...current, started: true, completed: true, completedAt: new Date().toISOString(), completedSteps: Array.from(completedSteps), miniTestScore: miniTestScore ?? current.miniTestScore };
+  const nextDay = { ...current, started: true, completed: true, completedAt: new Date().toISOString(), completedSteps: Array.from(completedSteps), score: miniTestScore ?? current.score, miniTestScore: miniTestScore ?? current.miniTestScore };
   saveFoundation48Progress(touchProgress(state, dayNumber, nextDay));
   saveSignedInFoundation48Day(dayNumber, nextDay);
-  markLearningLoopCompleted('foundation48', `day-${dayNumber}`, 25);
+  if (isFirstCompletion) markLearningLoopCompleted('foundation48', `day-${dayNumber}`, 25);
+  else syncFoundation48Activity(dayNumber, 0);
   syncFoundation48Words(dayNumber);
 }
 

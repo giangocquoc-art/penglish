@@ -87,6 +87,22 @@ export function ensureShuffledDifferentFromOriginal<T>(tokens: readonly T[], max
   return fallback;
 }
 
+export function shuffleChoiceOptions<T>(options: readonly T[], correctOption: T, seed: string | number = 'choice-randomization') {
+  const shuffled = shuffleArrayStableCopy(options, seed);
+  if (shuffled.length < 2) return shuffled;
+
+  if (itemsEqualByPosition(options, shuffled)) {
+    [shuffled[0], shuffled[1]] = [shuffled[1], shuffled[0]];
+  }
+
+  if (shuffled[0] === correctOption) {
+    const correctIndex = 1 + (hashSeed(`${seed}::correct-position`) % (shuffled.length - 1));
+    [shuffled[0], shuffled[correctIndex]] = [shuffled[correctIndex], shuffled[0]];
+  }
+
+  return shuffled;
+}
+
 export function createSentenceOrderTokens(words: readonly string[], questionId = 'sentence-order'): SentenceOrderToken[] {
   return words.map((word, index) => ({
     id: `${questionId}::${index}::${normalizeToken(word) || 'token'}`,

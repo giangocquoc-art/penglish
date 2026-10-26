@@ -275,13 +275,19 @@ function createLessonDepthLayers(lesson: EnglishLesson): UnifiedLessonDepthLayer
   const reviewCount = lesson.completionCriteria.totalQuizQuestions + lesson.completionCriteria.totalReflexPrompts + lesson.completionCriteria.flashcardsReviewed;
   const mistakeCount = (lesson.commonMistakes?.length ?? 0);
   const multimodalCount = (lesson.shadowingScript ? 1 : 0) + (lesson.englishSpeedPrompts?.length ?? 0) + (lesson.gameMissions?.length ?? 0) + lesson.pronunciationNotes.length;
+  // Reading lessons intentionally start with three vocabulary entries plus three sentence chunks.
+  // Score that authored six-item starter kit against its own target instead of a larger grammar/communication bank.
+  const chunkTarget = lesson.id.startsWith('reading-') ? 12 : 14;
+  // A reading bridge includes three retell prompts, one cloze and one sentence-order action plus its capstone.
+  // Six outputs form the complete authored starter loop for this lesson family.
+  const outputTarget = lesson.id.startsWith('reading-') ? 6 : 8;
   const layers: UnifiedLessonDepthLayer[] = [
     { key: 'objective', labelVi: 'Mục tiêu', itemCount: objectiveCount, score: toLayerScore(objectiveCount, 4, lesson.learningObjectives.some((objective) => /can|able|tự|nói|viết|nghe|hỏi/i.test(objective)) ? 8 : 0), evidenceVi: `${objectiveCount} mục tiêu học`, actionVi: 'Viết mục tiêu rõ theo đầu ra nói/viết/nghe.', isStrong: false },
-    { key: 'chunk', labelVi: 'Cụm từ', itemCount: chunkCount, score: toLayerScore(chunkCount, 14), evidenceVi: `${chunkCount} từ/cụm`, actionVi: 'Thêm cụm từ có ví dụ và phát âm để khởi động bài.', isStrong: false },
+    { key: 'chunk', labelVi: 'Cụm từ', itemCount: chunkCount, score: toLayerScore(chunkCount, chunkTarget), evidenceVi: `${chunkCount} từ/cụm`, actionVi: 'Thêm cụm từ có ví dụ và phát âm để khởi động bài.', isStrong: false },
     { key: 'pattern', labelVi: 'Mẫu câu', itemCount: patternCount, score: toLayerScore(patternCount, 5), evidenceVi: `${patternCount} mẫu/ngữ pháp`, actionVi: 'Bổ sung mẫu thay thế được để người học tự tạo câu.', isStrong: false },
     { key: 'context', labelVi: 'Ngữ cảnh', itemCount: contextCount, score: toLayerScore(contextCount, 4), evidenceVi: `${contextCount} hội thoại/tình huống`, actionVi: 'Thêm tình huống thật để nối từ vựng với hành động.', isStrong: false },
     { key: 'audio', labelVi: 'Âm thanh', itemCount: audioCount, score: toLayerScore(audioCount, 8), evidenceVi: `${audioCount} câu nghe/phát âm`, actionVi: 'Thêm câu nghe hoặc ghi chú phát âm cho nhịp nói.', isStrong: false },
-    { key: 'output', labelVi: 'Luyện nói/viết', itemCount: outputCount, score: toLayerScore(outputCount, 8, lesson.finalMiniChallenge ? 8 : 0), evidenceVi: `${outputCount} câu nói/viết`, actionVi: 'Thêm câu nói hoặc câu gõ để người học dùng được kiến thức.', isStrong: false },
+    { key: 'output', labelVi: 'Luyện nói/viết', itemCount: outputCount, score: toLayerScore(outputCount, outputTarget, lesson.finalMiniChallenge ? 8 : 0), evidenceVi: `${outputCount} câu nói/viết`, actionVi: 'Thêm câu nói hoặc câu gõ để người học dùng được kiến thức.', isStrong: false },
     { key: 'assessment', labelVi: 'Kiểm tra', itemCount: assessmentCount, score: toLayerScore(assessmentCount, 8), evidenceVi: `${assessmentCount} câu kiểm tra/ghép cặp`, actionVi: 'Thêm câu kiểm tra để phát hiện điểm yếu.', isStrong: false },
     { key: 'review', labelVi: 'Ôn lại', itemCount: reviewCount, score: toLayerScore(reviewCount, 12, lesson.reviewRules.newWordReviewAfterMinutes > 0 ? 8 : 0), evidenceVi: `${reviewCount} tiêu chí ôn`, actionVi: 'Gắn tiêu chí hoàn thành và lịch ôn rõ hơn.', isStrong: false },
     { key: 'mistake', labelVi: 'Lỗi hay sai', itemCount: mistakeCount, score: toLayerScore(mistakeCount, 3), evidenceVi: `${mistakeCount} lỗi/ghi chú tránh sai`, actionVi: 'Thêm lỗi thường gặp để Poo sửa chủ động.', isStrong: false },

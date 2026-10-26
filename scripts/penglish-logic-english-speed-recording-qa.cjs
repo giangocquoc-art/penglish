@@ -8,7 +8,7 @@ const outDir = path.resolve(__dirname, '..', 'reports', 'screenshots', 'penglish
 function isAllowedFailedRequest(url) {
   return url.includes('favicon')
     || url.includes('chrome-extension')
-    || url.includes('/ocean/ambient-whale/frames/');
+    || url.includes('/ocean/mascots/refined/poo-coach.webp');
 }
 
 async function waitForEnglishSpeed(page) {
@@ -76,7 +76,7 @@ async function assertNoUploadRequests(page, action, errors) {
   await action();
   await page.waitForTimeout(500);
   page.off('request', listener);
-  const unexpected = uploadRequests.filter((item) => !item.includes('/ocean/ambient-whale/frames/') && !item.includes('favicon'));
+  const unexpected = uploadRequests.filter((item) => !item.includes('/ocean/mascots/refined/poo-coach.webp') && !item.includes('favicon'));
   if (unexpected.length) errors.push(`unexpected upload/network request during recording:\n${unexpected.join('\n')}`);
 }
 

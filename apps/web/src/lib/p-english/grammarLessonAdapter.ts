@@ -5,6 +5,7 @@ import type { EnglishLesson, LessonLevel, QuizQuestion, SentenceOrderingTask, Fi
 type GrammarExample = {
   text: string;
   meaningVi: string;
+  pronunciation?: string;
 };
 
 function getGrammarExamples(source: GeneratedGrammarLessonSource): GrammarExample[] {
@@ -91,9 +92,10 @@ function buildGrammarVocabulary(source: GeneratedGrammarLessonSource): Vocabular
     difficulty: source.level === 'A1' || source.level === 'A2' ? 'easy' : 'medium',
     tags: ['grammar', source.level, source.source.sourcePatternId, 'pattern'],
   };
-  const exampleVocabulary = safeExamples.slice(0, 5).map((example, index): VocabularyItem => ({
+  const exampleVocabulary = safeExamples.map((example, index): VocabularyItem => ({
     id: `${source.id}-vocab-chunk-${index + 1}`,
     term: example.text,
+    pronunciation: example.pronunciation,
     meaningVi: example.meaningVi,
     partOfSpeechOrType: 'sentence chunk',
     example: example.text,
@@ -127,7 +129,7 @@ function buildGrammarBridge(source: GeneratedGrammarLessonSource): {
   const isCoreA2 = source.level === 'A2';
   const shadowingExamples = bridgeExamples.slice(0, source.level === 'A1' ? 3 : 4);
   const listeningExamples = bridgeExamples.slice(-2);
-  const reflexExamples = isCoreA2 ? bridgeExamples.slice(0, 4) : bridgeExamples.slice(0, 2);
+  const reflexExamples = bridgeExamples.slice(0, isCoreA2 ? 4 : 3);
   const hasDistinctTransferPair = transferExample.text.trim().toLowerCase() !== challengeExample.text.trim().toLowerCase();
   const transferPrompt = {
     text: 'Can you make another sentence with this pattern?',
@@ -349,9 +351,18 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
     gameMissions: [
       {
         id: `${source.id}-mission`,
-        title: 'Điền chỗ trống không dịch từng chữ',
-        instructionVi: 'Đọc cả câu, xác định vị trí bị che, dùng phím A/B/C/D hoặc Enter để hoàn thành nhanh.',
-        successCriteria: 'Trả lời đúng ít nhất 2/3 câu luyện tập của bài.',
+        title: 'Chinh phục ba thử thách mẫu câu',
+        instructionVi: 'Hoàn thành một câu chọn đáp án, một câu điền từ và một câu xếp từ. Đọc trọn câu trước khi trả lời.',
+        successCriteria: 'Trả lời đúng ít nhất 2/3 thử thách ngữ pháp.',
+        completion: {
+          kind: 'correct',
+          sourceItemIds: [
+            quizQuestions.find((question) => question.type === 'multiple-choice')?.id,
+            fillBlankTasks[0]?.id,
+            sentenceOrderingTasks[0]?.id,
+          ].filter((id): id is string => Boolean(id)),
+          minimum: 2,
+        },
       },
     ],
     whaleCoachLines: [
@@ -371,6 +382,15 @@ function adaptGrammarLesson(source: GeneratedGrammarLessonSource): EnglishLesson
       ifCorrectTwice: 'Nếu đúng 2 lần, chuyển sang câu cùng mẫu nhưng ngữ cảnh khác.',
       ifCorrectThreeTimesAcrossSessions: 'Nếu đúng qua nhiều phiên, đánh dấu mẫu ngữ pháp là đã quen.',
       priorityRule: 'Ưu tiên mẫu có lỗi sai gần nhất và mẫu cùng cấp CEFR.',
+    },
+    reviewPolicy: {
+      inLessonRetryLimit: 3,
+      wrongAnswerDelayMinutes: 10,
+      familiarAfterCorrectSessions: 2,
+      masteredAfterCorrectSessions: 3,
+      retryPromptMode: 'grammar-pattern',
+      wrongAnswerAction: 'show-explanation-and-retry',
+      priorityStrategy: 'recent-mistakes-first',
     },
     completionCriteria: {
       flashcardsReviewed: exampleFlashcards.length,

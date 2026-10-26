@@ -103,6 +103,7 @@ function toVocabulary(source: GeneratedReadingLessonSource, readingExamples: Rea
   const focusVocabulary: VocabularyItem[] = source.vocabularyFocus.map((item) => ({
     id: item.id,
     term: item.term,
+    pronunciation: item.pronunciation,
     meaningVi: item.meaningVi,
     partOfSpeechOrType: item.partOfSpeechOrType,
     example: item.example,
@@ -211,7 +212,7 @@ function buildReadingBridge(source: GeneratedReadingLessonSource, vocabulary: Vo
         repeatRecommended: source.level === 'A1' || source.level === 'A2' ? 3 : 2,
       },
     })),
-    speakingReflexPrompts: readingExamples.slice(0, 3).map((example, index) => ({
+    speakingReflexPrompts: [...readingExamples.slice(0, 3), ...(source.speakingFocusExamples ?? [])].map((example, index) => ({
       id: `${source.id}-reflex-reading-${index + 1}`,
       promptVi: `Poo nhờ bạn nói lại ý này: ${example.meaningVi}`,
       expectedEnglish: example.text,
@@ -285,8 +286,8 @@ function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson
       {
         id: `${source.id}-passage`,
         title: 'Đoạn đọc chính',
-        explanationVi: `Đọc đoạn này theo 2 lượt: lượt 1 nắm ý chính, lượt 2 tìm chi tiết cho câu hỏi. Nội dung: ${source.passage}`,
-        examples: [source.passage],
+        explanationVi: 'Đọc đoạn này theo 2 lượt: lượt 1 nắm ý chính, lượt 2 tìm chi tiết cho câu hỏi.',
+        examples: source.passage.split(/(?<=[.!?])\s+/).map((sentence) => sentence.trim()).filter(Boolean),
       },
       {
         id: `${source.id}-strategy`,
@@ -355,12 +356,26 @@ function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson
         title: 'Bắt ý chính như cá voi xanh',
         instructionVi: 'Đọc đoạn một lượt, trả lời câu hỏi trắc nghiệm, rồi làm câu điền từ và sắp xếp câu.',
         successCriteria: `Hoàn thành ít nhất ${Math.max(2, totalQuestionCount - 1)}/${totalQuestionCount} câu luyện đọc.`,
+        completion: {
+          kind: 'correct',
+          sourceItemIds: [
+            ...quizQuestions.map((question) => question.id),
+            fillBlankTasks[0]?.id,
+            sentenceOrderingTasks[0]?.id,
+          ].filter((id): id is string => Boolean(id)),
+          minimum: Math.max(2, totalQuestionCount - 1),
+        },
       },
       {
         id: `${source.id}-mission-retell`,
-        title: 'Đọc xong nói lại một ý',
-        instructionVi: 'Chọn một câu trọng tâm, nghe một lượt rồi nói lại mà không nhìn bản dịch.',
-        successCriteria: 'Nói hoặc viết lại được một ý đúng với đoạn đọc.',
+        title: 'Nghe rồi tự kể lại một ý',
+        instructionVi: 'Hoàn thành một lượt nghe câu trọng tâm và tự luyện nói lại một ý bằng câu tiếng Anh của bài. Phần nói không được chấm tự động.',
+        successCriteria: 'Đã hoàn thành lượt nghe và tự luyện nói; tự đối chiếu với câu mẫu.',
+        completion: {
+          kind: 'complete',
+          sourceItemIds: [bridge.listeningPractice[0]?.id, bridge.speakingReflexPrompts[0]?.id].filter((id): id is string => Boolean(id)),
+          minimum: 2,
+        },
       },
     ],
     whaleCoachLines: source.whaleCoachLines,
@@ -376,6 +391,15 @@ function adaptReadingLesson(source: GeneratedReadingLessonSource): EnglishLesson
       ifCorrectTwice: 'Nếu đúng 2 lần, chuyển sang đoạn cùng cấp CEFR nhưng bối cảnh khác.',
       ifCorrectThreeTimesAcrossSessions: 'Nếu đúng qua nhiều phiên, đánh dấu mẫu đọc là đã quen.',
       priorityRule: 'Ưu tiên ôn các đoạn có lỗi sai gần nhất và các từ khóa chưa nhớ.',
+    },
+    reviewPolicy: {
+      inLessonRetryLimit: 3,
+      wrongAnswerDelayMinutes: 10,
+      familiarAfterCorrectSessions: 2,
+      masteredAfterCorrectSessions: 3,
+      retryPromptMode: 'reading-evidence',
+      wrongAnswerAction: 'show-reading-evidence',
+      priorityStrategy: 'recent-mistakes-and-weak-keywords',
     },
     completionCriteria: {
       flashcardsReviewed: vocabulary.length,

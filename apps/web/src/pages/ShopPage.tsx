@@ -27,11 +27,11 @@ type ShopItem = {
 type TabKey = 'avatar' | 'background' | 'special' | 'inventory';
 
 const ASSET_EXT: Record<number, string> = {
-  1: 'gif', 2: 'jpg', 3: 'jpg', 4: 'gif', 5: 'jpg', 6: 'jpg', 7: 'gif', 8: 'gif',
-  10: 'gif', 12: 'jpg', 13: 'jpg', 16: 'webp', 17: 'jpg', 18: 'webp', 19: 'png',
-  20: 'png', 21: 'png', 22: 'png', 23: 'png', 24: 'jpg', 25: 'jpg', 26: 'webp',
-  27: 'jpg', 28: 'jpg', 29: 'gif', 30: 'jpg', 31: 'jpg', 32: 'jpg', 33: 'jpg',
-  34: 'jpg', 35: 'jpg', 183: 'jpg',
+  1: 'gif', 2: 'webp', 3: 'webp', 4: 'gif', 5: 'webp', 6: 'webp', 7: 'gif', 8: 'gif',
+  10: 'gif', 12: 'webp', 13: 'webp', 16: 'webp', 17: 'webp', 18: 'webp', 19: 'webp',
+  20: 'webp', 21: 'webp', 22: 'webp', 23: 'webp', 24: 'webp', 25: 'webp', 26: 'webp',
+  27: 'webp', 28: 'webp', 29: 'gif', 30: 'webp', 31: 'webp', 32: 'webp', 33: 'webp',
+  34: 'webp', 35: 'webp', 183: 'webp',
 };
 
 function imgFor(item: ShopItem): string | null {
